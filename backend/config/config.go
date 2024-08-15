@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	Application ApplicationConfig `envPrefix:"TS3_APPLICATION_"`
+	Database    DatabaseConfig    `envPrefix:"TS3_DATABASE_"`
 }
 
 // Create a configuration, using environment variables defined in the shell

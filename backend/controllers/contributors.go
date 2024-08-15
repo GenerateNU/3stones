@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/transactions"
 	"backend/types"
 
 	"github.com/gofiber/fiber/v2"
@@ -17,5 +18,11 @@ func NewContributorsController(ServiceParams *types.ServiceParams) *Contributors
 }
 
 func (c *ContributorsController) GetContributors(ctx *fiber.Ctx) error {
-	return ctx.SendStatus(404)
+	contributors, err := transactions.GetContributors(c.ServiceParams.DB)
+
+	if err != nil {
+		return ctx.SendStatus(500)
+	}
+
+	return ctx.JSON(contributors)
 }

@@ -1,3 +1,7 @@
 package types
 
-type ServiceParams struct{}
+import "backend/ent"
+
+type ServiceParams struct {
+	DB *ent.Client
+}
