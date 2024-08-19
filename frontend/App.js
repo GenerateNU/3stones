@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import TabNavigator from './navigation/BottomTabs'
 
 export default function App() {
@@ -7,5 +7,5 @@ export default function App() {
     <NavigationContainer>
       <TabNavigator />
     </NavigationContainer>
-  );
+  )
 }
