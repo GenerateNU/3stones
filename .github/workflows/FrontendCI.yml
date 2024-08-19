@@ -1,0 +1,39 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "frontend/**"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "frontend/**"
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Format Frontend
+        run: |
+          cd frontend
+          npm install prettier
+          npx prettier --check .
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint frontend
+        run: |
+          npm install
+          npm run lint
