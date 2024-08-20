@@ -11,13 +11,13 @@
 2. Create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp .env.template .env.dev`.
 
 3. Rather than worry about locally installing PostgreSQL, we'll use Supabase for provisoning our database instead. Log in to your Supabase account.
-    1. First create a new organization. From the *Dashboard*, click *New organization*, give this new org a name, and leave the type of organization and pricing plan at its defaults. THen click *Create organization*.
-    2. Next, create a new project. From the *Dashboard*, click *Create project*, Set the organization to the org you just created, give the project a name, and a database password (if not already generated). *SAVE THE DATABASE PASSWORD!!*. Leave the region at its default, and then click *Create new project*.
+    1. First create a new organization. From the **Dashboard**, click **New organization**, give this new org a name, and leave the type of organization and pricing plan at its defaults. THen click **Create organization**.
+    2. Next, create a new project. From the **Dashboard**, click **Create project**, Set the organization to the org you just created, give the project a name, and a database password (if not already generated). **SAVE THE DATABASE PASSWORD!!**. Leave the region at its default, and then click **Create new project**.
     ![Showing where the create buttons are](images/SupabaseDashboardButtons.png)
-    3. Once you click create new project, it should automatically open you to the project page. If not, from the *Dashboard* click on the project you just created. It may be a few minutes for Supabase to fully set up your project.
-    4. Once the project has been fully setup, hover over the sidebar on the left and click *Project Settings* on the bottom. Then navigate to the *Database* tab under the *Configuration* header.
+    3. Once you click create new project, it should automatically open you to the project page. If not, from the **Dashboard** click on the project you just created. It may be a few minutes for Supabase to fully set up your project.
+    4. Once the project has been fully setup, hover over the sidebar on the left and click **Project Settings** on the bottom. Then navigate to the **Database** tab under the **Configuration** header.
     ![Showing where the project settings is](images/projectsettingsbutton.png)
-    5. Here you should see a group of settings titled *Connection parameters*. Switch the *Mode* setting (where `Mode: Transaction` is set) to *Session mode*. Then, copy the parameters to the `.env.dev` file you crated earlier. The following is a list of which connection parameter maps to which env variable.
+    5. Here you should see a group of settings titled **Connection parameters**. Switch the **Mode** setting (where `Mode: Transaction` is set) to **Session mode**. Then, copy the parameters to the `.env.dev` file you crated earlier. The following is a list of which connection parameter maps to which env variable.
         - `Host` -> `TS3_DATABASE_HOST`
         - `Database name` -> `TS3_DATABASE_DBNAME`
         - `Port` -> `TS3_DATABASE_PORT`
