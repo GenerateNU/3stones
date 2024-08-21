@@ -8,7 +8,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       {/* Some dummy image */}
       <View style={styles.imageContainer}>
-        <Image source={require('../../assets/images/icon.png')} style={styles.imageStyle} />
+        <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </View>
       {/* Some dummy button */}
       <View>
