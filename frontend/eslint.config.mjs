@@ -1,11 +1,17 @@
 import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginReact from 'eslint-plugin-react'
+import jsEslint from '@eslint/js'
+import typescriptEslint from 'typescript-eslint'
+import eslintPluginReact from 'eslint-plugin-react'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
-  { languageOptions: { globals: globals.browser, parser: '@typescript-eslint/parser' } },
+  { ignores: ['.eslintrc.js', '.prettierrc.json', 'babel.config.js', '**/node_modules/', '.git/'] },
+  { languageOptions: { globals: globals.browser } },
+  jsEslint.configs.recommended,
+  ...typescriptEslint.configs.recommended,
+  eslintPluginReact.configs.flat.recommended,
+  eslintConfigPrettier,
   {
     rules: {
       'no-duplicate-imports': 'error',
@@ -21,17 +27,13 @@ export default [
       'default-case-last': 'error',
       eqeqeq: 'error',
       'no-else-return': 'error',
-      'no-magic-numbers': 'error',
       'no-unneeded-ternary': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
-      'prefer-destructuring': 'warn',
       'prefer-exponentiation-operator': 'warn',
       'require-await': 'error',
+      'react/prop-types': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
-  { ignores: ['.eslintrc.js', '.prettierrc.json', 'babel.config.js', '**/node_modules/', '.git/'] },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
 ]
