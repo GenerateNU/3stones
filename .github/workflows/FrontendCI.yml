@@ -33,7 +33,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lint frontend
+      - name: Lint Frontend
         run: |
+          cd frontend
           npm install
           npm run lint
+
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions.checkout@v4
+
+      - name: Test Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run test
