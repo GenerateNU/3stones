@@ -1,6 +1,6 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import styles from './styles'
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from './styles';
 
 export default function SecondScreen() {
   return (
@@ -9,5 +9,5 @@ export default function SecondScreen() {
         <Text style={styles.textStyle}>Another screen!</Text>
       </View>
     </View>
-  )
+  );
 }
