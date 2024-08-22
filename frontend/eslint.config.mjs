@@ -1,8 +1,8 @@
-import globals from 'globals'
-import jsEslint from '@eslint/js'
-import typescriptEslint from 'typescript-eslint'
-import eslintPluginReact from 'eslint-plugin-react'
-import eslintConfigPrettier from 'eslint-config-prettier'
+import globals from 'globals';
+import jsEslint from '@eslint/js';
+import typescriptEslint from 'typescript-eslint';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
@@ -34,6 +34,8 @@ export default [
       'require-await': 'error',
       'react/prop-types': 'off',
       '@typescript-eslint/no-require-imports': 'off',
+      semi: 'error',
+      'no-extra-semi': 'error',
     },
   },
-]
+];

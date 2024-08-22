@@ -1,10 +1,10 @@
-import React from 'react'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/home/home'
-import SecondScreen from '../screens/secondScreen/secondScreen'
+import HomeScreen from '../screens/home/home';
+import SecondScreen from '../screens/secondScreen/secondScreen';
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
@@ -16,5 +16,5 @@ export default function StackNavigator() {
       />
       <Stack.Screen name='secondScreen' component={SecondScreen} options={{ title: '' }} />
     </Stack.Navigator>
-  )
+  );
 }

@@ -1,9 +1,16 @@
-import React from 'react'
-import { Image, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 
-import styles from './styles'
+import styles from './styles';
 
-export default function HomeScreen({ navigation }) {
+interface HomeScreenProps {
+  // This actually should be `any`, so disabling the linter rule
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: NavigationScreenProp<any, any>;
+}
+
+export const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <View style={styles.container}>
       {/* Some dummy image */}
@@ -19,5 +26,5 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
