@@ -9,9 +9,9 @@ import (
 	"log"
 	"reflect"
 
-	"backend/ent/migrate"
+	"backend/internal/server/ent/migrate"
 
-	"backend/ent/contributor"
+	"backend/internal/server/ent/contributor"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"

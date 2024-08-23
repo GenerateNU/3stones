@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"backend/transactions"
-	"backend/types"
+	"backend/internal/server/transactions"
+	"backend/internal/server/types"
 
 	"github.com/gofiber/fiber/v2"
 )

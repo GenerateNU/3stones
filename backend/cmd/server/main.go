@@ -5,11 +5,11 @@ import (
 	"flag"
 	"fmt"
 
-	"backend/config"
-	"backend/ent"
-	"backend/routes"
-	"backend/types"
-	"backend/utilities"
+	"backend/internal/server/config"
+	"backend/internal/server/ent"
+	"backend/internal/server/routes"
+	"backend/internal/server/types"
+	"backend/internal/server/utilities"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -69,7 +69,7 @@ func setupServer(config *config.Config) (*fiber.App, error) {
 }
 
 func parseFlags() (configPath *string) {
-	configPath = flag.String("config", "../config/.env.dev", "Specify the path to the config file (.env)")
+	configPath = flag.String("config", "../../../config/.env.dev", "Specify the path to the config file (.env)")
 	flag.Parse()
 	return
 }

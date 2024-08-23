@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"backend/ent/contributor"
+	"backend/internal/server/ent/contributor"
 	"context"
 	"errors"
 	"fmt"

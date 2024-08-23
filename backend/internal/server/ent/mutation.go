@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"backend/ent/contributor"
-	"backend/ent/predicate"
+	"backend/internal/server/ent/contributor"
+	"backend/internal/server/ent/predicate"
 	"context"
 	"errors"
 	"fmt"
