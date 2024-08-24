@@ -1,12 +1,13 @@
-# Prerequisites
+# For Windows Users
+This guide assumes that you are using Linux/MacOS. If you are using Windows, please install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
+# Prerequisites
 - [Git](https://git-scm.com/)
 - [Golang](https://go.dev/)
   - Install through the official website, don't rely on package manager
 - A [Supabase](https://supabase.com/) account
   - You can use your Github account for this
 - [NodeJS](https://nodejs.org/en/)
-- NOTE: This guide assumes that you are using Linux/MacOS. If you are using Windows, please install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 - Clone the repository by running `git clone git@github.com:GenerateNU/3stones.git`.
 
 # Frontend Setup
@@ -23,7 +24,7 @@
 
 # Backend setup
 
-1. Create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp .env.template .env.dev`.
+1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
 
 2. Rather than worry about locally installing PostgreSQL, we'll use Supabase for provisoning our database instead. Log in to your Supabase account.
 
@@ -37,4 +38,4 @@
       ![Showing where the db settings are](images/databasesettings.png)
    6. Supabase contains lots of features that can be useful when debugging and developing, such as its Table Editor, SQL Editor, and Schema Visualizer. Explore a little!
 
-3. You should now have the necessary setup to run the project. Change into the backend directory by running `cd 3stones/backend`. Then run the backend with `go run main.go`.
+3. You should now have the necessary setup to run the project. Change into the backend directory by running `cd 3stones/backend/cmd/server`. Then run the backend with `go run main.go`.

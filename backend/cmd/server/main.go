@@ -18,7 +18,7 @@ import (
 
 func main() {
 	// Configuration - get the config path (if specified) and parse
-	configPath := parseFlags()
+	configPath := config.ParseFlags()
 	config, err := config.ParseConfiguration(*configPath)
 
 	if err != nil {
