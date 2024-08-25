@@ -1,7 +1,11 @@
 package types
 
-import "backend/internal/server/ent"
+import (
+	"backend/internal/server/auth"
+	"backend/internal/server/ent"
+)
 
 type ServiceParams struct {
-	DB *ent.Client
+	DB   *ent.Client
+	Auth *auth.Auth
 }

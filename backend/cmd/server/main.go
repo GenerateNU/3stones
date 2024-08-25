@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"fmt"
 
 	"backend/internal/server/config"
@@ -64,12 +63,7 @@ func setupServer(config *config.Config) (*fiber.App, error) {
 
 	// Initialize routes here! VVVV
 	routes.Contributors(routerParams)
+	routes.Auth(routerParams)
 
 	return app, nil
-}
-
-func parseFlags() (configPath *string) {
-	configPath = flag.String("config", "../../../config/.env.dev", "Specify the path to the config file (.env)")
-	flag.Parse()
-	return
 }
