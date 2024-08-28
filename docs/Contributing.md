@@ -22,7 +22,21 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 4. Run `npx expo start --tunnel` to run the frontend!
 
-# Backend setup
+# Backend setup (using Docker)
+The benefit of this approach is that latency for each request will be reduced (since your DB is on your machine vs. Supabase's servers) and it can be easier to reset the database to a working state if something breaks.
+
+1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
+
+2. Install Docker on your computer. 
+   - If you're on Linux/MacOS follow the instructions here. 
+   - If you're on Windows, install Docker with the instructions here, and then enable the WSL2 backend with the instructions here.
+
+3. Start the database by running `./start-database.sh`.
+   - If you're on Linux/MacOS, you can do this by running `./scripts/start-database.sh` (from the `3stones` directory).
+   - If you're on Windows, login into WSL2 by running `wsl` and then running `./scripts/start-database.sh` (from the `3stones` directory).
+
+# Backend setup (using Supabase)
+The benefit of this approach is that you'll only need to install Go on your local machine to develop the backend.
 
 1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
 
