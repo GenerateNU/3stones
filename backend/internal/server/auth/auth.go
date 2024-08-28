@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (
@@ -93,5 +94,22 @@ func (a *Auth) ValidateRefreshToken(tokenString string) (string, error) {
 		return claims["id"].(string), nil
 	} else {
 		return "", errors.New("could not parse claims")
+	}
+}
+
+// TODO: susceptible to rainbow attacks
+func (a *Auth) HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+
+	return string(bytes), err
+}
+
+func (a *Auth) ComparePasswords(hashedPassword string, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+
+	if err != nil {
+		return false
+	} else {
+		return true
 	}
 }

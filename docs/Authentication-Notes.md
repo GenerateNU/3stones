@@ -49,3 +49,5 @@ POST /register w/ email and password
     - If its supertrustworthy, a refresh token could contain (in payload) its expire date, and once verified on server, be used to check for validity
         - This is wrong: point of refresh tokens is that they can be revoked, and damage done by an attacker is minimal. if we don't store refresh tokens somewhere we have no way of revoking
     - If not, then we probably need a model storing refresh tokens or something
+
+- (NOTE TO FUTURE SELF) fibers.newerror everywhere please
