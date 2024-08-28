@@ -42,7 +42,7 @@ func setupServer(config *config.Config) (*fiber.App, error) {
 
 	app.Use(logger.New())
 
-	db, err := ent.Open("postgres", config.Database.ConnString())
+	db, err := ent.Open("postgres", config.Database.Url)
 	if err != nil {
 		return nil, err
 	}

@@ -34,7 +34,7 @@ func main() {
 }
 
 func setupDatabase(config *config.Config) (*sql.DB, error) {
-	db, err := sql.Open("postgres", config.Database.ConnString())
+	db, err := sql.Open("postgres", config.Database.Url)
 	if err != nil {
 		return nil, err
 	}
