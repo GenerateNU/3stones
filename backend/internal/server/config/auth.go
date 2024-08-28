@@ -1,6 +1,6 @@
 package config
 
 type AuthConfig struct {
-	SupabaseKey string `env:"SUPABASE_KEY"`
-	SupabaseUrl string `env:"SUPABASE_URL"`
+	AccessTokenSecret  string `env:"ACCESS_TOKEN_SECRET"`
+	RefreshTokenSecret string `env:"REFRESH_TOKEN_SECRET"`
 }

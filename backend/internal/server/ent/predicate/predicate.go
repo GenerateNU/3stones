@@ -8,3 +8,6 @@ import (
 
 // Contributor is the predicate function for contributor builders.
 type Contributor func(*sql.Selector)
+
+// User is the predicate function for user builders.
+type User func(*sql.Selector)

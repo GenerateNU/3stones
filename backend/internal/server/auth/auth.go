@@ -2,51 +2,96 @@ package auth
 
 import (
 	"backend/internal/server/config"
-	"context"
+	"backend/internal/server/ent"
+	"errors"
+	"time"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/nedpals/supabase-go"
+	"github.com/golang-jwt/jwt/v5"
+)
+
+const (
+	ACCESS_TOKEN_EXPIRY  = 1 * time.Hour       // Access token expires in an hour
+	REFRESH_TOKEN_EXPIRY = 30 * 24 * time.Hour // Refresh token expires in a month
 )
 
 type Auth struct {
-	supabase *supabase.Client
+	Config config.AuthConfig
 }
 
 func NewAuth(config *config.Config) *Auth {
-	supabase := supabase.CreateClient(config.Auth.SupabaseUrl, config.Auth.SupabaseKey)
-	return &Auth{supabase: supabase}
+	return &Auth{
+		Config: config.Auth,
+	}
 }
 
-func (a *Auth) SignIn(credentials supabase.UserCredentials) (*supabase.AuthenticatedDetails, error) {
-	return a.supabase.Auth.SignIn(context.Background(), credentials)
+func (a *Auth) NewAccessToken(user *ent.User) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":  user.ID.String(),
+		"exp": time.Now().Add(ACCESS_TOKEN_EXPIRY),
+	})
+
+	tokenString, err := token.SignedString(a.Config.AccessTokenSecret)
+
+	return tokenString, err
 }
 
-func (a *Auth) SignOut(userToken string) error {
-	return a.supabase.Auth.SignOut(context.Background(), userToken)
-}
-
-func (a *Auth) SignUp(credentials supabase.UserCredentials) (*supabase.User, error) {
-	return a.supabase.Auth.SignUp(context.Background(), credentials)
-}
-
-func (a *Auth) User(userToken string) (*supabase.User, error) {
-	return a.supabase.Auth.User(context.Background(), userToken)
-}
-
-func (a *Auth) ValidateUser() fiber.Handler {
-	return func(c *fiber.Ctx) error {
-		userToken := c.Get("Authorization")
-		if userToken == "" {
-			return fiber.NewError(fiber.StatusUnauthorized, "Missing authorization token")
+// If this token is valid, the returned string will be the user ID in the JWT signature.
+func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if token.Method.Alg() != "HS256" {
+			return nil, errors.New("incorrect alg type")
 		}
 
-		user, err := a.User(userToken)
-		if err != nil {
-			return fiber.NewError(fiber.StatusUnauthorized, "Invalid authorization token")
+		return a.Config.AccessTokenSecret, nil
+	})
+
+	if err != nil {
+		return "", err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		if claims["exp"].(time.Time).Before(time.Now()) {
+			return "", errors.New("access token expired")
 		}
 
-		c.Locals("user", user)
+		return claims["id"].(string), nil
+	} else {
+		return "", errors.New("could not parse claims")
+	}
+}
 
-		return c.Next()
+func (a *Auth) NewRefreshToken(user *ent.User) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":  user.ID.String(),
+		"exp": time.Now().Add(REFRESH_TOKEN_EXPIRY),
+	})
+
+	tokenString, err := token.SignedString(a.Config.RefreshTokenSecret)
+
+	return tokenString, err
+}
+
+// If validation is successful, returns the user id associated with the token.
+func (a *Auth) ValidateRefreshToken(tokenString string) (string, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if token.Method.Alg() != "HS256" {
+			return nil, errors.New("incorrect alg type")
+		}
+
+		return a.Config.RefreshTokenSecret, nil
+	})
+
+	if err != nil {
+		return "", err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		if claims["exp"].(time.Time).Before(time.Now()) {
+			return "", errors.New("refresh token expired")
+		}
+
+		return claims["id"].(string), nil
+	} else {
+		return "", errors.New("could not parse claims")
 	}
 }
