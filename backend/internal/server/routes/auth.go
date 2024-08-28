@@ -13,4 +13,5 @@ func Auth(params types.RouterParams) {
 	auth.Post("/login", authController.Login)
 	auth.Post("/register", authController.Register)
 	auth.Post("/logout", authController.Logout)
+	auth.Post("/refresh", authController.Refresh)
 }

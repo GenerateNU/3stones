@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"backend/internal/server/jsontypes"
 	"backend/internal/server/transactions"
 	"backend/internal/server/types"
 
@@ -18,13 +17,8 @@ func NewAuthController(serviceParams *types.ServiceParams) *AuthController {
 	}
 }
 
-type LoginRequestBody struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 func (c *AuthController) Login(ctx *fiber.Ctx) error {
-	var body jsontypes.LoginRequestBody
+	var body types.UserCredentials
 	if ctx.BodyParser(&body) != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "invalid request body")
 	}
@@ -43,12 +37,26 @@ func (c *AuthController) Logout(ctx *fiber.Ctx) error {
 }
 
 func (c *AuthController) Register(ctx *fiber.Ctx) error {
-	var body jsontypes.RegisterRequestBody
+	var body types.UserCredentials
 	if ctx.BodyParser(&body) != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "invalid request body")
 	}
 
 	tokens, err := transactions.Register(c.serviceParams.DB, c.serviceParams.Auth, &body)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(tokens)
+}
+
+func (c *AuthController) Refresh(ctx *fiber.Ctx) error {
+	var body types.RefreshRequestBody
+	if ctx.BodyParser(&body) != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "invalid request body")
+	}
+
+	tokens, err := transactions.Refresh(c.serviceParams.DB, c.serviceParams.Auth, &body)
 	if err != nil {
 		return err
 	}

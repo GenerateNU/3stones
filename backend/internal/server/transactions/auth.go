@@ -4,13 +4,14 @@ import (
 	"backend/internal/server/auth"
 	"backend/internal/server/ent"
 	"backend/internal/server/ent/user"
-	"backend/internal/server/jsontypes"
+	"backend/internal/server/types"
 	"context"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
-func Login(db *ent.Client, auth *auth.Auth, creds *jsontypes.UserCredentials) (*jsontypes.AuthTokens, error) {
+func Login(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
 	user, err := db.User.Query().Where(user.EmailEQ(creds.Email)).Only(context.Background())
 
 	if err != nil {
@@ -33,13 +34,13 @@ func Login(db *ent.Client, auth *auth.Auth, creds *jsontypes.UserCredentials) (*
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}
 
-	return &jsontypes.AuthTokens{
+	return &types.AuthTokens{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}, nil
 }
 
-func Register(db *ent.Client, auth *auth.Auth, creds *jsontypes.UserCredentials) (*jsontypes.AuthTokens, error) {
+func Register(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
 	passwordHash, err := auth.HashPassword(creds.Password)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "password hash failed")
@@ -64,7 +65,35 @@ func Register(db *ent.Client, auth *auth.Auth, creds *jsontypes.UserCredentials)
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}
 
-	return &jsontypes.AuthTokens{
+	return &types.AuthTokens{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}, nil
+}
+
+func Refresh(db *ent.Client, auth *auth.Auth, creds *types.RefreshRequestBody) (*types.AuthTokens, error) {
+	_, err := auth.ValidateRefreshToken(creds.RefreshToken) // todo
+	if err != nil {
+		return nil, fiber.NewError(fiber.StatusUnauthorized, "invalid/expired refresh token")
+	}
+
+	userUUID := uuid.New() // figure out how to convert userId (string) to uuid.UUID
+	user, err := db.User.Query().Where(user.IDEQ(userUUID)).Only(context.Background())
+	if err != nil {
+		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to get user")
+	}
+
+	accessToken, err := auth.NewAccessToken(user)
+	if err != nil {
+		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
+	}
+
+	refreshToken, err := auth.NewRefreshToken(user)
+	if err != nil {
+		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
+	}
+
+	return &types.AuthTokens{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}, nil
