@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// Contributor is the client for interacting with the Contributor builders.
 	Contributor *ContributorClient
+	// RefreshToken is the client for interacting with the RefreshToken builders.
+	RefreshToken *RefreshTokenClient
 	// User is the client for interacting with the User builders.
 	User *UserClient
 
@@ -148,6 +150,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Contributor = NewContributorClient(tx.config)
+	tx.RefreshToken = NewRefreshTokenClient(tx.config)
 	tx.User = NewUserClient(tx.config)
 }
 

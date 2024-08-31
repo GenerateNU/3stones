@@ -4,6 +4,7 @@ package ent
 
 import (
 	"backend/internal/server/ent/contributor"
+	"backend/internal/server/ent/refreshtoken"
 	"backend/internal/server/ent/user"
 	"context"
 	"errors"
@@ -74,8 +75,9 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			contributor.Table: contributor.ValidColumn,
-			user.Table:        user.ValidColumn,
+			contributor.Table:  contributor.ValidColumn,
+			refreshtoken.Table: refreshtoken.ValidColumn,
+			user.Table:         user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

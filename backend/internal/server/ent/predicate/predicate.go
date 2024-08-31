@@ -9,5 +9,8 @@ import (
 // Contributor is the predicate function for contributor builders.
 type Contributor func(*sql.Selector)
 
+// RefreshToken is the predicate function for refreshtoken builders.
+type RefreshToken func(*sql.Selector)
+
 // User is the predicate function for user builders.
 type User func(*sql.Selector)

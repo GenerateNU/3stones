@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"backend/internal/server/ent/refreshtoken"
 	"backend/internal/server/ent/schema"
 	"backend/internal/server/ent/user"
 
@@ -13,6 +14,12 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	refreshtokenFields := schema.RefreshToken{}.Fields()
+	_ = refreshtokenFields
+	// refreshtokenDescRefreshTokenHash is the schema descriptor for refresh_token_hash field.
+	refreshtokenDescRefreshTokenHash := refreshtokenFields[0].Descriptor()
+	// refreshtoken.RefreshTokenHashValidator is a validator for the "refresh_token_hash" field. It is called by the builders before save.
+	refreshtoken.RefreshTokenHashValidator = refreshtokenDescRefreshTokenHash.Validators[0].(func(string) error)
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescEmail is the schema descriptor for email field.

@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"backend/internal/server/ent/refreshtoken"
 	"backend/internal/server/ent/user"
 	"context"
 	"errors"
@@ -44,6 +45,21 @@ func (uc *UserCreate) SetNillableID(u *uuid.UUID) *UserCreate {
 		uc.SetID(*u)
 	}
 	return uc
+}
+
+// AddRefreshTokenIDs adds the "refresh_token" edge to the RefreshToken entity by IDs.
+func (uc *UserCreate) AddRefreshTokenIDs(ids ...int) *UserCreate {
+	uc.mutation.AddRefreshTokenIDs(ids...)
+	return uc
+}
+
+// AddRefreshToken adds the "refresh_token" edges to the RefreshToken entity.
+func (uc *UserCreate) AddRefreshToken(r ...*RefreshToken) *UserCreate {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return uc.AddRefreshTokenIDs(ids...)
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -147,6 +163,22 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.Password(); ok {
 		_spec.SetField(user.FieldPassword, field.TypeString, value)
 		_node.Password = value
+	}
+	if nodes := uc.mutation.RefreshTokenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

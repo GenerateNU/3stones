@@ -4,8 +4,10 @@ package ent
 
 import (
 	"backend/internal/server/ent/predicate"
+	"backend/internal/server/ent/refreshtoken"
 	"backend/internal/server/ent/user"
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -19,10 +21,11 @@ import (
 // UserQuery is the builder for querying User entities.
 type UserQuery struct {
 	config
-	ctx        *QueryContext
-	order      []user.OrderOption
-	inters     []Interceptor
-	predicates []predicate.User
+	ctx              *QueryContext
+	order            []user.OrderOption
+	inters           []Interceptor
+	predicates       []predicate.User
+	withRefreshToken *RefreshTokenQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -57,6 +60,28 @@ func (uq *UserQuery) Unique(unique bool) *UserQuery {
 func (uq *UserQuery) Order(o ...user.OrderOption) *UserQuery {
 	uq.order = append(uq.order, o...)
 	return uq
+}
+
+// QueryRefreshToken chains the current query on the "refresh_token" edge.
+func (uq *UserQuery) QueryRefreshToken() *RefreshTokenQuery {
+	query := (&RefreshTokenClient{config: uq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := uq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := uq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(user.Table, user.FieldID, selector),
+			sqlgraph.To(refreshtoken.Table, refreshtoken.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, user.RefreshTokenTable, user.RefreshTokenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(uq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first User entity from the query.
@@ -246,15 +271,27 @@ func (uq *UserQuery) Clone() *UserQuery {
 		return nil
 	}
 	return &UserQuery{
-		config:     uq.config,
-		ctx:        uq.ctx.Clone(),
-		order:      append([]user.OrderOption{}, uq.order...),
-		inters:     append([]Interceptor{}, uq.inters...),
-		predicates: append([]predicate.User{}, uq.predicates...),
+		config:           uq.config,
+		ctx:              uq.ctx.Clone(),
+		order:            append([]user.OrderOption{}, uq.order...),
+		inters:           append([]Interceptor{}, uq.inters...),
+		predicates:       append([]predicate.User{}, uq.predicates...),
+		withRefreshToken: uq.withRefreshToken.Clone(),
 		// clone intermediate query.
 		sql:  uq.sql.Clone(),
 		path: uq.path,
 	}
+}
+
+// WithRefreshToken tells the query-builder to eager-load the nodes that are connected to
+// the "refresh_token" edge. The optional arguments are used to configure the query builder of the edge.
+func (uq *UserQuery) WithRefreshToken(opts ...func(*RefreshTokenQuery)) *UserQuery {
+	query := (&RefreshTokenClient{config: uq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	uq.withRefreshToken = query
+	return uq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -333,8 +370,11 @@ func (uq *UserQuery) prepareQuery(ctx context.Context) error {
 
 func (uq *UserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*User, error) {
 	var (
-		nodes = []*User{}
-		_spec = uq.querySpec()
+		nodes       = []*User{}
+		_spec       = uq.querySpec()
+		loadedTypes = [1]bool{
+			uq.withRefreshToken != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*User).scanValues(nil, columns)
@@ -342,6 +382,7 @@ func (uq *UserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*User, e
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &User{config: uq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -353,7 +394,46 @@ func (uq *UserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*User, e
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := uq.withRefreshToken; query != nil {
+		if err := uq.loadRefreshToken(ctx, query, nodes,
+			func(n *User) { n.Edges.RefreshToken = []*RefreshToken{} },
+			func(n *User, e *RefreshToken) { n.Edges.RefreshToken = append(n.Edges.RefreshToken, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (uq *UserQuery) loadRefreshToken(ctx context.Context, query *RefreshTokenQuery, nodes []*User, init func(*User), assign func(*User, *RefreshToken)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[uuid.UUID]*User)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.withFKs = true
+	query.Where(predicate.RefreshToken(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(user.RefreshTokenColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.refresh_token_user
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "refresh_token_user" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "refresh_token_user" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (uq *UserQuery) sqlCount(ctx context.Context) (int, error) {

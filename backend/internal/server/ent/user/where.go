@@ -6,6 +6,7 @@ import (
 	"backend/internal/server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/google/uuid"
 )
 
@@ -192,6 +193,29 @@ func PasswordEqualFold(v string) predicate.User {
 // PasswordContainsFold applies the ContainsFold predicate on the "password" field.
 func PasswordContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldPassword, v))
+}
+
+// HasRefreshToken applies the HasEdge predicate on the "refresh_token" edge.
+func HasRefreshToken() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, RefreshTokenTable, RefreshTokenColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasRefreshTokenWith applies the HasEdge predicate on the "refresh_token" edge with a given conditions (other predicates).
+func HasRefreshTokenWith(preds ...predicate.RefreshToken) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := newRefreshTokenStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

@@ -4,6 +4,7 @@ package user
 
 import (
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/google/uuid"
 )
 
@@ -16,8 +17,17 @@ const (
 	FieldEmail = "email"
 	// FieldPassword holds the string denoting the password field in the database.
 	FieldPassword = "password"
+	// EdgeRefreshToken holds the string denoting the refresh_token edge name in mutations.
+	EdgeRefreshToken = "refresh_token"
 	// Table holds the table name of the user in the database.
 	Table = "users"
+	// RefreshTokenTable is the table that holds the refresh_token relation/edge.
+	RefreshTokenTable = "refresh_tokens"
+	// RefreshTokenInverseTable is the table name for the RefreshToken entity.
+	// It exists in this package in order to avoid circular dependency with the "refreshtoken" package.
+	RefreshTokenInverseTable = "refresh_tokens"
+	// RefreshTokenColumn is the table column denoting the refresh_token relation/edge.
+	RefreshTokenColumn = "refresh_token_user"
 )
 
 // Columns holds all SQL columns for user fields.
@@ -62,4 +72,25 @@ func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 // ByPassword orders the results by the password field.
 func ByPassword(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPassword, opts...).ToFunc()
+}
+
+// ByRefreshTokenCount orders the results by refresh_token count.
+func ByRefreshTokenCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newRefreshTokenStep(), opts...)
+	}
+}
+
+// ByRefreshToken orders the results by refresh_token terms.
+func ByRefreshToken(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newRefreshTokenStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newRefreshTokenStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(RefreshTokenInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, true, RefreshTokenTable, RefreshTokenColumn),
+	)
 }

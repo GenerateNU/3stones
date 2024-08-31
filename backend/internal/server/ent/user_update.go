@@ -4,6 +4,7 @@ package ent
 
 import (
 	"backend/internal/server/ent/predicate"
+	"backend/internal/server/ent/refreshtoken"
 	"backend/internal/server/ent/user"
 	"context"
 	"errors"
@@ -55,9 +56,45 @@ func (uu *UserUpdate) SetNillablePassword(s *string) *UserUpdate {
 	return uu
 }
 
+// AddRefreshTokenIDs adds the "refresh_token" edge to the RefreshToken entity by IDs.
+func (uu *UserUpdate) AddRefreshTokenIDs(ids ...int) *UserUpdate {
+	uu.mutation.AddRefreshTokenIDs(ids...)
+	return uu
+}
+
+// AddRefreshToken adds the "refresh_token" edges to the RefreshToken entity.
+func (uu *UserUpdate) AddRefreshToken(r ...*RefreshToken) *UserUpdate {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return uu.AddRefreshTokenIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
+}
+
+// ClearRefreshToken clears all "refresh_token" edges to the RefreshToken entity.
+func (uu *UserUpdate) ClearRefreshToken() *UserUpdate {
+	uu.mutation.ClearRefreshToken()
+	return uu
+}
+
+// RemoveRefreshTokenIDs removes the "refresh_token" edge to RefreshToken entities by IDs.
+func (uu *UserUpdate) RemoveRefreshTokenIDs(ids ...int) *UserUpdate {
+	uu.mutation.RemoveRefreshTokenIDs(ids...)
+	return uu
+}
+
+// RemoveRefreshToken removes "refresh_token" edges to RefreshToken entities.
+func (uu *UserUpdate) RemoveRefreshToken(r ...*RefreshToken) *UserUpdate {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return uu.RemoveRefreshTokenIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -120,6 +157,51 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := uu.mutation.Password(); ok {
 		_spec.SetField(user.FieldPassword, field.TypeString, value)
 	}
+	if uu.mutation.RefreshTokenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.RemovedRefreshTokenIDs(); len(nodes) > 0 && !uu.mutation.RefreshTokenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.RefreshTokenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{user.Label}
@@ -168,9 +250,45 @@ func (uuo *UserUpdateOne) SetNillablePassword(s *string) *UserUpdateOne {
 	return uuo
 }
 
+// AddRefreshTokenIDs adds the "refresh_token" edge to the RefreshToken entity by IDs.
+func (uuo *UserUpdateOne) AddRefreshTokenIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.AddRefreshTokenIDs(ids...)
+	return uuo
+}
+
+// AddRefreshToken adds the "refresh_token" edges to the RefreshToken entity.
+func (uuo *UserUpdateOne) AddRefreshToken(r ...*RefreshToken) *UserUpdateOne {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return uuo.AddRefreshTokenIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
+}
+
+// ClearRefreshToken clears all "refresh_token" edges to the RefreshToken entity.
+func (uuo *UserUpdateOne) ClearRefreshToken() *UserUpdateOne {
+	uuo.mutation.ClearRefreshToken()
+	return uuo
+}
+
+// RemoveRefreshTokenIDs removes the "refresh_token" edge to RefreshToken entities by IDs.
+func (uuo *UserUpdateOne) RemoveRefreshTokenIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.RemoveRefreshTokenIDs(ids...)
+	return uuo
+}
+
+// RemoveRefreshToken removes "refresh_token" edges to RefreshToken entities.
+func (uuo *UserUpdateOne) RemoveRefreshToken(r ...*RefreshToken) *UserUpdateOne {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return uuo.RemoveRefreshTokenIDs(ids...)
 }
 
 // Where appends a list predicates to the UserUpdate builder.
@@ -262,6 +380,51 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if value, ok := uuo.mutation.Password(); ok {
 		_spec.SetField(user.FieldPassword, field.TypeString, value)
+	}
+	if uuo.mutation.RefreshTokenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.RemovedRefreshTokenIDs(); len(nodes) > 0 && !uuo.mutation.RefreshTokenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.RefreshTokenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.RefreshTokenTable,
+			Columns: []string{user.RefreshTokenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(refreshtoken.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues
