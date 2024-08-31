@@ -18,6 +18,7 @@
     - `reset/main.go`: Code to reset the database.
     - `seed/main.go`: Code to seed the database.
   - `internal/server`: Contains all internal server code.
+    - `auth/`: Code for authentication (creating access/refresh tokens, creating and checking password hashes). Read `Authentication-Notes.md` for a more in-depth explanation.
     - `routes/`: Contains functions that initialize controllers and creates routes for the webserver.
     - `controllers/`: Contains controllers, which handle request parsing, returning a response, and calling into transactions to do business logic.
     - `transactions/`: Contains functions to handle querying/updating/inserting into the database or any other services/integrations 3stones uses.
