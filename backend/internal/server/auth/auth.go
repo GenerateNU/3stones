@@ -26,60 +26,41 @@ func NewAuth(config *config.Config) *Auth {
 }
 
 func (a *Auth) NewAccessToken(user *ent.User) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": user.ID.String(),                           // subject (user id)
-		"iss": "3stones",                                  // issuer
-		"aud": "user",                                     // user role (audience)
-		"exp": time.Now().Add(ACCESS_TOKEN_EXPIRY).Unix(), // expiration time
-		"iat": time.Now().Unix(),                          // issued at
-	})
-
-	tokenString, err := token.SignedString([]byte(a.Config.AccessTokenSecret))
-
-	return tokenString, err
-}
-
-// If this token is valid, the returned string will be the user ID in the JWT signature.
-func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte(a.Config.AccessTokenSecret), nil
-	})
-
-	if err != nil {
-		return "", err
-	}
-
-	if !token.Valid {
-		return "", errors.New("invalid/expired token")
-	}
-
-	if claims, ok := token.Claims.(jwt.MapClaims); ok {
-		// expiration does not need to be checked here; that's already done for us in the jwt.Parse
-
-		return claims["id"].(string), nil
-	} else {
-		return "", errors.New("could not parse claims")
-	}
+	return newUserToken(user, ACCESS_TOKEN_EXPIRY, a.Config.AccessTokenSecret)
 }
 
 func (a *Auth) NewRefreshToken(user *ent.User) (string, error) {
+	return newUserToken(user, REFRESH_TOKEN_EXPIRY, a.Config.RefreshTokenSecret)
+}
+
+func newUserToken(user *ent.User, duration time.Duration, secret string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": user.ID.String(),                            // subject (user id)
-		"iss": "3stones",                                   // issuer
-		"aud": "user",                                      // user role (audience)
-		"exp": time.Now().Add(REFRESH_TOKEN_EXPIRY).Unix(), // expiration time
-		"iat": time.Now().Unix(),                           // issued at
+		"sub": user.ID.String(),                // subject (user id)
+		"iss": "3stones",                       // issuer
+		"aud": "user",                          // user role (audience)
+		"exp": time.Now().Add(duration).Unix(), // expiration time
+		"iat": time.Now().Unix(),               // issued at
 	})
 
-	tokenString, err := token.SignedString([]byte(a.Config.RefreshTokenSecret))
+	tokenString, err := token.SignedString([]byte(secret))
 
 	return tokenString, err
 }
 
+// If validation is successful, returns the user id asssociated with the token.
+func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
+	return validateToken(tokenString, a.Config.AccessTokenSecret)
+}
+
 // If validation is successful, returns the user id associated with the token.
+// Because only one refresh token can exist at a time, this
 func (a *Auth) ValidateRefreshToken(tokenString string) (string, error) {
+	return validateToken(tokenString, a.Config.RefreshTokenSecret)
+}
+
+func validateToken(tokenString string, secret string) (string, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte(a.Config.RefreshTokenSecret), nil
+		return []byte(secret), nil
 	})
 
 	if err != nil {
