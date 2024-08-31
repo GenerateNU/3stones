@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	ACCESS_TOKEN_EXPIRY  = 1 * time.Hour       // Access token expires in an hour
-	REFRESH_TOKEN_EXPIRY = 30 * 24 * time.Hour // Refresh token expires in a month
+	ACCESS_TOKEN_EXPIRY  = 1 * time.Hour // Access token expires in an hour
+	REFRESH_TOKEN_EXPIRY = time.Second   // 30 * 24 * time.Hour // Refresh token expires in a month
 )
 
 type Auth struct {
@@ -27,11 +27,14 @@ func NewAuth(config *config.Config) *Auth {
 
 func (a *Auth) NewAccessToken(user *ent.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":  user.ID.String(),
-		"exp": time.Now().Add(ACCESS_TOKEN_EXPIRY),
+		"sub": user.ID.String(),                           // subject (user id)
+		"iss": "3stones",                                  // issuer
+		"aud": "user",                                     // user role (audience)
+		"exp": time.Now().Add(ACCESS_TOKEN_EXPIRY).Unix(), // expiration time
+		"iat": time.Now().Unix(),                          // issued at
 	})
 
-	tokenString, err := token.SignedString(a.Config.AccessTokenSecret)
+	tokenString, err := token.SignedString([]byte(a.Config.AccessTokenSecret))
 
 	return tokenString, err
 }
@@ -39,21 +42,19 @@ func (a *Auth) NewAccessToken(user *ent.User) (string, error) {
 // If this token is valid, the returned string will be the user ID in the JWT signature.
 func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if token.Method.Alg() != "HS256" {
-			return nil, errors.New("incorrect alg type")
-		}
-
-		return a.Config.AccessTokenSecret, nil
+		return []byte(a.Config.AccessTokenSecret), nil
 	})
 
 	if err != nil {
 		return "", err
 	}
 
+	if !token.Valid {
+		return "", errors.New("invalid/expired token")
+	}
+
 	if claims, ok := token.Claims.(jwt.MapClaims); ok {
-		if claims["exp"].(time.Time).Before(time.Now()) {
-			return "", errors.New("access token expired")
-		}
+		// expiration does not need to be checked here; that's already done for us in the jwt.Parse
 
 		return claims["id"].(string), nil
 	} else {
@@ -63,11 +64,14 @@ func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
 
 func (a *Auth) NewRefreshToken(user *ent.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":  user.ID.String(),
-		"exp": time.Now().Add(REFRESH_TOKEN_EXPIRY),
+		"sub": user.ID.String(),                            // subject (user id)
+		"iss": "3stones",                                   // issuer
+		"aud": "user",                                      // user role (audience)
+		"exp": time.Now().Add(REFRESH_TOKEN_EXPIRY).Unix(), // expiration time
+		"iat": time.Now().Unix(),                           // issued at
 	})
 
-	tokenString, err := token.SignedString(a.Config.RefreshTokenSecret)
+	tokenString, err := token.SignedString([]byte(a.Config.RefreshTokenSecret))
 
 	return tokenString, err
 }
@@ -75,23 +79,21 @@ func (a *Auth) NewRefreshToken(user *ent.User) (string, error) {
 // If validation is successful, returns the user id associated with the token.
 func (a *Auth) ValidateRefreshToken(tokenString string) (string, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if token.Method.Alg() != "HS256" {
-			return nil, errors.New("incorrect alg type")
-		}
-
-		return a.Config.RefreshTokenSecret, nil
+		return []byte(a.Config.RefreshTokenSecret), nil
 	})
 
 	if err != nil {
 		return "", err
 	}
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok {
-		if claims["exp"].(time.Time).Before(time.Now()) {
-			return "", errors.New("refresh token expired")
-		}
+	if !token.Valid {
+		return "", errors.New("invalid/expired token")
+	}
 
-		return claims["id"].(string), nil
+	// TODO: time isbroken, interface{} is float64, not int64
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		// expiration does not need to be checked here; that's already done for us in the jwt.Parse
+		return claims["sub"].(string), nil
 	} else {
 		return "", errors.New("could not parse claims")
 	}

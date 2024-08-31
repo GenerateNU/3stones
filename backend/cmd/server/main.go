@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"backend/internal/server/auth"
 	"backend/internal/server/config"
 	"backend/internal/server/ent"
 	"backend/internal/server/routes"
@@ -37,11 +38,12 @@ func main() {
 }
 
 func setupServer(config *config.Config) (*fiber.App, error) {
-	// Setup app, database, and router
+	// Setup app
 	app := fiber.New()
 
 	app.Use(logger.New())
 
+	// Setup singletons (db, auth)
 	db, err := ent.Open("postgres", config.Database.Url)
 	if err != nil {
 		return nil, err
@@ -52,12 +54,16 @@ func setupServer(config *config.Config) (*fiber.App, error) {
 		utilities.Exit("Failed to create schema resources: %v", err)
 	}
 
+	auth := auth.NewAuth(config)
+
+	// Setup routes
 	router := app.Group("/api/v1")
 
 	routerParams := types.RouterParams{
 		Router: router,
 		ServiceParams: &types.ServiceParams{
-			DB: db,
+			DB:   db,
+			Auth: auth,
 		},
 	}
 
