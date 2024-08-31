@@ -1,3 +1,6 @@
+# Guiding Philosophy
+[Cognitive load is what matters.](https://github.com/zakirullin/cognitive-load)
+
 # For Windows Users
 This guide assumes that you are using Linux/MacOS. If you are using Windows, please install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 

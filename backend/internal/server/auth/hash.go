@@ -33,9 +33,6 @@ var (
 
 func Hash(password string) (encodedHash string, err error) {
 	salt := []byte(HASH_SALT)
-	if err != nil {
-		return "", err
-	}
 
 	hash := argon2.IDKey(
 		[]byte(password),
