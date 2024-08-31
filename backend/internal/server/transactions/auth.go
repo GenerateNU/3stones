@@ -11,25 +11,28 @@ import (
 	"github.com/google/uuid"
 )
 
-func Login(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
+func Login(db *ent.Client, _auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
 	user, err := db.User.Query().Where(user.EmailEQ(creds.Email)).Only(context.Background())
 
 	if err != nil {
 		return nil, err
 	}
 
-	passwordsMatch := auth.ComparePasswords(user.Password, creds.Password)
+	passwordsMatch, err := auth.CompareRawAndHash(creds.Password, user.Password)
+	if err != nil {
+		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to check password")
+	}
 
 	if !passwordsMatch {
 		return nil, fiber.NewError(fiber.StatusUnauthorized, "invalid password")
 	}
 
-	accessToken, err := auth.NewAccessToken(user)
+	accessToken, err := _auth.NewAccessToken(user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
 	}
 
-	refreshToken, err := auth.NewRefreshToken(db, user)
+	refreshToken, err := _auth.NewRefreshToken(db, user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}
@@ -40,8 +43,8 @@ func Login(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*type
 	}, nil
 }
 
-func Register(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
-	passwordHash, err := auth.HashPassword(creds.Password)
+func Register(db *ent.Client, _auth *auth.Auth, creds *types.UserCredentials) (*types.AuthTokens, error) {
+	passwordHash, err := auth.Hash(creds.Password)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "password hash failed")
 	}
@@ -55,12 +58,12 @@ func Register(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*t
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "user creation failed")
 	}
 
-	accessToken, err := auth.NewAccessToken(user)
+	accessToken, err := _auth.NewAccessToken(user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
 	}
 
-	refreshToken, err := auth.NewRefreshToken(db, user)
+	refreshToken, err := _auth.NewRefreshToken(db, user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}

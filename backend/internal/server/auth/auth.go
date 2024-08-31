@@ -3,13 +3,14 @@ package auth
 import (
 	"backend/internal/server/config"
 	"backend/internal/server/ent"
+	"backend/internal/server/ent/refreshtoken"
+	user_ent "backend/internal/server/ent/user"
 	"context"
 	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
 )
 
 const (
@@ -40,14 +41,13 @@ func (a *Auth) NewRefreshToken(db *ent.Client, user *ent.User) (string, error) {
 	}
 
 	// Delete existing token
-	existingToken, err := user.QueryRefreshToken().Only(context.Background())
+	_, err = db.RefreshToken.
+		Delete().
+		Where(
+			refreshtoken.
+				HasUserWith(user_ent.IDEQ(user.ID))).
+		Exec(context.Background())
 
-	// Not found err is ok (means user has never logged in yet), any other err is bad
-	if !errors.Is(err, &ent.NotFoundError{}) {
-		return "", err
-	}
-
-	err = db.RefreshToken.DeleteOne(existingToken).Exec(context.Background())
 	if err != nil {
 		return "", err
 	}
@@ -55,7 +55,7 @@ func (a *Auth) NewRefreshToken(db *ent.Client, user *ent.User) (string, error) {
 	// Add new token to db
 	// We are hashing the refresh token so if a malicious actor gets access to the DB, they don't have a bunch of active refresh tokens
 	// to do harm with.
-	tokenHash, err := a.HashPassword(token)
+	tokenHash, err := Hash(token)
 	if err != nil {
 		return "", err
 	}
@@ -113,7 +113,11 @@ func (a *Auth) ValidateRefreshToken(db *ent.Client, tokenString string) (string,
 		return "", err
 	}
 
-	match := a.ComparePasswords(refreshToken.RefreshTokenHash, tokenString)
+	match, err := CompareRawAndHash(tokenString, refreshToken.RefreshTokenHash)
+	if err != nil {
+		return "", err
+	}
+
 	if !match {
 		return "", errors.New("invalid refresh token")
 	}
@@ -139,22 +143,5 @@ func validateToken(tokenString string, secret string) (string, error) {
 		return claims["sub"].(string), nil
 	} else {
 		return "", errors.New("could not parse claims")
-	}
-}
-
-// TODO: susceptible to rainbow attacks
-func (a *Auth) HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-
-	return string(bytes), err
-}
-
-func (a *Auth) ComparePasswords(hashedPassword string, password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-
-	if err != nil {
-		return false
-	} else {
-		return true
 	}
 }
