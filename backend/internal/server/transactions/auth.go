@@ -29,7 +29,7 @@ func Login(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*type
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
 	}
 
-	refreshToken, err := auth.NewRefreshToken(user)
+	refreshToken, err := auth.NewRefreshToken(db, user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}
@@ -60,7 +60,7 @@ func Register(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*t
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
 	}
 
-	refreshToken, err := auth.NewRefreshToken(user)
+	refreshToken, err := auth.NewRefreshToken(db, user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}
@@ -72,12 +72,12 @@ func Register(db *ent.Client, auth *auth.Auth, creds *types.UserCredentials) (*t
 }
 
 func Refresh(db *ent.Client, auth *auth.Auth, creds *types.RefreshRequestBody) (*types.AuthTokens, error) {
-	_, err := auth.ValidateRefreshToken(creds.RefreshToken) // todo
+	_, err := auth.ValidateRefreshToken(db, creds.RefreshToken)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusUnauthorized, "invalid/expired refresh token")
 	}
 
-	userUUID := uuid.New() // figure out how to convert userId (string) to uuid.UUID
+	userUUID := uuid.New()
 	user, err := db.User.Query().Where(user.IDEQ(userUUID)).Only(context.Background())
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to get user")
@@ -88,7 +88,7 @@ func Refresh(db *ent.Client, auth *auth.Auth, creds *types.RefreshRequestBody) (
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make access token")
 	}
 
-	refreshToken, err := auth.NewRefreshToken(user)
+	refreshToken, err := auth.NewRefreshToken(db, user)
 	if err != nil {
 		return nil, fiber.NewError(fiber.StatusInternalServerError, "failed to make refresh token")
 	}

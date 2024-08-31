@@ -3,10 +3,12 @@ package auth
 import (
 	"backend/internal/server/config"
 	"backend/internal/server/ent"
+	"context"
 	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -29,8 +31,41 @@ func (a *Auth) NewAccessToken(user *ent.User) (string, error) {
 	return newUserToken(user, ACCESS_TOKEN_EXPIRY, a.Config.AccessTokenSecret)
 }
 
-func (a *Auth) NewRefreshToken(user *ent.User) (string, error) {
-	return newUserToken(user, REFRESH_TOKEN_EXPIRY, a.Config.RefreshTokenSecret)
+// Refresh tokens are able to be revoked; we thus need to store them to figure out what refresh
+// token is in use for a user. Thus, that's why this method has a db arg.
+func (a *Auth) NewRefreshToken(db *ent.Client, user *ent.User) (string, error) {
+	token, err := newUserToken(user, REFRESH_TOKEN_EXPIRY, a.Config.RefreshTokenSecret)
+	if err != nil {
+		return "", err
+	}
+
+	// Delete existing token
+	existingToken, err := user.QueryRefreshToken().Only(context.Background())
+
+	// Not found err is ok (means user has never logged in yet), any other err is bad
+	if !errors.Is(err, &ent.NotFoundError{}) {
+		return "", err
+	}
+
+	err = db.RefreshToken.DeleteOne(existingToken).Exec(context.Background())
+	if err != nil {
+		return "", err
+	}
+
+	// Add new token to db
+	// We are hashing the refresh token so if a malicious actor gets access to the DB, they don't have a bunch of active refresh tokens
+	// to do harm with.
+	tokenHash, err := a.HashPassword(token)
+	if err != nil {
+		return "", err
+	}
+
+	_, err = db.RefreshToken.Create().SetUser(user).SetRefreshTokenHash(tokenHash).Save(context.Background())
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }
 
 func newUserToken(user *ent.User, duration time.Duration, secret string) (string, error) {
@@ -53,9 +88,37 @@ func (a *Auth) ValidateAccessToken(tokenString string) (string, error) {
 }
 
 // If validation is successful, returns the user id associated with the token.
-// Because only one refresh token can exist at a time, this
-func (a *Auth) ValidateRefreshToken(tokenString string) (string, error) {
-	return validateToken(tokenString, a.Config.RefreshTokenSecret)
+// Refresh tokens are able to be revoked; we thus need to store them to figure out what refresh
+// token is in use for a user. Thus, that's why this method has a db arg.
+func (a *Auth) ValidateRefreshToken(db *ent.Client, tokenString string) (string, error) {
+	userId, err := validateToken(tokenString, a.Config.RefreshTokenSecret)
+	if err != nil {
+		return "", err
+	}
+
+	// May be a valid refresh token at this point, but is it the one currently stored for the user?
+	// Let's perform this check
+	userUUID, err := uuid.Parse(userId)
+	if err != nil {
+		return "", err
+	}
+
+	user, err := db.User.Get(context.Background(), userUUID)
+	if err != nil {
+		return "", err
+	}
+
+	refreshToken, err := user.QueryRefreshToken().Only(context.Background())
+	if err != nil {
+		return "", err
+	}
+
+	match := a.ComparePasswords(refreshToken.RefreshTokenHash, tokenString)
+	if !match {
+		return "", errors.New("invalid refresh token")
+	}
+
+	return userId, nil
 }
 
 func validateToken(tokenString string, secret string) (string, error) {
@@ -71,7 +134,6 @@ func validateToken(tokenString string, secret string) (string, error) {
 		return "", errors.New("invalid/expired token")
 	}
 
-	// TODO: time isbroken, interface{} is float64, not int64
 	if claims, ok := token.Claims.(jwt.MapClaims); ok {
 		// expiration does not need to be checked here; that's already done for us in the jwt.Parse
 		return claims["sub"].(string), nil
