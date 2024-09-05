@@ -1,6 +1,7 @@
 package config
 
 type AuthConfig struct {
-	AccessTokenSecret  string `env:"ACCESS_TOKEN_SECRET"`
-	RefreshTokenSecret string `env:"REFRESH_TOKEN_SECRET"`
+	SUPABASE_JWT_SECRET string `env:"SUPABASE_JWT_SECRET"`
+	SUPABASE_URL        string `env:"SUPABASE_PROJECT_URL"`
+	SUPABASE_API_KEY    string `env:"SUPABASE_API_KEY"`
 }

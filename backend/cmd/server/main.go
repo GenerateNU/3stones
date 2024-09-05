@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"backend/internal/server/auth"
 	"backend/internal/server/config"
 	"backend/internal/server/ent"
 	"backend/internal/server/routes"
@@ -54,22 +53,19 @@ func setupServer(config *config.Config) (*fiber.App, error) {
 		utilities.Exit("Failed to create schema resources: %v", err)
 	}
 
-	auth := auth.NewAuth(config)
-
 	// Setup routes
 	router := app.Group("/api/v1")
 
 	routerParams := types.RouterParams{
 		Router: router,
+		Config: config,
 		ServiceParams: &types.ServiceParams{
-			DB:   db,
-			Auth: auth,
+			DB: db,
 		},
 	}
 
 	// Initialize routes here! VVVV
 	routes.Contributors(routerParams)
-	routes.Auth(routerParams)
 
 	return app, nil
 }
