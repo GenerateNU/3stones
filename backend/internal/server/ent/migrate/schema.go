@@ -21,46 +21,11 @@ var (
 		Columns:    ContributorsColumns,
 		PrimaryKey: []*schema.Column{ContributorsColumns[0]},
 	}
-	// RefreshTokensColumns holds the columns for the "refresh_tokens" table.
-	RefreshTokensColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "refresh_token_hash", Type: field.TypeString},
-		{Name: "refresh_token_user", Type: field.TypeUUID, Nullable: true},
-	}
-	// RefreshTokensTable holds the schema information for the "refresh_tokens" table.
-	RefreshTokensTable = &schema.Table{
-		Name:       "refresh_tokens",
-		Columns:    RefreshTokensColumns,
-		PrimaryKey: []*schema.Column{RefreshTokensColumns[0]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "refresh_tokens_users_user",
-				Columns:    []*schema.Column{RefreshTokensColumns[2]},
-				RefColumns: []*schema.Column{UsersColumns[0]},
-				OnDelete:   schema.SetNull,
-			},
-		},
-	}
-	// UsersColumns holds the columns for the "users" table.
-	UsersColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID},
-		{Name: "email", Type: field.TypeString, Unique: true},
-		{Name: "password", Type: field.TypeString},
-	}
-	// UsersTable holds the schema information for the "users" table.
-	UsersTable = &schema.Table{
-		Name:       "users",
-		Columns:    UsersColumns,
-		PrimaryKey: []*schema.Column{UsersColumns[0]},
-	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		ContributorsTable,
-		RefreshTokensTable,
-		UsersTable,
 	}
 )
 
 func init() {
-	RefreshTokensTable.ForeignKeys[0].RefTable = UsersTable
 }
