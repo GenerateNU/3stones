@@ -24,7 +24,12 @@ func Authorized(config *config.SupabaseConfig) func(ctx *fiber.Ctx) error {
 			return ctx.Status(400).JSON(fiber.Map{"code": "unauthorized"})
 		}
 
-		panic(payload)
+		subject, err := payload.Claims.GetSubject()
+		if err != nil {
+			return ctx.Status(500).JSON(fiber.Map{"code": "missing subject"})
+		}
+
+		ctx.Locals("userId", subject)
 		return ctx.Next()
 	}
 }
