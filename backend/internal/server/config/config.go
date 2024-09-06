@@ -10,7 +10,7 @@ import (
 type Config struct {
 	Application ApplicationConfig `envPrefix:"TS3_APPLICATION_"`
 	Database    DatabaseConfig    `envPrefix:"TS3_DATABASE_"`
-	Auth        AuthConfig        `envPrefix:"TS3_AUTH_"`
+	Supabase    SupabaseConfig    `envPrefix:"TS3_SUPABASE_"`
 }
 
 // Create a configuration, using environment variables defined in the shell

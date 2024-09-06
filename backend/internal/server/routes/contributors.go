@@ -12,5 +12,5 @@ func Contributors(params types.RouterParams) {
 	// api/v1/contributors/*
 	contributors := params.Router.Group("/contributors")
 
-	contributors.Get("/", auth.Authorized(&params.Config.Auth), contributorsController.GetContributors)
+	contributors.Get("/", auth.Authorized(&params.Config.Supabase), contributorsController.GetContributors)
 }

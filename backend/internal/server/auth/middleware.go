@@ -8,7 +8,7 @@ import (
 )
 
 // Use this to setup an authorized user.
-func Authorized(config *config.AuthConfig) func(ctx *fiber.Ctx) error {
+func Authorized(config *config.SupabaseConfig) func(ctx *fiber.Ctx) error {
 	return func(ctx *fiber.Ctx) error {
 		token := ctx.Get("Authorization", "")
 
@@ -17,7 +17,7 @@ func Authorized(config *config.AuthConfig) func(ctx *fiber.Ctx) error {
 		}
 
 		payload, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.SUPABASE_JWT_SECRET), nil
+			return []byte(config.JwtSecret), nil
 		})
 
 		if err != nil {
