@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"backend/internal/server/config"
-	"backend/internal/server/ent"
-	"backend/internal/server/utilities"
+	"backend/ent"
+	"backend/internal/config"
+	"backend/internal/utilities"
 
 	_ "github.com/lib/pq"
 )

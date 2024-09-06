@@ -1,7 +1,7 @@
 package types
 
 import (
-	"backend/internal/server/config"
+	"backend/internal/config"
 
 	"github.com/gofiber/fiber/v2"
 )

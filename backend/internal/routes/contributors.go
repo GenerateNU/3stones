@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"backend/internal/server/auth"
-	"backend/internal/server/controllers"
-	"backend/internal/server/types"
+	"backend/internal/auth"
+	"backend/internal/controllers"
+	"backend/internal/types"
 )
 
 func Contributors(params types.RouterParams) {

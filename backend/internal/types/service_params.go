@@ -1,7 +1,7 @@
 package types
 
 import (
-	"backend/internal/server/ent"
+	"backend/ent"
 )
 
 type ServiceParams struct {

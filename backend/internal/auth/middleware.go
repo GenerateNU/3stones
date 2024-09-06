@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"backend/internal/server/config"
+	"backend/internal/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"

@@ -3,7 +3,7 @@
 package contributor
 
 import (
-	"backend/internal/server/ent/predicate"
+	"backend/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )

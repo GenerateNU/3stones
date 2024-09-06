@@ -45,4 +45,4 @@
 
 Ent.go is an ORM that relies heavily on code generation: rather than writing SQL scripts and Go code to manually create database tables, we define our model in `ent/schema/` and run a command to write this code for us. You should familiarize yourself with Ent.go, with its [Getting Started page](https://entgo.io/docs/getting-started), the [Schema section](https://entgo.io/docs/schema-def), and [Code Generation section](https://entgo.io/docs/code-gen).
 
-Lastly, keep in mind that new model definitions can be created with `go run -mod=mod entgo.io/ent/cmd/ent new MODEL_NAME`, and that when you are done creating/updating/deleting a model definition, to run `go generate ./ent` to reflect these changes. Make sure these commands are run in the `backend/internal/server` directory.
+Lastly, keep in mind that new model definitions can be created with `go run -mod=mod entgo.io/ent/cmd/ent new MODEL_NAME`, and that when you are done creating/updating/deleting a model definition, to run `go generate ./ent` to reflect these changes. Make sure these commands are run in the `backend/internal` directory.

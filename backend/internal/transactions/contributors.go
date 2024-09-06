@@ -1,7 +1,7 @@
 package transactions
 
 import (
-	"backend/internal/server/ent"
+	"backend/ent"
 	"context"
 )
 

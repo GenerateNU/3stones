@@ -1,8 +1,8 @@
 package main
 
 import (
-	"backend/internal/server/config"
-	"backend/internal/server/utilities"
+	"backend/internal/config"
+	"backend/internal/utilities"
 	"context"
 	"flag"
 	"fmt"

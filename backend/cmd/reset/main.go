@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"backend/internal/server/config"
-	"backend/internal/server/utilities"
+	"backend/internal/config"
+	"backend/internal/utilities"
 
 	_ "github.com/lib/pq"
 )
