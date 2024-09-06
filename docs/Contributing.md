@@ -25,13 +25,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 4. Run `npx expo start --tunnel` to run the frontend!
 
-# Backend setup (using Docker)
+# Backend setup (using Supabase)
 1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
 
-2. Install Docker on your computer. 
-   - [Follow the instructions here](https://docs.docker.com/get-started/get-docker/)
-   - If you're on Windows, [follow the instructions to enable the WSL2 backend here](https://docs.docker.com/desktop/wsl/).
-
-3. Start the database by running `./start-database.sh`.
-   - If you're on Linux/MacOS, you can do this by running `./scripts/start-database.sh` (from the `3stones` directory).
-   - If you're on Windows, login into WSL2 by running `wsl` and then running `./scripts/start-database.sh` (from the `3stones` directory).
+2. Watch this video to install setup supabase:
