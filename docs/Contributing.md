@@ -31,3 +31,9 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 2. [Watch this video to install setup supabase](https://www.youtube.com/watch?v=UqpaVPfYO1k)
 
 3. Run the backend by running `cd backend`, then `go run ./cmd/server/main.go`.
+
+# Formatting
+Make sure `backend` is your working directory, then run `go run ./cmd/fmt/main.go`. This command will either return nothing (meaning your files are all correctly formatted) or instruct you to run a formatting command.
+
+# Linting
+Make sure `backend` is your working directory, then run `go run ./cmd/lint/main.go`.
