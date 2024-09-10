@@ -31,3 +31,9 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 2. [Watch this video to install setup supabase](https://www.youtube.com/watch?v=UqpaVPfYO1k)
 
 3. Run the backend by running `cd backend`, then `go run ./cmd/server/main.go`.
+
+# Formatting
+Make sure `gofumpt` is installed by running `go install mvdan.cc/gofumpt@latest`, then run `gofumpt -l -w .` with `backend` as your working directory.
+
+# Linting
+Make sure `golangci-lint` is installed by running `go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.61.0`, then run `golangci-lint run` with `backend` as your working directory.

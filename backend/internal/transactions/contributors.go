@@ -1,8 +1,9 @@
 package transactions
 
 import (
-	"backend/ent"
 	"context"
+
+	"backend/ent"
 )
 
 func GetContributors(client *ent.Client) ([]*ent.Contributor, error) {

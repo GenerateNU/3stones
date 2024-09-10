@@ -15,7 +15,6 @@ func main() {
 	// Configuration - get the config path (if specified) and parse
 	configPath := config.ParseFlags()
 	config, err := config.ParseConfiguration(*configPath)
-
 	if err != nil {
 		utilities.Exit("Error getting configuration: %s", err.Error())
 	}
