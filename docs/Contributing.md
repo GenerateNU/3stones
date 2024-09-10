@@ -28,4 +28,6 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 # Backend setup (using Supabase)
 1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
 
-2. Watch this video to install setup supabase:
+2. [Watch this video to install setup supabase](https://www.youtube.com/watch?v=UqpaVPfYO1k)
+
+3. Run the backend by running `cd backend`, then `go run ./cmd/server/main.go`.
