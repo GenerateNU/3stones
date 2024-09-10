@@ -4,6 +4,7 @@ import (
 	"backend/internal/models"
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -17,7 +18,7 @@ func GetContributors(db *pgxpool.Pool) ([]models.Contributor, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var id uint
+		var id uuid.UUID
 		var firstName string
 		var lastName string
 		var email string
