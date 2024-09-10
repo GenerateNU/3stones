@@ -1,11 +1,12 @@
 package main
 
 import (
-	"backend/internal/config"
-	"backend/internal/utilities"
 	"context"
 	"flag"
 	"fmt"
+
+	"backend/internal/config"
+	"backend/internal/utilities"
 
 	_ "github.com/lib/pq"
 	"github.com/nedpals/supabase-go"
@@ -36,7 +37,6 @@ func main() {
 		Password: password,
 		Data:     nil,
 	})
-
 	if err != nil {
 		utilities.Exit("Error signing in: %s", err.Error())
 	}

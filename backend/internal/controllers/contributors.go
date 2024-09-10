@@ -19,7 +19,6 @@ func NewContributorsController(ServiceParams *types.ServiceParams) *Contributors
 
 func (c *ContributorsController) GetContributors(ctx *fiber.Ctx) error {
 	contributors, err := transactions.GetContributors(c.ServiceParams.DB)
-
 	if err != nil {
 		return ctx.SendStatus(500)
 	}
