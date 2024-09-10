@@ -10,7 +10,7 @@ interface HomeScreenProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
-export const HomeScreen = ({ navigation }: HomeScreenProps) => {
+export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <View style={styles.container}>
       {/* Some dummy image */}
@@ -27,4 +27,4 @@ export const HomeScreen = ({ navigation }: HomeScreenProps) => {
       </View>
     </View>
   );
-};
+}
