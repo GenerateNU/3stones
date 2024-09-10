@@ -1,0 +1,67 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "backend/**"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "backend/**"
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.23"
+      - name: Cache Go Modules
+        uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go
+      - name: Install gofumpt
+        run: go install mvdan.cc/gofumpt@latest
+      - name: Check code formatting
+        run: |
+          unformatted_files=$(gofumpt -l ./backend/)
+          if [ -n "$unformatted_files" ]; then
+            echo "Files not formatted:"
+            echo "$unformatted_files"
+            exit 1
+          fi
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.22"
+      - name: Cache Go Modules
+        uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+          working-directory: ./backend/
+          args: --timeout=5m

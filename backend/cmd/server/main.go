@@ -1,18 +1,12 @@
 package main
 
 import (
-	"context"
-	"flag"
 	"fmt"
 
-	"backend/internal/server/config"
-	"backend/internal/server/ent"
-	"backend/internal/server/routes"
-	"backend/internal/server/types"
-	"backend/internal/server/utilities"
+	"backend/internal/config"
+	"backend/internal/setup"
+	"backend/internal/utilities"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/lib/pq"
 )
 
@@ -26,7 +20,7 @@ func main() {
 	}
 
 	// Setup app
-	app, err := setupServer(config)
+	app, err := setup.SetupServer(config)
 	if err != nil {
 		utilities.Exit("Failed to setup server: %v", err)
 	}
@@ -35,41 +29,4 @@ func main() {
 	if err := app.Listen(fmt.Sprintf("%s:%d", config.Application.Host, config.Application.Port)); err != nil {
 		utilities.Exit("Failed to start server: %v", err)
 	}
-}
-
-func setupServer(config *config.Config) (*fiber.App, error) {
-	// Setup app, database, and router
-	app := fiber.New()
-
-	app.Use(logger.New())
-
-	db, err := ent.Open("postgres", config.Database.ConnString())
-	if err != nil {
-		return nil, err
-	}
-
-	// Run auto-migration (ensure SQL tables conform to our schema)
-	if err := db.Schema.Create(context.Background()); err != nil {
-		utilities.Exit("Failed to create schema resources: %v", err)
-	}
-
-	router := app.Group("/api/v1")
-
-	routerParams := types.RouterParams{
-		Router: router,
-		ServiceParams: &types.ServiceParams{
-			DB: db,
-		},
-	}
-
-	// Initialize routes here! VVVV
-	routes.Contributors(routerParams)
-
-	return app, nil
-}
-
-func parseFlags() (configPath *string) {
-	configPath = flag.String("config", "../../../config/.env.dev", "Specify the path to the config file (.env)")
-	flag.Parse()
-	return
 }

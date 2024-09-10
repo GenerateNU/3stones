@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"backend/internal/server/config"
-	"backend/internal/server/ent"
-	"backend/internal/server/utilities"
+	"backend/ent"
+	"backend/internal/config"
+	"backend/internal/utilities"
 
 	_ "github.com/lib/pq"
 )
@@ -33,7 +33,7 @@ func main() {
 }
 
 func setupDatabase(config *config.Config) (*ent.Client, error) {
-	db, err := ent.Open("postgres", config.Database.ConnString())
+	db, err := ent.Open("postgres", config.Database.Url)
 	if err != nil {
 		return nil, err
 	}
