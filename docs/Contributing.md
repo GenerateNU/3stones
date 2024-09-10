@@ -33,7 +33,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 3. Run the backend by running `cd backend`, then `go run ./cmd/server/main.go`.
 
 # Formatting
-Make sure `backend` is your working directory, then run `go run ./cmd/fmt/main.go`. This command will either return nothing (meaning your files are all correctly formatted) or instruct you to run a formatting command.
+Make sure `gofumpt` is installed by running `go install mvdan.cc/gofumpt@latest`, then run `gofumpt -l -w .` with `backend` as your working directory.
 
 # Linting
-Make sure `backend` is your working directory, then run `go run ./cmd/lint/main.go`.
+Make sure `golangci-lint` is installed by running `go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.61.0`, then run `golangci-lint run` with `backend` as your working directory.
