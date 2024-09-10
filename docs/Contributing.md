@@ -19,7 +19,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 1. Run `cd frontend` to change to the frontend directory.
 
-2. Run `npx install yarn` to install the Yarn package manager.
+2. Run `npm install --global yarn` to install the Yarn package manager.
 
 3. Run `npx expo install` to install all packages used in the project.
 
