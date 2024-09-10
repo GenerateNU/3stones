@@ -1,10 +1,7 @@
 package transactions
 
-import (
-	"backend/ent"
-	"context"
-)
+import "github.com/jackc/pgx/v5/pgxpool"
 
-func GetContributors(client *ent.Client) ([]*ent.Contributor, error) {
-	return client.Contributor.Query().All(context.Background())
+func GetContributors(db *pgxpool.Pool) (int, error) {
+	return 0, nil
 }

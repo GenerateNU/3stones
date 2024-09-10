@@ -1,9 +1,9 @@
 package types
 
 import (
-	"backend/ent"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type ServiceParams struct {
-	DB *ent.Client
+	DB *pgxpool.Pool
 }
