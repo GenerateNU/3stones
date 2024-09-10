@@ -1,1 +1,2 @@
 .env.dev
+/node_modules
