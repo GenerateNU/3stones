@@ -6,6 +6,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 # Prerequisites
 - [Git](https://git-scm.com/)
+- [Docker](https://docs.docker.com/get-started/get-docker/)
 - [Golang](https://go.dev/)
   - Install through the official website, don't rely on package manager
 - A [Supabase](https://supabase.com/) account
