@@ -41,9 +41,9 @@ jobs:
 
   # This action is disabled since tests are failing right now
   tests:
+    if: false
     name: Run Tests
     runs-on: ubuntu-latest
-    if: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
