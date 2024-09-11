@@ -22,6 +22,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
             <Text style={styles.textStyle}>Dummy page</Text>
+            <Text style={styles.textStyle}>Page oneas </Text>
           </View>
         </TouchableOpacity>
       </View>
