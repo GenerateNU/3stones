@@ -5,12 +5,12 @@ on:
     branches:
       - "**"
     paths:
-      - "3stones/**"
+      - "frontend/**"
   pull_request:
     branches:
       - "**"
     paths:
-      - "3stones/**"
+      - "frontend/**"
 
 jobs:
   format:
