@@ -1,10 +1,11 @@
 package setup
 
 import (
+	"context"
+
 	"backend/internal/config"
 	"backend/internal/routes"
 	"backend/internal/types"
-	"context"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

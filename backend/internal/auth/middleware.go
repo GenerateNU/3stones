@@ -19,7 +19,6 @@ func Authorized(config *config.SupabaseConfig) func(ctx *fiber.Ctx) error {
 		payload, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 			return []byte(config.JwtSecret), nil
 		})
-
 		if err != nil {
 			return ctx.Status(400).JSON(fiber.Map{"code": "unauthorized"})
 		}
