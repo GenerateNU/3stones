@@ -1,1 +1,1 @@
-export const apiUrl = '127.0.0.1';
+export const API_URL = `${process.env.EXPO_PUBLIC_API_DOMAIN}`;

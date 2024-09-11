@@ -1,40 +1,43 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { RouteProp, useRoute } from '@react-navigation/native';
-
-import { useContributorById } from '../../services/contributor';
-
-type ParamList = {
-  mt: {
-    id: string;
-  };
-};
+import { useAllContributors } from '../../services/contributor';
+import { Contributor } from '../../types/contributor';
 
 export default function ContributorsScreen() {
-  const route = useRoute<RouteProp<ParamList, 'mt'>>();
-  const { id } = route.params;
-  const { contributor, contributorIsLoading } = useContributorById(id);
+  const { contributors, contributorsAreLoading } = useAllContributors();
 
-  if (contributorIsLoading) {
+  if (contributorsAreLoading) {
     return (
       <View>
-        <Text>Loading Contributor...</Text>
+        <Text>Loading Contributors...</Text>
       </View>
     );
   }
 
-  if (!contributor || contributor === undefined) {
+  if (!contributors || contributors === undefined) {
     <View>
-      <Text>Error Loading Contributor</Text>
+      <Text>Error Loading Contributors</Text>
     </View>;
   }
 
+  const contributorObjects: Contributor[] = contributors.data.map(
+    // Disable the linter checking for camelcase since these come from the database which is snake_case
+    // eslint-disable-next-line camelcase
+    (id: string, first_name: string, last_name: string, email: string) => {
+      // Disable the linter checking for camelcase since these come from the database which is snake_case
+      // eslint-disable-next-line camelcase
+      return { id, first_name, last_name, email };
+    },
+  );
+
   return (
     <View>
-      <Text>
-        {contributor.firstName} {contributor.lastName}
-      </Text>
+      {contributorObjects.map((contributor) => (
+        <Text key={contributor.id}>
+          {contributor.firstName} {contributor.lastName}, {contributor.email}
+        </Text>
+      ))}
     </View>
   );
 }

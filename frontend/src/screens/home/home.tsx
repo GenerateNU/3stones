@@ -25,6 +25,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             <Text style={styles.textStyle}>Page oneas </Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('contributorsScreen')}>
+          <View>
+            <Text style={styles.textStyle}>Contributors</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
