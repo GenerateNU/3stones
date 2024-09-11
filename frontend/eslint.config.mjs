@@ -6,7 +6,16 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
-  { ignores: ['.eslintrc.js', '.prettierrc.json', 'babel.config.js', '**/node_modules/', '.git/'] },
+  {
+    ignores: [
+      '.eslintrc.js',
+      '.prettierrc.json',
+      'babel.config.js',
+      '**/node_modules/',
+      '.git/',
+      'tailwind.config.js',
+    ],
+  },
   { languageOptions: { globals: globals.browser } },
   jsEslint.configs.recommended,
   ...typescriptEslint.configs.recommended,
