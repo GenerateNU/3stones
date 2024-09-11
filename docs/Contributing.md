@@ -1,10 +1,13 @@
 # Guiding Philosophy
+
 [Cognitive load is what matters.](https://github.com/zakirullin/cognitive-load)
 
 # For Windows Users
+
 This guide assumes that you are using Linux/MacOS. If you are using Windows, please install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 # Prerequisites
+
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/get-started/get-docker/)
 - [Golang](https://go.dev/)
@@ -24,9 +27,16 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 3. Run `npx expo install` to install all packages used in the project.
 
-4. Run `npx expo start --tunnel` to run the frontend!
+4. Follow steps 1-4 on [this guide](https://ngrok.com/docs/getting-started/) to install and configure `ngrok`, which we will use to connect from the frontend to the API.
+
+5. Create a file `.env` to store environment variables. Run `cp ./.env.template ./.env`.
+
+6. To get your auth token, run `go run ../backend/cmd/login/main.go [username] [password]` AFTER setting up the backend and following the steps in the SupaBase setup video.
+
+7. Run `npx expo start --tunnel` to run the frontend!
 
 # Backend setup (using Supabase)
+
 1. Let's first create a `.env.dev` file for you to store your configuration and environment secrets. Run `cp 3stones/config/.env.template 3stones/config/.env.dev`.
 
 2. These next commands will take place with `backend` as your working directory, so run `cd backend`.
@@ -34,6 +44,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 3. Install the Supabase local CLI with `npm i`.
 
 4. Run `npx supabase start -x vector` to start your Supabase services; after a minute or so, it should return an output like this:
+
 ```
 Started supabase local development setup.
 
@@ -52,19 +63,22 @@ service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZ
 ```
 
 From this:
-  - Copy the `API URL` value to the `TS3_SUPABASE_PROJECT_URL` key in `.env.dev`.
-  - Copy the `DB URL` value to the `TS3_DATABASE_URL` key in `.env.dev`.
-  - Copy the `JWT secret` value to the `TS3_SUPABASE_JWT_SECRET` key in `.env.dev`.
-  - Copy the `anon key` value to the `TS3_SUPABASE_API_KEY` key in `.env.dev`.
+
+- Copy the `API URL` value to the `TS3_SUPABASE_PROJECT_URL` key in `.env.dev`.
+- Copy the `DB URL` value to the `TS3_DATABASE_URL` key in `.env.dev`.
+- Copy the `JWT secret` value to the `TS3_SUPABASE_JWT_SECRET` key in `.env.dev`.
+- Copy the `anon key` value to the `TS3_SUPABASE_API_KEY` key in `.env.dev`.
 
 **Also of note**: The `Studio URL` will take you to a Supabase dashboard hosted locally on your computer, which is where you can create users, and use their SQL and table editor.
 
 5. Run `go run ./cmd/server/main.go`.
 
 # Useful backend commands
+
 These are all run with `backend` as your working directory.
+
 ```
-# Start the server 
+# Start the server
 go run ./cmd/server/main.go
 
 # Start supabase services
