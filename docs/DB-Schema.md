@@ -6,14 +6,15 @@ Notes I took while working on database schema
 - All locations are addresses
 - TODO: Constraint checking on shares: the shares that users have bought of a project should never exceed its total_shares (obv), consequently theres also some stuff we could maybe do to calculate remaining shares, idk.
 - TODO: fuck we need to keep purchase history
+    - I think if we just change user_shares to user_shares_purchases (table stores # of shares user has in a project -> table stores purchases of shares of project over time that a user made) this fixes it well, though this could result in some complex queries for getting total shares user has in a project, shares remaining, etc.
 # Models and their table details
 - Users
     - Supabase ID as primary key
         - Auth middleware will handle syncing (if the given token is valid but is for a user with no entry, create that entry)
     - First and last name
     - TODO: what other fields would we want here?
-- Investment
-    - Developer id (associates the investment w/ the developer)
+- Project
+    - Developer id (associates the project w/ the developer)
     - Title & description
     - Location
     - Total shares, price/share
@@ -23,20 +24,20 @@ Notes I took while working on database schema
     - Location
     - Description
     - TODO: What other descriptive information do we want?
-- User investments
-    - Effectively a M2M association - Keep a User id and Investment id on this one
+- User projects
+    - Effectively a M2M association - Keep a User id and Project id on this one
     - Quantity of shares in the given property
-- Investment posts
+- Project posts
     - Updates/events on the property
-    - Since there's only one developer / investment we just need an investment ID here
+    - Since there's only one developer per project we just need an project ID here
     - Title, Text (TODO: anything else we'd like?)
-- Investment progress updates
-    - Think % progress bar - the reason this would be its own table and not just a field upon a given investment entry is so users can see progress over time
-    - Needs investment ID (obviously)
+- Project progress updates
+    - Think % progress bar - the reason this would be its own table and not just a field upon a given project entry is so users can see progress over time
+    - Needs project ID (obviously)
     - Current progress (ensure this is always between 0 and 100)
-- Images on investments
-    - Investment ID and link to image URL
+- Images on projects
+    - Project ID and link to image URL
     - TODO: since we aren't doing developer URL, do we want to set up S3 infra or have image links be to like cats or random stock photos rn.
         - I vote for S3 infra as reach feature (if we have time), this is something I fear we'd get bogged down on.
-- Images on investment posts
+- Images on project posts
     - Post ID and link to image URL
