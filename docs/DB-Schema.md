@@ -1,0 +1,42 @@
+Notes I took while working on database schema
+# General notes
+- Everything should have created_at and/or updated_at
+    - updated_at seems like a PITA so hold on one sec
+- TODO: Lots of 'description' fields on these tables - do we want this to be plaintext or markdown/more fancy format? Mostly a design thing.
+- All locations are addresses
+- TODO: Constraint checking on shares: the shares that users have bought of a project should never exceed its total_shares (obv), consequently theres also some stuff we could maybe do to calculate remaining shares, idk.
+- TODO: fuck we need to keep purchase history
+# Models and their table details
+- Users
+    - Supabase ID as primary key
+        - Auth middleware will handle syncing (if the given token is valid but is for a user with no entry, create that entry)
+    - First and last name
+    - TODO: what other fields would we want here?
+- Investment
+    - Developer id (associates the investment w/ the developer)
+    - Title & description
+    - Location
+    - Total shares, price/share
+    - TODO: what other financial info (or any info) do we want here?
+- Developer
+    - Company name
+    - Location
+    - Description
+    - TODO: What other descriptive information do we want?
+- User investments
+    - Effectively a M2M association - Keep a User id and Investment id on this one
+    - Quantity of shares in the given property
+- Investment posts
+    - Updates/events on the property
+    - Since there's only one developer / investment we just need an investment ID here
+    - Title, Text (TODO: anything else we'd like?)
+- Investment progress updates
+    - Think % progress bar - the reason this would be its own table and not just a field upon a given investment entry is so users can see progress over time
+    - Needs investment ID (obviously)
+    - Current progress (ensure this is always between 0 and 100)
+- Images on investments
+    - Investment ID and link to image URL
+    - TODO: since we aren't doing developer URL, do we want to set up S3 infra or have image links be to like cats or random stock photos rn.
+        - I vote for S3 infra as reach feature (if we have time), this is something I fear we'd get bogged down on.
+- Images on investment posts
+    - Post ID and link to image URL
