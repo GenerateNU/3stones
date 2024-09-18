@@ -34,16 +34,16 @@ CREATE TABLE projects (
     title varchar(256) NOT NULL,
     description text NOT NULL DEFAULT '',
     location text NOT NULL,
-    total_shares int NOT NULL,
-    price_per_share_cents bigint NOT NULL -- Price/Share is USD cents - 1234 = $12.34 
+    completed boolean NOT NULL DEFAULT 0,
+    funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
 );
 
-CREATE TABLE user_shares (
+CREATE TABLE user_investments (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     project_id uuid REFERENCES projects ON DELETE RESTRICT,
     user_id uuid REFERENCES users ON DELETE RESTRICT,
-    shares int NOT NULL -- TODO: constraint stuff 
+    funded_cents bigint NOT NULL -- Total funding is in cents - 1234 
 );
 
 CREATE TABLE project_posts (
@@ -54,12 +54,14 @@ CREATE TABLE project_posts (
     description text NOT NULL
 );
 
-CREATE TABLE project_progress_updates (
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    project_id uuid REFERENCES projects on DELETE CASCADE,
-    progress int NOT NULL CHECK (progress >= 0 AND progress <= 100) -- 0-100 integer value
-);
+-- TODO: revamp this to milestones, need to consult with michael s. on this though. Keeping this
+-- table, just commented out, to remind us of project progress updates as a feature.
+-- CREATE TABLE project_progress_updates (
+--     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     project_id uuid REFERENCES projects on DELETE CASCADE,
+--     progress int NOT NULL CHECK (progress >= 0 AND progress <= 100) -- 0-100 integer value
+-- );
 
 CREATE TABLE project_images (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
