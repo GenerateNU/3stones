@@ -34,8 +34,8 @@ CREATE TABLE projects (
     title varchar(256) NOT NULL,
     description text NOT NULL DEFAULT '',
     location text NOT NULL,
-    completed boolean NOT NULL DEFAULT 0,
-    funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
+    completed boolean NOT NULL DEFAULT FALSE,
+    funding_goal_cents bigint NOT NULL -- Total funding is in cents - 1234 = $12.34
 );
 
 CREATE TABLE user_investments (
