@@ -10,7 +10,7 @@ import (
 )
 
 func GetDevelopers(db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
-	rows, err := db.Query(context.Background(), "SELECT * FROM developers where id = $1", id)
+	rows, err := db.Query(context.Background(), "SELECT id, name, description, location FROM developers where ID = $1", id)
 	if err != nil {
 		return nil, err
 	}
