@@ -1,6 +1,7 @@
 # Development notes
 Scattered thoughts when I was designing out schema, not really meant for reading but you can probably gleam some info out of this.
 
+- TODO: location data -> address,street,zip code, state, 
 ### QOL/backlog things (dump this to JIRA)
 - User investments are immutable
 - Use SQL triggers to calculate the remaining amount a project can be funded, prevent the amount a project's been funded from going over the amount

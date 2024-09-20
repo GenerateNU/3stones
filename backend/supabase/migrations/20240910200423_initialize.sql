@@ -12,8 +12,8 @@ CREATE TABLE contributors (
     email varchar(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE users (
-    supabase_id uuid PRIMARY KEY, -- Uses user uuid provided by Supabase
+CREATE TABLE investors (
+    supabase_id uuid PRIMARY KEY, -- Uses investor uuid provided by Supabase
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     first_name varchar(256) NOT NULL,
     last_name varchar(256) NOT NULL
@@ -38,11 +38,11 @@ CREATE TABLE projects (
     funding_goal_cents bigint NOT NULL -- Total funding is in cents - 1234 = $12.34
 );
 
-CREATE TABLE user_investments (
+CREATE TABLE investor_investments (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     project_id uuid REFERENCES projects ON DELETE RESTRICT,
-    user_id uuid REFERENCES users ON DELETE RESTRICT,
+    investor_id uuid REFERENCES investors ON DELETE RESTRICT,
     funded_cents bigint NOT NULL -- Total funding is in cents - 1234 
 );
 
