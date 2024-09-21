@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE contributors (
@@ -5,4 +6,11 @@ CREATE TABLE contributors (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE developers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(100) NOT NULL,
+    location VARCHAR(255) UNIQUE NOT NULL
 );
