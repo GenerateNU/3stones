@@ -11,7 +11,7 @@ type ProjectsController struct {
 	ServiceParams *types.ServiceParams
 }
 
-func NewProjectsontroller(ServiceParams *types.ServiceParams) *ProjectsController {
+func NewProjectsController(ServiceParams *types.ServiceParams) *ProjectsController {
 	return &ProjectsController{
 		ServiceParams: ServiceParams,
 	}
