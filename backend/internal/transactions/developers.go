@@ -17,7 +17,7 @@ func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
 
 	developers := []models.Developer{}
 
-	//Didn't see created at field returned in get all contributors so we are not including that either
+	// Didn't see created at field returned in get all contributors so we are not including that either
 	defer rows.Close()
 	for rows.Next() {
 		var id uuid.UUID
@@ -30,10 +30,10 @@ func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
 		}
 
 		developers = append(developers, models.Developer{
-			ID: id,
-			Name: name,
+			ID:          id,
+			Name:        name,
 			Description: description,
-			Location: location,
+			Location:    location,
 		})
 	}
 

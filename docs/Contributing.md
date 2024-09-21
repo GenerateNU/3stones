@@ -90,5 +90,5 @@ npx supabase start -x vector
 npx supabase stop
 
 # Reset database (after you've added seed data, modified tables, etc.)
-npx supabase reset
+npx supabase db reset
 ```
