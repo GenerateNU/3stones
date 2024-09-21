@@ -9,13 +9,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func GetProjects(db *pgxpool.Pool) ([]models.Contributor, error) {
+func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 	rows, err := db.Query(context.Background(), "SELECT * FROM projects")
 	if err != nil {
 		return nil, err
 	}
 
-	contributors := []models.Project{}
+	projects := []models.Project{}
 
 	defer rows.Close()
 	for rows.Next() {
@@ -31,7 +31,7 @@ func GetProjects(db *pgxpool.Pool) ([]models.Contributor, error) {
 			return nil, err
 		}
 
-		contributors = append(contributors, models.Contributor{
+		projects = append(projects, models.Project{
 			ID: id,
 		    DeveloperID: developerID,
 		    Title: title,
