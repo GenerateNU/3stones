@@ -29,10 +29,10 @@ func GetDevelopers(db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
 		}
 
 		developers = append(developers, models.Developer{
-			ID:        id,
-			Name: name,
-			Description:  description,
-			Location:     location,
+			ID:          id,
+			Name:        name,
+			Description: description,
+			Location:    location,
 		})
 	}
 
