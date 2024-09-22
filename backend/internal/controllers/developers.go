@@ -21,6 +21,10 @@ func NewDevelopersController(ServiceParams *types.ServiceParams) *DevelopersCont
 func (c *DevelopersController) GetDevelopers(ctx *fiber.Ctx) error {
 	idParam := ctx.Params("id")
 	id, err := uuid.Parse(idParam)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).SendString("Invalid UUID")
+	}
+
 	developers, err := transactions.GetDevelopers(c.ServiceParams.DB, id)
 	if err != nil {
 		return ctx.SendStatus(500)
