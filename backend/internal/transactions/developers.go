@@ -19,17 +19,17 @@ func GetDevelopers(db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var id uuid.UUID
+		var developerID uuid.UUID
 		var name string
 		var description string
 		var location string
-		err = rows.Scan(&id, &name, &description, &location)
+		err = rows.Scan(&developerID, &name, &description, &location)
 		if err != nil {
 			return nil, err
 		}
 
 		developers = append(developers, models.Developer{
-			ID:          id,
+			ID:          developerID,
 			Name:        name,
 			Description: description,
 			Location:    location,
