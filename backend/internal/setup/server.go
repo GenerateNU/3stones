@@ -3,6 +3,7 @@ package setup
 import (
 	"context"
 
+	"backend/internal/auth"
 	"backend/internal/config"
 	"backend/internal/routes"
 	"backend/internal/types"
@@ -28,6 +29,10 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 	router := app.Group("/api/v1")
 
 	routerParams := types.RouterParams{
+		Auth: &auth.AuthFactory{
+			Config: &config.Supabase,
+			DB:     db,
+		},
 		Router: router,
 		Config: config,
 		ServiceParams: &types.ServiceParams{
