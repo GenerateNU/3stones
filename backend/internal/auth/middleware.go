@@ -1,9 +1,10 @@
 package auth
 
 import (
+	"context"
+
 	"backend/internal/config"
 	"backend/internal/transactions"
-	"context"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"

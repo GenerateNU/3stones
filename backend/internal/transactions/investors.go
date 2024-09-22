@@ -12,7 +12,6 @@ func CheckInvestorExists(ctx context.Context, pool *pgxpool.Pool, investorID str
 
 	var exists int
 	err := pool.QueryRow(ctx, query, investorID).Scan(&exists)
-
 	if err != nil {
 		if err.Error() == "no rows in result set" {
 			return false, nil
