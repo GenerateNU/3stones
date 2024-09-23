@@ -23,7 +23,6 @@ func GetDevelopers(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) ([]model
 
 	var developers []models.Developer
 
-	
 	// Iterate through the rows and scan them into the Developer struct
 	for rows.Next() {
 		var developer models.Developer
