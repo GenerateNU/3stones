@@ -22,6 +22,7 @@
     - `auth/`: Code for authentication. Right now this is just the middleware. See `Authentication-Notes.md` for an overview.
     - `config/`: Type definitions and functions used for parsing `.env` configs.
     - `controllers/`: Contains controllers, which handle request parsing, returning a response, and calling into transactions to do business logic.
+    - `errors/`: Contains type definitions and constants for API error handling.
     - `models/`: Contains types for database rows/objects.
     - `routes/`: Contains functions that initialize controllers and creates routes for the webserver.
     - `setup/`: Contains the `SetupServer` method for initializing the server.
