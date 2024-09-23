@@ -34,8 +34,6 @@ The same rule applies to all sorts of numeric statuses (in the database or where
 P.S. It's often mentally taxing to distinguish between "authentication" and "authorization". We can use simpler terms like ["login" and "permissions"](https://ntietz.com/blog/lets-say-instead-of-auth/) to reduce the cognitive load.
 
 # Using ApiError
-You shouldn't need to really touch any of the code in `errors/api_error.go`; just know that the `ApiError.Send(ctx *fiber.Ctx)` method is what is used to return an API error from the server. What you will probably need to modify is code in `errors/constants.go`, where you will initialize ApiErrors (and their codes and messages). Things to keep in mind:
-
-- The `Code` should always be either 400 (error is caused by the client/request) or 500 (error is caused by the server).
-- The `Message` should always be a single `camel_case` identifier, i.e `jwt_has_expired`, `user_not_found`, etc.
-- The granularity for errors (should I return internal server error? should I return something more specific) is TBD, something that will be ironed out through code reviews and what not. Something to keep in mind, though, is that the error messages you create will be the ones you will eventually be dealing with on the frontend to create error handling UI/UX.
+1. Create a new error using either `NewServerError` (error is server's fault) or `NewClientError` (error is client's fault) and keeping it as a constant in `api_errors/constants.go`.
+    - **All `ApiError`s should be in `api_errors/constants.go` - the idea is, over time, we build out a library of common errors that can be reused throughout the backend. Also the less unique errors we have => the less work we have to do on frontend w.r.t error UI/UX.
+2. `ApiError`s implement the golang `error` interface, meaning we can just return them from handlers/transactions like any other `error`. A handler has been configured (see `setup/server.go`) to convert `ApiError`s into a response.
