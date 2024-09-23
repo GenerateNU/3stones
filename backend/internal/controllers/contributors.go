@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/internal/errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
@@ -20,7 +21,7 @@ func NewContributorsController(ServiceParams *types.ServiceParams) *Contributors
 func (c *ContributorsController) GetContributors(ctx *fiber.Ctx) error {
 	contributors, err := transactions.GetContributors(c.ServiceParams.DB)
 	if err != nil {
-		return ctx.SendStatus(500)
+		return errors.INTERNAL_SERVER_ERROR.Send(ctx)
 	}
 
 	return ctx.JSON(contributors)
