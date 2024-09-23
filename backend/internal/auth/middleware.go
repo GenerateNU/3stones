@@ -5,7 +5,6 @@ import (
 
 	"backend/internal/api_errors"
 	"backend/internal/config"
-	"backend/internal/errors"
 	"backend/internal/transactions"
 
 	"github.com/gofiber/fiber/v2"
