@@ -3,8 +3,8 @@ package auth
 import (
 	"context"
 
+	"backend/internal/api_errors"
 	"backend/internal/config"
-	"backend/internal/errors"
 	"backend/internal/transactions"
 
 	"github.com/gofiber/fiber/v2"
@@ -22,31 +22,31 @@ func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 		token := ctx.Get("Authorization", "")
 
 		if token == "" {
-			return errors.UNAUTHORIZED.Send(ctx)
+			return &api_errors.UNAUTHORIZED
 		}
 
 		payload, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 			return []byte(a.Config.JwtSecret), nil
 		})
 		if err != nil {
-			return errors.UNAUTHORIZED.Send(ctx)
+			return &api_errors.UNAUTHORIZED
 		}
 
 		// Subject will be user's UUID
 		subject, err := payload.Claims.GetSubject()
 		if err != nil {
-			return errors.INTERNAL_SERVER_ERROR.Send(ctx)
+			return &api_errors.INTERNAL_SERVER_ERROR
 		}
 
 		investorExists, err := transactions.CheckInvestorExists(context.Background(), a.DB, subject)
 		if err != nil {
-			return errors.INTERNAL_SERVER_ERROR.Send(ctx)
+			return &api_errors.INTERNAL_SERVER_ERROR
 		}
 
 		if !investorExists {
 			err := transactions.CreateInvestor(context.Background(), a.DB, subject)
 			if err != nil {
-				return errors.INTERNAL_SERVER_ERROR.Send(ctx)
+				return &api_errors.INTERNAL_SERVER_ERROR
 			}
 		}
 
