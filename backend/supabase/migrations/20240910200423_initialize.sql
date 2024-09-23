@@ -12,6 +12,66 @@ CREATE TABLE contributors (
     email varchar(255) UNIQUE NOT NULL
 );
 
+-- enum of US state codes (for addresses)
+CREATE TYPE us_state as ENUM (
+    'DC', -- District of Columbia
+    'AL', -- Alabama
+    'AK', -- Alaska
+    'AZ', -- Arizona
+    'AR', -- Arkansas
+    'CA', -- California
+    'CO', -- Colorado
+    'CT', -- Connecticut
+    'DE', -- Delaware
+    'FL', -- Florida
+    'GA', -- Georgia
+    'HI', -- Hawaii
+    'ID', -- Idaho
+    'IL', -- Illinois
+    'IN', -- Indiana
+    'IA', -- Iowa
+    'KS', -- Kansas
+    'KY', -- Kentucky
+    'LA', -- Louisiana
+    'ME', -- Maine
+    'MD', -- Maryland
+    'MA', -- Massachusetts
+    'MI', -- Michigan
+    'MN', -- Minnesota
+    'MS', -- Mississippi
+    'MO', -- Missouri
+    'MT', -- Montana
+    'NE', -- Nebraska
+    'NV', -- Nevada
+    'NH', -- New Hampshire
+    'NJ', -- New Jersey
+    'NM', -- New Mexico
+    'NY', -- New York
+    'NC', -- North Carolina
+    'ND', -- North Dakota
+    'OH', -- Ohio
+    'OK', -- Oklahoma
+    'OR', -- Oregon
+    'PA', -- Pennsylvania
+    'RI', -- Rhode Island
+    'SC', -- South Carolina
+    'SD', -- South Dakota
+    'TN', -- Tennessee
+    'TX', -- Texas
+    'UT', -- Utah
+    'VT', -- Vermont
+    'VA', -- Virginia
+    'WA', -- Washington
+    'WV', -- West Virginia
+    'WI', -- Wisconsin
+    'WY'  -- Wyoming
+);
+
+-- zipcodes
+CREATE DOMAIN zipcode varchar(10)
+    CONSTRAINT valid_zipcode 
+    CHECK (VALUE ~ '[A-Z0-9-]+');
+
 CREATE TABLE investors (
     supabase_id uuid PRIMARY KEY, -- Uses investor uuid provided by Supabase
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -24,7 +84,11 @@ CREATE TABLE developers (
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name varchar(256) NOT NULL,
     description text NOT NULL,
-    location text NOT NULL
+    state us_state NOT NULL,
+    locality varchar(256) NOT NULL,
+    zipcode zipcode NOT NULL,
+    street varchar(256) NOT NULL,
+    premise varchar(10) NOT NULL
 );
 
 CREATE TABLE projects (
@@ -33,9 +97,13 @@ CREATE TABLE projects (
     developer_id uuid REFERENCES developers ON DELETE RESTRICT,
     title varchar(256) NOT NULL,
     description text NOT NULL DEFAULT '',
-    location text NOT NULL,
     completed boolean NOT NULL DEFAULT FALSE,
-    funding_goal_cents bigint NOT NULL -- Total funding is in cents - 1234 = $12.34
+    funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
+    state us_state NOT NULL,
+    locality varchar(256) NOT NULL,
+    zipcode zipcode NOT NULL,
+    street varchar(256) NOT NULL,
+    premise varchar(10) NOT NULL
 );
 
 CREATE TABLE investor_investments (
@@ -53,15 +121,6 @@ CREATE TABLE project_posts (
     title varchar(256) NOT NULL,
     description text NOT NULL
 );
-
--- TODO: revamp this to milestones, need to consult with michael s. on this though. Keeping this
--- table, just commented out, to remind us of project progress updates as a feature.
--- CREATE TABLE project_progress_updates (
---     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
---     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     project_id uuid REFERENCES projects on DELETE CASCADE,
---     progress int NOT NULL CHECK (progress >= 0 AND progress <= 100) -- 0-100 integer value
--- );
 
 CREATE TABLE project_images (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
