@@ -2,6 +2,7 @@ package transactions
 
 import (
 	"context"
+	"errors"
 
 	"backend/internal/models"
 
@@ -9,31 +10,37 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func GetDevelopers(db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
-	rows, err := db.Query(context.Background(), "SELECT id, name, description, location FROM developers where ID = $1", id)
+// Define a custom error for when no developers are found
+var ErrDeveloperNotFound = errors.New("no developers found")
+
+func GetDevelopers(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
+	// Execute the query with the provided context and developer ID
+	rows, err := db.Query(ctx, "SELECT id, name, description, location FROM developers WHERE ID = $1", id)
 	if err != nil {
 		return nil, err
 	}
-
-	developers := []models.Developer{}
-
 	defer rows.Close()
+
+	var developers []models.Developer
+
+	
+	// Iterate through the rows and scan them into the Developer struct
 	for rows.Next() {
-		var developerID uuid.UUID
-		var name string
-		var description string
-		var location string
-		err = rows.Scan(&developerID, &name, &description, &location)
+		var developer models.Developer
+		err := rows.Scan(&developer.ID, &developer.Name, &developer.Description, &developer.Location)
 		if err != nil {
 			return nil, err
 		}
+		developers = append(developers, developer)
+	}
 
-		developers = append(developers, models.Developer{
-			ID:          developerID,
-			Name:        name,
-			Description: description,
-			Location:    location,
-		})
+	// Return an error if no developers were found
+	if len(developers) == 0 {
+		return nil, ErrDeveloperNotFound
+	}
+
+	if rows.Err() != nil {
+		return nil, rows.Err()
 	}
 
 	return developers, nil
