@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"backend/internal/auth"
 	"backend/internal/controllers"
 	"backend/internal/types"
 )
@@ -12,5 +11,5 @@ func Contributors(params types.RouterParams) {
 	// api/v1/contributors/*
 	contributors := params.Router.Group("/contributors")
 
-	contributors.Get("/", auth.Authorized(&params.Config.Supabase), contributorsController.GetContributors)
+	contributors.Get("/", params.Auth.Middleware(), contributorsController.GetContributors)
 }
