@@ -21,7 +21,7 @@ func NewProjectsController(ServiceParams *types.ServiceParams) *ProjectsControll
 func (c *ProjectsController) GetProjects(ctx *fiber.Ctx) error {
 	projects, err := transactions.GetProjects(c.ServiceParams.DB)
 	if err != nil {
-		return ctx.SendStatus(500)
+		return &api_errors.INTERNAL_SERVER_ERROR
 	}
 
 	return ctx.JSON(projects)
