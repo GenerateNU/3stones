@@ -12,5 +12,5 @@ func Projects(params types.RouterParams) {
 	// api/v1/projects/*
 	projects := params.Router.Group("/projects")
 
-	projects.Get("/", auth.Authorized(&params.Config.Supabase), projectsController.GetProjects)
+	projects.Get("/", params.Auth.Middleware(), projectsController.GetProjects)
 }
