@@ -32,12 +32,12 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 		}
 
 		projects = append(projects, models.Project{
-			ID: id,
-		    DeveloperID: developerID,
-		    Title: title,
-		    Description: description,
-		    Location: location,
-		    Completed: completed,
+			ID:               id,
+		    DeveloperID:      developerID,
+		    Title:            title,
+		    Description:      description,
+		    Location:         location,
+		    Completed:        completed,
 		    FundingGoalCents: fundingGoalCents,
 		})
 	}
