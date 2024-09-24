@@ -10,6 +10,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "./backend/cmd/server/main.go",
+            "cwd": "./backend"
         },
     ]
 }
