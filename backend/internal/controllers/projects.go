@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 

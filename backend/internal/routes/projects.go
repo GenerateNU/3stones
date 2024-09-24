@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"backend/internal/auth"
 	"backend/internal/controllers"
 	"backend/internal/types"
 )
