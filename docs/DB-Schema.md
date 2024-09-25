@@ -1,14 +1,21 @@
+# Address format
+```
+premise varchar(10) NOT NULL
+street varchar(256) NOT NULL,
+locality varchar(256) NOT NULL,
+state us_state NOT NULL,
+zipcode zipcode NOT NULL,
+```
+
+If I have the address 7 Speare Pl, Boston MA 02115:
+- premise <=> 7
+- street <=> Speare Pl
+- locality <=> Boston
+- state <=> MA
+- zipcode <=> 02115
+
 # Development notes
 Scattered thoughts when I was designing out schema, not really meant for reading but you can probably gleam some info out of this.
-
-- TODO: location data -> address,street,zip code, state, 
-    - Taken from drupal address field/xNAL address standard with a lot of stuff omitted (assumed we are in USA)
-    - state (state, 2 letter code)
-    - locality (city, town)
-    - postal_code (zip code)
-    - street (street)
-    - premise (apt, suite, box number, etc.)
-    
 ### QOL/backlog things (dump this to JIRA)
 - User investments are immutable
 - Use SQL triggers to calculate the remaining amount a project can be funded, prevent the amount a project's been funded from going over the amount

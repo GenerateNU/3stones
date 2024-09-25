@@ -10,7 +10,7 @@ import (
 )
 
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
-	rows, err := db.Query(context.Background(), "SELECT id, developer_id, title, description, location, completed, funding_goal_cents FROM projects")
+	rows, err := db.Query(context.Background(), "SELECT id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode FROM projects")
 	if err != nil {
 		return nil, err
 	}
@@ -23,10 +23,15 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 		var developerID uuid.UUID
 		var title string
 		var description string
-		var location string
 		var completed bool
 		var fundingGoalCents int32
-		err = rows.Scan(&id, &developerID, &title, &description, &location, &completed, &fundingGoalCents)
+		var premise string
+		var street string
+		var locality string
+		var state string
+		var zipcode string
+
+		err = rows.Scan(&id, &developerID, &title, &description, &completed, &fundingGoalCents, &premise, &street, &locality, &state, &zipcode)
 		if err != nil {
 			return nil, err
 		}
@@ -36,9 +41,13 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			DeveloperID:      developerID,
 			Title:            title,
 			Description:      description,
-			Location:         location,
 			Completed:        completed,
 			FundingGoalCents: fundingGoalCents,
+			Premise:          premise,
+			Street:           street,
+			Locality:         locality,
+			State:            state,
+			Zipcode:          zipcode,
 		})
 	}
 

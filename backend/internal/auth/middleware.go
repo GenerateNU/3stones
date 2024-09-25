@@ -1,8 +1,6 @@
 package auth
 
 import (
-	"context"
-
 	"backend/internal/api_errors"
 	"backend/internal/config"
 	"backend/internal/transactions"
@@ -35,18 +33,18 @@ func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 		// Subject will be user's UUID
 		subject, err := payload.Claims.GetSubject()
 		if err != nil {
-			return &api_errors.INTERNAL_SERVER_ERROR
+			return err
 		}
 
-		investorExists, err := transactions.CheckInvestorExists(context.Background(), a.DB, subject)
+		investorExists, err := transactions.CheckInvestorExists(a.DB, subject)
 		if err != nil {
-			return &api_errors.INTERNAL_SERVER_ERROR
+			return err
 		}
 
 		if !investorExists {
-			err := transactions.CreateInvestor(context.Background(), a.DB, subject)
+			err := transactions.CreateInvestor(a.DB, subject)
 			if err != nil {
-				return &api_errors.INTERNAL_SERVER_ERROR
+				return err
 			}
 		}
 

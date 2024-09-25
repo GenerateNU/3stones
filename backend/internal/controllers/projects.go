@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
@@ -21,7 +20,7 @@ func NewProjectsController(serviceParams *types.ServiceParams) *ProjectsControll
 func (c *ProjectsController) GetProjects(ctx *fiber.Ctx) error {
 	projects, err := transactions.GetProjects(c.ServiceParams.DB)
 	if err != nil {
-		return &api_errors.INTERNAL_SERVER_ERROR
+		return err
 	}
 
 	return ctx.JSON(projects)

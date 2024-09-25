@@ -67,11 +67,6 @@ CREATE TYPE us_state as ENUM (
     'WY'  -- Wyoming
 );
 
--- zipcodes
-CREATE DOMAIN zipcode varchar(10)
-    CONSTRAINT valid_zipcode 
-    CHECK (VALUE ~ '[A-Z0-9-]+');
-
 CREATE TABLE investors (
     supabase_id uuid PRIMARY KEY, -- Uses investor uuid provided by Supabase
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -84,11 +79,11 @@ CREATE TABLE developers (
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name varchar(256) NOT NULL,
     description text NOT NULL,
-    state us_state NOT NULL,
-    locality varchar(256) NOT NULL,
-    zipcode zipcode NOT NULL,
+    premise varchar(10) NOT NULL,
     street varchar(256) NOT NULL,
-    premise varchar(10) NOT NULL
+    locality varchar(256) NOT NULL,
+    state us_state NOT NULL,
+    zipcode varchar(10) NOT NULL
 );
 
 CREATE TABLE projects (
@@ -99,11 +94,11 @@ CREATE TABLE projects (
     description text NOT NULL DEFAULT '',
     completed boolean NOT NULL DEFAULT FALSE,
     funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
-    state us_state NOT NULL,
-    locality varchar(256) NOT NULL,
-    zipcode zipcode NOT NULL,
+    premise varchar(10) NOT NULL,
     street varchar(256) NOT NULL,
-    premise varchar(10) NOT NULL
+    locality varchar(256) NOT NULL,
+    state us_state NOT NULL,
+    zipcode varchar(10) NOT NULL
 );
 
 CREATE TABLE investor_investments (
