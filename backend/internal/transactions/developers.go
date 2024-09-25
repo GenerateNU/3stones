@@ -2,16 +2,12 @@ package transactions
 
 import (
 	"context"
-	"errors"
 
 	"backend/internal/models"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
-
-// Define a custom error for when no developers are found
-var ErrDeveloperNotFound = errors.New("no developers found")
 
 func GetDevelopers(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) ([]models.Developer, error) {
 	// Execute the query with the provided context and developer ID
@@ -35,7 +31,7 @@ func GetDevelopers(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) ([]model
 
 	// Return an error if no developers were found
 	if len(developers) == 0 {
-		return nil, ErrDeveloperNotFound
+		return []models.Developer{}, nil
 	}
 
 	if rows.Err() != nil {

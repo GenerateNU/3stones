@@ -12,14 +12,14 @@ type ContributorsController struct {
 	ServiceParams *types.ServiceParams
 }
 
-func NewContributorsController(ServiceParams *types.ServiceParams) *ContributorsController {
+func NewContributorsController(serviceParams *types.ServiceParams) *ContributorsController {
 	return &ContributorsController{
-		ServiceParams: ServiceParams,
+		ServiceParams: serviceParams,
 	}
 }
 
 func (c *ContributorsController) GetContributors(ctx *fiber.Ctx) error {
-	contributors, err := transactions.GetContributors(ctx.Context(), c.ServiceParams.DB)
+	contributors, err := transactions.GetContributors(c.ServiceParams.DB)
 	if err != nil {
 		return &api_errors.INTERNAL_SERVER_ERROR
 	}
