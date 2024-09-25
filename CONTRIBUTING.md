@@ -25,15 +25,17 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 2. Run `npm install --global yarn` to install the Yarn package manager.
 
-3. Run `npx expo install` to install all packages used in the project.
+3. Run `yarn add expo`
 
-4. Follow steps 1-4 on [this guide](https://ngrok.com/docs/getting-started/) to install and configure `ngrok`, which we will use to connect from the frontend to the API.
+4. Run `npx expo install` to install all packages used in the project.
 
-5. Create a file `.env` to store environment variables. Run `cp ./.env.template ./.env`.
+5. Follow steps 1-4 on [this guide](https://ngrok.com/docs/getting-started/) to install and configure `ngrok`, which we will use to connect from the frontend to the API.
 
-6. To get your auth token, run `go run ../backend/cmd/login/main.go [username] [password]` AFTER setting up the backend and following the steps in the SupaBase setup video.
+6. Create a file `.env` to store environment variables. Run `cp ./.env.template ./.env`.
 
-7. Run `npx expo start --tunnel` to run the frontend!
+7. To get your auth token, run `go run ../backend/cmd/login/main.go [username] [password]` AFTER setting up the backend and following the steps in the SupaBase setup video.
+
+8. Run `npx expo start --tunnel` to run the frontend! If this doesn't work, try running `npx expo start`
 
 # Backend setup (using Supabase)
 
@@ -88,5 +90,18 @@ npx supabase start -x vector
 npx supabase stop
 
 # Reset database (after you've added seed data, modified tables, etc.)
-npx supabase reset
+npx supabase db reset
+
+# Format all files (make sure you have gofumpt installed)
+gofumpt -l -w .
+
+# Run linters
+golangci-lint run
 ```
+
+# Contributing guidelines
+
+1. **Open PRs as early as possible.** This allows us to give you feedback and help earlier.
+2. **Keep your branch as up-to-date with main as possible.** The earlier and more frequent you are updating your feature branch with changes from main the less weird merge conflicts and less extra work you will have to do.
+3. **(question????)** Submit video walkthroughs of you running your endpoint on PRs.
+4. **Branch names should be \<JIRA-TICKET\>-\<DESCRIPTOR\>**, i.e _SCRUM-1-get-developers_ or _SCRUM-10-database-fixes_.

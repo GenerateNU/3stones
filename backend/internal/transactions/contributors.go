@@ -10,7 +10,7 @@ import (
 )
 
 func GetContributors(db *pgxpool.Pool) ([]models.Contributor, error) {
-	rows, err := db.Query(context.Background(), "SELECT * FROM contributors")
+	rows, err := db.Query(context.Background(), "SELECT id, first_name, last_name, email FROM contributors")
 	if err != nil {
 		return nil, err
 	}

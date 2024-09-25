@@ -1,31 +1,51 @@
 package auth
 
 import (
+	"backend/internal/api_errors"
 	"backend/internal/config"
+	"backend/internal/transactions"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// Use this to setup an authorized user.
-func Authorized(config *config.SupabaseConfig) func(ctx *fiber.Ctx) error {
+type AuthFactory struct {
+	Config *config.SupabaseConfig
+	DB     *pgxpool.Pool
+}
+
+func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 	return func(ctx *fiber.Ctx) error {
 		token := ctx.Get("Authorization", "")
 
 		if token == "" {
-			return ctx.Status(400).JSON(fiber.Map{"code": "unauthorized"})
+			return &api_errors.UNAUTHORIZED
 		}
 
 		payload, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.JwtSecret), nil
+			return []byte(a.Config.JwtSecret), nil
 		})
 		if err != nil {
-			return ctx.Status(400).JSON(fiber.Map{"code": "unauthorized"})
+			return &api_errors.UNAUTHORIZED
 		}
 
+		// Subject will be user's UUID
 		subject, err := payload.Claims.GetSubject()
 		if err != nil {
-			return ctx.Status(500).JSON(fiber.Map{"code": "missing subject"})
+			return err
+		}
+
+		investorExists, err := transactions.CheckInvestorExists(a.DB, subject)
+		if err != nil {
+			return err
+		}
+
+		if !investorExists {
+			err := transactions.CreateInvestor(a.DB, subject)
+			if err != nil {
+				return err
+			}
 		}
 
 		ctx.Locals("userId", subject)
