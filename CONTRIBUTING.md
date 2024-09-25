@@ -98,3 +98,9 @@ gofumpt -l -w .
 # Run linters
 golangci-lint run
 ```
+
+# Contributing guidelines
+1. **Open PRs as early as possible.** This allows us to give you feedback and help earlier.
+2. **Keep your branch as up-to-date with main as possible.** The earlier and more frequent you are updating your feature branch with changes from main the less weird merge conflicts and less extra work you will have to do.
+3. **(question????)** Submit video walkthroughs of you running your endpoint on PRs. 
+4. **Branch names should be \<JIRA-TICKET\>-\<DESCRIPTOR\>**, i.e _SCRUM-1-get-developers_ or _SCRUM-10-database-fixes_.

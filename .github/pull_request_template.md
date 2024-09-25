@@ -11,6 +11,7 @@
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have tested my code and ensured it works
+- [ ] I have merged the most recent commit from main into my branch
 
 ## Screenshots:
 <!--- If working on a backend ticket, screenshots or a walkthrough of successful API calls are included. -->
