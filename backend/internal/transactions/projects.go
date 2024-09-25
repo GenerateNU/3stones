@@ -10,7 +10,7 @@ import (
 )
 
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
-	rows, err := db.Query(context.Background(), "SELECT * FROM projects")
+	rows, err := db.Query(context.Background(), "SELECT id, developer_id, title, description, location, completed, funding_goal_cents FROM projects")
 	if err != nil {
 		return nil, err
 	}
