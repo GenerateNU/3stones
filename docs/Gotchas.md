@@ -1,0 +1,1 @@
+- Single quotes and double quotes in SQL mean different things. Single quotes are for strings/string literals and double quotes are for database identifiers.
