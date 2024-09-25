@@ -11,5 +11,5 @@ func Developers(params types.RouterParams) {
 	// api/v1/developers/{id}
 	developers := params.Router.Group("/developers")
 
-	developers.Get("/:id", params.Auth.Middleware(), developersController.GetDevelopers)
+	developers.Get("/:id", params.Auth.Middleware(), developersController.GetDeveloperById)
 }

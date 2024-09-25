@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
@@ -18,19 +19,16 @@ func NewDevelopersController(ServiceParams *types.ServiceParams) *DevelopersCont
 	}
 }
 
-func (c *DevelopersController) GetDevelopers(ctx *fiber.Ctx) error {
+func (c *DevelopersController) GetDeveloperById(ctx *fiber.Ctx) error {
 	idParam := ctx.Params("id")
 	id, err := uuid.Parse(idParam)
 	if err != nil {
-		return ctx.Status(400).SendString("Invalid UUID")
+		return &api_errors.INVALID_UUID
 	}
 
-	developers, err := transactions.GetDevelopers(ctx.Context(), c.ServiceParams.DB, id)
+	developers, err := transactions.GetDeveloperById(c.ServiceParams.DB, id)
 	if err != nil {
-		if err == transactions.ErrDeveloperNotFound {
-			return ctx.SendStatus(404)
-		}
-		return ctx.SendStatus(500)
+		return &api_errors.INTERNAL_SERVER_ERROR
 	}
 
 	return ctx.JSON(developers)
