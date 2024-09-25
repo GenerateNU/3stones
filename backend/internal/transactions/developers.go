@@ -2,15 +2,21 @@ package transactions
 
 import (
 	"context"
+	"errors"
 
+	"backend/internal/api_errors"
 	"backend/internal/models"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
-	rows, err := db.Query(context.Background(), "SELECT * FROM developers")
+	rows, err := db.Query(context.Background(), "SELECT id, name, description, location FROM developers")
+	if err != nil {
+		return nil, err
+	}
 
 	developers := []models.Developer{}
 
@@ -44,6 +50,10 @@ func GetDeveloperById(db *pgxpool.Pool, id uuid.UUID) (*models.Developer, error)
 	var developer models.Developer
 	err := row.Scan(&developer.ID, &developer.Name, &developer.Description, &developer.Location)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, &api_errors.UUID_NOT_FOUND
+		}
+
 		return nil, err
 	}
 
