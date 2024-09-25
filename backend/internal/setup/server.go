@@ -57,6 +57,7 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 
 	// Initialize routes here! VVVV
 	routes.Contributors(routerParams)
+	routes.Projects(routerParams)
 
 	return app, nil
 }
