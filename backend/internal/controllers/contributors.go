@@ -12,9 +12,9 @@ type ContributorsController struct {
 	ServiceParams *types.ServiceParams
 }
 
-func NewContributorsController(ServiceParams *types.ServiceParams) *ContributorsController {
+func NewContributorsController(serviceParams *types.ServiceParams) *ContributorsController {
 	return &ContributorsController{
-		ServiceParams: ServiceParams,
+		ServiceParams: serviceParams,
 	}
 }
 
