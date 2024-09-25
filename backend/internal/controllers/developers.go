@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 type DevelopersController struct {
@@ -20,7 +22,22 @@ func NewDevelopersController(ServiceParams *types.ServiceParams) *DevelopersCont
 func (c *DevelopersController) GetDevelopers(ctx *fiber.Ctx) error {
 	developers, err := transactions.GetDevelopers(c.ServiceParams.DB)
 	if err != nil {
-		return ctx.SendStatus(500)
+		return &api_errors.INTERNAL_SERVER_ERROR
+	}
+
+	return ctx.JSON(developers)
+}
+
+func (c *DevelopersController) GetDeveloperById(ctx *fiber.Ctx) error {
+	idParam := ctx.Params("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	developers, err := transactions.GetDeveloperById(c.ServiceParams.DB, id)
+	if err != nil {
+		return &api_errors.INTERNAL_SERVER_ERROR
 	}
 
 	return ctx.JSON(developers)

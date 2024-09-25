@@ -11,9 +11,6 @@ import (
 
 func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
 	rows, err := db.Query(context.Background(), "SELECT * FROM developers")
-	if err != nil {
-		return nil, err
-	}
 
 	developers := []models.Developer{}
 
@@ -38,4 +35,17 @@ func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
 	}
 
 	return developers, nil
+}
+
+func GetDeveloperById(db *pgxpool.Pool, id uuid.UUID) (*models.Developer, error) {
+	// Execute the query with the provided context and developer ID
+	row := db.QueryRow(context.Background(), "SELECT id, name, description, location FROM developers WHERE ID = $1", id)
+
+	var developer models.Developer
+	err := row.Scan(&developer.ID, &developer.Name, &developer.Description, &developer.Location)
+	if err != nil {
+		return nil, err
+	}
+
+	return &developer, nil
 }
