@@ -9,6 +9,34 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+func GetDevelopers(db *pgxpool.Pool) ([]models.Developer, error) {
+	rows, err := db.Query(context.Background(), "SELECT * FROM developers")
+
+	developers := []models.Developer{}
+
+	// Didn't see created at field returned in get all contributors so we are not including that either
+	defer rows.Close()
+	for rows.Next() {
+		var id uuid.UUID
+		var name string
+		var description string
+		var location string
+		err = rows.Scan(&id, &name, &description, &location)
+		if err != nil {
+			return nil, err
+		}
+
+		developers = append(developers, models.Developer{
+			ID:          id,
+			Name:        name,
+			Description: description,
+			Location:    location,
+		})
+	}
+
+	return developers, nil
+}
+
 func GetDeveloperById(db *pgxpool.Pool, id uuid.UUID) (*models.Developer, error) {
 	// Execute the query with the provided context and developer ID
 	row := db.QueryRow(context.Background(), "SELECT id, name, description, location FROM developers WHERE ID = $1", id)
