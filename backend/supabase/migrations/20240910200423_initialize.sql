@@ -80,6 +80,7 @@ CREATE TABLE developers (
     name varchar(256) NOT NULL,
     description text NOT NULL,
     premise varchar(10) NOT NULL,
+    subpremise varchar(10),
     street varchar(256) NOT NULL,
     locality varchar(256) NOT NULL,
     state us_state NOT NULL,
@@ -95,6 +96,7 @@ CREATE TABLE projects (
     completed boolean NOT NULL DEFAULT FALSE,
     funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
     premise varchar(10) NOT NULL,
+    subpremise varchar(10),
     street varchar(256) NOT NULL,
     locality varchar(256) NOT NULL,
     state us_state NOT NULL,

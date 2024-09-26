@@ -1,9 +1,15 @@
 package config
 
-import "flag"
+import (
+	"flag"
+	"os"
+)
 
 func ParseFlags() (configPath *string) {
-	configPath = flag.String("config", "../config/.env.dev", "Specify the path to the config file (.env)")
+	if os.Getenv("APP_ENVIRONMENT") != "production" {
+		configPath = flag.String("config", "../config/.env.dev", "Specify the path to the config file (.env)")
+	}
+
 	flag.Parse()
 	return
 }
