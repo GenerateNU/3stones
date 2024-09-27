@@ -68,7 +68,6 @@ func GetProjectTotalFunded(db *pgxpool.Pool, id uuid.UUID) (int64, error) {
 	return totalFundedCents, nil
 }
 
-
 func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	// Execute the query with the provided context and developer ID
 	row := db.QueryRow(
