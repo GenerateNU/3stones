@@ -28,6 +28,21 @@ func (c *ProjectsController) GetProjects(ctx *fiber.Ctx) error {
 	return ctx.JSON(projects)
 }
 
+func (c *ProjectsController) GetProjectById(ctx *fiber.Ctx) error {
+	idParam := ctx.Params("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	project, err := transactions.GetProjectById(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+
+	return ctx.JSON(project)
+}
+
 func (c *ProjectsController) GetProjectTotalFunded(ctx *fiber.Ctx) error {
 	idParam := ctx.Params("id")
 	id, err := uuid.Parse(idParam)

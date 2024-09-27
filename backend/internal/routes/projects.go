@@ -12,5 +12,6 @@ func Projects(params types.RouterParams) {
 	projects := params.Router.Group("/projects")
 
 	projects.Get("/", params.Auth.Middleware(), projectsController.GetProjects)
+	projects.Get("/:id", params.Auth.Middleware(), projectsController.GetProjectById)
 	projects.Get("/:id/total-funded", params.Auth.Middleware(), projectsController.GetProjectTotalFunded)
 }
