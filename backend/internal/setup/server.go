@@ -60,5 +60,9 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 	routes.Developers(routerParams)
 	routes.Projects(routerParams)
 
+	router.Get("/health", func(ctx *fiber.Ctx) error {
+		return ctx.SendStatus(200)
+	})
+
 	return app, nil
 }

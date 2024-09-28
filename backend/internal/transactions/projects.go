@@ -2,10 +2,14 @@ package transactions
 
 import (
 	"context"
+	"errors"
 
+	"backend/internal/api_errors"
 	"backend/internal/models"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -52,4 +56,65 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 	}
 
 	return projects, nil
+}
+
+func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
+	// Execute the query with the provided context and developer ID
+	row := db.QueryRow(
+		context.Background(),
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode FROM projects WHERE ID = $1",
+		id)
+
+	var project models.Project
+	err := row.Scan(
+		&project.ID,
+		&project.DeveloperID,
+		&project.Title,
+		&project.Description,
+		&project.Completed,
+		&project.FundingGoalCents,
+		&project.Premise,
+		&project.Street,
+		&project.Locality,
+		&project.State,
+		&project.Zipcode)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, &api_errors.UUID_NOT_FOUND
+		}
+
+		return nil, err
+	}
+
+	return &project, nil
+}
+
+func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, id uuid.UUID, amount int32) error {
+	// Get the current project to check for funding goal
+	project, err := GetProjectById(db, id)
+	if err != nil {
+		return err
+	}
+
+	//extract investor id from locals context
+	investorId, ok := ctx.Locals("userId").(uuid.UUID)
+
+	// Check with Sumer and Arav for function name to get total funded amount
+	//for now, we'll query directly until the name is given
+	var amountFunded int32
+	row := db.QueryRow(context.Background(), "SELECT SUM(funded_cents) FROM investor_investments WHERE project_id = $1", id)
+
+	err = row.Scan(&amountFunded)
+	if err != nil {
+		return err
+	}
+
+	// check if amount invested is greater than total funding goal
+	if amountFunded+amount <= project.FundingGoalCents && ok {
+		db.Query(context.Background(),
+			"INSERT INTO investor_investments(project_id, investor_id, funded_cents) VALUES ($1, $2, $3);", id, investorId, amount)
+	} else {
+		return err
+	}
+	return nil //DOUBLE CHECK
 }

@@ -1,3 +1,72 @@
+BEGIN TRANSACTION;
+INSERT INTO
+    auth.users (
+        instance_id,
+        id,
+        aud,
+        role,
+        email,
+        encrypted_password,
+        email_confirmed_at,
+        recovery_sent_at,
+        last_sign_in_at,
+        raw_app_meta_data,
+        raw_user_meta_data,
+        created_at,
+        updated_at,
+        confirmation_token,
+        email_change,
+        email_change_token_new,
+        recovery_token
+    ) (
+        select
+            '00000000-0000-0000-0000-000000000000',
+            uuid_generate_v4 (),
+            'authenticated',
+            'authenticated',
+            'user' || (ROW_NUMBER() OVER ()) || '@example.com',
+            crypt ('password123', gen_salt ('bf')),
+            current_timestamp,
+            current_timestamp,
+            current_timestamp,
+            '{"provider":"email","providers":["email"]}',
+            '{}',
+            current_timestamp,
+            current_timestamp,
+            '',
+            '',
+            '',
+            ''
+        FROM
+            generate_series(1, 10)
+    );
+
+-- test user email identities
+INSERT INTO
+    auth.identities (
+        id,
+        user_id,
+        provider_id,
+        identity_data,
+        provider,
+        last_sign_in_at,
+        created_at,
+        updated_at
+    ) (
+        select
+            uuid_generate_v4 (),
+            id,
+            id,
+            format('{"sub":"%s","email":"%s"}', id :: text, email) :: jsonb,
+            'email',
+            current_timestamp,
+            current_timestamp,
+            current_timestamp
+        from
+            auth.users
+    );
+COMMIT TRANSACTION;
+
 -- SQLBook: Code
 INSERT INTO contributors (first_name, last_name, email) VALUES ('Michael', 'Brennan', 'brennan.mic@northeastern.edu');
 INSERT INTO contributors (first_name, last_name, email) VALUES ('Ryan', 'Saperstein', 'saperstein.r@northeastern.edu');
@@ -9,7 +78,12 @@ INSERT INTO developers (id, name, description, premise, street, locality, state,
 INSERT INTO projects (id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode) VALUES ('c3733692-5a86-441f-8ad0-9c32c648bb72', '56ebee48-d844-4fcd-aa58-fb71688c3e81', 'Bowser Castle', 'A big fiery castle sitting on prime real estate', 'FALSE', '100000000', '7', 'Speare Pl', 'Boston', 'MA', '02115');
 INSERT INTO projects (id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', '56ebee48-d844-4fcd-aa58-fb71688c3e81', 'Spongebob Pineapple', 'A pineapple under the sea', 'TRUE', '18000000', '7', 'Speare Pl', 'Boston', 'MA', '02115');
 
+INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user1@example.com'), 'Michael', 'Brennan');
+INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user2@example.com'), 'Abby', 'Stevenson');
+INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user3@example.com'), 'Dao', 'Ho');
 
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('e30e9159-5dac-48e9-b5cd-5ee8910ffa56', '2024-09-27 12:15:30', 'c3733692-5a86-441f-8ad0-9c32c648bb72', '', '1574')
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('c21b9ea3-40d3-4c9c-aac0-baf6118719c2', '2024-09-26 10:49:15', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', '', '2017')
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('10240ceb-6cd6-42e3-b68a-b5fccf4623d9', '2024-08-17 11:55:10', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', '', '2514')
+
+INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('e30e9159-5dac-48e9-b5cd-5ee8910ffa56', '2024-09-27 12:15:30', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email = 'user1@example.com'), '1574');
+INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('c21b9ea3-40d3-4c9c-aac0-baf6118719c2', '2024-09-26 10:49:15', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user2@example.com'), '2017');
+INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('10240ceb-6cd6-42e3-b68a-b5fccf4623d9', '2024-08-17 11:55:10', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user3@example.com'), '2514');
+

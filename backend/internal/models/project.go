@@ -15,3 +15,7 @@ type Project struct {
 	State            string    `json:"state"`
 	Zipcode          string    `json:"zipcode"`
 }
+
+type InvestRequestBody struct {
+	Amount int32 `json:"amount"`
+}
