@@ -15,8 +15,7 @@ func GetPortfolio(db *pgxpool.Pool, investorID uuid.UUID) (map[uuid.UUID]int, er
 		return nil, err
 	}
 
-	var portfolio map[uuid.UUID]int
-	portfolio = make(map[uuid.UUID]int)
+	portfolio := make(map[uuid.UUID]int)
 
 	defer rows.Close()
 	for rows.Next() {
