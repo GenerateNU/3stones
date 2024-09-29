@@ -46,22 +46,27 @@ func (c *ProjectsController) GetProjectById(ctx *fiber.Ctx) error {
 
 // TODO: return custom error message
 func (c *ProjectsController) PostInvestmentById(ctx *fiber.Ctx) error {
-	idParam := ctx.Params("id")
+	projectIdParam := ctx.Params("id")
 	investRequestBody := new(models.InvestRequestBody)
 
+	//parses the incoming request body into the investRequestBody struct
+	//returns an error if there was an issue such as missing fields
 	if err := ctx.BodyParser(investRequestBody); err != nil {
 		return err
 	}
 
-	id, err := uuid.Parse(idParam)
+	//Parses the projectid into a uuid form, returns an error if unable to convert
+	projectId, err := uuid.Parse(projectIdParam)
 	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
 
-	transactions.PostInvestmentById(ctx, c.ServiceParams.DB, id, investRequestBody.Amount)
+	err = transactions.PostInvestmentById(ctx, c.ServiceParams.DB, projectId, investRequestBody.Amount)
 	if err != nil {
+		//api_errors.NewClientError("Invalid amount") -> this returns an api error not a regular error
 		return nil
 	}
 
+	//signals the request was successful
 	return ctx.JSON(200)
 }

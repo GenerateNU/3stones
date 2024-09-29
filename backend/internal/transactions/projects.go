@@ -89,9 +89,9 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	return &project, nil
 }
 
-func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, id uuid.UUID, amount int32) error {
+func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
 	// Get the current project to check for funding goal
-	project, err := GetProjectById(db, id)
+	project, err := GetProjectById(db, projectId)
 	if err != nil {
 		return err
 	}
@@ -102,19 +102,20 @@ func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, id uuid.UUID, amount i
 	// Check with Sumer and Arav for function name to get total funded amount
 	//for now, we'll query directly until the name is given
 	var amountFunded int32
-	row := db.QueryRow(context.Background(), "SELECT SUM(funded_cents) FROM investor_investments WHERE project_id = $1", id)
+	row := db.QueryRow(context.Background(), "SELECT SUM(funded_cents) FROM investor_investments WHERE project_id = $1", projectId)
 
 	err = row.Scan(&amountFunded)
 	if err != nil {
 		return err
 	}
 
-	// check if amount invested is greater than total funding goal
+	// check if amount invested is greater than total funding goal and that the investor id was successfully extracted
 	if amountFunded+amount <= project.FundingGoalCents && ok {
 		db.Query(context.Background(),
-			"INSERT INTO investor_investments(project_id, investor_id, funded_cents) VALUES ($1, $2, $3);", id, investorId, amount)
+			"INSERT INTO investor_investments(project_id, investor_id, funded_cents) VALUES ($1, $2, $3);", projectId, investorId, amount)
 	} else {
 		return err
 	}
+	//if there was no errors in the process of adding it to the database return nothing
 	return nil //DOUBLE CHECK
 }
