@@ -20,7 +20,7 @@ func GetPortfolio(db *pgxpool.Pool, investorID uuid.UUID) (map[uuid.UUID]int, er
 
 	defer rows.Close()
 	for rows.Next() {
-		var projectID uuid.UUID
+		var projectID   uuid.UUID
 		var totalFunded int
 
 		err = rows.Scan(&projectID, &totalFunded)
