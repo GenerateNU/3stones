@@ -92,12 +92,13 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
 	// Get the current project to check for funding goal
 	project, err := GetProjectById(db, projectId)
+
 	if err != nil {
 		return err
 	}
 
 	//extract investor id from locals context
-	investorId, ok := ctx.Locals("userId").(uuid.UUID)
+	investorId := ctx.Locals("userId")
 
 	// Check with Sumer and Arav for function name to get total funded amount
 	//for now, we'll query directly until the name is given
@@ -110,12 +111,16 @@ func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, a
 	}
 
 	// check if amount invested is greater than total funding goal and that the investor id was successfully extracted
-	if amountFunded+amount <= project.FundingGoalCents && ok {
-		db.Query(context.Background(),
-			"INSERT INTO investor_investments(project_id, investor_id, funded_cents) VALUES ($1, $2, $3);", projectId, investorId, amount)
+	if amountFunded+amount <= project.FundingGoalCents {
+		_, err = db.Exec(ctx.Context(),
+			`INSERT INTO investor_investments(project_id, investor_id, funded_cents) 
+		VALUES ($1, $2, $3)`, projectId, investorId, amount)
+		if err != nil {
+			return err
+		}
 	} else {
-		return err
+		return &api_errors.FUNDING_GOAL_EXCEEDED
 	}
 	//if there was no errors in the process of adding it to the database return nothing
-	return nil //DOUBLE CHECK
+	return nil 
 }
