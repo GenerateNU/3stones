@@ -7,7 +7,6 @@ import (
 	"backend/internal/api_errors"
 	"backend/internal/models"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -89,15 +88,12 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	return &project, nil
 }
 
-func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
+func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
 	// Get the current project to check for funding goal
 	project, err := GetProjectById(db, projectId)
 	if err != nil {
 		return err
 	}
-
-	// extract investor id from locals context
-	investorId := ctx.Locals("userId")
 
 	// Check with Sumer and Arav for function name to get total funded amount
 	// for now, we'll query directly until the name is given
@@ -111,7 +107,7 @@ func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, a
 
 	// check if amount invested is greater than total funding goal and that the investor id was successfully extracted
 	if amountFunded+amount <= project.FundingGoalCents {
-		_, err = db.Exec(ctx.Context(),
+		_, err = db.Exec(context.Background(),
 			`INSERT INTO investor_investments(project_id, investor_id, funded_cents) 
 		VALUES ($1, $2, $3)`, projectId, investorId, amount)
 		if err != nil {

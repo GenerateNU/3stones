@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 INSERT INTO
     auth.users (
         instance_id,
@@ -65,7 +64,6 @@ INSERT INTO
         from
             auth.users
     );
-COMMIT TRANSACTION;
 
 -- SQLBook: Code
 INSERT INTO contributors (first_name, last_name, email) VALUES ('Michael', 'Brennan', 'brennan.mic@northeastern.edu');
@@ -83,7 +81,7 @@ INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id fr
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user3@example.com'), 'Dao', 'Ho');
 
 
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('e30e9159-5dac-48e9-b5cd-5ee8910ffa56', '2024-09-27 12:15:30', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email = 'user1@example.com'), '1574');
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('c21b9ea3-40d3-4c9c-aac0-baf6118719c2', '2024-09-26 10:49:15', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user2@example.com'), '2017');
-INSERT INTO investor_investments(id, created_at, project_id, investor_id, funded_cents) VALUES ('10240ceb-6cd6-42e3-b68a-b5fccf4623d9', '2024-08-17 11:55:10', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user3@example.com'), '2514');
+INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('e30e9159-5dac-48e9-b5cd-5ee8910ffa56', '2024-09-27 12:15:30', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email = 'user1@example.com'), '1574');
+INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('c21b9ea3-40d3-4c9c-aac0-baf6118719c2', '2024-09-26 10:49:15', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user2@example.com'), '2017');
+INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('10240ceb-6cd6-42e3-b68a-b5fccf4623d9', '2024-08-17 11:55:10', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user3@example.com'), '2514');
 

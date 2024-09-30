@@ -44,7 +44,7 @@ func (c *ProjectsController) GetProjectById(ctx *fiber.Ctx) error {
 	return ctx.JSON(project)
 }
 
-func (c *ProjectsController) PostInvestmentById(ctx *fiber.Ctx) error {
+func (c *ProjectsController) Invest(ctx *fiber.Ctx) error {
 	projectIdParam := ctx.Params("id")
 	investRequestBody := new(models.InvestRequestBody)
 
@@ -65,9 +65,21 @@ func (c *ProjectsController) PostInvestmentById(ctx *fiber.Ctx) error {
 		return &api_errors.INVALID_UUID
 	}
 
-	err = transactions.PostInvestmentById(ctx, c.ServiceParams.DB, projectId, investRequestBody.Amount)
+	// extract investor id from locals context
+	investorIdStringVal := ctx.Locals("userId")
+
+	investorIdString, ok := investorIdStringVal.(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	investorId, err := uuid.Parse(investorIdString)
 	if err != nil {
-		// api_errors.NewClientError("Invalid amount") -> this returns an api error not a regular error
+		return &api_errors.INVALID_UUID
+	}
+
+	err = transactions.Invest(investorId, c.ServiceParams.DB, projectId, investRequestBody.Amount)
+	if err != nil {
 		return err
 	}
 
