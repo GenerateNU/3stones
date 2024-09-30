@@ -108,7 +108,7 @@ func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount 
 	// check if amount invested is greater than total funding goal and that the investor id was successfully extracted
 	if amountFunded+amount <= project.FundingGoalCents {
 		_, err = db.Exec(context.Background(),
-			`INSERT INTO investor_investments(project_id, investor_id, funded_cents) 
+			`INSERT INTO investor_investments (project_id, investor_id, funded_cents) 
 		VALUES ($1, $2, $3)`, projectId, investorId, amount)
 		if err != nil {
 			return err
