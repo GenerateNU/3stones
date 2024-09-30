@@ -92,16 +92,15 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
 	// Get the current project to check for funding goal
 	project, err := GetProjectById(db, projectId)
-
 	if err != nil {
 		return err
 	}
 
-	//extract investor id from locals context
+	// extract investor id from locals context
 	investorId := ctx.Locals("userId")
 
 	// Check with Sumer and Arav for function name to get total funded amount
-	//for now, we'll query directly until the name is given
+	// for now, we'll query directly until the name is given
 	var amountFunded int32
 	row := db.QueryRow(context.Background(), "SELECT SUM(funded_cents) FROM investor_investments WHERE project_id = $1", projectId)
 
@@ -121,6 +120,6 @@ func PostInvestmentById(ctx *fiber.Ctx, db *pgxpool.Pool, projectId uuid.UUID, a
 	} else {
 		return &api_errors.FUNDING_GOAL_EXCEEDED
 	}
-	//if there was no errors in the process of adding it to the database return nothing
-	return nil 
+	// if there was no errors in the process of adding it to the database return nothing
+	return nil
 }
