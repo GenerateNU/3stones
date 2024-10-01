@@ -49,6 +49,7 @@ func (c *ProjectsController) GetProjectTotalFunded(ctx *fiber.Ctx) error {
 	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
+	
 	totalFunded, err := transactions.GetProjectTotalFunded(c.ServiceParams.DB, id)
 	if err != nil {
 		return err

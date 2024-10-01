@@ -60,7 +60,7 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 func GetProjectTotalFunded(db *pgxpool.Pool, id uuid.UUID) (int64, error) {
 	var totalFundedCents int64
 
-	err := db.QueryRow(context.Background(), "SELECT COALESCE(SUM(funded_cents), 0) as sum FROM investor_investments JOIN projects ON investor_investments.project_id = projects.id WHERE projects.id = $1", id).Scan(&totalFundedCents)
+	err := db.QueryRow(context.Background(), "SELECT COALESCE(SUM(funded_cents), 0) AS sum FROM investor_investments WHERE project_id = $1", id).Scan(&totalFundedCents)
 	if err != nil {
 		return 0, err
 	}
