@@ -13,4 +13,5 @@ func Projects(params types.RouterParams) {
 
 	projects.Get("/", params.Auth.Middleware(), projectsController.GetProjects)
 	projects.Get("/:id", params.Auth.Middleware(), projectsController.GetProjectById)
+	projects.Post("/:id/invest", params.Auth.Middleware(), projectsController.Invest)
 }
