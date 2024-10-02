@@ -21,21 +21,6 @@ func NewInvestorsController(ServiceParams *types.ServiceParams) *InvestorsContro
 	}
 }
 
-// func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
-// 	idParam := ctx.Params("id")
-// 	id, err := uuid.Parse(idParam)
-// 	if err != nil {
-// 		return &api_errors.INVALID_UUID
-// 	}
-
-// 	investors, err := transactions.GetPortfolio(c.ServiceParams.DB, id)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	return ctx.JSON(investors)
-// }
-
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	userId := ctx.Locals("userId")
 
