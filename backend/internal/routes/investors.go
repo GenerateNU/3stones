@@ -13,5 +13,4 @@ func Investors(params types.RouterParams) {
 
 	// investors.Get("/portfolio/:id", params.Auth.Middleware(), investorsController.GetPortfolio)
 	investors.Get("/portfolio", params.Auth.Middleware(), investorsController.GetPortfolio)
-
 }

@@ -1,13 +1,14 @@
 package controllers
 
 import (
+	"fmt"
+
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	"fmt"
 )
 
 type InvestorsController struct {
@@ -36,17 +37,17 @@ func NewInvestorsController(ServiceParams *types.ServiceParams) *InvestorsContro
 // }
 
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
-    userId := ctx.Locals("userId")
-    
-    id, err := uuid.Parse(fmt.Sprintf("%v", userId))
-    if err != nil {
-        return &api_errors.INVALID_UUID
-    }
+	userId := ctx.Locals("userId")
 
-    investors, err := transactions.GetPortfolio(c.ServiceParams.DB, id)
-    if err != nil {
-        return err
-    }
+	id, err := uuid.Parse(fmt.Sprintf("%v", userId))
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
 
-    return ctx.JSON(investors)
+	investors, err := transactions.GetPortfolio(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+
+	return ctx.JSON(investors)
 }
