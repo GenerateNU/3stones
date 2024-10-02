@@ -98,3 +98,35 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 
 	return &project, nil
 }
+
+func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
+	// Get the current project to check for funding goal
+	project, err := GetProjectById(db, projectId)
+	if err != nil {
+		return err
+	}
+
+	// Check with Sumer and Arav for function name to get total funded amount
+	// for now, we'll query directly until the name is given
+	var amountFunded int32
+	row := db.QueryRow(context.Background(), "SELECT SUM(funded_cents) FROM investor_investments WHERE project_id = $1", projectId)
+
+	err = row.Scan(&amountFunded)
+	if err != nil {
+		return err
+	}
+
+	// check if amount invested is greater than total funding goal and that the investor id was successfully extracted
+	if amountFunded+amount <= project.FundingGoalCents {
+		_, err = db.Exec(context.Background(),
+			`INSERT INTO investor_investments (project_id, investor_id, funded_cents) 
+		VALUES ($1, $2, $3)`, projectId, investorId, amount)
+		if err != nil {
+			return err
+		}
+	} else {
+		return &api_errors.FUNDING_GOAL_EXCEEDED
+	}
+	// if there was no errors in the process of adding it to the database return nothing
+	return nil
+}
