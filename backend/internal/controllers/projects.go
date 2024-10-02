@@ -44,6 +44,21 @@ func (c *ProjectsController) GetProjectById(ctx *fiber.Ctx) error {
 	return ctx.JSON(project)
 }
 
+func (c *ProjectsController) GetProjectTotalFunded(ctx *fiber.Ctx) error {
+	idParam := ctx.Params("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	totalFunded, err := transactions.GetProjectTotalFunded(c.ServiceParams.DB, id)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	return ctx.JSON(totalFunded)
+}
+
 func (c *ProjectsController) Invest(ctx *fiber.Ctx) error {
 	projectIdParam := ctx.Params("id")
 	investRequestBody := new(models.InvestRequestBody)
