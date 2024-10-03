@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
@@ -22,9 +20,12 @@ func NewInvestorsController(ServiceParams *types.ServiceParams) *InvestorsContro
 }
 
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
-	userId := ctx.Locals("userId")
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
 
-	id, err := uuid.Parse(fmt.Sprintf("%v", userId))
+	id, err := uuid.Parse(userId)
 	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
