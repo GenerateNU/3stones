@@ -37,3 +37,23 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(investors)
 }
+
+func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
+	p := new(PaginationParams)
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	investors, err := transactions.GetHistory(c.ServiceParams.DB, id, 1, 1)
+	if err != nil {
+		return err
+	}
+
+	return ctx.JSON(investors)
+}

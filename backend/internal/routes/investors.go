@@ -12,4 +12,5 @@ func Investors(params types.RouterParams) {
 	investors := params.Router.Group("/investors")
 
 	investors.Get("/portfolio", params.Auth.Middleware(), investorsController.GetPortfolio)
+	investors.Get("/history", params.Auth.Middleware(), investorsController.GetHistory)
 }
