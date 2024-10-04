@@ -7,10 +7,11 @@ import (
 	"backend/internal/api_errors"
 	"backend/internal/models"
 
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"time"
 )
 
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
@@ -133,7 +134,10 @@ func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount 
 }
 
 func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool) ([]models.ProjectPost, error) {
-	rows, err := db.Query(context.Background(), "SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC", projectId)
+	rows, err := db.Query(
+		context.Background(),
+		"SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC",
+		projectId)
 
 	project_posts := []models.ProjectPost{}
 	defer rows.Close()
@@ -150,18 +154,23 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool) ([]models.ProjectPos
 			&title,
 			&description)
 
-	if err != nil {
-		return nil, err
-	}
+		if err != nil {
 
-	project_posts = append(project_posts, models.ProjectPost{
-		ID:               id,
-		CreatedAt: 		  createdAt,
-		ProjectID:        projectID,
-		Title:            title,
-		Description:      description,
-	})
-}
-return project_posts, nil
-	
+			if errors.Is(err, pgx.ErrNoRows) {
+				return nil, &api_errors.UUID_NOT_FOUND
+			}
+
+			return nil, err
+		}
+
+		project_posts = append(project_posts, models.ProjectPost{
+			ID:          id,
+			CreatedAt:   createdAt,
+			ProjectID:   projectID,
+			Title:       title,
+			Description: description,
+		})
+	}
+	return project_posts, nil
+
 }
