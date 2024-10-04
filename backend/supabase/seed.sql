@@ -1,3 +1,4 @@
+-- SQLBook: Code
 INSERT INTO
     auth.users (
         instance_id,
@@ -88,4 +89,8 @@ INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VAL
 INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('00ae74b8-dac2-47cd-8c79-eb543e0c0b41', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user1@example.com'), '100');
 
 INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('874c693a-fefb-4a6f-8988-a85cfadb8fe2', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user2@example.com'), '2000');
+
+INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('0a880294-a917-4480-9865-f3a5d8ccc54d', '2024-9-03 00:10:18.08853+00', 'c3733692-5a86-441f-8ad0-9c32c648bb72', 'We have added a moat', 'The castle is now surrounded by a moat to keep intruders out');
+INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('93c9ec99-aef7-4f9b-ab60-8354c5c7119b', '2024-10-04 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Antimold technology installed', 'Spongebob will no longer be at risk of living in a mouldy pineapple');
+INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('2e840679-d9c4-4044-9f82-b262ace78bf3', '2024-10-03 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Mold Discovered', 'Unfortunately we have discovered mold growing on spongebobs pineapple');
 

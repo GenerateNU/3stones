@@ -1,3 +1,4 @@
+-- SQLBook: Code
 BEGIN;
 
 -- Allows us to use gen_random_uuid()

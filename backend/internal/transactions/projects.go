@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"time"
 )
 
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
@@ -129,4 +130,38 @@ func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount 
 	}
 	// if there was no errors in the process of adding it to the database return nothing
 	return nil
+}
+
+func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool) ([]models.ProjectPost, error) {
+	rows, err := db.Query(context.Background(), "SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC", projectId)
+
+	project_posts := []models.ProjectPost{}
+	defer rows.Close()
+	for rows.Next() {
+		var id uuid.UUID
+		var createdAt time.Time
+		var projectID uuid.UUID
+		var title string
+		var description string
+
+		err = rows.Scan(&id,
+			&createdAt,
+			&projectID,
+			&title,
+			&description)
+
+	if err != nil {
+		return nil, err
+	}
+
+	project_posts = append(project_posts, models.ProjectPost{
+		ID:               id,
+		CreatedAt: 		  createdAt,
+		ProjectID:        projectID,
+		Title:            title,
+		Description:      description,
+	})
+}
+return project_posts, nil
+	
 }
