@@ -1,9 +1,10 @@
 package transactions
 
 import (
-	"backend/internal/models"
 	"context"
 	"fmt"
+
+	"backend/internal/models"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -50,5 +51,4 @@ func GetProfile(db *pgxpool.Pool, investorId uuid.UUID) (models.InvestorProfile,
 	}
 
 	return investorProfile, nil
-
 }

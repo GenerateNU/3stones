@@ -84,7 +84,7 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	var investor = models.Investor{
+	investor := models.Investor{
 		ID:                    id,
 		FirstName:             profile.FirstName,
 		LastName:              profile.LastName,
