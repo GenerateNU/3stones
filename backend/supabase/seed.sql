@@ -76,6 +76,7 @@ INSERT INTO developers (id, name, description, premise, street, locality, state,
 INSERT INTO projects (id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode) VALUES ('c3733692-5a86-441f-8ad0-9c32c648bb72', '56ebee48-d844-4fcd-aa58-fb71688c3e81', 'Bowser Castle', 'A big fiery castle sitting on prime real estate', 'FALSE', '100000000', '7', 'Speare Pl', 'Boston', 'MA', '02115');
 INSERT INTO projects (id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', '56ebee48-d844-4fcd-aa58-fb71688c3e81', 'Spongebob Pineapple', 'A pineapple under the sea', 'TRUE', '18000000', '7', 'Speare Pl', 'Boston', 'MA', '02115');
 
+<<<<<<< HEAD
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user1@example.com'), 'Michael', 'Brennan');
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user2@example.com'), 'Abby', 'Stevenson');
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user3@example.com'), 'Dao', 'Ho');
@@ -84,4 +85,18 @@ INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id fr
 INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('e30e9159-5dac-48e9-b5cd-5ee8910ffa56', '2024-09-27 12:15:30', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email = 'user1@example.com'), '1574');
 INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('c21b9ea3-40d3-4c9c-aac0-baf6118719c2', '2024-09-26 10:49:15', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user2@example.com'), '2017');
 INSERT INTO investor_investments (id, created_at, project_id, investor_id, funded_cents) VALUES ('10240ceb-6cd6-42e3-b68a-b5fccf4623d9', '2024-08-17 11:55:10', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email = 'user3@example.com'), '2514');
+=======
+INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user1@example.com'), 'Dwight', 'Howard');
+INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user2@example.com'), 'Taj', 'Gibson');
+
+
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('bdd66406-64bd-41a5-b797-a486751ea429', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email='user1@example.com'), '1200');
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('ba995313-1b8a-4b4e-ad02-0b72efd22309', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email='user1@example.com'), '400');
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('de194a16-c0be-4519-bf6a-9a3bceea1b42', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email='user1@example.com'), '800');
+
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('a9daf2f3-67c5-4f34-8c7c-0b4079a90c91', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user1@example.com'), '1200');
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('00ae74b8-dac2-47cd-8c79-eb543e0c0b41', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user1@example.com'), '100');
+
+INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('874c693a-fefb-4a6f-8988-a85cfadb8fe2', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user2@example.com'), '2000');
+>>>>>>> 48e7c8af922a55ed972a42d2eb81020b1e8ebc6b
 

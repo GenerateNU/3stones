@@ -1,9 +1,11 @@
 package transactions
 
 import (
+	"backend/internal/models"
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -36,4 +38,17 @@ func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
 	}
 
 	return nil
+}
+
+func GetProfile(db *pgxpool.Pool, investorId uuid.UUID) (models.InvestorProfile, error) {
+	query := "SELECT first_name, last_name FROM investors WHERE supabase_id = $1"
+
+	var investorProfile models.InvestorProfile
+	err := db.QueryRow(context.Background(), query, investorId).Scan(&investorProfile.FirstName, &investorProfile.LastName)
+	if err != nil {
+		return models.InvestorProfile{}, err
+	}
+
+	return investorProfile, nil
+
 }
