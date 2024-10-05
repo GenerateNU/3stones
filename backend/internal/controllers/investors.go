@@ -4,6 +4,7 @@ import (
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
+	
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -24,7 +25,7 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	if !ok {
 		return &api_errors.INVALID_UUID
 	}
-
+	
 	id, err := uuid.Parse(userId)
 	if err != nil {
 		return &api_errors.INVALID_UUID
@@ -39,7 +40,15 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 }
 
 func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
-	p := new(PaginationParams)
+	paginationParams := new(types.PaginationParams)
+
+	err := ctx.QueryParser(paginationParams)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	
+
 	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
 		return &api_errors.INVALID_UUID
@@ -50,9 +59,9 @@ func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 		return &api_errors.INVALID_UUID
 	}
 
-	investors, err := transactions.GetHistory(c.ServiceParams.DB, id, 1, 1)
+	investors, err := transactions.GetHistory(c.ServiceParams.DB, id, paginationParams.Limit, paginationParams.Offset)
 	if err != nil {
-		return err
+		return ctx.Status(fiber.StatusInternalServerError).JSON(err)
 	}
 
 	return ctx.JSON(investors)
