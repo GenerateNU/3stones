@@ -139,6 +139,10 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool) ([]models.ProjectPos
 		"SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC",
 		projectId)
 
+	if err != nil {
+		return nil, err
+	}
+
 	project_posts := []models.ProjectPost{}
 	defer rows.Close()
 	for rows.Next() {
