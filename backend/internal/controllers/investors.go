@@ -4,7 +4,6 @@ import (
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
-	
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -25,7 +24,7 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	if !ok {
 		return &api_errors.INVALID_UUID
 	}
-	
+
 	id, err := uuid.Parse(userId)
 	if err != nil {
 		return &api_errors.INVALID_UUID
@@ -46,8 +45,6 @@ func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
-
-	
 
 	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
