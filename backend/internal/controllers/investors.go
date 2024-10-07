@@ -36,7 +36,7 @@ func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	return ctx.JSON(investorProfile)
+	return ctx.Status(fiber.StatusOK).JSON(investorProfile)
 }
 
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
@@ -92,5 +92,5 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		InvestmentBreakdown:   investments,
 	}
 
-	return ctx.JSON(investor)
+	return ctx.Status(fiber.StatusOK).JSON(investor)
 }
