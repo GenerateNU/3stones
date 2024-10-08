@@ -1,7 +1,9 @@
 package models
 
-import "github.com/google/uuid"
-import "time"
+import (
+	"github.com/google/uuid"
+	"time"
+)
 
 type Project struct {
 	ID               uuid.UUID `json:"id"`
@@ -22,9 +24,9 @@ type InvestRequestBody struct {
 }
 
 type ProjectPost struct {
-	ID               uuid.UUID `json:"id"`
-	CreatedAt 		 time.Time `json:"created_at"`
-	ProjectID        uuid.UUID `json:"project_id"`
-	Title            string    `json:"title"`
-	Description      string    `json:"description"`
+	ID          uuid.UUID `json:"id"`
+	CreatedAt   time.Time `json:"created_at"`
+	ProjectID   uuid.UUID `json:"project_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
 }

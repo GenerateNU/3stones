@@ -3,11 +3,10 @@ package transactions
 import (
 	"context"
 	"errors"
+	"time"
 
 	"backend/internal/api_errors"
 	"backend/internal/models"
-
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -138,7 +137,6 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 		context.Background(),
 		"SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3",
 		projectId, limit, offset)
-
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +155,6 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 			&projectID,
 			&title,
 			&description)
-
 		if err != nil {
 
 			if errors.Is(err, pgx.ErrNoRows) {
@@ -176,5 +173,4 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 		})
 	}
 	return project_posts, nil
-
 }
