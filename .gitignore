@@ -1,2 +1,3 @@
 .env.dev
 /node_modules
+*.p12
