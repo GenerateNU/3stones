@@ -103,13 +103,30 @@ func (c *ProjectsController) Invest(ctx *fiber.Ctx) error {
 }
 
 func (c *ProjectsController) GetProjectPosts(ctx *fiber.Ctx) error {
+	paginationParams := new(types.PaginationParams)
+
+	err := ctx.QueryParser(paginationParams)
+	if err != nil {
+		return &api_errors.PAGINATION_ERROR
+	}
+
+	// default values for limit and offset
+
+	if paginationParams.Limit == 0 {
+		paginationParams.Limit = 5
+	}
+
+	if paginationParams.Offset == 0 {
+		paginationParams.Offset = 0
+	}
+
 	idParam := ctx.Params("id")
 	id, err := uuid.Parse(idParam)
 	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
 
-	posts, err := transactions.GetProjectPosts(id, c.ServiceParams.DB)
+	posts, err := transactions.GetProjectPosts(id, c.ServiceParams.DB, paginationParams.Limit, paginationParams.Offset)
 	if err != nil {
 		return err
 	}

@@ -133,11 +133,11 @@ func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount 
 	return nil
 }
 
-func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool) ([]models.ProjectPost, error) {
+func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset int) ([]models.ProjectPost, error) {
 	rows, err := db.Query(
 		context.Background(),
-		"SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC",
-		projectId)
+		"SELECT id, created_at, project_id, title, description FROM project_posts WHERE project_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3",
+		projectId, limit, offset)
 
 	if err != nil {
 		return nil, err

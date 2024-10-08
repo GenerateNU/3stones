@@ -9,4 +9,5 @@ var (
 	INVALID_INVESTMENT_AMOUNT = NewClientError("invalid_investment_amount")
 	INVALID_REQUEST_BODY      = NewClientError("invalid_request_body")
 	FUNDING_GOAL_EXCEEDED     = NewClientError("funding_goal_exceeded")
+	PAGINATION_ERROR          = NewClientError("pagination_error")
 )
