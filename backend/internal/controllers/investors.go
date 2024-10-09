@@ -102,12 +102,6 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		return &api_errors.PAGINATION_ERROR
 	}
 
-	investors, err := transactions.GetHistory(c.ServiceParams.DB, id, paginationParams.Limit, paginationParams.Offset)
-	if err != nil {
-		return err
-	}
-
-	return ctx.JSON(investors)
 	profile, err := transactions.GetProfile(c.ServiceParams.DB, id)
 	if err != nil {
 		return err
