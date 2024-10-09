@@ -2,6 +2,7 @@ package models
 
 import "github.com/google/uuid"
 
+
 type Investor struct {
 	ID                    uuid.UUID         `json:"id"`
 	FirstName             string            `json:"first"`
@@ -13,4 +14,10 @@ type Investor struct {
 type InvestorProfile struct {
 	FirstName string `json:"first"`
 	LastName  string `json:"last"`
+}
+
+type HistoryEntry struct {
+	CreatedAt   string `json:"created_at"`
+	ProjectID   uuid.UUID `json:"project_id"`
+	FundedCents int       `json:"funded_cents"`
 }
