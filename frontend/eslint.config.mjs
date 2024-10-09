@@ -7,6 +7,13 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  {
     ignores: [
       '.eslintrc.js',
       '.prettierrc.json',
@@ -16,7 +23,11 @@ export default [
       'tailwind.config.js',
     ],
   },
-  { languageOptions: { globals: globals.browser } },
+  {
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+    },
+  },
   jsEslint.configs.recommended,
   ...typescriptEslint.configs.recommended,
   eslintPluginReact.configs.flat.recommended,

@@ -16,7 +16,7 @@ const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
-    <StyledView className='flex-1 items-center justify-center bg-white'>
+    <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
       {/* Some dummy image */}
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
@@ -25,7 +25,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
-            <StyledText className='align-center font-bold text-3xl'>Dummy page</StyledText>
+            <StyledText className='align-center text-3xl font-title text-defaultText'>
+              Dummy page
+            </StyledText>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('contributorsScreen')}>
