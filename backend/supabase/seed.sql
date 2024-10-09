@@ -1,4 +1,3 @@
--- SQLBook: Code
 INSERT INTO
     auth.users (
         instance_id,
