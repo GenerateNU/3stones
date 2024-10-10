@@ -8,9 +8,16 @@ type Investor struct {
 	LastName              string            `json:"last"`
 	TotalInvestmentAmount int               `json:"total_investment_amount"`
 	InvestmentBreakdown   map[uuid.UUID]int `json:"investment_breakdown"`
+	History               []HistoryEntry    `json:"history"`
 }
 
 type InvestorProfile struct {
 	FirstName string `json:"first"`
 	LastName  string `json:"last"`
+}
+
+type HistoryEntry struct {
+	CreatedAt   string    `json:"created_at"`
+	ProjectID   uuid.UUID `json:"project_id"`
+	FundedCents int       `json:"funded_cents"`
 }
