@@ -61,11 +61,6 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 	paginationParams := new(types.PaginationParams)
 
-	err := ctx.QueryParser(paginationParams)
-	if err != nil {
-		return &api_errors.INVALID_UUID
-	}
-
 	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
 		return &api_errors.INVALID_UUID
@@ -76,9 +71,14 @@ func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 		return &api_errors.INVALID_UUID
 	}
 
+	err = ctx.QueryParser(paginationParams)
+	if err != nil {
+		return &api_errors.PAGINATION_ERROR
+	}
+
 	investors, err := transactions.GetHistory(c.ServiceParams.DB, id, paginationParams.Limit, paginationParams.Offset)
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(err)
+		return err
 	}
 
 	return ctx.JSON(investors)
@@ -117,12 +117,18 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		return err
 	}
 
+	history, err := transactions.GetHistory(c.ServiceParams.DB, id, paginationParams.Limit, paginationParams.Offset)
+	if err != nil {
+		return err
+	}
+
 	investor := models.Investor{
 		ID:                    id,
 		FirstName:             profile.FirstName,
 		LastName:              profile.LastName,
 		TotalInvestmentAmount: totalValue,
 		InvestmentBreakdown:   investments,
+		History:               history,
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(investor)
