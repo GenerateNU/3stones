@@ -117,18 +117,12 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	history, err := transactions.GetHistory(c.ServiceParams.DB, id, paginationParams.Limit, paginationParams.Offset)
-	if err != nil {
-		return err
-	}
-
 	investor := models.Investor{
 		ID:                    id,
 		FirstName:             profile.FirstName,
 		LastName:              profile.LastName,
 		TotalInvestmentAmount: totalValue,
 		InvestmentBreakdown:   investments,
-		History:               history,
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(investor)
