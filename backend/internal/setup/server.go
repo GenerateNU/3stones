@@ -14,6 +14,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/plaid/plaid-go/v29/plaid"
 )
 
 func SetupServer(config *config.Config) (*fiber.App, error) {
@@ -40,6 +41,13 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 		return nil, err
 	}
 
+	// Setup plaid
+	plaidConfig := plaid.NewConfiguration()
+	plaidConfig.AddDefaultHeader("PLAID-CLIENT-ID", config.Plaid.ClientId)
+	plaidConfig.AddDefaultHeader("PLAID-SECRET", config.Plaid.Secret)
+	plaidConfig.UseEnvironment(plaid.Production)
+	plaidClient := plaid.NewAPIClient(plaidConfig)
+
 	// Setup routes
 	router := app.Group("/api/v1")
 
@@ -51,7 +59,8 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 		Router: router,
 		Config: config,
 		ServiceParams: &types.ServiceParams{
-			DB: db,
+			DB:    db,
+			Plaid: plaidClient,
 		},
 	}
 
