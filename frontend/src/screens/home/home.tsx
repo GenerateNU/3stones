@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import searchBar from '../../../components/SearchBar';
 
 import styles from './styles';
 
@@ -17,10 +18,14 @@ const StyledText = styled(Text);
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
+      <StyledView className='align-center'>
+        {searchBar()}
+      </StyledView>
       {/* Some dummy image */}
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
+      
       {/* Some dummy button */}
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
