@@ -1,31 +1,51 @@
 import { useQuery } from '@tanstack/react-query';
+import { v4 as UUID } from 'uuid';
 import axios from 'axios';
 
-import { Contributor } from '../types/contributor';
 import { apiUrl } from './apiLinks';
+import { Project } from '../types/project';
+import { dumpAxiosError } from '../util/errors';
 
-export type ContributorQueryParams = {
-  id?: number;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-};
-
-const getProjectById = async (id: string): Promise<Project> => {
-    return await axios.get(`${apiUrl}/api/v1/project/${id}`)
+const getProject = async (id: string): Promise<Project | null> => {
+  try {
+    const response = await axios.get<Project>(`${apiUrl}/api/v1/projects/${id}`);
+    return response.data; // Return the project if successful
+  } catch (error) {
+    dumpAxiosError(error);
+    return null; // Return null if there's an error
+  }
 }
 
-export const useProjectById = (id: string) => {
-  const { data: project, isLoading } = useQuery<Contributor>({
-    queryKey: ['contributor', id],
-    queryFn: asy() => {
-        const result = await axios.get(`${apiUrl}/api/v1/project/${id}`);
-
-    },
+export const useProject = (id: string) => {
+  const { data: project, isLoading } = useQuery<Project>({
+    queryKey: ['project', id],
+    queryFn: () => getProject(id),
   });
 
   return {
-    contributor,
-    contributorIsLoading,
+    project,
+    isLoading,
+  };
+};
+
+const getProjectTotalFunded = async (id: string): Promise<number | null> => {
+  try {
+    const response = await axios.get<number>(`${apiUrl}/api/v1/projects/${id}/total-funded`);
+    return response.data; // Return the project if successful
+  } catch (error) {
+    dumpAxiosError(error);
+    return null; // Return null if there's an error
+  }
+}
+
+export const useProjectTotalFunded = (id: string) => {
+  const { data: projectTotalFunded, isLoading } = useQuery<number>({
+    queryKey: ['project_total_funded', id],
+    queryFn: () => getProjectTotalFunded(id),
+  });
+
+  return {
+    projectTotalFunded,
+    isLoading,
   };
 };
