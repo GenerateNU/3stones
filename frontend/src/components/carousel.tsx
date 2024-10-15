@@ -23,7 +23,20 @@ export default function GenericCarousel() {
             <Carousel
              width = {width}
              height = {width / 2}
-             data = {list}/>
+             data = {list}
+             renderItem={({ item }) => (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'lightgray',
+                  }}
+                >
+                </View>
+              )}
+              scrollAnimationDuration={1000}
+             />
         </View>
     )
 }
