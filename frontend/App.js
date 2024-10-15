@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './src/navigation/BottomTabs';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
+const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -28,8 +30,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }

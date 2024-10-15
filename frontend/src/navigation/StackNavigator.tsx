@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../screens/home/home';
 import SecondScreen from '../screens/secondScreen/secondScreen';
+import ContributorsScreen from '../screens/contributors/contributors';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,11 @@ export default function StackNavigator() {
         options={{ title: '', headerShown: false }}
       />
       <Stack.Screen name='secondScreen' component={SecondScreen} options={{ title: '' }} />
+      <Stack.Screen
+        name='contributorsScreen'
+        component={ContributorsScreen}
+        options={{ title: '' }}
+      />
     </Stack.Navigator>
   );
 }

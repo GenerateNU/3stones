@@ -100,6 +100,7 @@ golangci-lint run
 ```
 
 # Contributing guidelines
+
 1. **Open PRs as early as possible.** This allows us to give you feedback and help earlier.
 2. **Keep your branch as up-to-date with main as possible.** The earlier and more frequent you are updating your feature branch with changes from main the less weird merge conflicts and less extra work you will have to do.
 3. **Submit video walkthroughs of you running your endpoint on PRs.** 
