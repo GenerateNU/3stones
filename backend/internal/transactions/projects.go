@@ -40,6 +40,11 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			return nil, err
 		}
 
+		images, err := GetProjectImages(db, id)
+		if err != nil {
+			return nil, err
+		}
+
 		projects = append(projects, models.Project{
 			ID:               id,
 			DeveloperID:      developerID,
@@ -52,6 +57,7 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			Locality:         locality,
 			State:            state,
 			Zipcode:          zipcode,
+			Images:           images,
 		})
 	}
 
@@ -97,7 +103,37 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 		return nil, err
 	}
 
+	images, err := GetProjectImages(db, project.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	project.Images = images
+
 	return &project, nil
+}
+
+func GetProjectImages(db *pgxpool.Pool, id uuid.UUID) ([]models.ImageLink, error) {
+	rows, err := db.Query(context.Background(), `SELECT id, image_url FROM project_images WHERE project_id = $1;`, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var imageUrls []models.ImageLink
+	for rows.Next() {
+		var imageId uuid.UUID
+		var imageUrl string
+
+		if err := rows.Scan(&imageId, &imageUrl); err != nil {
+			return nil, err
+		}
+		imageUrls = append(imageUrls, models.ImageLink{
+			ID:  imageId,
+			Url: imageUrl,
+		})
+	}
+
+	return imageUrls, err
 }
 
 func Invest(investorId uuid.UUID, db *pgxpool.Pool, projectId uuid.UUID, amount int32) error {
@@ -143,6 +179,7 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 
 	project_posts := []models.ProjectPost{}
 	defer rows.Close()
+
 	for rows.Next() {
 		var id uuid.UUID
 		var createdAt time.Time
