@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
@@ -28,6 +28,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             <StyledText className='align-center text-3xl font-title text-defaultText'>
               Dummy page
             </StyledText>
+            <Button onPress={(evt) => {
+              console.log("Hello, world!");
+            }} title="Click me"></Button>
           </View>
         </TouchableOpacity>
       </View>
