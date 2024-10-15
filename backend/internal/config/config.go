@@ -11,6 +11,7 @@ type Config struct {
 	Application ApplicationConfig `envPrefix:"TS3_APPLICATION_"`
 	Database    DatabaseConfig    `envPrefix:"TS3_DATABASE_"`
 	Supabase    SupabaseConfig    `envPrefix:"TS3_SUPABASE_"`
+	Plaid       PlaidConfig       `envPrefix:"TS3_PLAID_"`
 }
 
 // Create a configuration, using environment variables defined in the shell

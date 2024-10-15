@@ -31,3 +31,15 @@ func GetPortfolio(db *pgxpool.Pool, investorID uuid.UUID) (map[uuid.UUID]int, er
 
 	return portfolio, nil
 }
+
+func GetTotalPortfolioValue(db *pgxpool.Pool, investorID uuid.UUID) (int, error) {
+	query := "SELECT COALESCE(SUM(funded_cents), 0) AS total_value FROM investor_investments WHERE investor_id = $1"
+
+	var totalValue int
+	err := db.QueryRow(context.Background(), query, investorID).Scan(&totalValue)
+	if err != nil {
+		return 0, err
+	}
+
+	return totalValue, nil
+}
