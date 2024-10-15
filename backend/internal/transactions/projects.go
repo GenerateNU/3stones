@@ -14,7 +14,10 @@ import (
 )
 
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
-	rows, err := db.Query(context.Background(), "SELECT id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode FROM projects")
+	rows, err := db.Query(
+		context.Background(),
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode FROM projects")
+
 	if err != nil {
 		return nil, err
 	}
@@ -29,13 +32,14 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 		var description string
 		var completed bool
 		var fundingGoalCents int32
+		var milestone string
 		var premise string
 		var street string
 		var locality string
 		var state string
 		var zipcode string
 
-		err = rows.Scan(&id, &developerID, &title, &description, &completed, &fundingGoalCents, &premise, &street, &locality, &state, &zipcode)
+		err = rows.Scan(&id, &developerID, &title, &description, &completed, &fundingGoalCents, &milestone, &premise, &street, &locality, &state, &zipcode)
 		if err != nil {
 			return nil, err
 		}
@@ -52,6 +56,7 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			Description:      description,
 			Completed:        completed,
 			FundingGoalCents: fundingGoalCents,
+			Milestone:        milestone,
 			Premise:          premise,
 			Street:           street,
 			Locality:         locality,
@@ -79,7 +84,7 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	// Execute the query with the provided context and developer ID
 	row := db.QueryRow(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, premise, street, locality, state, zipcode FROM projects WHERE ID = $1",
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode FROM projects WHERE ID = $1",
 		id)
 
 	var project models.Project
@@ -90,6 +95,7 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 		&project.Description,
 		&project.Completed,
 		&project.FundingGoalCents,
+		&project.Milestone,
 		&project.Premise,
 		&project.Street,
 		&project.Locality,

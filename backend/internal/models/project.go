@@ -13,6 +13,7 @@ type Project struct {
 	Description      string      `json:"description"`
 	Completed        bool        `json:"completed"`
 	FundingGoalCents int32       `json:"funding_goal_cents"`
+	Milestone        string      `json:"milestone"`
 	Premise          string      `json:"premise"`
 	Street           string      `json:"street"`
 	Locality         string      `json:"locality"`
