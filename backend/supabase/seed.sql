@@ -84,7 +84,6 @@ INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-9
 INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'https://cdn2.thecatapi.com/images/MjA1MTYzNg.jpg');
 INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg');
 
-
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user1@example.com'), 'Dwight', 'Howard');
 INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user2@example.com'), 'Taj', 'Gibson');
 
@@ -97,10 +96,15 @@ INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VAL
 
 INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('874c693a-fefb-4a6f-8988-a85cfadb8fe2', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', (SELECT id FROM auth.users WHERE email='user2@example.com'), '2000');
 
-INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('0a880294-a917-4480-9865-f3a5d8ccc54d', '2024-9-03 00:10:18.08853+00', 'c3733692-5a86-441f-8ad0-9c32c648bb72', 'We have added a moat', 'The castle is now surrounded by a moat to keep intruders out');
-INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('93c9ec99-aef7-4f9b-ab60-8354c5c7119b', '2024-10-04 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Antimold technology installed', 'Spongebob will no longer be at risk of living in a mouldy pineapple');
-INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('2e840679-d9c4-4044-9f82-b262ace78bf3', '2024-10-03 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Mold Discovered', 'Unfortunately we have discovered mold growing on spongebobs pineapple');
-INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('ade2d04f-b304-471c-ac1f-b3a0887b3319', '2024-9-03 00:14:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Pinapple in Place', 'We have placed the pineapple under the sea - waiting to start carving it into a home');
-INSERT INTO project_posts(id, created_at, project_id, title, description) VALUES ('d9a81e16-05d1-4248-a047-5870f6c34755', '2024-8-03 00:14:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Aquiring a Pineapple', 'It has been tricky trying to find a pineapple large enough to turn into a house');
+INSERT INTO project_posts (id, created_at, project_id, title, description) VALUES ('0a880294-a917-4480-9865-f3a5d8ccc54d', '2024-9-03 00:10:18.08853+00', 'c3733692-5a86-441f-8ad0-9c32c648bb72', 'We have added a moat', 'The castle is now surrounded by a moat to keep intruders out');
+INSERT INTO project_posts (id, created_at, project_id, title, description) VALUES ('93c9ec99-aef7-4f9b-ab60-8354c5c7119b', '2024-10-04 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Antimold technology installed', 'Spongebob will no longer be at risk of living in a mouldy pineapple');
+INSERT INTO project_posts (id, created_at, project_id, title, description) VALUES ('2e840679-d9c4-4044-9f82-b262ace78bf3', '2024-10-03 00:56:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Mold Discovered', 'Unfortunately we have discovered mold growing on spongebobs pineapple');
+INSERT INTO project_posts (id, created_at, project_id, title, description) VALUES ('ade2d04f-b304-471c-ac1f-b3a0887b3319', '2024-9-03 00:14:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Pinapple in Place', 'We have placed the pineapple under the sea - waiting to start carving it into a home');
+INSERT INTO project_posts (id, created_at, project_id, title, description) VALUES ('d9a81e16-05d1-4248-a047-5870f6c34755', '2024-8-03 00:14:18.08853+00', 'd09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'Aquiring a Pineapple', 'It has been tricky trying to find a pineapple large enough to turn into a house');
 
+INSERT INTO project_post_images (post_id, image_url) VALUES ('0a880294-a917-4480-9865-f3a5d8ccc54d', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
+INSERT INTO project_post_images (post_id, image_url) VALUES ('93c9ec99-aef7-4f9b-ab60-8354c5c7119b', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
+INSERT INTO project_post_images (post_id, image_url) VALUES ('2e840679-d9c4-4044-9f82-b262ace78bf3', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
+INSERT INTO project_post_images (post_id, image_url) VALUES ('ade2d04f-b304-471c-ac1f-b3a0887b3319', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
+INSERT INTO project_post_images (post_id, image_url) VALUES ('d9a81e16-05d1-4248-a047-5870f6c34755', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
 

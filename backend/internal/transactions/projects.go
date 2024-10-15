@@ -177,7 +177,7 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 		return nil, err
 	}
 
-	project_posts := []models.ProjectPost{}
+	projectPosts := []models.ProjectPost{}
 	defer rows.Close()
 
 	for rows.Next() {
@@ -193,7 +193,6 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 			&title,
 			&description)
 		if err != nil {
-
 			if errors.Is(err, pgx.ErrNoRows) {
 				return nil, &api_errors.UUID_NOT_FOUND
 			}
@@ -201,13 +200,42 @@ func GetProjectPosts(projectId uuid.UUID, db *pgxpool.Pool, limit int, offset in
 			return nil, err
 		}
 
-		project_posts = append(project_posts, models.ProjectPost{
+		images, err := GetProjectPostImages(db, id)
+		if err != nil {
+			return nil, err
+		}
+
+		projectPosts = append(projectPosts, models.ProjectPost{
 			ID:          id,
 			CreatedAt:   createdAt,
 			ProjectID:   projectID,
 			Title:       title,
 			Description: description,
+			Images:      images,
 		})
 	}
-	return project_posts, nil
+	return projectPosts, nil
+}
+
+func GetProjectPostImages(db *pgxpool.Pool, id uuid.UUID) ([]models.ImageLink, error) {
+	rows, err := db.Query(context.Background(), `SELECT id, image_url FROM project_post_images WHERE post_id = $1;`, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var imageUrls []models.ImageLink
+	for rows.Next() {
+		var imageId uuid.UUID
+		var imageUrl string
+
+		if err := rows.Scan(&imageId, &imageUrl); err != nil {
+			return nil, err
+		}
+		imageUrls = append(imageUrls, models.ImageLink{
+			ID:  imageId,
+			Url: imageUrl,
+		})
+	}
+
+	return imageUrls, err
 }
