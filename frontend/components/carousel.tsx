@@ -1,6 +1,6 @@
 import Carousel from 'react-native-reanimated-carousel'
 import React from 'react'
-import { Dimensions, View } from 'react-native'
+import { Dimensions, View, Image } from 'react-native'
 
 export default function GenericCarousel() {
     const width = Dimensions.get('window').width
@@ -33,7 +33,14 @@ export default function GenericCarousel() {
                     backgroundColor: 'lightgray',
                   }}
                 >
+                    <Image
+                            source={{ uri: item.image }}
+                            style={{ width: '100%', height: '80%' }}
+                            resizeMode="cover"
+                        />
+
                 </View>
+
               )}
               scrollAnimationDuration={1000}
              />
