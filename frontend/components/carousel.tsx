@@ -2,9 +2,16 @@ import Carousel from 'react-native-reanimated-carousel'
 import React from 'react'
 import { Dimensions, View, Image } from 'react-native'
 
-export default function GenericCarousel() {
-    const width = Dimensions.get('window').width
 
+interface GenericCarouselProps {
+    components: React.ReactNode[]; // ReactNode allows you to pass JSX elements
+}
+
+
+export default function GenericCarousel({ components }: GenericCarouselProps) {
+    const width = Dimensions.get('window').width
+    
+    /*
     const list = [
         {
             id: 1,
@@ -17,13 +24,16 @@ export default function GenericCarousel() {
             image: 'https://picsum.photos/200/300'
         }
     ]
+        */
+
+    /*dataSet = {{ kind: "basic-layouts", name: "left-align"}}*/
 
     return (
         <View style={{ flex:1 }}>
             <Carousel
              width = {width}
-             height = {width / 2}
-             data = {list}
+             height = {width}
+             data = {components}
              renderItem={({ item }) => (
                 <View
                   style={{
@@ -31,13 +41,9 @@ export default function GenericCarousel() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: 'lightgray',
-                  }}
+                  }} 
                 >
-                    <Image
-                            source={{ uri: item.image }}
-                            style={{ width: '100%', height: '80%' }}
-                            resizeMode="cover"
-                        />
+                    {item}
 
                 </View>
 
