@@ -4,8 +4,6 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
 import styles from './styles';
-import Carousel from 'react-native-reanimated-carousel';
-import GenericCarousel from '../../components/carousel';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -23,7 +21,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
-      <GenericCarousel/>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>

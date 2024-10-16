@@ -1,6 +1,6 @@
-import Carousel from 'react-native-reanimated-carousel'
-import React from 'react'
-import { Dimensions, View, Image } from 'react-native'
+import Carousel from 'react-native-reanimated-carousel';
+import React from 'react';
+import { Dimensions, View } from 'react-native';
 
 
 interface GenericCarouselProps {
@@ -9,7 +9,7 @@ interface GenericCarouselProps {
 
 
 export default function GenericCarousel({ components }: GenericCarouselProps) {
-    const width = Dimensions.get('window').width
+    const width = Dimensions.get('window').width;
     
     /*
     const list = [
@@ -51,5 +51,5 @@ export default function GenericCarousel({ components }: GenericCarouselProps) {
               scrollAnimationDuration={1000}
              />
         </View>
-    )
+    );
 }
