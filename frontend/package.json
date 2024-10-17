@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "format": "prettier --write **/*.{js,jsx,ts,tsx,css,md,json,scss} --config ./.prettierrc.json",
+    "format": "npx prettier --write **/*.{js,ts,tsx,md,json} --config ./.prettierrc.json",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "jest"
