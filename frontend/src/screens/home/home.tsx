@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {/* Some dummy image */}
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
+        {/* Some dummy button */}
       </StyledView>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
