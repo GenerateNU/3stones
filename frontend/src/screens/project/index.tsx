@@ -32,7 +32,6 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(x / 100);
     }
 
-    const testImage = 'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?cs=srgb&dl=pexels-wojciech-kumpicki-1084687-2071882.jpg&fm=jpg';
     const fundingProgress: DimensionValue = `${(projectTotalFunded / project.funding_goal_cents).toFixed(0)}%` as DimensionValue;
 
     const propertyDetails = [
@@ -43,25 +42,27 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
         ["Estimated Hold Period", "20 Months"]
     ];
 
+    const numberOfImages = project.images.length;
+
     return (
         <StyledScrollView className='flex-1 bg-surfaceBG p-6 text-defaultText' contentContainerStyle={{alignItems: 'stretch'}}>
             <StyledTouchableOpacity className='flex flex-row h-32 w-full' onPress={(evt) => { navigation.navigate('project-images')}}>
                 <StyledView className='flex-grow bg-red-100 mr-2'>
                     <StyledImage
-                        source={{ uri: testImage }} // replace with your image link
+                        source={{ uri: project.images[0 % numberOfImages].url }} // replace with your image link
                         className="flex-1 object-cover rounded"
                         resizeMode="cover"
                     />
                 </StyledView>
                 <StyledView className='flex flex-col flex-grow ml-2'>
                     <StyledImage
-                        source={{ uri: testImage }} // replace with your image link
+                        source={{ uri: project.images[1 % numberOfImages].url }} // replace with your image link
                         className="flex-1 object-cover mb-2 rounded"
                         resizeMode="cover"
                     />
                     <StyledView className='flex-1 object-cover mt-2 rounded bg-green-500'>
                         <StyledImage
-                            source={{ uri: testImage }} // replace with your image link
+                            source={{ uri: project.images[2 % numberOfImages].url }} // replace with your image link
                             className="w-full h-full object-cover rounded"
                             resizeMode="cover"
                         />
