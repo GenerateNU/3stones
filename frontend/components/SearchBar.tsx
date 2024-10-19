@@ -14,9 +14,8 @@ const { width, height } = Dimensions.get('window');
 // Width and Height were used to determine viewport's width/height (responsive design)
 const styles = StyleSheet.create({
   shadowSearchBar: {
-    // 75 vw and 5 vh
+    // 75vw and 5vh
     width: width * 0.75,
-
     height: height * 0.05,
     backgroundColor: 'white',
     shadowColor: '#000',
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.035,
     shadowOpacity: 0.25,
     shadowRadius: height * 0.006,
-    //for android, change this
+    //Drop shadow for android: for edit in the future if android drop shadow is incorrectly rendering this component.(elevation is an android specific property)
     elevation: height * 0.05,
     paddingLeft: width * 0.1,
     fontSize: width * 0.04,
