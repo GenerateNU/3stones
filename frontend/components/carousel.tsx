@@ -8,10 +8,9 @@ interface GenericCarouselProps {
 }
 const StyledView = styled(View);
 
-
 export default function GenericCarousel({ components }: GenericCarouselProps) {
   const width = Dimensions.get('window').width;
-  
+
   return (
     <StyledView className='flex-1'>
       <Carousel
@@ -19,7 +18,7 @@ export default function GenericCarousel({ components }: GenericCarouselProps) {
         height={width}
         data={components}
         renderItem={({ item }) => (
-          <StyledView className="flex-1 justify-center items-center bg-lightgray">
+          <StyledView className='flex-1 justify-center items-center bg-lightgray'>
             {item}
           </StyledView>
         )}
