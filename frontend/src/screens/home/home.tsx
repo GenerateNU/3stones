@@ -14,9 +14,24 @@ interface HomeScreenProps {
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
+const WelcomeBlock = () => {
+  return (
+    <StyledView className='flex h-[12vh] w-[100vw] items-center justify-center'>
+      <StyledView className='bg-[#000]'>
+        <StyledText className='text-2xl font-title text-defaultText'>
+          Welcome to the app!
+        </StyledText>
+      </StyledView>
+    </StyledView>
+  );
+};
+
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
-    <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
+    <StyledView className='flex-1 items-center bg-surfaceBG'>
+      <StyledView className='pt-[5vh]'>
+      <WelcomeBlock />
+      </StyledView>
       {/* Some dummy image */}
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
