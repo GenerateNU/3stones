@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
 import styles from './styles';
+import PropertyCard from '../../components/PropertyCard';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -22,6 +23,13 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
       {/* Some dummy button */}
+      <PropertyCard address={'480 Mass Ave.'} 
+      location={'Boston, MA 02119'} 
+      price={170000} 
+      duration={'6'} 
+      invested={50} 
+      completion={100} 
+      imageUrl={'frontend/assets/images/splash.png'} />
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
