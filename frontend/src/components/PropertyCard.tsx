@@ -14,12 +14,12 @@ interface PropertyCardProps {
     invested: number;
     completion: number;
     imageUrl: string;
-  }
+}
 
 const PropertyCard = ({address, location, price, duration, invested, completion, imageUrl} : PropertyCardProps )=> {
 
   return (
-    <StyledView className = 'flex p-4 w-80 bg-surfaceFG overflow-hidden rounded-lg'>
+    <StyledView className = 'flex p-4 w-8/10 bg-surfaceFG overflow-hidden rounded-lg'>
         <StyledView className = 'flex-1 align-center'>
             <Image source={{ uri: imageUrl }} />
         </StyledView>

@@ -5,6 +5,7 @@ import { styled } from 'nativewind';
 
 import styles from './styles';
 import PropertyCard from '../../components/PropertyCard';
+import SideBySide from '../../components/SideBySide';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -23,13 +24,21 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
       {/* Some dummy button */}
-      <PropertyCard address={'480 Mass Ave.'} 
+      <SideBySide component1={<PropertyCard address={'480 Mass Ave.'} 
       location={'Boston, MA 02119'} 
       price={170000} 
       duration={'6'} 
       invested={50} 
       completion={100} 
-      imageUrl={'frontend/assets/images/splash.png'} />
+      imageUrl={'frontend/assets/images/splash.png'} />} component2={<PropertyCard address={'480 Mass Ave.'} 
+      location={'Boston, MA 02119'} 
+      price={170000} 
+      duration={'6'} 
+      invested={50} 
+      completion={100} 
+      imageUrl={'frontend/assets/images/splash.png'} />} >
+        
+      </SideBySide>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
