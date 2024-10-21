@@ -24,10 +24,10 @@ const PropertyCard = ({address, location, price, duration, invested, completion,
             <Image source={{ uri: imageUrl }} />
         </StyledView>
         <StyledView className = 'flex-2 p-4'>
-            <StyledText className = 'text-2xl' >{address}</StyledText>
-            <StyledText className = 'text-lg'>{location}</StyledText>
-            <StyledText className = 'text-lg'>${price.toLocaleString()}</StyledText>
-            <StyledText className = 'text-lg'>{duration} months</StyledText>
+            <StyledText className = 'text-lg' >{address}</StyledText>
+            <StyledText className = 'text-sm'>{location}</StyledText>
+            <StyledText className = 'text-sm'>${price.toLocaleString()}</StyledText>
+            <StyledText className = 'text-sm'>{duration} months</StyledText>
         </StyledView>
         <StyledView className = 'flex-3 p-4 w-full bg-surfaceFG overflow-hidden'>
              <InvestmentProgress percentageFunded={(invested/completion)*100} />

@@ -24,21 +24,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
       {/* Some dummy button */}
-      <SideBySide component1={<PropertyCard address={'480 Mass Ave.'} 
-      location={'Boston, MA 02119'} 
-      price={170000} 
-      duration={'6'} 
-      invested={50} 
-      completion={100} 
-      imageUrl={'frontend/assets/images/splash.png'} />} component2={<PropertyCard address={'480 Mass Ave.'} 
-      location={'Boston, MA 02119'} 
-      price={170000} 
-      duration={'6'} 
-      invested={50} 
-      completion={100} 
-      imageUrl={'frontend/assets/images/splash.png'} />} >
-        
-      </SideBySide>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
