@@ -2,6 +2,8 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import WideGreenButton from '../../components/WideGreenButton';
+import WideWhiteButton from '../../components/WideWhiteButton';
 
 import styles from './styles';
 
@@ -36,33 +38,63 @@ const WelcomeBlock = ({ name }: { name: string }) => {
   );
 };
 
-const PortfolioValue = ({ Portfoliovalue, Portfoliochange }: { Portfoliovalue: number, Portfoliochange: number }) => {
+const PortfolioValue = ({
+  Portfoliovalue,
+  Portfoliochange,
+  navigation,
+}: {
+  Portfoliovalue: number;
+  Portfoliochange: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: NavigationScreenProp<any, any>;
+}) => {
   return (
-    <StyledView className='flex flex-col  h-[30vh] items-center justify-center px-[7vw] py-[4vh] bg-brand50'>
-      <StyledView className='flex flex-col w-full h-full bg-defaultPrimary'>
+    <StyledView className='flex flex-col  h-[30vh] items-center justify-center px-[7vw] py-[4vh]'>
+      <StyledView className='flex flex-col w-full h-full'>
         <StyledView className='flex-1 flex flex-row'>
-        <StyledView className='flex-1'>
+          <StyledView className='flex-1'>
             <StyledView className='flex flex-col'>
-              <StyledText className='text-[2vh] font-nunitoRegular text-defaultText'>Portfolio Value</StyledText>
-              <StyledText className='text-[4vh] font-heading text-defaultText'>${Portfoliovalue}</StyledText>
+              <StyledText className='text-[2vh] font-nunitoRegular text-defaultText'>
+                Portfolio Value
+              </StyledText>
+              <StyledText className='text-[4vh] font-title'>
+                ${Portfoliovalue.toLocaleString()}
+              </StyledText>
               <StyledView className='flex flex-row items-center'>
-                <StyledImage source={require('../../../assets/images/arrow_outward.png')} className='w-[5vw] h-[5vw] mx-[0.75vw]' />
-                <StyledText className='text-[2vh] font-heading color-success'>${Portfoliochange}</StyledText>
+                <StyledImage
+                  source={require('../../../assets/images/arrow-outward.png')}
+                  className='w-[5vw] h-[5vw] mx-[0.75vw]'
+                />
+                <StyledText className='text-[2vh] font-heading color-success'>
+                  ${Portfoliochange.toLocaleString()}
+                </StyledText>
               </StyledView>
             </StyledView>
           </StyledView>
-          <StyledView className='flex-2'>
-            <StyledText className='text-[2vh] font-heading text-defaultText'>More Details</StyledText>
+          <StyledView className='flex-2 flex justify-center h-[10vh]'>
+            <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
+              <StyledImage
+                source={require('../../../assets/images/more-details.png')}
+                className='w-[12vw] h-[12vw]'
+              />
+            </TouchableOpacity>
           </StyledView>
         </StyledView>
 
-
-        <StyledView className='flex-2 flex flex-row'>
-          <StyledView className='flex-1'>
-            <StyledText className='text-[3vh] font-heading text-defaultText'>Button 1</StyledText>
+        <StyledView className='flex-2 flex flex-row gap-x-4'>
+          <StyledView className='flex-1 h-[5vh]'>
+            <WideGreenButton
+              name={'Portfolio'}
+              iconRoute={require('../../../assets/images/chevron-right.png')}
+              navigation={navigation}
+            ></WideGreenButton>
           </StyledView>
-          <StyledView className='flex-2'>
-            <StyledText className='text-[3vh] font-heading text-defaultText'>Button 2</StyledText>
+          <StyledView className='flex-1 h-[5vh]'>
+            <WideWhiteButton
+              name={'Portfolio'}
+              iconRoute={require('../../../assets/images/attach-money.png')}
+              navigation={navigation}
+            ></WideWhiteButton>
           </StyledView>
         </StyledView>
       </StyledView>
@@ -75,7 +107,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     <StyledView className='flex-1 items-center bg-surfaceBG'>
       <StyledView className='pt-[5vh]'>
         <WelcomeBlock name='Michael' />
-        <PortfolioValue Portfoliovalue={12345.67} Portfoliochange={350.23} />
+        <PortfolioValue
+          Portfoliovalue={12345.67}
+          Portfoliochange={350.23}
+          navigation={navigation}
+        />
       </StyledView>
       {/* Some dummy image */}
       <StyledView className='align-center'>
