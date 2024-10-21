@@ -4,8 +4,6 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
 import styles from './styles';
-import PropertyCard from '../../components/PropertyCard';
-import SideBySide from '../../components/SideBySide';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
