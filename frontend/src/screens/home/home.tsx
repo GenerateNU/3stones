@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import { notificationLogo } from '../../../assets/images/notifications.png';
 
 import styles from './styles';
 
@@ -26,7 +25,10 @@ const WelcomeBlock = ({ name }: { name: string }) => {
         </StyledView>
         <StyledView className='flex-2 flex items-center justify-center'>
           <StyledView className='flex items-center justify-center bg-brand50 w-[15vw] h-[15vw] rounded-full'>
-          <StyledImage source={require('../../../assets/images/notifications.png')} className='w-[9vw] h-[9vw]'></StyledImage>
+            <StyledImage
+              source={require('../../../assets/images/notifications.png')}
+              className='w-[9vw] h-[9vw]'
+            ></StyledImage>
           </StyledView>
         </StyledView>
       </StyledView>
