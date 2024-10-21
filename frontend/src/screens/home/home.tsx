@@ -36,11 +36,46 @@ const WelcomeBlock = ({ name }: { name: string }) => {
   );
 };
 
+const PortfolioValue = ({ Portfoliovalue, Portfoliochange }: { Portfoliovalue: number, Portfoliochange: number }) => {
+  return (
+    <StyledView className='flex flex-col  h-[30vh] items-center justify-center px-[7vw] py-[4vh] bg-brand50'>
+      <StyledView className='flex flex-col w-full h-full bg-defaultPrimary'>
+        <StyledView className='flex-1 flex flex-row'>
+        <StyledView className='flex-1'>
+            <StyledView className='flex flex-col'>
+              <StyledText className='text-[2vh] font-nunitoRegular text-defaultText'>Portfolio Value</StyledText>
+              <StyledText className='text-[4vh] font-heading text-defaultText'>${Portfoliovalue}</StyledText>
+              <StyledView className='flex flex-row items-center'>
+                <StyledImage source={require('../../../assets/images/arrow_outward.png')} className='w-[5vw] h-[5vw] mx-[0.75vw]' />
+                <StyledText className='text-[2vh] font-heading color-success'>${Portfoliochange}</StyledText>
+              </StyledView>
+            </StyledView>
+          </StyledView>
+          <StyledView className='flex-2'>
+            <StyledText className='text-[2vh] font-heading text-defaultText'>More Details</StyledText>
+          </StyledView>
+        </StyledView>
+
+
+        <StyledView className='flex-2 flex flex-row'>
+          <StyledView className='flex-1'>
+            <StyledText className='text-[3vh] font-heading text-defaultText'>Button 1</StyledText>
+          </StyledView>
+          <StyledView className='flex-2'>
+            <StyledText className='text-[3vh] font-heading text-defaultText'>Button 2</StyledText>
+          </StyledView>
+        </StyledView>
+      </StyledView>
+    </StyledView>
+  );
+};
+
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <StyledView className='flex-1 items-center bg-surfaceBG'>
       <StyledView className='pt-[5vh]'>
         <WelcomeBlock name='Michael' />
+        <PortfolioValue Portfoliovalue={12345.67} Portfoliochange={350.23} />
       </StyledView>
       {/* Some dummy image */}
       <StyledView className='align-center'>
