@@ -17,7 +17,6 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 	rows, err := db.Query(
 		context.Background(),
 		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode FROM projects")
-
 	if err != nil {
 		return nil, err
 	}
