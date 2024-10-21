@@ -24,10 +24,10 @@ const WelcomeBlock = ({ name }: { name: string }) => {
           <StyledText className='text-[3vh] font-heading'>Welcome back</StyledText>
         </StyledView>
         <StyledView className='flex-2 flex items-center justify-center'>
-          <StyledView className='flex items-center justify-center bg-brand50 w-[15vw] h-[15vw] rounded-full'>
+          <StyledView className='flex items-center justify-center bg-brand50 w-[12vw] h-[12vw] rounded-full'>
             <StyledImage
               source={require('../../../assets/images/notifications.png')}
-              className='w-[9vw] h-[9vw]'
+              className='w-[7vw] h-[7vw]'
             ></StyledImage>
           </StyledView>
         </StyledView>
