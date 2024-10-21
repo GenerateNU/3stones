@@ -1,9 +1,10 @@
 package controllers
 
 import (
+	"context"
+
 	"backend/internal/api_errors"
 	"backend/internal/types"
-	"context"
 
 	"github.com/gofiber/fiber/v2"
 	plaid "github.com/plaid/plaid-go/v29/plaid"

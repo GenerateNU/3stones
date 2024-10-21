@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"context"
+
 	"backend/internal/api_errors"
 	"backend/internal/types"
-	plaid "github.com/plaid/plaid-go/v29/plaid"
+
 	"github.com/gofiber/fiber/v2"
-	"context"
+	plaid "github.com/plaid/plaid-go/v29/plaid"
 )
 
 type PlaidLoginController struct {
@@ -33,9 +35,9 @@ func (c *PlaidLoginController) CreateLinkToken(ctx *fiber.Ctx) error {
 
 	// Create Link Token request payload with the required parameters
 	linkTokenCreateRequest := plaid.NewLinkTokenCreateRequest(
-		"3 Stones",                            // Client Name
-		"en",                                       // Language
-		[]plaid.CountryCode{plaid.COUNTRYCODE_US},  // Country Codes
+		"3 Stones", // Client Name
+		"en",       // Language
+		[]plaid.CountryCode{plaid.COUNTRYCODE_US},              // Country Codes
 		plaid.LinkTokenCreateRequestUser{ClientUserId: userId}, // User Info
 	)
 
