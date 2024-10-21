@@ -17,6 +17,7 @@ module.exports = {
         surfaceBG: '#FAFAFC',
         surfaceFG: '#FFFFFF',
         border: '#DDDDDD',
+        brand50: '#CADEDB',
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],
