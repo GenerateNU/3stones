@@ -3,7 +3,6 @@ import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
 import InvestmentProgress from './InvestmentProgress';
 
-import styles from '/Users/abbystevenson/Desktop/Northeastern/Extra Curriculars/Generate/3stones/frontend/src/screens/home/styles.ts';
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
@@ -22,7 +21,7 @@ const PropertyCard = ({address, location, price, duration, invested, completion,
   return (
     <StyledView className = 'flex p-4 w-80 bg-surfaceFG overflow-hidden rounded-lg'>
         <StyledView className = 'flex-1 align-center'>
-            <Image source={{ uri: imageUrl }}  style={styles.imageStyle}/>
+            <Image source={{ uri: imageUrl }} />
         </StyledView>
         <StyledView className = 'flex-2 p-4'>
             <StyledText className = 'text-2xl' >{address}</StyledText>
