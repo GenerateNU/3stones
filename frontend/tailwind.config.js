@@ -7,7 +7,7 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
         black: '#000000',
-        white: 'ffffff',
+        white: '#ffffff',
         defaultPrimary: '#285852',
         defaultPush: '#65918C',
         defaultDisabled: '#A7C6C2',

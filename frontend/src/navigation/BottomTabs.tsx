@@ -3,6 +3,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SecondScreen from '../screens/secondScreen/secondScreen';
 import StackNavigator from './StackNavigator';
+import WelcomeScreen from '../screens/login_flow/WelcomeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +36,18 @@ export default function TabNavigator() {
             <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
           ),
           tabBarLabel: 'Second screen',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='welcomeScreen'
+        component={WelcomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
+          ),
+          tabBarLabel: 'Signup Flow',
           title: '',
           headerShown: false,
         }}

@@ -1,9 +1,12 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
 import styles from './styles';
+import ButtonComponent from '../../components/ButtonComponent';
+import TextInputComponent from '../../components/TextInputComponent';
+import ProgressBarComponent from '../../components/ProgressBarComponent';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -22,6 +25,42 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
       </StyledView>
       {/* Some dummy button */}
+      <ButtonComponent
+              title="Continue"
+              theme="primary"
+              // do nothing for now
+              onPress = {() => {}}
+              disabled={false}
+            />
+            <ButtonComponent
+              title="Continue"
+              theme="secondary"
+              // do nothing for now
+              onPress = {() => {}}
+              disabled={false}
+            />
+            <ButtonComponent
+              title="Continue"
+              theme="secondary"
+              // do nothing for now
+              onPress = {() => {}}
+              disabled={true}
+            />
+            <TextInputComponent
+              placeholder="Username"
+              value=""
+              onChangeText={() => {}}
+              isPassword={false}
+            />
+            <ProgressBarComponent
+              currentStep={1}
+              totalSteps={3}
+              showBack={true}
+              showClose={false}
+              onPress = {() => {}}
+            />
+
+        
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
