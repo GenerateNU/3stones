@@ -5,6 +5,7 @@ import { styled } from 'nativewind';
 
 import PropertyCard from '../components/PropertyCard';
 import SideBySide from '../components/SideBySide';
+import ActionRequiredCard from '../components/ActionRequiredCard';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -18,6 +19,7 @@ const StyledText = styled(Text);
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
     <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
+      <ActionRequiredCard address={'336 Oak Ave. Riverton, TX'} date={'September 30, 2024'} />
       <SideBySide component1={<PropertyCard address={'480 Mass Ave.'} 
       location={'Boston, MA 02119'} 
       price={170000} 
