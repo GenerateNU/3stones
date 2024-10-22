@@ -2,8 +2,7 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import WideGreenButton from '../../components/WideGreenButton';
-import WideWhiteButton from '../../components/WideWhiteButton';
+import WideButton from '../../components/WideButton';
 
 import styles from './styles';
 
@@ -38,6 +37,28 @@ const WelcomeBlock = ({ name }: { name: string }) => {
   );
 };
 
+const AddFundsButton = ({ navigation }) => {
+  return (
+    <WideButton
+      name={'Add Funds'}
+      iconRoute={require('../../../assets/images/attach-money.png')}
+      navigation={navigation}
+      intent="secondary"
+    ></WideButton>
+  );
+};
+
+const PortfolioButton = ({ navigation }) => {
+  return (
+    <WideButton
+      name={'Portfolio'}
+      iconRoute={require('../../../assets/images/chevron-right.png')}
+      navigation={navigation}
+      intent="primary"
+    ></WideButton>
+  );
+};
+
 const PortfolioValue = ({
   Portfoliovalue,
   Portfoliochange,
@@ -45,6 +66,7 @@ const PortfolioValue = ({
 }: {
   Portfoliovalue: number;
   Portfoliochange: number;
+  // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }) => {
@@ -80,21 +102,12 @@ const PortfolioValue = ({
             </TouchableOpacity>
           </StyledView>
         </StyledView>
-
         <StyledView className='flex-2 flex flex-row gap-x-4'>
           <StyledView className='flex-1 h-[5vh]'>
-            <WideGreenButton
-              name={'Portfolio'}
-              iconRoute={require('../../../assets/images/chevron-right.png')}
-              navigation={navigation}
-            ></WideGreenButton>
+            <PortfolioButton navigation={navigation} />
           </StyledView>
           <StyledView className='flex-1 h-[5vh]'>
-            <WideWhiteButton
-              name={'Portfolio'}
-              iconRoute={require('../../../assets/images/attach-money.png')}
-              navigation={navigation}
-            ></WideWhiteButton>
+            <AddFundsButton navigation={navigation} />
           </StyledView>
         </StyledView>
       </StyledView>
