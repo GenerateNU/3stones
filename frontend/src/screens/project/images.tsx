@@ -5,7 +5,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { useProject } from '../../services/project';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { useSharedValue } from 'react-native-reanimated';
+import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { Zoomable } from '@likashefqet/react-native-image-zoom';
 
 interface ProjectImagesScreenProps {
@@ -24,7 +24,7 @@ export default function ProjectImagesScreen({ navigation }: ProjectImagesScreenP
     const ref = React.useRef<ICarouselInstance>(null);
     
     const progress = useSharedValue<number>(0);
-    
+
     if (isLoading) {
         return <Text>Loading ...</Text>
     }
@@ -57,20 +57,18 @@ export default function ProjectImagesScreen({ navigation }: ProjectImagesScreenP
             <StyledScrollView className='px-6 mt-10' horizontal contentContainerStyle={{alignItems: 'stretch'}}>
                 <StyledView className='flex flex-row w-full h-[72px] gap-x-4'>
                     {project.images.map((item, ind, arr) => (
-                        <StyledView className="w-[72px] h-[72px]">
-                            <StyledImage
-                                source={{ uri: item.url }} // replace with your image link
-                                className="flex-1 object-cover rounded"
-                                resizeMode="cover"
-                            />
-                        </StyledView>
+                        <TouchableOpacity onPress={() => {ref.current?.scrollTo({ count: ind - progress.value, animated: true})}}>
+                            <StyledView className="w-[72px] h-[72px]">
+                                <StyledImage
+                                    source={{ uri: item.url }} // replace with your image link
+                                    className="flex-1 object-cover rounded"
+                                    resizeMode="cover"
+                                />
+                            </StyledView>
+                        </TouchableOpacity>
                     ))}
                 </StyledView>
             </StyledScrollView>
-            
-            <StyledText className='w-full text-center'>
-                Hello
-            </StyledText>
         </StyledView>
     );
 }

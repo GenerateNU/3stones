@@ -43,6 +43,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
     ];
 
     const numberOfImages = project.images.length;
+    const imageButtonText = numberOfImages > 20 ? "20+ Images" : `${numberOfImages} Images`
 
     return (
         <StyledScrollView className='flex-1 bg-surfaceBG p-6 text-defaultText' contentContainerStyle={{alignItems: 'stretch'}}>
@@ -70,7 +71,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
                         <StyledView className="absolute inset-0 bg-gray-800 opacity-50 w-full h-full rounded" />
 
                         <StyledView className="absolute inset-0 flex items-center justify-center w-full h-full">
-                            <StyledText className="text-sm font-body" style={{color: '#F3F3F3'}}>20+ Images</StyledText>
+                            <StyledText className="text-sm font-body" style={{color: '#F3F3F3'}}>{imageButtonText}</StyledText>
                         </StyledView>
                     </StyledView>
                     
