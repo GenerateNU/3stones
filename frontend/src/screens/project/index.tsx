@@ -4,6 +4,7 @@ import { Image, Text, View, TouchableOpacity, Button, DimensionValue, ScrollView
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { useProject, useProjectTotalFunded } from '../../services/project';
+import MapView, { Marker } from 'react-native-maps';
 
 interface ProjectScreenProps {
     // This actually should be `any`, so disabling the linter rule
@@ -16,6 +17,7 @@ const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
+const StyledMapView = styled(MapView);
 
 export default function ProjectScreen({ navigation }: ProjectScreenProps) {
     const { project, isLoading } = useProject('c3733692-5a86-441f-8ad0-9c32c648bb72');
@@ -43,7 +45,8 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
     ];
 
     const numberOfImages = project.images.length;
-    const imageButtonText = numberOfImages > 20 ? "20+ Images" : `${numberOfImages} Images`
+    const imageButtonText = numberOfImages > 20 ? "20+ Images" : `${numberOfImages} Images`;
+    const mapRegion = {latitude: project.latitude, longitude: project.longitude, latitudeDelta: 0.001, longitudeDelta: 0.001};
 
     return (
         <StyledScrollView className='flex-1 bg-surfaceBG p-6 text-defaultText' contentContainerStyle={{alignItems: 'stretch'}}>
@@ -77,10 +80,10 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
                     
                 </StyledView>
             </StyledTouchableOpacity>
-            <StyledTouchableOpacity className='my-6 h-16 w-full bg-yellow-600 rounded' onPress={(evt) => { navigation.navigate('project-map') }}>
-                <Text>
-                    Map view
-                </Text>
+            <StyledTouchableOpacity className='my-6 h-16 w-full rounded overflow-hidden' onPress={(evt) => { navigation.navigate('project-map') }}>
+                <StyledMapView className="w-full h-full" initialRegion={mapRegion} scrollEnabled={false}>
+                    <Marker coordinate={{latitude: mapRegion.latitude, longitude: mapRegion.longitude}}/>
+                </StyledMapView>
             </StyledTouchableOpacity>
             <StyledText className='text-2xl font-heading leading-8'>
                 { firstTitle }

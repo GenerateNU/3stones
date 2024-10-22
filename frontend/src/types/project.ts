@@ -19,5 +19,7 @@ export type Project = {
   locality: string;
   state: string;
   zipcode: string;
+  latitude: number;
+  longitude: number;
   images: ImageLink[];
 };

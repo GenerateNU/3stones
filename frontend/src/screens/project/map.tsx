@@ -4,6 +4,7 @@ import { Image, Text, View, TouchableOpacity, Button, DimensionValue } from 'rea
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { useProject, useProjectTotalFunded } from '../../services/project';
+import MapView, { Marker } from 'react-native-maps';
 
 interface ProjectMapScreenProps {
     // This actually should be `any`, so disabling the linter rule
@@ -11,14 +12,20 @@ interface ProjectMapScreenProps {
     navigation: NavigationScreenProp<any, any>;
 }
 
-const StyledView = styled(View);
-const StyledText = styled(Text);
-const StyledTouchableOpacity = styled(TouchableOpacity);
+const StyledMapView = styled(MapView);
 
 export default function ProjectMapScreen({ navigation }: ProjectMapScreenProps) {
+    const { project, isLoading } = useProject('c3733692-5a86-441f-8ad0-9c32c648bb72');
+
+    if (isLoading) {
+        return <Text>Loading ...</Text>
+    }
+
+    const mapRegion = {latitude: project.latitude, longitude: project.longitude, latitudeDelta: 0.005, longitudeDelta: 0.005};
+
     return (
-        <Text>
-            Map screen
-        </Text>
+        <StyledMapView className="w-full h-full" initialRegion={mapRegion}>
+            <Marker coordinate={{latitude: mapRegion.latitude, longitude: mapRegion.longitude}}/>
+        </StyledMapView>
     );
 }
