@@ -24,8 +24,8 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         </StyledView>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
             <StyledView className='flex w-[336px] h-[64px] py-[10px] flex-col justify-center items-start gap-[1px] shrink-0'>
-                <StyledText className ='p-4 text-lg'> Your Investments </StyledText>
-                <StyledText className ='p-4 text-lg'> 11 on going investments, 2 completed </StyledText>
+                <StyledText className ='p-4 h-[21px] body-regular'> Your Investments </StyledText>
+                <StyledText className ='p-4 h-[21px] body-regular'> 11 on going investments, 2 completed </StyledText>
         </StyledView>
             <FourGrid 
                 component1={<PropertyCard 

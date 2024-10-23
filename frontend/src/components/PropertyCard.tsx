@@ -19,15 +19,21 @@ interface PropertyCardProps {
 const PropertyCard = ({address, location, price, duration, invested, completion, imageUrl} : PropertyCardProps )=> {
 
   return (
-    <StyledView className = 'flex flex-col p-4 bg-surfaceFG rounded-lg shadow-md'>
+    <StyledView className = 'flex flex-col p-4 bg-surfaceFG rounded-[18px] box-shadow'>
         <StyledView className = 'flex items-center justify-center mb-2'>
             <Image source={{ uri: imageUrl }} />
         </StyledView>
         <StyledView className = 'flex-1'>
-            <StyledText className = 'text-lg' >{address}</StyledText>
-            <StyledText className = 'text-sm'>{location}</StyledText>
-            <StyledText className = 'text-sm'>${price.toLocaleString()}</StyledText>
-            <StyledText className = 'text-sm'>{duration} months</StyledText>
+            <StyledView className = 'flex h-[39px] flex-col justify-center shrink-0 self-stretch'>
+                <StyledText className = 'body-regular' >{address}</StyledText>
+                <StyledText className = 'body-regular'>{location}</StyledText>
+            </StyledView>
+            <StyledView className = 'flex h-[19px] flex-col justify-center shrink-0 self-stretch'>
+                <StyledText className = 'caption-medium'>${price.toLocaleString()}</StyledText>
+            </StyledView>
+            <StyledView className = 'flex h-[19px] flex-col justify-center shrink-0 self-stretch'>
+                <StyledText className = 'caption-medium'>{duration} months</StyledText>
+            </StyledView>
         </StyledView>
         <StyledView className = 'mt-2'>
              <InvestmentProgress percentageFunded={(invested/completion)*100} />
