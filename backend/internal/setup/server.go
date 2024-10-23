@@ -45,7 +45,7 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 	plaidConfig := plaid.NewConfiguration()
 	plaidConfig.AddDefaultHeader("PLAID-CLIENT-ID", config.Plaid.ClientId)
 	plaidConfig.AddDefaultHeader("PLAID-SECRET", config.Plaid.Secret)
-	plaidConfig.UseEnvironment(plaid.Production)
+	plaidConfig.UseEnvironment(plaid.Sandbox)
 	plaidClient := plaid.NewAPIClient(plaidConfig)
 
 	// Setup routes
@@ -70,7 +70,6 @@ func SetupServer(config *config.Config) (*fiber.App, error) {
 	routes.Projects(routerParams)
 	routes.Investors(routerParams)
 	routes.PlaidRoutes(routerParams)
-	routes.TransferRoutes(routerParams)
 
 	router.Get("/health", func(ctx *fiber.Ctx) error {
 		return ctx.SendStatus(200)
