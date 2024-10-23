@@ -54,7 +54,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
                 <StyledView className='flex-grow bg-red-100 mr-2'>
                     <StyledImage
                         source={{ uri: project.images[0 % numberOfImages].url }} // replace with your image link
-                        className="flex-1 object-cover rounded"
+                        className="flex-1 object-cover rounded "
                         resizeMode="cover"
                     />
                 </StyledView>
