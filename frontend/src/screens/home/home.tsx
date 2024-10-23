@@ -32,6 +32,13 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             </StyledText>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('profileScreen')}>
+          <View>
+            <StyledText className='align-center text-3xl font-title text-defaultText'>
+              Profile Page
+            </StyledText>
+          </View>
+        </TouchableOpacity>
       </View>
     </StyledView>
   );
