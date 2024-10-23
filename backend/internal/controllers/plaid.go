@@ -57,35 +57,35 @@ func (c *PlaidController) CreateLinkToken(ctx *fiber.Ctx) error {
 }
 
 func (c *PlaidController) ExchangePublicToken(ctx *fiber.Ctx) error {
-    type RequestBody struct {
-        PublicToken string `json:"public_token"`
-    }
+	type RequestBody struct {
+		PublicToken string `json:"public_token"`
+	}
 
-    var body RequestBody
-    if err := ctx.BodyParser(&body); err != nil {
-        return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-            "message": "Invalid request body",
-        })
-    }
+	var body RequestBody
+	if err := ctx.BodyParser(&body); err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid request body",
+		})
+	}
 
-    exchangeRequest := plaid.NewItemPublicTokenExchangeRequest(body.PublicToken)
+	exchangeRequest := plaid.NewItemPublicTokenExchangeRequest(body.PublicToken)
 
-    response, _, err := c.ServiceParams.Plaid.PlaidApi.ItemPublicTokenExchange(ctx.Context()).ItemPublicTokenExchangeRequest(*exchangeRequest).Execute()
-    if err != nil {
-        return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-            "message": "Failed to exchange public token",
-            "error":   err.Error(),
-        })
-    }
+	response, _, err := c.ServiceParams.Plaid.PlaidApi.ItemPublicTokenExchange(ctx.Context()).ItemPublicTokenExchangeRequest(*exchangeRequest).Execute()
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to exchange public token",
+			"error":   err.Error(),
+		})
+	}
 
-    accessToken := response.GetAccessToken()
-    itemID := response.GetItemId()
+	accessToken := response.GetAccessToken()
+	itemID := response.GetItemId()
 
-    // Store accessToken and itemID securely in your database associated with the user
-    userID, ok := ctx.Locals("userId").(string)
-    if !ok {
-        return &api_errors.INVALID_UUID
-    }
+	// Store accessToken and itemID securely in your database associated with the user
+	userID, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
 
 	uuidUserID, err := uuid.Parse(userID)
 	if err != nil {
@@ -96,15 +96,15 @@ func (c *PlaidController) ExchangePublicToken(ctx *fiber.Ctx) error {
 	}
 
 	err = transactions.StoreAccessToken(c.ServiceParams.DB, uuidUserID, accessToken, itemID)
-    if err != nil {
-        return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-            "message": "Failed to store access token",
-            "error":   err.Error(),
-        })
-    }
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to store access token",
+			"error":   err.Error(),
+		})
+	}
 
-    return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-        "access_token": accessToken,
-        "item_id":      itemID,
-    })
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"access_token": accessToken,
+		"item_id":      itemID,
+	})
 }
