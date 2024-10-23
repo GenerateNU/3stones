@@ -12,7 +12,7 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
         black: '#000000',
-        white: 'ffffff',
+        white: '#FFFFFF',
         defaultPrimary: '#285852',
         defaultPush: '#65918C',
         defaultDisabled: '#A7C6C2',
@@ -22,6 +22,8 @@ module.exports = {
         surfaceBG: '#FAFAFC',
         surfaceFG: '#FFFFFF',
         border: '#DDDDDD',
+        brand50: '#CADEDB',
+        success: '#0E9888',
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],
