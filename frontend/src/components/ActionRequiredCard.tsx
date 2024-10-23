@@ -14,7 +14,7 @@ interface ActionRequiredCardProps {
 const ActionRequiredCard = ({address, date} : ActionRequiredCardProps )=> {
 
     return (
-      <StyledView className = 'flex p-4 w-8/10 bg-surfaceFG overflow-hidden rounded-lg'>
+      <StyledView className = 'flex alignContent-space-between justifyContent-center p-4 w-8/10 bg-surfaceFG overflow-hidden rounded-lg'>
           <StyledView className = 'flex-1 align-center'>
               <Image source={{uri: './action-required.png'}} />
               <StyledText className='text-bodyBold'>Action Required</StyledText>
@@ -24,7 +24,7 @@ const ActionRequiredCard = ({address, date} : ActionRequiredCardProps )=> {
               <StyledText className = 'text-body'>Please view offer details and vote on the sale by {date}.</StyledText>
           </StyledView>
           <StyledView className = 'flex-3 p-4 w-full bg-surfaceFG overflow-hidden'>
-               <StyledButton className='p-4 color-defaultPrimary text-surfaceBG' title='Offer Details' />
+               <StyledButton className='rounded-full color-defaultPrimary text-surfaceBG' title='Offer Details' />
           </StyledView>
       </StyledView>
   );
