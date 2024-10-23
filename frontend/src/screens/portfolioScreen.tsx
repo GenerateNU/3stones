@@ -20,9 +20,13 @@ const StyledScrollView = styled(ScrollView)
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
+        <StyledView className='flex w-[372px] h-[55px] items-center shrink-0'>
+        </StyledView>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
-        <StyledText className ='p-4 text-lg'> Your Investments </StyledText>
-        <StyledText className ='p-4 text-lg'> 11 on going investments, 2 completed </StyledText>
+            <StyledView className='flex w-[336px] h-[64px] py-[10px] flex-col justify-center items-start gap-[1px] shrink-0'>
+                <StyledText className ='p-4 text-lg'> Your Investments </StyledText>
+                <StyledText className ='p-4 text-lg'> 11 on going investments, 2 completed </StyledText>
+        </StyledView>
             <FourGrid 
                 component1={<PropertyCard 
                                 address={'480 Mass Ave.'} 
