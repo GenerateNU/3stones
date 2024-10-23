@@ -19,17 +19,17 @@ interface PropertyCardProps {
 const PropertyCard = ({address, location, price, duration, invested, completion, imageUrl} : PropertyCardProps )=> {
 
   return (
-    <StyledView className = 'flex p-4 w-8/10 bg-surfaceFG overflow-hidden rounded-lg'>
-        <StyledView className = 'flex-1 align-center'>
+    <StyledView className = 'flex flex-col p-4 bg-surfaceFG rounded-lg shadow-md'>
+        <StyledView className = 'flex items-center justify-center mb-2'>
             <Image source={{ uri: imageUrl }} />
         </StyledView>
-        <StyledView className = 'flex-2 p-4'>
+        <StyledView className = 'flex-1'>
             <StyledText className = 'text-lg' >{address}</StyledText>
             <StyledText className = 'text-sm'>{location}</StyledText>
             <StyledText className = 'text-sm'>${price.toLocaleString()}</StyledText>
             <StyledText className = 'text-sm'>{duration} months</StyledText>
         </StyledView>
-        <StyledView className = 'flex-3 p-4 w-full bg-surfaceFG overflow-hidden'>
+        <StyledView className = 'mt-2'>
              <InvestmentProgress percentageFunded={(invested/completion)*100} />
         </StyledView>
     </StyledView>

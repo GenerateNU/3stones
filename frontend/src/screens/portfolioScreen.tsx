@@ -2,9 +2,10 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import { ScrollView } from 'react-native';
 
 import PropertyCard from '../components/PropertyCard';
-import SideBySide from '../components/SideBySide';
+import FourGrid from '../components/FourGrid';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -14,14 +15,15 @@ interface PortfolioScreenProps {
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledScrollView = styled(ScrollView)
 
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
-    <StyledView className='flex-1 justify-center bg-surfaceBG'>
+    <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
+        <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
         <StyledText className ='p-4 text-lg'> Your Investments </StyledText>
         <StyledText className ='p-4 text-lg'> 11 on going investments, 2 completed </StyledText>
-        <StyledView className='h-3/4'>
-            <SideBySide 
+            <FourGrid 
                 component1={<PropertyCard 
                                 address={'480 Mass Ave.'} 
                                 location={'Boston, MA 02119'} 
@@ -37,10 +39,8 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                                 duration={'6'} 
                                 invested={50} 
                                 completion={100} 
-                                imageUrl={'frontend/assets/images/splash.png'} />} >
-            </SideBySide>
-            <SideBySide 
-                component1={<PropertyCard 
+                                imageUrl={'frontend/assets/images/splash.png'} />}
+                component3={<PropertyCard 
                                 address={'480 Mass Ave.'} 
                                 location={'Boston, MA 02119'} 
                                 price={170000} 
@@ -48,7 +48,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                                 invested={50} 
                                 completion={100} 
                                 imageUrl={'frontend/assets/images/splash.png'} />} 
-                    component2={<PropertyCard 
+                component4={<PropertyCard 
                                 address={'480 Mass Ave.'} 
                                 location={'Boston, MA 02119'} 
                                 price={170000} 
@@ -56,9 +56,9 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                                 invested={50} 
                                 completion={100} 
                                 imageUrl={'frontend/assets/images/splash.png'} />} >
-            </SideBySide>
+            </FourGrid>
+            </StyledScrollView>
         </StyledView>
-      </StyledView>
 
     );
 }
