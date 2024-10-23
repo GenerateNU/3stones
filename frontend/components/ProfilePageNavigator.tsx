@@ -21,7 +21,7 @@ export default function ProfilePageNavigator({ navigation, pageName }: ProfilePa
                     {pageName}
                 </StyledText>
                 <StyledText className="text-[16px] text-[#282828] font-normal leading-[22px]">
-                    WTF
+                    Placeholder
                 </StyledText>
             </StyledView>
         </TouchableOpacity>
