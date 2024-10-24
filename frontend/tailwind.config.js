@@ -1,13 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}', './src/screens/home/home.tsx'],
+  content: [
+    './App.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
+    './src/screens/home/home.tsx',
+    './components/**.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
         black: '#000000',
-        white: 'ffffff',
+        white: '#FFFFFF',
         defaultPrimary: '#285852',
         defaultPush: '#65918C',
         defaultDisabled: '#A7C6C2',
@@ -17,6 +22,8 @@ module.exports = {
         surfaceBG: '#FAFAFC',
         surfaceFG: '#FFFFFF',
         border: '#DDDDDD',
+        brand50: '#CADEDB',
+        success: '#0E9888',
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],

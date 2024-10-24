@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "format": "prettier --write **/*.{js,jsx,ts,tsx,css,md,json,scss} --config ./.prettierrc.json",
+    "format": "npx prettier --write **/*.{js,ts,tsx,md,json} --config ./.prettierrc.json",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "jest"
@@ -22,6 +22,7 @@
     "@tanstack/react-query": "^5.51.23",
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.4",
+    "class-variance-authority": "^0.7.0",
     "eslint": "^9.9.0",
     "expo": "^51.0.37",
     "expo-font": "~12.0.10",
