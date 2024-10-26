@@ -3,11 +3,7 @@ import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
-
-import PropertyCard from '../components/PropertyCard';
-import FourGrid from '../components/FourGrid';
-import PortfolioMainComponent from '../components/PortfolioMainComponent';
-import ActionRequiredCard from '../components/ActionRequiredCard';
+import PortfolioItem from '../components/PortfolioItem';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -25,53 +21,21 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         <StyledView className='flex w-[372px] h-[55px] items-center shrink-0'>
         </StyledView>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
-        <PortfolioMainComponent 
-            investmentValue={20000} 
-            cashBalance={700} 
-            pendingTransactions={2} 
-            expectedReturns={700} 
-            investedIn={12}>
+            <StyledView className = 'flex h-[318px] px-[20px] py-[5px] flex-col justify-center items-center gap-[10px] shrink-0'>
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
 
-            </PortfolioMainComponent>
-            <ActionRequiredCard address={'716 Columbus Ave.'} date={'November 3, 2024'} />
-            <StyledView className='flex w-[336px] h-[64px] py-[10px] flex-col justify-center items-start gap-[1px] shrink-0'>
-                <StyledText className ='p-4 h-[21px] body-regular'> Your Investments </StyledText>
+                </PortfolioItem>    
+            </StyledView>
+            <StyledView className = 'flex h-[300px] w-[336px] py-[10px] flex-col items-start gap-4' > 
+                <StyledText className ='p-4 h-1/10 body-regular'> Your Investments </StyledText>
+                <StyledView className = ''>
+                    
+                </StyledView>
+            </StyledView>
+            <StyledView className='flex w-[336px] h-8 py-2 flex-col justify-center items-start gap-[1px] mt-[40px]'>
+                <StyledText className ='p-4 h-5 body-regular'> Your Investments </StyledText>
                 <StyledText className ='p-4 h-[21px] body-regular'> 11 on going investments, 2 completed </StyledText>
         </StyledView>
-            <FourGrid 
-                component1={<PropertyCard 
-                                address={'480 Mass Ave.'} 
-                                location={'Boston, MA 02119'} 
-                                price={170000} 
-                                duration={'6'} 
-                                invested={50} 
-                                completion={100} 
-                                imageUrl={'frontend/assets/images/splash.png'} />} 
-                component2={<PropertyCard 
-                                address={'480 Mass Ave.'} 
-                                location={'Boston, MA 02119'} 
-                                price={170000} 
-                                duration={'6'} 
-                                invested={50} 
-                                completion={100} 
-                                imageUrl={'frontend/assets/images/splash.png'} />}
-                component3={<PropertyCard 
-                                address={'480 Mass Ave.'} 
-                                location={'Boston, MA 02119'} 
-                                price={170000} 
-                                duration={'6'} 
-                                invested={50} 
-                                completion={100} 
-                                imageUrl={'frontend/assets/images/splash.png'} />} 
-                component4={<PropertyCard 
-                                address={'480 Mass Ave.'} 
-                                location={'Boston, MA 02119'} 
-                                price={170000} 
-                                duration={'6'} 
-                                invested={50} 
-                                completion={100} 
-                                imageUrl={'frontend/assets/images/splash.png'} />} >
-            </FourGrid>
             </StyledScrollView>
         </StyledView>
 
