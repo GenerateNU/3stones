@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
 import { styled } from 'nativewind';
-import { ArrowLeftIcon, XMarkIcon } from 'react-native-heroicons/outline'; // Use any icon library
+import { ArrowLeftIcon, XMarkIcon } from 'react-native-heroicons/outline';
+// import {CloseIcon} from '../../assets/images/close.png';
 
 const StyledView = styled(View);
 const StyledPressable = styled(Pressable);
@@ -26,7 +27,7 @@ const ProgressBarComponent = ({ currentStep, totalSteps, showBack, showClose, on
           className="mr-4" // Margin to the right of the button
           onPress={onPress}
         >
-          <XMarkIcon style={{ width: 24, height: 24}} />
+          <XMarkIcon width={24} height={24} fill="black" />
         </StyledPressable>
       )}
 
