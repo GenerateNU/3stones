@@ -33,6 +33,7 @@ module.exports = {
         title: ['Nunito-ExtraBold'],
         bodyBold: ['Inter_18pt-Bold'],
         body: ['Inter_18pt-Regular'],
+        sourceSans3: ['SourceSans3-Regular'],
       },
     },
   },
