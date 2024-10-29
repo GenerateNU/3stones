@@ -18,24 +18,39 @@ const StyledScrollView = styled(ScrollView)
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
-        <StyledView className='flex w-[372px] h-[55px] items-center shrink-0'>
+        <StyledView className='flex w-93 h-14 items-center shrink-0'>
         </StyledView>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
-            <StyledView className = 'flex h-[318px] px-[20px] py-[5px] flex-col justify-center items-center gap-[10px] shrink-0'>
+            <StyledView className='flex w-53 h-39 p-[7px_24px] flex-col items-center gap-2.5 shrink-0 rounded-[27px] bg-white'>
+                <StyledText className = 'sourceSans3BodyBold'>Your Positions</StyledText>
+            </StyledView>
+            <StyledView className = 'flex w-98 p-[16px_24px] flex-col items-start gap-3 rounded-[27px] bg-white'>
+                <StyledText className = "sourceSans3CaptionMedium text-defaultText"> 8 Total Investments</StyledText>
                 < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
 
-                </PortfolioItem>    
+                </PortfolioItem>  
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem> 
+                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
+
+                </PortfolioItem>   
             </StyledView>
-            <StyledView className = 'flex h-[300px] w-[336px] py-[10px] flex-col items-start gap-4' > 
-                <StyledText className ='p-4 h-1/10 body-regular'> Your Investments </StyledText>
-                <StyledView className = ''>
-                    
-                </StyledView>
-            </StyledView>
-            <StyledView className='flex w-[336px] h-8 py-2 flex-col justify-center items-start gap-[1px] mt-[40px]'>
-                <StyledText className ='p-4 h-5 body-regular'> Your Investments </StyledText>
-                <StyledText className ='p-4 h-[21px] body-regular'> 11 on going investments, 2 completed </StyledText>
-        </StyledView>
             </StyledScrollView>
         </StyledView>
 

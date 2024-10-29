@@ -29,11 +29,11 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                             <StyledText className = 'sourceSans3CaptionMedium text-defaultText' >Commercial Development</StyledText>
                         </StyledView>
                         <StyledView className="flex py-1 px-3 gap-1 items-center rounded-[8px] bg-border mb-3">
-                            <StyledText className="caption-medium text-defaultText">Land Control Secured</StyledText>
+                            <StyledText className="sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
                         </StyledView>
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>
                             <StyledView className = 'flex justify-between items-start mr-4'>
-                                <StyledText className = 'caption-medium text-defaultText' >Value</StyledText>
+                                <StyledText className = 'sourceSans3CaptionMedium text-defaultText' >Value</StyledText>
                                 <StyledText className = 'body-medium text-defaultText' >$250.00</StyledText>
                             </StyledView>
                             <StyledView className = 'flex flex-col items-start'>
