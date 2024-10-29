@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
 import PortfolioItem from '../components/PortfolioItem';
+import UpdateCard  from '../components/PortfolioUpdateCard';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -13,7 +14,7 @@ interface PortfolioScreenProps {
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledScrollView = styled(ScrollView)
+const StyledScrollView = styled(ScrollView);
 
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
@@ -25,6 +26,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                 <StyledText className = 'sourceSans3BodyBold'>Your Positions</StyledText>
             </StyledView>
             <StyledView className = 'flex w-98 p-[16px_24px] flex-col items-start gap-3 rounded-[27px] bg-white'>
+                <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00'/>
                 <StyledText className = "sourceSans3CaptionMedium text-defaultText"> 8 Total Investments</StyledText>
                 < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
 
