@@ -16,6 +16,7 @@ export default function App() {
     'Inter-Bold': require('./assets/fonts/inter/Inter_18pt-Bold.ttf'),
     'Inter-Regular': require('./assets/fonts/inter/Inter_18pt-Regular.ttf'),
     'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
+    'SourceSans3-Medium': require('./assets/fonts/sourceSans3/SourceSans3-Medium.ttf'),
   });
 
   useEffect(() => {

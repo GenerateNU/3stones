@@ -6,45 +6,39 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const tagVariants = cva('flex flex-row items-center rounded-full px-2 py-1', {
+const tagVariants = cva('flex flex-row items-center rounded-lg px-3 py-1', {
   variants: {
     level: {
-      neutral: 'bg-gray-100',
-      success: 'bg-brand50',
-      warning: 'bg-yellow-100',
-      critical: 'bg-red-100'
-    },
-    type: {
-      default: '',
-      defaultWithIcon: '',
-      subduedWithIcon: 'opacity-60',
-      subdued: 'opacity-60'
+      neutral: 'bg-gray-900',
+      success: 'bg-success', 
+      warning: 'bg-[#F7B418]',
+      critical: 'bg-[#D32246]',
+      neutralSubdued: 'bg-gray-200',
+      successSubdued: 'bg-[#ECF3ED]',
+      warningSubdued: 'bg-[#F9EFD7]',
+      criticalSubdued: 'bg-[#F8EDED]'
     }
   },
   defaultVariants: {
     level: 'neutral',
-    type: 'default'
   }
 });
 
-const tagTextVariants = cva('text-sm font-sourceSans3', {
+const tagTextVariants = cva('text-xs font-sourceSans3Medium', {
   variants: {
     level: {
-      neutral: 'text-gray-700',
-      success: 'text-success',
-      warning: 'text-yellow-700',
-      critical: 'text-red-700'
-    },
-    type: {
-      default: '',
-      defaultWithIcon: 'ml-1',
-      subduedWithIcon: 'ml-1',
-      subdued: ''
+      neutral: 'text-white',
+      success: 'text-white',
+      warning: 'text-gray-900',
+      critical: 'text-white',
+      neutralSubdued: 'text-gray-600',
+      successSubdued: 'text-success',
+      warningSubdued: 'text-[#F7B418]',
+      criticalSubdued: 'text-[#D32246]'
     }
   },
   defaultVariants: {
     level: 'neutral',
-    type: 'default'
   }
 });
 
@@ -56,17 +50,16 @@ interface TagProps extends ViewProps, VariantProps<typeof tagVariants> {
 export function Tag({
   children,
   level,
-  type,
   icon,
   ...props
 }: TagProps) {
   return (
     <StyledView
-      className={tagVariants({ level, type })}
+      className={tagVariants({ level })}
       {...props}
     >
-      {(type === 'defaultWithIcon' || type === 'subduedWithIcon') && icon}
-      <StyledText className={tagTextVariants({ level, type })}>
+      {icon}
+      <StyledText className={`${tagTextVariants({ level })} ${icon ? 'ml-1' : ''}`}>
         {children}
       </StyledText>
     </StyledView>
