@@ -5,13 +5,22 @@ import { styled } from 'nativewind';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledImage = styled(Image);
 
 const PortfolioDetails = ()=> {
     return (
         <StyledView className = 'w-full flex flex-col items-start gap-6 self-stretch px-6 pb-8 pt-0'>
             {/* Top Part */}
             <StyledView className = 'flex flex-col items-start gap-1 self-stretch'>
-                <StyledText>Net Portfolio Value</StyledText>
+                <StyledView className = 'flex flex-row'> 
+                    <StyledText>Net Portfolio Value</StyledText>
+                    <StyledView className = 'px-2'>
+                        <StyledImage
+                            source={require('../../assets/images/remove_red_eye.png')}
+                            className='w-[5vw] h-[5vw]'
+                        ></StyledImage>
+                    </StyledView>
+                </StyledView>
                 <StyledText className = 'font-bold'>$12,345.67</StyledText>
                 <StyledView className = 'flex flex-row justify-between items-center'>
                     <StyledText className = 'color-success'>$350.23</StyledText>

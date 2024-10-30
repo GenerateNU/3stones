@@ -16,6 +16,7 @@ interface PortfolioScreenProps {
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledScrollView = styled(ScrollView);
+const StyledImage = styled(Image);
 
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
@@ -23,8 +24,16 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         <StyledView className='flex w-93 h-14 items-center shrink-0'>
         </StyledView>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
-            <StyledView className = 'flex justify-between items-center self-stretch px-6 py-3'>
-                <StyledText> Your Portfolio</StyledText>
+            <StyledView className = 'flex justify-between items-left self-stretch px-6 py-3'>
+                <StyledView className = 'flex flex-row'>
+                    <StyledText>Your Portfolio</StyledText>
+                    <StyledView className = 'items-right justify-right'>
+                        <StyledImage
+                            source={require('../../assets/images/settings.png')}
+                            className='w-[6vw] h-[6vw]'
+                        ></StyledImage>
+                        </StyledView>
+                </StyledView>
             </StyledView>
             <PortfolioDetails></PortfolioDetails>
             <StyledView className='flex w-53 h-39 p-[7px_24px] flex-col items-center gap-2.5 shrink-0 rounded-[27px] bg-white'>
