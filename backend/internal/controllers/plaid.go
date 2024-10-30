@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
 	"backend/internal/types"
@@ -21,12 +23,18 @@ func NewPlaidController(serviceParams *types.ServiceParams) *PlaidController {
 }
 
 func (c *PlaidController) CreateLinkToken(ctx *fiber.Ctx) error {
-	userID, ok := ctx.Locals("userId").(string)
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
 		return &api_errors.INVALID_UUID
 	}
 
-	clientUserID := userID
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	clientUserID := id.String()
+
 	countryCodes := []plaid.CountryCode{plaid.COUNTRYCODE_US}
 	user := plaid.LinkTokenCreateRequestUser{
 		ClientUserId: clientUserID,
@@ -45,10 +53,7 @@ func (c *PlaidController) CreateLinkToken(ctx *fiber.Ctx) error {
 	// Execute the request to create a link token
 	response, _, err := c.ServiceParams.Plaid.PlaidApi.LinkTokenCreate(ctx.Context()).LinkTokenCreateRequest(*request).Execute()
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to create link token",
-			"error":   err.Error(),
-		})
+		return err
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -63,48 +68,181 @@ func (c *PlaidController) ExchangePublicToken(ctx *fiber.Ctx) error {
 
 	var body RequestBody
 	if err := ctx.BodyParser(&body); err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request body",
-		})
+		return &api_errors.INTERNAL_SERVER_ERROR
 	}
 
 	exchangeRequest := plaid.NewItemPublicTokenExchangeRequest(body.PublicToken)
 
 	response, _, err := c.ServiceParams.Plaid.PlaidApi.ItemPublicTokenExchange(ctx.Context()).ItemPublicTokenExchangeRequest(*exchangeRequest).Execute()
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to exchange public token",
-			"error":   err.Error(),
-		})
+		return err
 	}
 
 	accessToken := response.GetAccessToken()
 	itemID := response.GetItemId()
 
 	// Store accessToken and itemID securely in your database associated with the user
-	userID, ok := ctx.Locals("userId").(string)
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
 		return &api_errors.INVALID_UUID
 	}
 
-	uuidUserID, err := uuid.Parse(userID)
+	id, err := uuid.Parse(userId)
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid user ID",
-			"error":   err.Error(),
-		})
+		return &api_errors.INVALID_UUID
 	}
 
-	err = transactions.StoreAccessToken(c.ServiceParams.DB, uuidUserID, accessToken, itemID)
+	err = transactions.StoreAccessToken(c.ServiceParams.DB, id, accessToken, itemID)
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to store access token",
-			"error":   err.Error(),
-		})
+		return err
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
 		"access_token": accessToken,
 		"item_id":      itemID,
 	})
+}
+
+func (c *PlaidController) Invest(ctx *fiber.Ctx) error {
+	// Extract user ID
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	// Parse request body
+	type RequestBody struct {
+		PropertyID string `json:"property_id"`
+		Amount     string `json:"amount"`
+	}
+
+	var body RequestBody
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	// Validate input
+	if body.PropertyID == "" || body.Amount == "" {
+		return &api_errors.MISSING_FIELDS
+	}
+
+	// Retrieve access token
+	accessToken, err := transactions.GetAccessToken(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+	if accessToken == "" {
+		return &api_errors.INTERNAL_SERVER_ERROR
+	}
+
+	// Retrieve account ID (first account)
+	accountID, err := transactions.GetFirstAccountID(c.ServiceParams.Plaid, accessToken)
+	if err != nil {
+		return err
+	}
+
+	// Retrieve user info
+	user, err := transactions.GetUserInfo(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+
+	// Create transfer authorization
+	transferAuthResponse, err := c.createTransferAuthorization(
+		ctx, accessToken, accountID, body.Amount, user)
+	if err != nil {
+		return err
+	}
+
+	// Handle authorization decision
+	if transferAuthResponse.Decision != "approved" {
+		// Handle declined or user_action_required
+		if transferAuthResponse.Decision == "declined" {
+			return &api_errors.TRANSFER_AUTHORIZATION_DECLINED
+		}
+		if transferAuthResponse.Decision == "user_action_required" {
+			return &api_errors.TRANSFER_AUTHORIZATION_USER_ACTION_REQUIRED
+		}
+		return &api_errors.TRANSFER_AUTHORIZATION_FAILED
+	}
+
+	authorizationID := transferAuthResponse.Id
+
+	// Create transfer
+	transferResponse, err := c.createTransfer(
+		ctx, accessToken, accountID, authorizationID, body.Amount, body.PropertyID)
+	if err != nil {
+		return err
+	}
+
+	// Update investment records in your database
+	err = transactions.RecordInvestment(
+		c.ServiceParams.DB, id, body.PropertyID, body.Amount, transferResponse.Id)
+	if err != nil {
+		return err
+	}
+
+	// Return transfer details
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"transfer_id":     transferResponse.Id,
+		"transfer_status": transferResponse.Status,
+	})
+}
+
+func (c *PlaidController) createTransferAuthorization(
+	ctx *fiber.Ctx, accessToken, accountID, amount string, user transactions.UserInfo,
+) (*plaid.TransferAuthorization, error) {
+	transferType := plaid.TRANSFERTYPE_DEBIT
+	transferNetwork := plaid.TRANSFERNETWORK_ACH
+	achClass := plaid.ACHCLASS_WEB
+
+	transferUser := plaid.NewTransferAuthorizationUserInRequest(user.LegalName)
+	transferUser.SetEmailAddress(user.Email)
+
+	transferAuthRequest := plaid.NewTransferAuthorizationCreateRequest(
+		accessToken,
+		accountID,
+		transferType,
+		transferNetwork,
+		amount,
+		*transferUser,
+	)
+	transferAuthRequest.SetAchClass(achClass)
+
+	response, _, err := c.ServiceParams.Plaid.PlaidApi.TransferAuthorizationCreate(ctx.Context()).TransferAuthorizationCreateRequest(*transferAuthRequest).Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	auth := response.GetAuthorization()
+	return &auth, nil
+}
+
+func (c *PlaidController) createTransfer(
+	ctx *fiber.Ctx, accessToken, accountID, authorizationID, amount, propertyID string,
+) (*plaid.Transfer, error) {
+	transferType := plaid.TRANSFERTYPE_DEBIT
+	description := fmt.Sprintf("3 Stones Purchase of Property %s, Amount %s", propertyID, amount)
+
+	transferRequest := plaid.NewTransferCreateRequest(
+		accessToken,
+		accountID,
+		authorizationID,
+		string(transferType),
+	)
+	transferRequest.SetAmount(amount)
+	transferRequest.SetDescription(description)
+
+	response, _, err := c.ServiceParams.Plaid.PlaidApi.TransferCreate(ctx.Context()).TransferCreateRequest(*transferRequest).Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	transfer := response.GetTransfer()
+	return &transfer, nil
 }
