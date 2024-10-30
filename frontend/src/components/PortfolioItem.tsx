@@ -23,22 +23,22 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                 {/* Left Side of the Card*/}
                 <StyledView className = 'flex w-2/3 flex-col items-start'>
                     <StyledView className = 'flex flex-col items-start p-1 self-stretch space-y-2 mb-2'>
-                        <StyledText className = 'sourceSans3BodyBold text-defaultText' >333 Market Street</StyledText>
-                        <StyledText className = 'sourceSans3CaptionMedium text-defaultText' >San Francisco, CA</StyledText>
+                        <StyledText className = 'font-sourceSans3BodyBold' >333 Market Street</StyledText>
+                        <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >San Francisco, CA</StyledText>
                         <StyledView className = 'py-3'>
-                            <StyledText className = 'sourceSans3CaptionMedium text-defaultText' >Commercial Development</StyledText>
+                            <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Commercial Development</StyledText>
                         </StyledView>
                         <StyledView className="flex py-1 px-3 gap-1 items-center rounded-[8px] bg-border mb-3">
-                            <StyledText className="sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
+                            <StyledText className="font-sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
                         </StyledView>
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>
                             <StyledView className = 'flex justify-between items-start mr-4'>
-                                <StyledText className = 'sourceSans3CaptionMedium text-defaultText' >Value</StyledText>
-                                <StyledText className = 'body-medium text-defaultText' >$250.00</StyledText>
+                                <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Value</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >$250.00</StyledText>
                             </StyledView>
                             <StyledView className = 'flex flex-col items-start'>
-                                <StyledText className = 'caption-medium text-defaultText' >Exp Return</StyledText>
-                                <StyledText className = 'body-medium text-defaultText' >5.12%</StyledText>
+                                <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Exp Return</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >5.12%</StyledText>
                             </StyledView>
 
                         </StyledView>
@@ -61,8 +61,8 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                         </ImageBackground>
                     </StyledView>
                     <StyledView className = 'flex flex-col w-full justify-between items-end '>
-                        <StyledText className = 'caption-medium text-defaultText' >Time Line</StyledText>
-                        <StyledText className = 'body-medium text-defaultText' >6 Years</StyledText>
+                        <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Time Line</StyledText>
+                        <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >6 Years</StyledText>
                     </StyledView>
                 </StyledView>
             </StyledView>
