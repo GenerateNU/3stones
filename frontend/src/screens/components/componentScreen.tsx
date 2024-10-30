@@ -4,6 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Tag from '../../components/Tag';
+import TextField from '../../components/TextField';
 
 const StyledView = styled(View)
 
@@ -33,6 +34,24 @@ export default function ComponentScreen() {
         <Tag level="successSubdued">Success Subdued Tag</Tag>
         <Tag level="warningSubdued">Warning Subdued Tag</Tag>
         <Tag level="criticalSubdued">Critical Subdued Tag</Tag>
+
+        <TextField placeholder="Default text field" />
+        <TextField 
+          placeholder="Hover text field" 
+        />
+        <TextField 
+          placeholder="Focused text field"
+          state="focused" 
+        />
+        <TextField 
+          placeholder="Error text field"
+          error={true}
+          helperText="This is an error message"
+        />
+        <TextField 
+          placeholder="With helper text"
+          helperText="This is some helper text"
+        />
       </StyledView>
     </ScrollView>
   );

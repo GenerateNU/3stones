@@ -25,7 +25,7 @@ const buttonVariants = cva('flex', {
   }
 });
 
-const buttonTextVariants = cva('font-sourceSans3 text-sm font-medium leading-[18px]', {
+const buttonTextVariants = cva('font-sourceSans3 text-sm font-medium leading-[18px] text-center', {
   variants: {
     type: {
       primary: 'text-white',
