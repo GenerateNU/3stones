@@ -16,11 +16,24 @@ const StyledView = styled(View);
 const StyledPressable = styled(Pressable);
 const StyledImage = styled(Image);
 
+const NotificationIconBlock = () => {
+    return (
+      <StyledView className='flex-2 flex items-center justify-center'>
+        <StyledView className='flex items-center justify-center bg-brand50 w-[12vw] h-[12vw] rounded-full'>
+          <StyledImage
+            source={require('../assets/images/notifications.png')}
+            className='w-[7vw] h-[7vw]'
+          ></StyledImage>
+        </StyledView>
+      </StyledView>
+    );
+  };
+
 export default function NotificationButton({navigation}: NotificationButtonProps, onPress) {
     return(
         <StyledPressable className='w-10 rounded-full bg-green-200 text-black'
         onPress={onPress}>
-            
+        <NotificationIconBlock/>
         </StyledPressable>
     );
 }

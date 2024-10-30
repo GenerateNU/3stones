@@ -5,44 +5,67 @@ import ProfilePageNavigator from '../../../components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './styles';
 import NotificationButton from '../../../components/NotificationButton';
+import WideButton from '../../components/WideButton';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledImage = styled(Image);
 
 interface ProfileScreenProps {
     // This actually should be `any`, so disabling the linter rule
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     navigation: NavigationScreenProp<any, any>;
-  }
+}
+
+//Button to navigate to the portfolio page
+const EditProfileButton = ({ navigation }) => {
+    return (
+        <StyledView className='h-[4vh] w-[15vh]'>
+            <WideButton
+                name={'Edit Profile'}
+                navigation={navigation}
+                intent='secondary'
+            ></WideButton>
+        </StyledView>
+    );
+  };
 
 export default function ProfileScreen({ navigation }: ProfileScreenProps) {
     return(
-        <StyledView className='flex h-screen py-[6vh] bg-green-500'> 
+        <StyledView className='flex h-screen py-[6vh]'> 
             {/*Your Profile ...*/}
-            <StyledView className="flex-row py-[2vh] px-[4vw] justify-between bg-blue-500">
+            <StyledView className="flex-row py-[2vh] px-[4vw] justify-between">
                 <StyledText className="text-3xl align-center font-Nunito-BoldItalic text-center">
                     Your Profile
                 </StyledText>
                 <NotificationButton navigation={navigation} onPress = {() => {}}/>
             </StyledView>
-            <StyledView className="flex px-[vw] py-[2vh] flex-col items-center bg-orange-500 space-y-[10vh]">
-                <Image source={require('../../../assets/images/PlaceHolderPFP.png')} style={styles.imageStyle} />
+            <StyledView className="flex px-[vw] py-[2vh] flex-col items-center space-y-[10vh]">
+                <StyledImage source={require('../../../assets/images/PlaceHolderPFP.png')} style={styles.imageStyle} />
                 <StyledText>
                     Your Name
                 </StyledText>
                 <StyledText>
                     yourname@gmail.com
                 </StyledText>
-                <StyledText>
-                    Edit Profile
-                </StyledText>
+                <EditProfileButton navigation={navigation}/>
             </StyledView>
-            <StyledView className='bg-red-500'>
-                <ProfilePageNavigator navigation={navigation} pageName='Settings'/>
-                <ProfilePageNavigator navigation={navigation} pageName='Legal Documents'/>
-                <ProfilePageNavigator navigation={navigation} pageName='Deposit'/>
-                <ProfilePageNavigator navigation={navigation} pageName='Withdraw'/>
-                <ProfilePageNavigator navigation={navigation} pageName='Risk Tolerance'/>
+            <StyledView className='flex flex-col space-y-[32vw]'>
+                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
+                <StyledView className='flex flex-col gap-y-[40vh]'>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} pageName='Settings'/>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} pageName='Legal Documents'/>
+                </StyledView>
+                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
+                <StyledView className='flex flex-col gap-y-[40vh]'>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} pageName='Deposit'/>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} pageName='Withdraw'/>
+                </StyledView>
+                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
+                <StyledView className='flex flex-col gap-y-[40vh]'>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} pageName='Risk Tolerance'/>
+                </StyledView>
+                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
             </StyledView>
         </StyledView>
     );

@@ -62,7 +62,7 @@ export interface ButtonProps
   //name of button
   name: string;
   //route to button's icon
-  iconRoute: ImageSourcePropType;
+  iconRoute?: ImageSourcePropType; //made optional for buttons that don't have icons associated with them
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
@@ -82,7 +82,7 @@ const WideButton: React.FC<ButtonProps> = ({ name, iconRoute, intent, navigation
       className={buttonVariants({ intent })}
     >
       <StyledText className={buttonTextVariants({ intent })}>{name}</StyledText>
-      <StyledImage source={iconRoute} className='w-[7vw] h-[7vw]'></StyledImage>
+      {iconRoute && <StyledImage source={iconRoute} className='w-[7vw] h-[7vw]'></StyledImage>}
     </StyledTouchableOpacity>
   );
 };
