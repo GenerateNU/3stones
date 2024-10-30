@@ -15,7 +15,9 @@ export default function App() {
     'Nunito-Regular': require('./assets/fonts/nunito/Nunito-Regular.ttf'),
     'Inter-Bold': require('./assets/fonts/inter/Inter_18pt-Bold.ttf'),
     'Inter-Regular': require('./assets/fonts/inter/Inter_18pt-Regular.ttf'),
-    'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
+    'SourceSans3-Bold': require('./assets/fonts/sourceSans3/SourceSans3-Bold.ttf'),
+    'SourceSans3-Medium': require('./assets/fonts/sourceSans3/SourceSans3-Medium.ttf'),
+    'SourceSans3-SemiBold': require('./assets/fonts/sourceSans3/SourceSans3-SemiBold.ttf'),
   });
 
   useEffect(() => {

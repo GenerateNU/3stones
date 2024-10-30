@@ -36,8 +36,7 @@ module.exports = {
         sourceSans3BodyBold: ['SourceSans3-Bold'],
         sourceSans3CaptionMedium: ['SourceSans3-Medium'],
         sourceSans3BodyMedium: ['SourceSans3-SemiBold'],
-
+      },
     },
   },
-},
 };
