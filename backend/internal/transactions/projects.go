@@ -16,7 +16,8 @@ import (
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 	rows, err := db.Query(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode FROM projects")
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects")
+
 	if err != nil {
 		return nil, err
 	}
@@ -25,44 +26,34 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var id uuid.UUID
-		var developerID uuid.UUID
-		var title string
-		var description string
-		var completed bool
-		var fundingGoalCents int32
-		var milestone string
-		var premise string
-		var street string
-		var locality string
-		var state string
-		var zipcode string
+		var project models.Project
+		err := rows.Scan(
+			&project.ID,
+			&project.DeveloperID,
+			&project.Title,
+			&project.Description,
+			&project.Completed,
+			&project.FundingGoalCents,
+			&project.Milestone,
+			&project.Premise,
+			&project.Street,
+			&project.Locality,
+			&project.State,
+			&project.Zipcode,
+			&project.Latitude,
+			&project.Longitude)
 
-		err = rows.Scan(&id, &developerID, &title, &description, &completed, &fundingGoalCents, &milestone, &premise, &street, &locality, &state, &zipcode)
 		if err != nil {
 			return nil, err
 		}
 
-		images, err := GetProjectImages(db, id)
+		images, err := GetProjectImages(db, project.ID)
 		if err != nil {
 			return nil, err
 		}
+		project.Images = images
 
-		projects = append(projects, models.Project{
-			ID:               id,
-			DeveloperID:      developerID,
-			Title:            title,
-			Description:      description,
-			Completed:        completed,
-			FundingGoalCents: fundingGoalCents,
-			Milestone:        milestone,
-			Premise:          premise,
-			Street:           street,
-			Locality:         locality,
-			State:            state,
-			Zipcode:          zipcode,
-			Images:           images,
-		})
+		projects = append(projects, project)
 	}
 
 	return projects, nil
@@ -83,7 +74,7 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	// Execute the query with the provided context and developer ID
 	row := db.QueryRow(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode FROM projects WHERE ID = $1",
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE ID = $1",
 		id)
 
 	var project models.Project
@@ -99,7 +90,9 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 		&project.Street,
 		&project.Locality,
 		&project.State,
-		&project.Zipcode)
+		&project.Zipcode,
+		&project.Latitude,
+		&project.Longitude)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, &api_errors.UUID_NOT_FOUND
