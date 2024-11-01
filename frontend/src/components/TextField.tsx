@@ -8,7 +8,7 @@ const StyledTextInput = styled(TextInput);
 const StyledText = styled(Text);
 
 const textFieldVariants = cva(
-  'w-full border border-border rounded-xl px-3 py-2 font-sourceSans3 text-base', 
+  'w-full border border-border rounded-xl px-3 py-2 font-sourceSans3 text-base bg-white', 
   {
     variants: {
       state: {
