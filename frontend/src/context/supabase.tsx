@@ -7,7 +7,7 @@ import { TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET } from '@env';
 const supabaseUrl = TS3_SUPABASE_PROJECT_URL;
 const supabaseAnonKey = TS3_SUPABASE_JWT_SECRET;
 
-console.log(TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET); 
+console.log(TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET);
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {

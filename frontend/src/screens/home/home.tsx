@@ -7,18 +7,13 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { BASE_URL } from '@env';
 
-
 // interface HomeScreenProps {
 //   // This actually should be `any`, so disabling the linter rule
 //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 //   navigation: NavigationScreenProp<any, any>;
 // }
 
-
-
-
 const StyledView = styled(View);
-
 
 // Log out button to test authentication
 const TestLogOut = () => {
@@ -31,13 +26,13 @@ const TestLogOut = () => {
 
     //test getting token
     console.log(token);
-  
+
     return token;
   };
 
   // Test endpoint to get all developers from backend
   const getDevelopers = async () => {
-    console.log(`http://${BASE_URL}/api/v1/developers`);
+    console.log(`${BASE_URL}/api/v1/developers`);
     const token = session.access_token;
     const response = await fetch(`${BASE_URL}/api/v1/developers`, {
       method: 'GET',
@@ -54,29 +49,28 @@ const TestLogOut = () => {
   useEffect(() => {
     getToken();
     getDevelopers();
-  }
-  , []);
-  
+  }, []);
+
   return (
-    <StyledView className="w-[100vw] h-[100vh] flex items-center justify-center">
-      <Button title="Log Out" onPress={() => {signOut(); }} />
+    <StyledView className='w-[100vw] h-[100vh] flex items-center justify-center'>
+      <Button
+        title='Log Out'
+        onPress={() => {
+          signOut();
+        }}
+      />
     </StyledView>
   );
 };
 
 export default function HomeScreen() {
-
-  
   return (
-      <GestureHandlerRootView>
+    <GestureHandlerRootView>
       <StyledView className='flex-1 items-center bg-surfaceBG'>
         <StyledView className='pt-[5vh]'>
           <TestLogOut />
         </StyledView>
       </StyledView>
-
-      </GestureHandlerRootView>
+    </GestureHandlerRootView>
   );
 }
-
-

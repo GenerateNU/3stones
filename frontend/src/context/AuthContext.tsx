@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
     });
 
-    // Cleannnup function 
+    // Cleannnup function
     return () => subscription.unsubscribe();
   }, []);
 

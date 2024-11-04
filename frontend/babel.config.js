@@ -6,15 +6,16 @@ module.exports = function (api) {
       '@babel/plugin-transform-react-jsx',
       'nativewind/babel',
       [
-        "module:react-native-dotenv", {
-          "moduleName": "@env",
-          "path": "./../.env",
-          "safe": false,
-          "allowUndefined": true,        
-          "blocklist": null,
-          "allowlist": null,
-          "verbose": false
-        }
+        'module:react-native-dotenv',
+        {
+          moduleName: '@env',
+          path: './../.env',
+          safe: false,
+          allowUndefined: true,
+          blocklist: null,
+          allowlist: null,
+          verbose: false,
+        },
       ],
     ],
   };

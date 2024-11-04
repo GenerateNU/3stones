@@ -6,7 +6,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import SampleLoginScreen from './src/screens/home/sampleLoginScreen';
 
-
 SplashScreen.preventAutoHideAsync();
 
 // Navigates user to the log in screen if seesion is not found (i.e. user not logged in)
@@ -48,5 +47,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
-
