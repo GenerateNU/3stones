@@ -1,27 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { styled } from 'nativewind';
 
-const StyledView = styled(View);
-const StyledText = styled(Text);
+const ProgressBarContainer = styled(View, 'w-full h-2 bg-border rounded-full overflow-hidden mb-2');
+const ProgressBarFill = styled(View, 'h-full bg-defaultPrimary rounded-full');
 
-const InvestmentProgress = ({ percentageFunded }) => {
-  const investmentAmount = 2452.34; // placeholder value
+const ProgressBarComponent = ({ current, total }) => {
+  const percentage = (current / total) * 100;
 
   return (
-    <StyledView className='p-4 bg-border rounded-lg'>
-      <StyledView className='w-full h-3 bg-surfaceFG rounded-full mb-1 overflow-hidden'>
-        <StyledView
-          className='h-full bg-disabledText rounded-full'
-          // tailwindcss doesn't support dynamic styles, so we have to use inline styles
-          style={{ width: `${percentageFunded}%` }}
-        />
-      </StyledView>
-      <StyledText className='text-lg'>
-        ${investmentAmount.toFixed(2)} invested · {percentageFunded}% funded
-      </StyledText>
-    </StyledView>
+    <ProgressBarContainer>
+      <ProgressBarFill style={{ width: `${percentage}%` }} />
+    </ProgressBarContainer>
   );
 };
 
-export default InvestmentProgress;
+export default ProgressBarComponent;

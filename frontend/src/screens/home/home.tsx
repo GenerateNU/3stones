@@ -4,8 +4,10 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
+import InvestmentProgress from '../../components/InvestmentProgress';
 
 import styles from './styles';
+import ProgressBarComponent from '../../components/InvestmentProgress';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -27,6 +29,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           navigation={navigation}
         />
       </StyledView>
+
+      {/* Progress bar (1/6). Can be used for investment progress too*/}
+      <ProgressBarComponent current = {1} total = {6} />
+      
       {/* Some dummy image */}
       <StyledView className='align-center'>
         <Image source={require('../../../assets/images/icon.png')} style={styles.imageStyle} />
