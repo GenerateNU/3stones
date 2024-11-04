@@ -1,4 +1,4 @@
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -14,6 +14,7 @@ import { BASE_URL } from '@env';
 // }
 
 const StyledView = styled(View);
+const StyledText = styled(Text);
 
 // Log out button to test authentication
 const TestLogOut = () => {
@@ -59,6 +60,7 @@ const TestLogOut = () => {
           signOut();
         }}
       />
+      <StyledText>{developers}</StyledText>
     </StyledView>
   );
 };
