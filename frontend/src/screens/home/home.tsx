@@ -38,9 +38,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             <StyledText className='align-center text-3xl font-title text-defaultText'>
               Dummy page
             </StyledText>
-            <Button onPress={(evt) => {
-              console.log("Hello, world!");
-            }} title="Click me"></Button>
+            <Button
+              onPress={() => {
+                console.log('Hello, world!');
+              }}
+              title='Click me'
+            ></Button>
           </View>
         </TouchableOpacity>
       </View>
