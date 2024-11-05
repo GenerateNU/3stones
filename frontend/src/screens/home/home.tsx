@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
+import { TitleText } from '../../components/typography';
 
 import styles from './styles';
 
@@ -35,9 +36,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
-            <StyledText className='align-center text-3xl font-title text-defaultText'>
-              Dummy page
-            </StyledText>
+            <TitleText>Dummy page</TitleText>
             <Button
               onPress={() => {
                 console.log('Hello, world!');
