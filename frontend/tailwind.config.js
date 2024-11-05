@@ -59,10 +59,12 @@ module.exports = {
         nunitoBoldItalic: ['Nunito-BoldItalic'],
         heading: ['Nunito-Bold'],
         nunitoRegular: ['Nunito-Regular'],
+        nunitoSemiBold: ['Nunito-SemiBold'],
         title: ['Nunito-ExtraBold'],
         bodyBold: ['Inter_18pt-Bold'],
         body: ['Inter_18pt-Regular'],
         sourceSans3: ['SourceSans3-Regular'],
+        sourceSans3Bold: ['SourceSans3-Bold'],
       },
     },
 
