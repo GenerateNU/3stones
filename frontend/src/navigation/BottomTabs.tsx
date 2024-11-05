@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SecondScreen from '../screens/secondScreen/secondScreen';
 import PortfolioScreen from '../screens/portfolioScreen'
 import StackNavigator from './StackNavigator';
+import ProjectNavigator from './ProjectNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,18 @@ export default function TabNavigator() {
             <TabBarIcon color={focused ? 'blue' : 'black'} name='circle' />
           ),
           tabBarLabel: 'Home',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='Project'
+        component={ProjectNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='circle' />
+          ),
+          tabBarLabel: 'Project',
           title: '',
           headerShown: false,
         }}

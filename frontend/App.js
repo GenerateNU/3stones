@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './src/navigation/BottomTabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,6 +19,8 @@ export default function App() {
     'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
   });
 
+  const queryClient = new QueryClient();
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -29,8 +32,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }

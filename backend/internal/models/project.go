@@ -19,6 +19,8 @@ type Project struct {
 	Locality         string      `json:"locality"`
 	State            string      `json:"state"`
 	Zipcode          string      `json:"zipcode"`
+	Latitude         float32     `json:"latitude"`
+	Longitude        float32     `json:"longitude"`
 	Images           []ImageLink `json:"images"`
 }
 
