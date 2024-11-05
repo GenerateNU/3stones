@@ -17,12 +17,27 @@ const tagVariants = cva('flex flex-row items-center rounded-lg px-3 py-1', {
       successSubdued: 'bg-[#ECF3ED]',
       warningSubdued: 'bg-[#F9EFD7]',
       criticalSubdued: 'bg-[#F8EDED]'
-    }
+    },
   },
   defaultVariants: {
     level: 'neutral',
   }
 });
+
+const tagIconVariants = cva('', {
+  variants: {
+    level: {
+      neutral: 'text-black',
+      success: 'text-success',
+      warning: 'text-[#F7B418]',
+      critical: 'text-[#D32246]',
+      neutralSubdued: 'text-gray-600',
+      successSubdued: 'text-success',
+      warningSubdued: 'text-[#F7B418]',
+      criticalSubdued: 'text-[#D32246]'
+    }
+  }
+})
 
 const tagTextVariants = cva('text-xs font-sourceSans3Medium', {
   variants: {
@@ -51,14 +66,15 @@ export function Tag({
   children,
   level,
   icon,
+  className,
   ...props
-}: TagProps) {
+}: TagProps & { className?: string }) {
   return (
     <StyledView
-      className={tagVariants({ level })}
+      className={`${tagVariants({ level })} ${className || ''}`}
       {...props}
     >
-      {icon}
+      <StyledView className={`${tagIconVariants({ level })}`}>{icon}</StyledView>
       <StyledText className={`${tagTextVariants({ level })} ${icon ? 'ml-1' : ''}`}>
         {children}
       </StyledText>

@@ -40,19 +40,23 @@ const buttonTextVariants = cva('font-sourceSans3 text-sm font-medium leading-[18
 
 interface ButtonProps extends TouchableOpacityProps, VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 export function Button({ 
   children,
   type,
   size,
+  icon,
+  className,
   ...props 
-}: ButtonProps) {
+}: ButtonProps & { className?: string }) {
   return (
     <StyledTouchableOpacity 
-      className={ buttonVariants({ type, size }) }
+      className={`${buttonVariants({ type, size })} ${className || ''}`}
       {...props}
     >
+      {icon}
       <StyledText className={buttonTextVariants({ type })}>
         {children}
       </StyledText>

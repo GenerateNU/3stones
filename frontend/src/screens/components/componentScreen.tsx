@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Tag from '../../components/Tag';
-import TextField from '../../components/TextField';
+import Placeholder from '../../../assets/svgs/placeholder.svg';
 
 const StyledView = styled(View)
 
@@ -21,7 +21,7 @@ export default function ComponentScreen() {
         <Button type="plainDark" size="small"><Text>Action</Text></Button>
         <Button type="plainDark" size="medium"><Text>Action</Text></Button>
         <Button type="plainDark" size="large"><Text>Action</Text></Button>
-
+        
         <Card>
             <Text>Small Default Card</Text>
         </Card>
@@ -35,23 +35,14 @@ export default function ComponentScreen() {
         <Tag level="warningSubdued">Warning Subdued Tag</Tag>
         <Tag level="criticalSubdued">Critical Subdued Tag</Tag>
 
-        <TextField placeholder="Default text field" />
-        <TextField 
-          placeholder="Hover text field" 
-        />
-        <TextField 
-          placeholder="Focused text field"
-          state="focused" 
-        />
-        <TextField 
-          placeholder="Error text field"
-          error={true}
-          helperText="This is an error message"
-        />
-        <TextField 
-          placeholder="With helper text"
-          helperText="This is some helper text"
-        />
+        <Tag level="neutral" icon={<Placeholder width={12} height={12}/>}>Neutral Tag</Tag>
+        <Tag level="success" icon={<Placeholder width={12} height={12}/>}>Success Tag</Tag>
+        <Tag level="warning" icon={<Placeholder width={12} height={12}/>}>Warning Tag</Tag>
+        <Tag level="critical" icon={<Placeholder width={12} height={12}/>}>Critical Tag</Tag>
+        <Tag level="neutralSubdued" icon={<Placeholder width={12} height={12}/>}>Neutral Subdued Tag</Tag>
+        <Tag level="successSubdued" icon={<Placeholder width={12} height={12}/>}>Success Subdued Tag</Tag>
+        <Tag level="warningSubdued" icon={<Placeholder width={12} height={12}/>}>Warning Subdued Tag</Tag>
+        <Tag level="criticalSubdued" icon={<Placeholder width={12} height={12}/>}>Critical Subdued Tag</Tag>
       </StyledView>
     </ScrollView>
   );
