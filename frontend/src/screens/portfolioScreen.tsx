@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
 import PortfolioItem from '../components/PortfolioItem';
+import SearchBar from '../components/SearchBar';
 import UpdateCard  from '../components/PortfolioUpdateCard';
 
 interface PortfolioScreenProps {
@@ -21,6 +22,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
         <StyledView className='flex w-93 h-14 items-center shrink-0'>
         </StyledView>
+        <SearchBar value='Search'/>
         <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
             <StyledView className='flex w-53 h-39 p-[7px_24px] flex-col items-center gap-2.5 shrink-0 rounded-[27px] bg-white'>
                 <StyledText className = 'sourceSans3BodyBold'>Your Positions</StyledText>
