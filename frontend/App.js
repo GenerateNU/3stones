@@ -19,23 +19,23 @@ export default function App() {
     'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
   });
 
-    const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
-    useEffect(() => {
-        if (loaded || error) {
-            SplashScreen.hideAsync();
-        }
-    }, [loaded, error]);
-
-    if (!loaded && !error) {
-        return null;
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
     }
+  }, [loaded, error]);
 
-    return (
-        <QueryClientProvider client={queryClient}>
-            <NavigationContainer>
-                <TabNavigator />
-            </NavigationContainer>
-        </QueryClientProvider>
-    );
+  if (!loaded && !error) {
+    return null;
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
+  );
 }
