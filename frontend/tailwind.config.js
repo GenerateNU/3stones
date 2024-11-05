@@ -65,5 +65,18 @@ module.exports = {
         sourceSans3: ['SourceSans3-Regular'],
       },
     },
+
+    spacing: {
+      three_xs: '4px',
+      two_xs: '8px',
+      xs: '12px',
+      s: '16px',
+      m: '24px',
+      lg: '32px',
+      xl: '40px',
+      two_xl: '48px',
+      three_xl: '56px',
+      four_xl: '64px',
+    },
   },
 };
