@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, Image, TextInput } from 'react-native';
+import { View, Pressable, Image, TextInput, Dimensions, GestureResponderEvent } from 'react-native';
 import { styled } from 'nativewind';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -11,45 +11,57 @@ const StyledTextInput = styled(TextInput);
 const searchBarVariants = cva('flex-row items-center px-4 py-2 rounded-full', {
   variants: {
     intent: {
-      selected: 'border border-neutral-900',
-      unselected: 'border border-neutral-500',
-      filled: 'border border-neutral-500 bg-gray-400',
+      selected: 'border border-borderSelected bg-surfaceFG text-defaultText',
+      unselected: 'border border-borderPrimary bg-surfaceFG text-placeholderText',
+      disabled: 'border border-borderPrimary bg-surfaceDisabled text-placeholderText',
     },
     icon: {
-      clear: '../../assets/images/x-icon.png',
-      search: '../../assets/images/search-icon.png',
+      'x-default': '../../assets/images/x-icon-default.png',
+      'search-default': '../../assets/images/search-icon-default.png',
+      'x-disabled': '../../assets/images/x-icon-disabled.png',
+      'search-disabled': '../../assets/images/search-icon-disabled.png',
     },
   },
   compoundVariants: [
-    { intent: 'selected', icon: 'clear', className: 'bg-white' },
-    { intent: 'unselected', icon: 'search', className: 'bg-white' },
-    { intent: 'filled', icon: 'clear', className: 'bg-gray-400' },
-    { intent: 'filled', icon: 'search', className: 'bg-gray-400' },
+    { intent: 'selected', icon: 'x-default', className: 'bg-surfaceFG' },
+    { intent: 'unselected', icon: 'search-default', className: 'bg-surfaceFG' },
+    { intent: 'disabled', icon: 'x-disabled', className: 'bg-surfaceDisabled' },
+    { intent: 'disabled', icon: 'search-disabled', className: 'bg-surfaceDisabled' },
   ],
 });
 
 const iconVariants = {
-  clear: require('../../assets/images/x-icon.png'),
-  search: require('../../assets/images/search-icon.png'),
+  'x-default': require('../../assets/images/x-icon-default.png'),
+  'x-disabled': require('../../assets/images/x-icon-disabled.png'),
+  'search-default': require('../../assets/images/search-icon-default.png'),
+  'search-disabled': require('../../assets/images/search-icon-disabled.png')
 };
+
+const { height: screenHeight } = Dimensions.get('window');
+const calculatedWidth = (239 / 1000) * screenHeight;
+const calculatedHeight = (42 / 1000) * screenHeight;
 
 type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   value: string;
   onValueChange: (text: string) => void;
+  onPressed: (event: GestureResponderEvent) => void;
   intent: string;
   icon: string;
+  textColor: string;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, onValueChange, intent, icon }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ value, intent, icon, textColor, onValueChange, onPressed }) => {
   return (
-    <StyledView className={searchBarVariants({ intent, icon })}>
+    <StyledView className={searchBarVariants({ intent, icon })} style={{ width: calculatedWidth, height: calculatedHeight, paddingHorizontal: 12 }}>
       <StyledTextInput
-        className="text-defaultText flex-1"
+        style={{ fontSize: 14, fontFamily: "sourceSans3", fontWeight: 500}}
+        className="flex-1"
         placeholder={value}
+        placeholderTextColor={textColor}
         onChangeText={onValueChange}
       />
-      <StyledPressable className="ml-2">
-        <StyledImage source={iconVariants[icon || 'clear']} style={{ width: 16, height: 16 }} />
+      <StyledPressable className="ml-2" onPress={onPressed}>
+        <StyledImage source={iconVariants[icon || 'clear']} style={{ width: 14, height: 14 }} />
       </StyledPressable>
     </StyledView>
   );
