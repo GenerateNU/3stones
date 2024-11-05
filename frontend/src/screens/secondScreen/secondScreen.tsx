@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { GestureResponderEvent, Text, View } from 'react-native';
 import styles from './styles';
 import SearchBar from '../../components/SearchBar';
 
@@ -11,16 +11,24 @@ export default function SecondScreen() {
       </View>
       <SearchBar value='Search' onValueChange={function (text: string): void {
         throw new Error('Function not implemented.');
-      } } intent={'selected'} icon={'clear'}/>
+      } } intent={'selected'} icon={'x-default'} textColor={'#282828'} onPressed={function (event: GestureResponderEvent): void {
+        throw new Error('Function not implemented.');
+      } }/>
       <SearchBar value='Search' onValueChange={function (text: string): void {
         throw new Error('Function not implemented.');
-      } } intent={'filled'} icon={'clear'}/>
+      } } intent={'disabled'} icon={'x-disabled'} textColor={'#868686'} onPressed={function (event: GestureResponderEvent): void {
+        throw new Error('Function not implemented.');
+      } }/>
       <SearchBar value='Search' onValueChange={function (text: string): void {
         throw new Error('Function not implemented.');
-      } } intent={'unselected'} icon={'search'}/>
+      } } intent={'unselected'} icon={'search-default'} textColor={'#BBBBBB'} onPressed={function (event: GestureResponderEvent): void {
+        throw new Error('Function not implemented.');
+      } }/>
       <SearchBar value='Search' onValueChange={function (text: string): void {
         throw new Error('Function not implemented.');
-      } } intent={'filled'} icon={'search'}/>
+      } } intent={'disabled'} icon={'search-disabled'} textColor={'#868686'} onPressed={function (event: GestureResponderEvent): void {
+        throw new Error('Function not implemented.');
+      } }/>
     </View>
   );
 }
