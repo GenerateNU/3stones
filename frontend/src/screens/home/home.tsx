@@ -1,9 +1,10 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
+import { TitleText } from '../../components/typography';
 
 import styles from './styles';
 
@@ -35,9 +36,13 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
           <View>
-            <StyledText className='align-center text-3xl font-title text-defaultText'>
-              Dummy page
-            </StyledText>
+            <TitleText>Dummy page</TitleText>
+            <Button
+              onPress={() => {
+                console.log('Hello, world!');
+              }}
+              title='Click me'
+            ></Button>
           </View>
         </TouchableOpacity>
       </View>
