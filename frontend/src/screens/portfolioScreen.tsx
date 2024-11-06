@@ -4,8 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
 import PortfolioItem from '../components/PortfolioItem';
-import SearchBar from '../components/SearchBar';
-import UpdateCard  from '../components/PortfolioUpdateCard';
+import UpdateCard from '../components/PortfolioUpdateCard';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -20,43 +19,91 @@ const StyledScrollView = styled(ScrollView);
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
-        <StyledView className='flex w-93 h-14 items-center shrink-0'>
+      <StyledView className='flex w-93 h-14 items-center shrink-0'></StyledView>
+      <StyledScrollView contentContainerStyle={{ flexGrow: 1 }} className='flex-1'>
+        <StyledView className='flex w-53 h-39 p-[7px_24px] flex-col items-center gap-2.5 shrink-0 rounded-[27px] bg-white'>
+          <StyledText className='sourceSans3BodyBold'>Your Positions</StyledText>
         </StyledView>
-        <SearchBar value='Search'/>
-        <StyledScrollView  contentContainerStyle={{ flexGrow: 1 }} className = 'flex-1' >
-            <StyledView className='flex w-53 h-39 p-[7px_24px] flex-col items-center gap-2.5 shrink-0 rounded-[27px] bg-white'>
-                <StyledText className = 'sourceSans3BodyBold'>Your Positions</StyledText>
-            </StyledView>
-            <StyledView className = 'flex w-98 p-[16px_24px] flex-col items-start gap-3 rounded-[27px] bg-white'>
-                <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00'/>
-                <StyledText className = "sourceSans3CaptionMedium text-defaultText"> 8 Total Investments</StyledText>
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem>  
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem> 
-                < PortfolioItem address={''} location={''} price={0} duration={''} invested={0} completion={0} imageUrl={''}>
-
-                </PortfolioItem>   
-            </StyledView>
-            </StyledScrollView>
+        <StyledView className='flex w-98 p-[16px_24px] flex-col items-start gap-3 rounded-[27px] bg-white'>
+          <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
+          <StyledText className='sourceSans3CaptionMedium text-defaultText'>
+            {' '}
+            8 Total Investments
+          </StyledText>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
         </StyledView>
-
-    );
+      </StyledScrollView>
+    </StyledView>
+  );
 }
