@@ -23,7 +23,7 @@ func NewInvestorsController(ServiceParams *types.ServiceParams) *InvestorsContro
 func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
 	id, ok := ctxt.GetUserID(ctx)
 	if !ok {
-		return &api_errors.INVALID_UUID
+		return &api_errors.UUID_NOT_FOUND
 	}
 
 	investorProfile, err := transactions.GetProfile(c.ServiceParams.DB, id)
