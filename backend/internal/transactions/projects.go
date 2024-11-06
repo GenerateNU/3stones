@@ -41,7 +41,6 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			&project.Zipcode,
 			&project.Latitude,
 			&project.Longitude)
-
 		if err != nil {
 			return nil, err
 		}
