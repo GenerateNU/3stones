@@ -1,11 +1,12 @@
 import React from 'react';
 import { styled } from 'nativewind';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { TextInput, View, Text, TextInputProps, ImageSourcePropType } from 'react-native';
+import { TextInput, View, Text, TextInputProps, ImageSourcePropType, Image} from 'react-native';
 
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledView = styled(View);
+const StyledImage = styled(Image);
 
 const textFieldVariants = cva('textField', {
     variants: {
@@ -82,19 +83,30 @@ const textFieldVariants = cva('textField', {
 
         ],
         left: [
-
+          'flex-row',
+          'items-center',
+          'pl-4',
         ],
         right: [
-
+          'flex-row-reverse',
+          'items-center',
+          'pr-4', 
         ],
-        preffix: [
-
+        prefix: [
+          'flex-row',
+          'items-center',
+          'pl-4',
         ],
         suffix: [
-
+          'flex-row-reverse',
+          'items-center',
+          'pr-4', 
         ],
         counter: [
-
+          'flex-row',
+          'justify-between',
+          'items-center',
+          'pr-4', 
         ],
       }
     },
@@ -141,6 +153,8 @@ const textFieldTextVariants = cva('text', {
       iconRoute?: ImageSourcePropType;
       //placeholder for the text field
       placeholder: string;
+      //error message
+      errorMessage?: string;
 }
 
 /**
@@ -150,10 +164,12 @@ const textFieldTextVariants = cva('text', {
  * @param intent TextField variant (default, hover, focused, filled, error, diabled).
  * @param size TextField size (medium, large)
  * @param icon Location of the icon (deafult, left, right, prefix, suffix, counter)
+ * @param errorMessage The message to be displayed if the intent is error 
+ * @param placeholder The text you want to display before you type into the field
  * 
  */
 
-const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, icon }) => {
+const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, icon, errorMessage, placeholder}) => {
 
   const [value, setValue] = React.useState('');
 
@@ -162,7 +178,26 @@ const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, ic
   }
     
   return (
-    <StyledView className={textFieldTextVariants({intent})}>
-    </StyledView>
+    <StyledView className  = {textFieldVariants({size, intent})}>
+      {(icon === 'left' || icon === 'prefix') && iconRoute && (
+        <StyledImage source={iconRoute} className="mr-2" /> 
+        )}
+        <StyledTextInput 
+        className = {textFieldTextVariants({intent})}
+        onChangeText={onChangeInput}
+        value={value}/>
+      {(icon === 'right' || icon === 'suffix') && iconRoute && (
+        <StyledImage source={iconRoute} className="ml-2" /> 
+      )}
+      {icon === 'counter' && (
+        //Need to pass the count in or is it always 20?
+        <StyledText className="ml-2 text-gray-600">{`${value.length}/20`}</StyledText>
+      )}
+        {intent === 'error' && errorMessage && (
+        <StyledText className="text-red-500 mt-1">{errorMessage}</StyledText>
+      )}
+      </StyledView>
   );
 };
+
+export default TextField

@@ -24,6 +24,7 @@ module.exports = {
         border: '#DDDDDD',
         brand50: '#CADEDB',
         success: '#0E9888',
+
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],
@@ -34,6 +35,9 @@ module.exports = {
         bodyBold: ['Inter_18pt-Bold'],
         body: ['Inter_18pt-Regular'],
         sourceSans3: ['SourceSans3-Regular'],
+      },
+      borderRadius: {
+        'spacing-xs': '12px',
       },
     },
   },
