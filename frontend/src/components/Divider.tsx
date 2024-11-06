@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ImageSourcePropType } from 'react-native';
+import { View, Image, ImageSourcePropType } from 'react-native';
 import { styled } from 'nativewind';
 import { CaptionText } from './typography';
 
