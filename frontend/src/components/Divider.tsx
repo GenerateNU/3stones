@@ -24,7 +24,7 @@ const Divider: React.FC<DividerProps> = ({ text, image }) => {
         //Allows for conditional rendering of text element
         //Text element styling is taken from typography.tsx
         <StyledView className='items-center px-[0.5vh]'>
-          <CaptionText>{text}</CaptionText>
+          <CaptionText className='text-gray-300'>{text}</CaptionText>
         </StyledView>
       )}
       {image && (
