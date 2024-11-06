@@ -19,7 +19,7 @@ interface DividerProps {
 const Divider: React.FC<DividerProps> = ({ text, image }) => {
   return (
     <StyledView className='relative flex-row items-center w-full'>
-      <StyledView className='flex-1 h-[0.2vh] bg-gray-300'/>
+      <StyledView className='flex-1 h-[0.2vh] bg-gray-300' />
       {text && (
         //Allows for conditional rendering of text element
         //Text element styling is taken from typography.tsx
@@ -33,7 +33,7 @@ const Divider: React.FC<DividerProps> = ({ text, image }) => {
           <StyledImage source={image} className='w-[5vw] h-[5vw]' />
         </StyledView>
       )}
-      <StyledView className='flex-1 h-[0.2vh] bg-gray-300'/>
+      <StyledView className='flex-1 h-[0.2vh] bg-gray-300' />
     </StyledView>
   );
 };
