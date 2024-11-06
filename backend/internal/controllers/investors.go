@@ -51,7 +51,7 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 	id, ok := ctxt.GetUserID(ctx)
 	if !ok {
-		return &api_errors.INVALID_UUID
+		return &api_errors.UUID_NOT_FOUND
 	}
 
 	paginationParams := new(types.PaginationParams)
