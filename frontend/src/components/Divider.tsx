@@ -4,7 +4,6 @@ import { styled } from 'nativewind';
 import { CaptionText } from './typography';
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 interface DividerProps {
