@@ -24,6 +24,7 @@ module.exports = {
         border: '#DDDDDD',
         brand50: '#CADEDB',
         success: '#0E9888',
+        error: '#D32246',
 
       },
       fontFamily: {

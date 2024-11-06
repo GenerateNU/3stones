@@ -1,3 +1,9 @@
+    // TO DO icon left and icon right - vertically centered 
+    // Make sure the colours are in the config file 
+    // Get the text to be visible
+    // Get the text to be styled right 
+    // Make sure that images getting passed in for left and right are the right size?
+
 import React from 'react';
 import { styled } from 'nativewind';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -17,7 +23,10 @@ const textFieldVariants = cva('textField', {
             'items-start',
             'bg-surfaceFG',
             'border-border',
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
         ],
         hover: [
             'flex w-82',
@@ -25,23 +34,32 @@ const textFieldVariants = cva('textField', {
             'items-start',
             'bg-gray-200', //not in config file #DDD
             'border-gray-300', //not in config file #BBB
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
         ],
          focus: [
-            'flex w-82',
+            'flex w-4',
             'flex-col',
             'items-start',
             'bg-surfaceFG',
             'border-border-selected', //not in config file #4B4B4B
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
          ],
         error: [
-            'flex w-82',
-            'flex-col',
-            'items-start',
+            'flex w-3/4',
+            'flex-row',
+            'items-center',
             'bg-surfaceFG',
-            'border-error', 
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
+            'border-error',
         ],
          filled: [
             'flex w-82',
@@ -49,7 +67,10 @@ const textFieldVariants = cva('textField', {
             'items-start',
             'bg-surfaceFG',
             'border-gray-200',
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
          ],
          disabled: [
             'flex w-82',
@@ -57,7 +78,10 @@ const textFieldVariants = cva('textField', {
             'items-start',
             'bg-gray-300',
             'border-gray-500',
-            'rounded-spacing-xs',
+            'border-x-[0.3px]',
+            'border-y-[0.3px]', 
+            'rounded-[12px]',
+            'p-4',
          ]
       },
       size: {
@@ -155,6 +179,12 @@ const textFieldTextVariants = cva('text', {
       placeholder: string;
       //error message
       errorMessage?: string;
+      //preffix
+      prefix?: string;
+      //suffix
+      suffix?: string;
+      //counter value 
+      count?: string;
 }
 
 /**
@@ -164,12 +194,14 @@ const textFieldTextVariants = cva('text', {
  * @param intent TextField variant (default, hover, focused, filled, error, diabled).
  * @param size TextField size (medium, large)
  * @param icon Location of the icon (deafult, left, right, prefix, suffix, counter)
- * @param errorMessage The message to be displayed if the intent is error 
+ * @param errorMessage The message to be displayed if the intent is error (optional)
  * @param placeholder The text you want to display before you type into the field
- * 
+ * @param prefix If you want a value to go infront of the text (optional)
+ * @param suffix If you want a value to go after the text (optional)
+ * @param count The value you want to counter to be out of (optional)
  */
 
-const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, icon, errorMessage, placeholder}) => {
+const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, icon, errorMessage, placeholder, prefix, suffix, count}) => {
 
   const [value, setValue] = React.useState('');
 
@@ -178,23 +210,36 @@ const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, ic
   }
     
   return (
-    <StyledView className  = {textFieldVariants({size, intent})}>
-      {(icon === 'left' || icon === 'prefix') && iconRoute && (
-        <StyledImage source={iconRoute} className="mr-2" /> 
+    <StyledView className = 'p-4 gap-0.5 items-center flex-col'>
+    <StyledView className = {textFieldVariants({size, intent, icon})}>
+      {(icon === 'left') && iconRoute && (
+        <StyledImage source={require('../../../assets/images/error.png')} className="mr-2" /> 
+        )}
+        {(icon === 'prefix') && prefix && (
+         <StyledText className="ml-2 text-primary-default">{prefix}</StyledText>
         )}
         <StyledTextInput 
-        className = {textFieldTextVariants({intent})}
+        className = {textFieldTextVariants({ intent})}
         onChangeText={onChangeInput}
-        value={value}/>
-      {(icon === 'right' || icon === 'suffix') && iconRoute && (
-        <StyledImage source={iconRoute} className="ml-2" /> 
+        value={value}
+        editable={true}
+        placeholder={placeholder}/>
+      {(icon === 'right') && iconRoute && (
+        <StyledImage source={require('../../../assets/images/error.png')} className="ml-2 w-0.5 h-0.5" /> 
+      )}
+      {(icon === 'suffix') && suffix && (
+        <StyledText className="ml-2 text-primary-default">{suffix}</StyledText>
       )}
       {icon === 'counter' && (
-        //Need to pass the count in or is it always 20?
-        <StyledText className="ml-2 text-gray-600">{`${value.length}/20`}</StyledText>
+        <StyledText className="ml-2 text-primary-default">{`${value.length}/${count}`}</StyledText>
       )}
-        {intent === 'error' && errorMessage && (
-        <StyledText className="text-red-500 mt-1">{errorMessage}</StyledText>
+       
+      </StyledView>
+      {intent === 'error' && errorMessage && (
+        <StyledView className = "flex-row items-center gap-2">
+          <Image source={require('../../../assets/images/error.png')} />
+          <StyledText className="text-error mt-1">{errorMessage}</StyledText>
+       </StyledView>
       )}
       </StyledView>
   );
