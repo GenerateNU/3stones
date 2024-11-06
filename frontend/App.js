@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './src/navigation/BottomTabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -11,11 +12,16 @@ export default function App() {
     'Nunito-Black': require('./assets/fonts/nunito/Nunito-Black.ttf'),
     'Nunito-BoldItalic': require('./assets/fonts/nunito/Nunito-BoldItalic.ttf'),
     'Nunito-Bold': require('./assets/fonts/nunito/Nunito-Bold.ttf'),
+    'Nunito-SemiBold': require('./assets/fonts/nunito/Nunito-SemiBold.ttf'),
     'Nunito-ExtraBold': require('./assets/fonts/nunito/Nunito-ExtraBold.ttf'),
     'Nunito-Regular': require('./assets/fonts/nunito/Nunito-Regular.ttf'),
     'Inter-Bold': require('./assets/fonts/inter/Inter_18pt-Bold.ttf'),
     'Inter-Regular': require('./assets/fonts/inter/Inter_18pt-Regular.ttf'),
+    'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
+    'SourceSans3-Bold': require('./assets/fonts/sourceSans3/SourceSans3-Bold.ttf'),
   });
+
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     if (loaded || error) {
@@ -28,8 +34,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
