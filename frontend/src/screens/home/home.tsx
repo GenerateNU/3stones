@@ -7,7 +7,6 @@ import WelcomeBlock from './welcomeBlock';
 import { TitleText } from '../../components/typography';
 
 import styles from './styles';
-import Divider from '../../components/Divider';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
