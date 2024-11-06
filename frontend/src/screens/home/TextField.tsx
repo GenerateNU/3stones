@@ -171,8 +171,6 @@ const textFieldTextVariants = cva('text', {
   export interface TextFieldProps
     extends TextInputProps,
     VariantProps<typeof textFieldVariants> {
-      //name of textfield
-      name: string;
       //route to the icon optional
       iconRoute?: ImageSourcePropType;
       //placeholder for the text field
@@ -189,7 +187,6 @@ const textFieldTextVariants = cva('text', {
 
 /**
  * TextField component
- * @param name name of TextField.
  * @param iconRoute route to TextField's icon (optional).
  * @param intent TextField variant (default, hover, focused, filled, error, diabled).
  * @param size TextField size (medium, large)
@@ -201,7 +198,7 @@ const textFieldTextVariants = cva('text', {
  * @param count The value you want to counter to be out of (optional)
  */
 
-const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, icon, errorMessage, placeholder, prefix, suffix, count}) => {
+const TextField: React.FC<TextFieldProps> = ({iconRoute, intent, size, icon, errorMessage, placeholder, prefix, suffix, count}) => {
 
   const [value, setValue] = React.useState('');
 
@@ -225,7 +222,7 @@ const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, ic
         editable={true}
         placeholder={placeholder}/>
       {(icon === 'right') && iconRoute && (
-        <StyledImage source={require('../../../assets/images/error.png')} className="ml-2 w-0.5 h-0.5" /> 
+        <StyledImage source={require('../../../assets/images/error.png')} className="ml-2" /> 
       )}
       {(icon === 'suffix') && suffix && (
         <StyledText className="ml-2 text-primary-default">{suffix}</StyledText>
@@ -245,4 +242,4 @@ const TextField: React.FC<TextFieldProps> = ({ name, iconRoute, intent, size, ic
   );
 };
 
-export default TextField
+export default TextField;
