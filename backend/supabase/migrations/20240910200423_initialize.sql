@@ -3,6 +3,9 @@ BEGIN;
 -- Allows us to use gen_random_uuid()
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+-- Location data
+CREATE EXTENSION IF NOT EXISTS "postgis";
+
 -- not a 'real' table - just for learning/dev purposes
 CREATE TABLE contributors (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -101,7 +104,8 @@ CREATE TABLE projects (
     street varchar(256) NOT NULL,
     locality varchar(256) NOT NULL,
     state us_state NOT NULL,
-    zipcode varchar(10) NOT NULL
+    zipcode varchar(10) NOT NULL,
+    coordinates GEOGRAPHY(point) NOT NULL 
 );
 
 CREATE TABLE investor_investments (
