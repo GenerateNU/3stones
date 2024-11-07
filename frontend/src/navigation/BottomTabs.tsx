@@ -52,6 +52,18 @@ export default function TabNavigator() {
           headerShown: false,
         }}
       />
+      <Tab.Screen
+        name='components'
+        component={ComponentScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
+          ),
+          tabBarLabel: 'Components',
+          title: '',
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
