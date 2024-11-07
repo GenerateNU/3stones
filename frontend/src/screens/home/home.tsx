@@ -1,4 +1,3 @@
-import { View, Button, Text } from 'react-native';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -6,13 +5,7 @@ import 'react-native-url-polyfill/auto';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { BASE_URL } from '@env';
-import React from 'react';
-import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
-import { NavigationScreenProp } from 'react-navigation';
-import { styled } from 'nativewind';
-import PortfolioValue from './portfolioValue';
-import WelcomeBlock from './welcomeBlock';
-import { TitleText } from '../../components/typography';
+import { Text, View, Button } from 'react-native';
 
 // interface HomeScreenProps {
 //   // This actually should be `any`, so disabling the linter rule

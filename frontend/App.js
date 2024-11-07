@@ -45,10 +45,12 @@ export default function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <TabNavigator />
-      </NavigationContainer>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <TabNavigator />
+        </NavigationContainer>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
