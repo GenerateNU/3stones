@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"backend/internal/api_errors"
+	"backend/internal/ctxt"
 	"backend/internal/models"
 	"backend/internal/transactions"
 	"backend/internal/types"
@@ -80,16 +81,8 @@ func (c *ProjectsController) Invest(ctx *fiber.Ctx) error {
 		return &api_errors.INVALID_UUID
 	}
 
-	// extract investor id from locals context
-	investorIdStringVal := ctx.Locals("userId")
-
-	investorIdString, ok := investorIdStringVal.(string)
+	investorId, ok := ctxt.GetUserID(ctx)
 	if !ok {
-		return &api_errors.INVALID_UUID
-	}
-
-	investorId, err := uuid.Parse(investorIdString)
-	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
 
