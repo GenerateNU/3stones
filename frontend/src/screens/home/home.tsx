@@ -4,7 +4,6 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
-import InvestmentProgress from '../../components/ProgressBar';
 
 import styles from './styles';
 import ProgressBarComponent from '../../components/ProgressBar';
