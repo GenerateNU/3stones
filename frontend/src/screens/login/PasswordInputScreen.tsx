@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
+import Button from '../../components/Button';
 import { SignupContext } from '../../context/SignupContext';
 import ProgressBar from '../../components/ProgressBar';
 
@@ -54,12 +54,11 @@ export default function PasswordInputScreen({ navigation }) {
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Continue"
-              theme="primary"
+            <Button
+              type="primary"
               onPress={() => {handleNext()}}
               disabled={!password.trim()} // Disable if password is empty
-            />
+            >Continue</Button>
           </StyledView>
 
         </StyledView>

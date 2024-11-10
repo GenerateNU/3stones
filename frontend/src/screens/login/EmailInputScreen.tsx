@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Image, View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
+import Button from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
 import { SignupContext } from '../../context/SignupContext';
 
@@ -54,12 +54,11 @@ export default function EmailInputScreen({ navigation }) {
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Continue"
-              theme="primary"
+            <Button
+              type="primary"
               onPress={() => {handleNext()}}
               disabled={!email.trim()} // Disable if no email
-            />
+            >Continue</Button>
           </StyledView>
 
         </StyledView>

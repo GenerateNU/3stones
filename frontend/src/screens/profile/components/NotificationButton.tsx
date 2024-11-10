@@ -21,7 +21,7 @@ const NotificationIconBlock = () => {
       <StyledView className='flex-2 flex items-center justify-center'>
         <StyledView className='flex items-center justify-center bg-brand50 w-[12vw] h-[12vw] rounded-full'>
           <StyledImage
-            source={require('../assets/images/notifications.png')}
+            source={require('../../../../assets/images/notifications.png')}
             className='w-[7vw] h-[7vw]'
           ></StyledImage>
         </StyledView>

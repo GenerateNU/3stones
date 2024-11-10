@@ -3,8 +3,7 @@ import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import ProfilePageNavigator from '../../../components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
-import styles from './styles';
-import NotificationButton from '../../../components/NotificationButton';
+import NotificationButton from './components/NotificationButton';
 import Button from '../../components/Button';
 
 const StyledView = styled(View);
@@ -39,7 +38,7 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
                 <NotificationButton navigation={navigation} onPress = {() => {}}/>
             </StyledView>
             <StyledView className="flex px-[vw] py-[2vh] flex-col items-center space-y-[10vh]">
-                <StyledImage source={require('../../../assets/images/PlaceHolderPFP.png')} style={styles.imageStyle} />
+                <StyledImage className="w-12 h-12" source={require('../../../assets/images/PlaceHolderPFP.png')}/>
                 <StyledText>
                     Your Name
                 </StyledText>

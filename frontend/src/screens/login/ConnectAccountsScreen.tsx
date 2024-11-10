@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
+import Button from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
 
 
@@ -43,12 +43,11 @@ export default function ConnectAccountsScreen({ navigation }) {
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Continue"
-              theme="primary"
+            <Button
+              type="primary"
               onPress={() => navigation.navigate('InvestmentPlanScreen')}
               disabled={false}
-            />
+            >Continue</Button>
           </StyledView>
 
         </StyledView>

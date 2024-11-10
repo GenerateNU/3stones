@@ -8,6 +8,7 @@ import UserDetailsScreen from '../screens/login/UserDetailsScreen'; // Add other
 import ConnectAccountsScreen from '../screens/login/ConnectAccountsScreen';
 import InvestmentPlanScreen from '../screens/login/InvestmentPlanScreen';
 import { SignupProvider } from '../context/SignupContext';
+import SampleLoginScreen from '../screens/login/SampleLoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,11 @@ export default function LoginNavigator() {
           name='InvestmentPlanScreen'
           component={InvestmentPlanScreen}
           options={{ title: 'Your Details' }}
+        />
+        <Stack.Screen
+          name='LoginScreen'
+          component={SampleLoginScreen}
+          options={{ title: 'Login' }}
         />
       </Stack.Navigator>
     </SignupProvider>
