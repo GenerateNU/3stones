@@ -54,13 +54,13 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name='components'
-        component={ComponentScreen}
+        name='welcomeScreen'
+        component={WelcomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
           ),
-          tabBarLabel: 'Components',
+          tabBarLabel: 'Signup Flow',
           title: '',
           headerShown: false,
         }}
