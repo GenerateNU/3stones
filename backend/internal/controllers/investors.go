@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"backend/internal/api_errors"
-	"backend/internal/ctxt"
 	"backend/internal/models"
 	"backend/internal/transactions"
 	"backend/internal/types"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 type InvestorsController struct {
@@ -21,9 +21,14 @@ func NewInvestorsController(ServiceParams *types.ServiceParams) *InvestorsContro
 }
 
 func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
-	id, ok := ctxt.GetUserID(ctx)
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
-		return &api_errors.UUID_NOT_FOUND
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
 	}
 
 	investorProfile, err := transactions.GetProfile(c.ServiceParams.DB, id)
@@ -35,8 +40,13 @@ func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
 }
 
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
-	id, ok := ctxt.GetUserID(ctx)
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
 		return &api_errors.INVALID_UUID
 	}
 
@@ -49,13 +59,20 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 }
 
 func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
-	id, ok := ctxt.GetUserID(ctx)
+	paginationParams := new(types.PaginationParams)
+
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
-		return &api_errors.UUID_NOT_FOUND
+		return &api_errors.INVALID_UUID
 	}
 
-	paginationParams := new(types.PaginationParams)
-	if err := ctx.QueryParser(paginationParams); err != nil {
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	err = ctx.QueryParser(paginationParams)
+	if err != nil {
 		return &api_errors.PAGINATION_ERROR
 	}
 
@@ -68,13 +85,20 @@ func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 }
 
 func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
-	id, ok := ctxt.GetUserID(ctx)
+	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
-		return &api_errors.UUID_NOT_FOUND
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
 	}
 
 	paginationParams := new(types.PaginationParams)
-	if err := ctx.QueryParser(paginationParams); err != nil {
+
+	err = ctx.QueryParser(paginationParams)
+	if err != nil {
 		return &api_errors.PAGINATION_ERROR
 	}
 
