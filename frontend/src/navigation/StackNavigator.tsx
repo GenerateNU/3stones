@@ -11,6 +11,7 @@ import ConnectAccountsScreen from '../screens/login_flow/ConnectAccountsScreen';
 import InvestmentPlanScreen from '../screens/login_flow/InvestmentPlanScreen';
 import { SignupProvider } from '../context/SignupContext';
 
+import ProfileScreen from '../screens/profile/profile';
 
 const Stack = createNativeStackNavigator();
 

@@ -6,6 +6,7 @@ import SecondScreen from '../screens/secondScreen/secondScreen';
 import PortfolioScreen from '../screens/portfolioScreen'
 import StackNavigator from './StackNavigator';
 import ProjectNavigator from './ProjectNavigator';
+import ProfileScreen from '../screens/profile/profile';
 
 const Tab = createBottomTabNavigator();
 
