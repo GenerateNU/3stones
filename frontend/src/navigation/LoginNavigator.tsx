@@ -1,21 +1,18 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/home/home';
-import SecondScreen from '../screens/secondScreen/secondScreen';
-import WelcomeScreen from '../screens/login_flow/WelcomeScreen';
-import EmailInputScreen from '../screens/login_flow/EmailInputScreen';
-import PasswordInputScreen from '../screens/login_flow/PasswordInputScreen';
-import UserDetailsScreen from '../screens/login_flow/UserDetailsScreen'; // Add other screens as needed
-import ConnectAccountsScreen from '../screens/login_flow/ConnectAccountsScreen';
-import InvestmentPlanScreen from '../screens/login_flow/InvestmentPlanScreen';
+import WelcomeScreen from '../screens/login/WelcomeScreen';
+import EmailInputScreen from '../screens/login/EmailInputScreen';
+import PasswordInputScreen from '../screens/login/PasswordInputScreen';
+import UserDetailsScreen from '../screens/login/UserDetailsScreen'; // Add other screens as needed
+import ConnectAccountsScreen from '../screens/login/ConnectAccountsScreen';
+import InvestmentPlanScreen from '../screens/login/InvestmentPlanScreen';
 import { SignupProvider } from '../context/SignupContext';
-
-import ProfileScreen from '../screens/profile/profile';
+import SampleLoginScreen from '../screens/login/SampleLoginScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default function StackNavigator() {
+export default function LoginNavigator() {
   return (
     <SignupProvider>
       <Stack.Navigator initialRouteName='WelcomeScreen'>
@@ -50,14 +47,9 @@ export default function StackNavigator() {
           options={{ title: 'Your Details' }}
         />
         <Stack.Screen
-          name='homeScreen'
-          component={HomeScreen}
-          options={{ title: '', headerShown: false }}
-        />
-        <Stack.Screen
-          name='secondScreen'
-          component={SecondScreen}
-          options={{ title: '' }}
+          name='LoginScreen'
+          component={SampleLoginScreen}
+          options={{ title: 'Login' }}
         />
       </Stack.Navigator>
     </SignupProvider>

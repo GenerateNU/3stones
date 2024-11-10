@@ -3,9 +3,9 @@ import { Image, Text, View, TouchableOpacity} from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
-import PortfolioItem from '../components/PortfolioItem';
-import PortfolioDetails from '../components/PortfolioDetails';
-import UpdateCard from '../components/PortfolioUpdateCard';
+import PortfolioItem from './components/PortfolioItem';
+import PortfolioDetails from './components/PortfolioDetails';
+import UpdateCard from './components/PortfolioUpdateCard';
 
 interface PortfolioScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -37,10 +37,10 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
           <StyledView className='flex flex-row justify-between'>
             <StyledText>Your Portfolio</StyledText>
             <StyledView className='items-right justify-right'>
-              <StyledImage
-                source={require('../../assets/images/settings.png')}
+              {/* <StyledImage
+                source={require('../../assets/images/remove_red_eye.png')}
                 className='w-[6vw] h-[6vw]'
-              ></StyledImage>
+              ></StyledImage> */}
             </StyledView>
           </StyledView>
         </StyledView>

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
-import RadioButtonComponent from '../../components/RadioButtonComponent';  // Import the new component
-import { SignupContext } from '../../context/SignupContext';
+import Button from '../../components/Button';
+import RadioButtonComponent from './components/RadioButtonComponent';  // Import the new component
+import ProgressBar from '../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -34,12 +33,9 @@ export default function InvestmentPlanScreen({ navigation }) {
 
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent
-              currentStep={5}
-              totalSteps={6}
-              showBack={true}
-              showClose={false}
-              onPress={() => navigation.navigate('ConnectAccountsScreen')}
+            <ProgressBar
+                current={5}
+                total={6}
             />
           </StyledView>
 
@@ -67,12 +63,11 @@ export default function InvestmentPlanScreen({ navigation }) {
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Next"
-              theme="primary"
-              onPress={() => navigation.navigate('homeScreen')}
-              disabled={!selectedOption} // Disable until an option is selected
-            />
+            <Button
+              type="primary"
+              onPress={() => {() => navigation.navigate('homeScreen')}}
+              disabled={!selectedOption} // Disable if no email
+            >Next</Button>
           </StyledView>
 
         </StyledView>

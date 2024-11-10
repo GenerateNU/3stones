@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, Image, ImageBackground } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
-
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -16,7 +15,7 @@ const PortfolioDetails = ()=> {
                     <StyledText>Net Portfolio Value</StyledText>
                     <StyledView className = 'px-2'>
                         <StyledImage
-                            source={require('../../assets/images/remove_red_eye.png')}
+                            source={require('../../../../assets/images/remove_red_eye.png')}
                             className='w-[5vw] h-[5vw]'
                         ></StyledImage>
                     </StyledView>

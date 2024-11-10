@@ -5,10 +5,15 @@ import axios from 'axios';
 import { API_URL } from '../constants';
 import { Project } from '../types/project';
 import { dumpAxiosError } from '../util/errors';
+import { useAuth } from '../context/AuthContext';
 
-const getProject = async (id: string): Promise<Project | null> => {
+const getProject = async (id: string, access_token: string): Promise<Project | null> => {
   try {
-    const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`);
+    const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`, {
+      headers: {
+        Authorization: `${access_token}`,
+      }
+    });
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
@@ -17,9 +22,11 @@ const getProject = async (id: string): Promise<Project | null> => {
 }
 
 export const useProject = (id: string) => {
+  const { session } = useAuth();
+  
   const { data: project, isLoading } = useQuery<Project>({
     queryKey: ['project', id],
-    queryFn: () => getProject(id),
+    queryFn: () => getProject(id, session?.access_token),
   });
 
   return {

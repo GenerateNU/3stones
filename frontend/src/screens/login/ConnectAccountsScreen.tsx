@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
+import Button from '../../components/Button';
+import ProgressBar from '../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -22,12 +22,9 @@ export default function ConnectAccountsScreen({ navigation }) {
 
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent 
-              currentStep={4} 
-              totalSteps={6} 
-              showBack={true} 
-              showClose={false} 
-              onPress={() => navigation.navigate('UserDetailsScreen')} 
+            <ProgressBar
+              current={4} 
+              total={6} 
             />
           </StyledView>
 
@@ -46,12 +43,11 @@ export default function ConnectAccountsScreen({ navigation }) {
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Continue"
-              theme="primary"
+            <Button
+              type="primary"
               onPress={() => navigation.navigate('InvestmentPlanScreen')}
               disabled={false}
-            />
+            >Continue</Button>
           </StyledView>
 
         </StyledView>

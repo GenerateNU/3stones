@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import { styled } from 'nativewind';
 import UpdateText from './PortfolioUpdateText';
-import SideBySide from './SideBySide';
+import SideBySide from '../../../components/SideBySide';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

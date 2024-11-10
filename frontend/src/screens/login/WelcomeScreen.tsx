@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View, Text } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
+import Button from '../../components/Button';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -22,21 +22,18 @@ export default function WelcomeScreen({ navigation }) {
         <StyledImage className='h-1/4 resize-contain mt-5 mb-5' source={require('../../../assets/images/icon.png')} />
       </StyledView>
 
-      <ButtonComponent
-        title="Sign Up"
-        theme="primary"
+      <Button
+        type="primary"
         onPress={() => navigation.navigate('EmailInputScreen')} // Replace with your actual navigation route
         disabled={false}
-      />
-
+      >Sign Up</Button>
       <StyledView className="my-2" />
 
-      <ButtonComponent
-        title="Login"
-        theme="secondary"
+      <Button
+        type="secondary"
         onPress={() => navigation.navigate('LoginScreen')} // Replace with your actual navigation route
         disabled={false}
-      />
+      >Login</Button>
     </StyledView>
   );
 }

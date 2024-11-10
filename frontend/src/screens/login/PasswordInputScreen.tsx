@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
-import TextInputComponent from '../../components/TextInputComponent';
+import Button from '../../components/Button';
 import { SignupContext } from '../../context/SignupContext';
+import ProgressBar from '../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -32,12 +31,9 @@ export default function PasswordInputScreen({ navigation }) {
           
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent 
-              currentStep={2} 
-              totalSteps={6} 
-              showBack={true} 
-              showClose={false} 
-              onPress={() => navigation.navigate('EmailInputScreen')} 
+            <ProgressBar
+              current={2} 
+              total={6} 
             />
           </StyledView>
 
@@ -48,22 +44,21 @@ export default function PasswordInputScreen({ navigation }) {
               Choose a strong password for your account.
             </StyledText>
 
-            <TextInputComponent
+            {/* <TextInputComponent
               placeholder="Password"
               value={password}
               onChangeText={setPassword}
               isPassword={true}
-            />
+            /> */}
           </StyledView>
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
-            <ButtonComponent
-              title="Continue"
-              theme="primary"
+            <Button
+              type="primary"
               onPress={() => {handleNext()}}
               disabled={!password.trim()} // Disable if password is empty
-            />
+            >Continue</Button>
           </StyledView>
 
         </StyledView>
