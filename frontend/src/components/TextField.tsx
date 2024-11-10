@@ -1,9 +1,3 @@
-    // TO DO icon left and icon right - vertically centered 
-    // Make sure the colours are in the config file 
-    // Get the text to be visible
-    // Get the text to be styled right 
-    // Make sure that images getting passed in for left and right are the right size?
-
 import React from 'react';
 import { styled } from 'nativewind';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -20,68 +14,63 @@ const textFieldVariants = cva('textField', {
         default: [
             'flex w-82',
             'flex-col',
-            'items-start',
+            'items-center',
             'bg-surfaceFG',
             'border-border',
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
-            'rounded-[12px]',
-            'p-4',
+            'rounded-[12px]', 
         ],
         hover: [
             'flex w-82',
             'flex-col',
-            'items-start',
-            'bg-gray-200', //not in config file #DDD
-            'border-gray-300', //not in config file #BBB
+            'items-center',
+            'bg-gray-200', 
+            'border-gray-300', 
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
-            'rounded-[12px]',
-            'p-4',
+            'rounded-[12px]', 
         ],
          focus: [
-            'flex w-4',
+            'flex w-82',
             'flex-col',
-            'items-start',
+            'items-center',
             'bg-surfaceFG',
-            'border-border-selected', //not in config file #4B4B4B
+            'border-border-selected', 
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
             'rounded-[12px]',
-            'p-4',
          ],
         error: [
-            'flex w-3/4',
+            'flex w-82',
             'flex-row',
             'items-center',
             'bg-surfaceFG',
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
             'rounded-[12px]',
-            'p-4',
             'border-error',
         ],
          filled: [
             'flex w-82',
             'flex-col',
-            'items-start',
+            'items-center',
             'bg-surfaceFG',
             'border-gray-200',
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
             'rounded-[12px]',
-            'p-4',
+            
          ],
          disabled: [
             'flex w-82',
             'flex-col',
-            'items-start',
+            'items-center',
             'bg-gray-300',
             'border-gray-500',
             'border-x-[0.3px]',
             'border-y-[0.3px]', 
-            'rounded-[12px]',
-            'p-4',
+            'rounded-[12px]', 
          ]
       },
       size: {
@@ -112,9 +101,10 @@ const textFieldVariants = cva('textField', {
           'pl-4',
         ],
         right: [
-          'flex-row-reverse',
+          'flex-row',
           'items-center',
           'pr-4', 
+          'justify-between',   
         ],
         prefix: [
           'flex-row',
@@ -122,9 +112,10 @@ const textFieldVariants = cva('textField', {
           'pl-4',
         ],
         suffix: [
-          'flex-row-reverse',
+          'flex-row',
           'items-center',
           'pr-4', 
+          'justify-between',   
         ],
         counter: [
           'flex-row',
@@ -142,11 +133,11 @@ const textFieldTextVariants = cva('text', {
       intent: {
         default: [
             'body-regular',
-            'color-gray-600', //not in config file #727272
+            'color-gray-600', 
         ],
         hover: [
             'body-regular',
-            'color-gray-600', //not in config file #727272
+            'color-gray-600', 
         ],
          focus: [
             'body-regular',
@@ -162,7 +153,7 @@ const textFieldTextVariants = cva('text', {
          ],
          disabled: [
             'body-regular',
-            'color-gray-500', //not in config file #868686
+            'color-gray-500', 
          ]
       },
     },
@@ -207,10 +198,10 @@ const TextField: React.FC<TextFieldProps> = ({iconRoute, intent, size, icon, err
   }
     
   return (
-    <StyledView className = 'p-4 gap-0.5 items-center flex-col'>
+    <StyledView className = 'p-4 gap-0.5 items-start flex-col'>
     <StyledView className = {textFieldVariants({size, intent, icon})}>
       {(icon === 'left') && iconRoute && (
-        <StyledImage source={require('../../../assets/images/error.png')} className="mr-2" /> 
+        <StyledImage source={iconRoute} className="mr-2" /> 
         )}
         {(icon === 'prefix') && prefix && (
          <StyledText className="ml-2 text-primary-default">{prefix}</StyledText>
@@ -222,7 +213,7 @@ const TextField: React.FC<TextFieldProps> = ({iconRoute, intent, size, icon, err
         editable={true}
         placeholder={placeholder}/>
       {(icon === 'right') && iconRoute && (
-        <StyledImage source={require('../../../assets/images/error.png')} className="ml-2" /> 
+        <StyledImage source={iconRoute} className="ml-2 items-right" /> 
       )}
       {(icon === 'suffix') && suffix && (
         <StyledText className="ml-2 text-primary-default">{suffix}</StyledText>
