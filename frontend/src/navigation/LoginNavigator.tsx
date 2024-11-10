@@ -1,8 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/home/home';
-import SecondScreen from '../screens/secondScreen/secondScreen';
 import WelcomeScreen from '../screens/login/WelcomeScreen';
 import EmailInputScreen from '../screens/login/EmailInputScreen';
 import PasswordInputScreen from '../screens/login/PasswordInputScreen';
@@ -11,11 +9,9 @@ import ConnectAccountsScreen from '../screens/login/ConnectAccountsScreen';
 import InvestmentPlanScreen from '../screens/login/InvestmentPlanScreen';
 import { SignupProvider } from '../context/SignupContext';
 
-import ProfileScreen from '../screens/profile/profile';
-
 const Stack = createNativeStackNavigator();
 
-export default function StackNavigator() {
+export default function LoginNavigator() {
   return (
     <SignupProvider>
       <Stack.Navigator initialRouteName='WelcomeScreen'>
@@ -48,16 +44,6 @@ export default function StackNavigator() {
           name='InvestmentPlanScreen'
           component={InvestmentPlanScreen}
           options={{ title: 'Your Details' }}
-        />
-        <Stack.Screen
-          name='homeScreen'
-          component={HomeScreen}
-          options={{ title: '', headerShown: false }}
-        />
-        <Stack.Screen
-          name='secondScreen'
-          component={SecondScreen}
-          options={{ title: '' }}
         />
       </Stack.Navigator>
     </SignupProvider>

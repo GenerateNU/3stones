@@ -5,7 +5,7 @@ import ProfilePageNavigator from '../../../components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './styles';
 import NotificationButton from '../../../components/NotificationButton';
-import WideButton from '../../components/WideButton';
+import Button from '../../components/Button';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -21,11 +21,9 @@ interface ProfileScreenProps {
 const EditProfileButton = ({ navigation }) => {
     return (
         <StyledView className='h-[4vh] w-[15vh]'>
-            <WideButton
-                name={'Edit Profile'}
-                navigation={navigation}
-                intent='secondary'
-            ></WideButton>
+            <Button onPress={() => {console.log("Edit profile button clicked")}}
+                type='secondary'
+            >Edit Profile</Button>
         </StyledView>
     );
   };

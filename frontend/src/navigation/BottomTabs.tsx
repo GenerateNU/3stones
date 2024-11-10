@@ -33,6 +33,54 @@ export default function TabNavigator() {
         }}
       />
       {/* <Tab.Screen
+        name='Explore'
+        component={ExploreScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='search' />
+          ),
+          tabBarLabel: 'Explore',
+          title: '',
+          headerShown: false,
+        }}
+      /> */}
+      <Tab.Screen
+        name='Portfolio'
+        component={PortfolioScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='chart-pie' />
+          ),
+          tabBarLabel: 'Portfolio',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='Project'
+        component={ProjectNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='building' />
+          ),
+          tabBarLabel: 'Project',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='Profile'
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='user' />
+          ),
+          tabBarLabel: 'Profile',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      {/* <Tab.Screen
         name='Stack'
         component={StackNavigator}
         options={{
