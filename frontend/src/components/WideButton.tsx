@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { TouchableOpacity, Text, Image, ImageSourcePropType } from 'react-native';
 import { styled } from 'nativewind';
@@ -75,6 +76,8 @@ export interface ButtonProps
  * @param intent button variant (primary = green, secondary = outline).
  * @param navigation navigation prop to direct to another screen/action
  */
+
+/*
 const WideButton: React.FC<ButtonProps> = ({ name, iconRoute, intent, navigation }) => {
   return (
     <StyledTouchableOpacity
@@ -88,3 +91,4 @@ const WideButton: React.FC<ButtonProps> = ({ name, iconRoute, intent, navigation
 };
 
 export default WideButton;
+*/
