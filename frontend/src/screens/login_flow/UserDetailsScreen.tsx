@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
-import TextInputComponent from '../../components/TextInputComponent';
+import ProgressBar from '../../components/ProgressBar';
 import { SignupContext } from '../../context/SignupContext';
 
 
@@ -34,12 +33,9 @@ export default function UserDetailsScreen({ navigation }) {
 
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent
-              currentStep={3}
-              totalSteps={6}
-              showBack={true}
-              showClose={false}
-              onPress={() => navigation.navigate('PasswordInputScreen')}
+            <ProgressBar
+              current={3}
+              total={6}
             />
           </StyledView>
 
@@ -50,7 +46,7 @@ export default function UserDetailsScreen({ navigation }) {
               We need your first and last name to get started.
             </StyledText>
 
-            <TextInputComponent
+            {/* <TextInputComponent
               placeholder="First Name"
               value={firstName}
               onChangeText={setFirstName}
@@ -62,7 +58,7 @@ export default function UserDetailsScreen({ navigation }) {
               value={lastName}
               onChangeText={setLastName}
               isPassword={false}
-            />
+            /> */}
           </StyledView>
 
           {/* Continue Button */}

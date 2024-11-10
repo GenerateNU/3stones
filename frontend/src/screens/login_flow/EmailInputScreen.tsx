@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Image, View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
-import TextInputComponent from '../../components/TextInputComponent';
+import ProgressBar from '../../components/ProgressBar';
 import { SignupContext } from '../../context/SignupContext';
 
 
@@ -32,12 +31,9 @@ export default function EmailInputScreen({ navigation }) {
           
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent 
-              currentStep={1} 
-              totalSteps={6} 
-              showBack={false} 
-              showClose={true} 
-              onPress={() => navigation.navigate('WelcomeScreen')} 
+          <ProgressBar
+              current={1} 
+              total={6} 
             />
           </StyledView>
           
@@ -48,12 +44,12 @@ export default function EmailInputScreen({ navigation }) {
               You’ll use this email to log in next time.
             </StyledText>
 
-            <TextInputComponent
+            {/* <TextInputComponent
               placeholder="E-mail"
               value={email}
               onChangeText={setEmail}
               isPassword={false}
-            />
+            /> */}
           </StyledView>
 
           {/* Continue Button */}

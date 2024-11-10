@@ -7,6 +7,7 @@ import StackNavigator from './StackNavigator';
 import ProjectScreen from '../screens/project';
 import ProjectNavigator from './ProjectNavigator';
 import ProfileScreen from '../screens/profile/profile';
+import HomeScreen from '../screens/home/home';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,18 @@ export default function TabNavigator() {
   return (
     <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='home' />
+          ),
+          tabBarLabel: 'Home',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      {/* <Tab.Screen
         name='Stack'
         component={StackNavigator}
         options={{
@@ -54,8 +67,8 @@ export default function TabNavigator() {
           title: '',
           headerShown: false,
         }}
-      />
-      <Tab.Screen
+      /> */}
+      {/* <Tab.Screen
         name='portfolioScreen'
         component={PortfolioScreen}
         name='welcomeScreen'
@@ -69,7 +82,7 @@ export default function TabNavigator() {
           title: '',
           headerShown: false,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
