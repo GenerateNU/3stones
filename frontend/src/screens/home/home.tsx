@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
+import RadioGroup from '../../../components/RadioGroup';
 
 import styles from './styles';
 import ProgressBarComponent from '../../components/ProgressBar';
@@ -29,8 +30,19 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         />
       </StyledView>
 
+      <RadioGroup 
+        choices={[
+          { label: "Option 1", disabled: false, selected: false}, 
+          { label: "Option 2", disabled: false, selected: false}, 
+          { label: "Option 3", disabled: false, selected: true}, 
+          { label: "Option 4", disabled: false, selected: false}, 
+        ]}
+        onSelect={(selectedChoice) => console.log(selectedChoice)}
+      />
+
       {/* Progress bar (1/6). Can be used for investment progress too*/}
-      <ProgressBarComponent current = {1} total = {6} />
+      <ProgressBarComponent current={1} total={6} />
+
 
       {/* Some dummy image */}
       <StyledView className='align-center'>
