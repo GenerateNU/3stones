@@ -1,10 +1,10 @@
 import React from 'react';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ComponentScreen from '../screens/components/componentScreen';
 import SecondScreen from '../screens/secondScreen/secondScreen';
 import PortfolioScreen from '../screens/portfolioScreen'
 import StackNavigator from './StackNavigator';
+import ProjectScreen from '../screens/project';
 import ProjectNavigator from './ProjectNavigator';
 import ProfileScreen from '../screens/profile/profile';
 

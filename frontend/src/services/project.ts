@@ -14,7 +14,7 @@ const getProject = async (id: string): Promise<Project | null> => {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-};
+}
 
 export const useProject = (id: string) => {
   const { data: project, isLoading } = useQuery<Project>({
@@ -36,7 +36,7 @@ const getProjectTotalFunded = async (id: string): Promise<number | null> => {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-};
+}
 
 export const useProjectTotalFunded = (id: string) => {
   const { data: projectTotalFunded, isLoading } = useQuery<number>({

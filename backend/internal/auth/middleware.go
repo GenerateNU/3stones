@@ -3,12 +3,10 @@ package auth
 import (
 	"backend/internal/api_errors"
 	"backend/internal/config"
-	"backend/internal/ctxt"
 	"backend/internal/transactions"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -38,11 +36,6 @@ func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 			return err
 		}
 
-		id, err := uuid.Parse(subject)
-		if err != nil {
-			return &api_errors.INVALID_UUID
-		}
-
 		investorExists, err := transactions.CheckInvestorExists(a.DB, subject)
 		if err != nil {
 			return err
@@ -55,7 +48,7 @@ func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 			}
 		}
 
-		ctxt.SetUserID(ctx, id)
+		ctx.Locals("userId", subject)
 		return ctx.Next()
 	}
 }
