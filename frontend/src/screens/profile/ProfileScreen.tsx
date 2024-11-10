@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
-import ProfilePageNavigator from '../../../components/ProfilePageNavigator';
+import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
 import NotificationButton from './components/NotificationButton';
 import Button from '../../components/Button';

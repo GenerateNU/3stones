@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
-import SampleLoginScreen from './src/screens/login/SampleLoginScreen';
+import LoginNavigator from './src/navigation/LoginNavigator';
 
 SplashScreen.preventAutoHideAsync();
 

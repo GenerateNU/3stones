@@ -26,7 +26,7 @@ export default function ProfilePageNavigator({ navigation, pageName, iconRoute }
                         {pageName}
                     </StyledText>
                 </StyledView>
-                <StyledImage source={require('../assets/images/side-arrow.png')} className='h-[3vh] w-[3vh]'/>
+                <StyledImage source={require('../../../../assets/images/side-arrow.png')} className='h-[3vh] w-[3vh]'/>
             </StyledView>
         </TouchableOpacity>
     );
