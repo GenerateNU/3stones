@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Contributor } from '../types/contributor';
-import { apiUrl } from './apiLinks';
+import { API_URL } from '../constants';
 
 export type ContributorQueryParams = {
   id?: number;
@@ -15,7 +15,7 @@ const getContributor = async (id: string): Promise<Contributor> => {
   if (!parseInt(id)) {
     return {} as Contributor;
   }
-  return await axios.get(`${apiUrl}/contributor/${id}`);
+  return await axios.get(`${API_URL}/contributor/${id}`);
 };
 
 export const useContributorById = (id: string) => {

@@ -1,9 +1,11 @@
 import React from 'react';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ComponentScreen from '../screens/components/componentScreen';
 import SecondScreen from '../screens/secondScreen/secondScreen';
 import PortfolioScreen from '../screens/portfolioScreen'
 import StackNavigator from './StackNavigator';
+import ProjectNavigator from './ProjectNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +31,18 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
+        name='Project'
+        component={ProjectNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='circle' />
+          ),
+          tabBarLabel: 'Project',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
         name='secondScreen'
         component={SecondScreen}
         options={{
@@ -43,11 +57,14 @@ export default function TabNavigator() {
       <Tab.Screen
         name='portfolioScreen'
         component={PortfolioScreen}
+        name='welcomeScreen'
+        component={WelcomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
           ),
           tabBarLabel: 'Portfolio Screen',
+          tabBarLabel: 'Signup Flow',
           title: '',
           headerShown: false,
         }}
