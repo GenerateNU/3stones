@@ -16,11 +16,12 @@ interface CardProps extends ViewProps, VariantProps<typeof cardVariants> {
 
 export function Card({
   children,
+  className,
   ...props
-}: CardProps) {
+}: CardProps & { className?: string }) {
   return (
     <StyledView
-      className={cardVariants()}
+      className={`${cardVariants()} ${className || ''}`}
       {...props}
     >
       {children}
