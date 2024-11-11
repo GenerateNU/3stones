@@ -5,7 +5,6 @@ import Button from '../../components/Button';
 import { SignupContext } from '../../context/SignupContext';
 import ProgressBar from '../../components/ProgressBar';
 
-
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
@@ -17,30 +16,28 @@ export default function PasswordInputScreen({ navigation }) {
 
   const handleNext = () => {
     updateForm('password', password);
-    navigation.navigate('UserDetailsScreen'); 
+    navigation.navigate('UserDetailsScreen');
   };
 
   return (
     <StyledKeyboardAvoidingView
-      className="flex-1"
+      className='flex-1'
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={80}
     >
-      <StyledScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }}>
-        <StyledView className="flex-1 items-center bg-surfaceBG p-6 justify-between">
-          
+      <StyledScrollView className='flex-1' contentContainerStyle={{ flexGrow: 1 }}>
+        <StyledView className='flex-1 items-center bg-surfaceBG p-6 justify-between'>
           {/* Progress Bar */}
-          <StyledView className="w-full mb-4">
-            <ProgressBar
-              current={2} 
-              total={6} 
-            />
+          <StyledView className='w-full mb-4'>
+            <ProgressBar current={2} total={6} />
           </StyledView>
 
           {/* Password Input Section */}
-          <StyledView className="w-full flex-1 justify-center items-center">
-            <StyledText className="text-center text-2xl font-bold text-black mb-2">Create a password</StyledText>
-            <StyledText className="text-center text-gray-600 mb-8">
+          <StyledView className='w-full flex-1 justify-center items-center'>
+            <StyledText className='text-center text-2xl font-bold text-black mb-2'>
+              Create a password
+            </StyledText>
+            <StyledText className='text-center text-gray-600 mb-8'>
               Choose a strong password for your account.
             </StyledText>
 
@@ -53,14 +50,17 @@ export default function PasswordInputScreen({ navigation }) {
           </StyledView>
 
           {/* Continue Button */}
-          <StyledView className="w-full mt-6">
+          <StyledView className='w-full mt-6'>
             <Button
-              type="primary"
-              onPress={() => {handleNext()}}
+              type='primary'
+              onPress={() => {
+                handleNext();
+              }}
               disabled={!password.trim()} // Disable if password is empty
-            >Continue</Button>
+            >
+              Continue
+            </Button>
           </StyledView>
-
         </StyledView>
       </StyledScrollView>
     </StyledKeyboardAvoidingView>

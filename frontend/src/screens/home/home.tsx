@@ -4,7 +4,6 @@ import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 
-
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +19,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  return (<></>);
+  return <></>;
   //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
   //     {/* Some dummy image */}
   //     <StyledView className='align-center'>
@@ -62,7 +61,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   //             onPress = {() => {}}
   //           />
 
-        
   //   <StyledView className='flex-1 items-center bg-surfaceBG'>
   //     <StyledView className='pt-[5vh]'>
   //       <WelcomeBlock name='Michael' />
@@ -76,7 +74,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   //     <StyledView className='align-center'>
   //       <Image source={require('../../../assets/images/icon.png')}/>
   //       {/* Some dummy button */}
-       
+
   //     </StyledView>
   //     <View>
   //       <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
