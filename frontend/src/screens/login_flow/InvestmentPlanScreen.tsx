@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
 import RadioButtonComponent from '../../components/RadioButtonComponent';  // Import the new component
 import { SignupContext } from '../../context/SignupContext';
+import ProgressBarComponent from '../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -34,12 +34,9 @@ export default function InvestmentPlanScreen({ navigation }) {
 
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent
-              currentStep={5}
-              totalSteps={6}
-              showBack={true}
-              showClose={false}
-              onPress={() => navigation.navigate('ConnectAccountsScreen')}
+          <ProgressBarComponent 
+              current = {1}
+              total = {6}
             />
           </StyledView>
 

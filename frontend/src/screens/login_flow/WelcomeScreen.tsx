@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, View, Text } from 'react-native';
 import { styled } from 'nativewind';
 import ButtonComponent from '../../components/ButtonComponent';
+import WelcomeToThreeStones from './WelcomeToThreeStones';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -10,8 +11,7 @@ const StyledImage = styled(Image);
 export default function WelcomeScreen({ navigation }) {
   return (
     <StyledView className="flex-1 justify-center items-center bg-surfaceBG p-6">
-      <StyledText className="text-3xl font-bold text-black mb-2">Welcome to</StyledText>
-      <StyledText className="text-4xl font-bold text-black mb-4">3 Stones</StyledText>
+      <WelcomeToThreeStones />
       
       <StyledText className="text-center text-gray-600 mb-8">
         Providing the tools you need to make your first investments in real estate.
@@ -25,7 +25,7 @@ export default function WelcomeScreen({ navigation }) {
       <ButtonComponent
         title="Sign Up"
         theme="primary"
-        onPress={() => navigation.navigate('EmailInputScreen')} // Replace with your actual navigation route
+        onPress={() => navigation.navigate('EmailInputScreen')} 
         disabled={false}
       />
 
@@ -34,7 +34,7 @@ export default function WelcomeScreen({ navigation }) {
       <ButtonComponent
         title="Login"
         theme="secondary"
-        onPress={() => navigation.navigate('LoginScreen')} // Replace with your actual navigation route
+        onPress={() => navigation.navigate('LoginEmailScreen')}
         disabled={false}
       />
     </StyledView>

@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './src/navigation/BottomTabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,21 +16,26 @@ export default function App() {
     'Nunito-Regular': require('./assets/fonts/nunito/Nunito-Regular.ttf'),
     'Inter-Bold': require('./assets/fonts/inter/Inter_18pt-Bold.ttf'),
     'Inter-Regular': require('./assets/fonts/inter/Inter_18pt-Regular.ttf'),
+    'SourceSans3-Regular': require('./assets/fonts/sourceSans3/SourceSans3-Regular.ttf'),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
+    const queryClient = new QueryClient();
+
+    useEffect(() => {
+        if (loaded || error) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded, error]);
+
+    if (!loaded && !error) {
+        return null;
     }
-  }, [loaded, error]);
 
-  if (!loaded && !error) {
-    return null;
-  }
-
-  return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <NavigationContainer>
+                <TabNavigator />
+            </NavigationContainer>
+        </QueryClientProvider>
+    );
 }

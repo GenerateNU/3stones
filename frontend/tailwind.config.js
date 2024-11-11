@@ -1,13 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}', './src/screens/home/home.tsx'],
+  content: [
+    './App.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
+    './src/screens/home/home.tsx',
+    './components/**.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
         black: '#000000',
-        white: '#ffffff',
+        white: '#FFFFFF',
         defaultPrimary: '#285852',
         defaultPush: '#65918C',
         defaultDisabled: '#A7C6C2',
@@ -17,6 +22,10 @@ module.exports = {
         surfaceBG: '#FAFAFC',
         surfaceFG: '#FFFFFF',
         border: '#DDDDDD',
+        brand50: '#CADEDB',
+        success: '#0E9888',
+        error: '#D32246',
+
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],
@@ -26,6 +35,12 @@ module.exports = {
         title: ['Nunito-ExtraBold'],
         bodyBold: ['Inter_18pt-Bold'],
         body: ['Inter_18pt-Regular'],
+        sourceSans3BodyBold: ['SourceSans3-Bold'],
+        sourceSans3CaptionMedium: ['SourceSans3-Medium'],
+        sourceSans3BodyMedium: ['SourceSans3-SemiBold'],
+      },
+      borderRadius: {
+        'spacing-xs': '12px',
       },
     },
   },

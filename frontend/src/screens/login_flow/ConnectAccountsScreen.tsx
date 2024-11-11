@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 import ButtonComponent from '../../components/ButtonComponent';
-import ProgressBarComponent from '../../components/ProgressBarComponent';
+import ProgressBarComponent from '../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -22,12 +22,9 @@ export default function ConnectAccountsScreen({ navigation }) {
 
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
-            <ProgressBarComponent 
-              currentStep={4} 
-              totalSteps={6} 
-              showBack={true} 
-              showClose={false} 
-              onPress={() => navigation.navigate('UserDetailsScreen')} 
+            <ProgressBarComponent
+            current={2}
+            total={6}
             />
           </StyledView>
 

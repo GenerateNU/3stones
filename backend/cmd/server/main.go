@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"backend/internal/config"
 	"backend/internal/setup"
@@ -25,7 +29,21 @@ func main() {
 	}
 
 	// Listen for connections
-	if err := app.Listen(fmt.Sprintf("%s:%d", config.Application.Host, config.Application.Port)); err != nil {
-		utilities.Exit("Failed to start server: %v", err)
+	go func() {
+		if err := app.Listen(fmt.Sprintf(":%d", config.Application.Port)); err != nil {
+			utilities.Exit("Failed to start server: %v", err)
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+
+	<-quit
+
+	slog.Info("Shutting down server")
+	if err := app.Shutdown(); err != nil {
+		slog.Error("failed to shutdown server", "error", err)
 	}
+
+	slog.Info("Server shutdown")
 }

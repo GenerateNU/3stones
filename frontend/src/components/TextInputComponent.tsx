@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, View, Pressable } from 'react-native';
 import { styled } from 'nativewind';
-import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline'; // You can use any icon library.
+// import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline'; // You can use any icon library.
 
 const StyledView = styled(View);
 const StyledTextInput = styled(TextInput);
@@ -24,7 +24,7 @@ const TextInputComponent = ({ placeholder, value, onChangeText, isPassword }) =>
                 secureTextEntry={isSecure} // Toggle this based on the state
                 autoCapitalize="none"
             />
-            {isPassword && (
+            {/* {isPassword && (
                 <StyledPressable onPress={toggleSecureEntry}>
                     {isSecure ? (
                         <EyeSlashIcon style={{ width: 24, height: 24 }} />
@@ -32,7 +32,7 @@ const TextInputComponent = ({ placeholder, value, onChangeText, isPassword }) =>
                         <EyeIcon style={{ width: 24, height: 24 }} />
                     )}
                 </StyledPressable>
-            )}
+            )} */}
         </StyledView>
     );
 };
