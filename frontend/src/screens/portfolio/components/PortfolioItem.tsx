@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ImageBackground } from 'react-native';
 import { styled } from 'nativewind';
+import Card from "../../../components/Card"
 
 
 const StyledView = styled(View);
@@ -18,7 +19,7 @@ interface PortfolioItemProps {
 
 const PortfolioItem = ({address, location, price, duration, invested, completion, imageUrl} : PortfolioItemProps )=> {
     return (
-        <StyledView className = 'h-100 flex w-75 flex-col items-start p-6 rounded-[8px] border border-border bg-SurfaceFG'>
+        <Card className = 'h-100'>
             <StyledView className = 'flex w-full min-w-38 flex-row items-start self-stretch'>
                 {/* Left Side of the Card*/}
                 <StyledView className = 'flex w-2/3 flex-col items-start'>
@@ -66,7 +67,7 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                     </StyledView>
                 </StyledView>
             </StyledView>
-        </StyledView>
+        </Card>
     );
 };
 
