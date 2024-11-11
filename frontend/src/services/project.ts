@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { v4 as UUID } from 'uuid';
+// import { v4 as UUID } from 'uuid';
 import axios from 'axios';
 
 import { API_URL } from '../constants';
@@ -12,18 +12,18 @@ const getProject = async (id: string, access_token: string): Promise<Project | n
     const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`, {
       headers: {
         Authorization: `${access_token}`,
-      }
+      },
     });
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-}
+};
 
 export const useProject = (id: string) => {
   const { session } = useAuth();
-  
+
   const { data: project, isLoading } = useQuery<Project>({
     queryKey: ['project', id],
     queryFn: () => getProject(id, session?.access_token),
@@ -43,7 +43,7 @@ const getProjectTotalFunded = async (id: string): Promise<number | null> => {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-}
+};
 
 export const useProjectTotalFunded = (id: string) => {
   const { data: projectTotalFunded, isLoading } = useQuery<number>({
