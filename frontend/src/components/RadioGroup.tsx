@@ -16,9 +16,8 @@ const StyledText = styled(Text);
 
 const RadioGroup: React.FC<RadioGroupProps> = ({ choices, onSelect }) => {
   // Find the disabled preselected choice, if any, for initial selection
-  const initialSelectedChoice = choices.find(
-    (choice) => choice.selected && choice.disabled
-  )?.label || null;
+  const initialSelectedChoice =
+    choices.find((choice) => choice.selected && choice.disabled)?.label || null;
 
   const [selectedChoice, setSelectedChoice] = useState<string | null>(initialSelectedChoice);
 
@@ -37,9 +36,9 @@ const RadioGroup: React.FC<RadioGroupProps> = ({ choices, onSelect }) => {
   };
 
   return (
-    <StyledView className="flex flex-col items-start space-y-4">
+    <StyledView className='flex flex-col items-start space-y-4'>
       {choices.map(({ label, disabled = false, selected = false }) => (
-        <StyledView key={label} className="flex flex-row items-center space-x-2">
+        <StyledView key={label} className='flex flex-row items-center space-x-2'>
           <RadioButton
             selected={selectedChoice === label}
             onPress={() => handlePress(label, disabled)}
