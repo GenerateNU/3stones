@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, ImageBackground } from 'react-native';
 import { styled } from 'nativewind';
 import Card from "../../../components/Card"
+import Tag from "../../../components/Tag"
 
 
 const StyledView = styled(View);
@@ -17,29 +18,32 @@ interface PortfolioItemProps {
     imageUrl: string;
 }
 
-const PortfolioItem = ({address, location, price, duration, invested, completion, imageUrl} : PortfolioItemProps )=> {
+const PortfolioItem = ({address, location, price, duration, invested, completion, imageUrl} : PortfolioItemProps & { className?: string })=> {
     return (
         <Card className = 'h-100'>
             <StyledView className = 'flex w-full min-w-38 flex-row items-start self-stretch'>
                 {/* Left Side of the Card*/}
                 <StyledView className = 'flex w-2/3 flex-col items-start'>
                     <StyledView className = 'flex flex-col items-start p-1 self-stretch space-y-2 mb-2'>
-                        <StyledText className = 'font-sourceSans3BodyBold' >333 Market Street</StyledText>
-                        <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >San Francisco, CA</StyledText>
+                        <StyledText className = 'font-sourceSans3Bold text-[16px]' >333 Market Street</StyledText>
+                        <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >San Francisco, CA</StyledText>
                         <StyledView className = 'py-3'>
-                            <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Commercial Development</StyledText>
+                            <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Commercial Development</StyledText>
                         </StyledView>
-                        <StyledView className="flex py-1 px-3 gap-1 items-center rounded-[8px] bg-border mb-3">
-                            <StyledText className="font-sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
-                        </StyledView>
+                    
+                        <Tag> 
+                            <StyledView className="flex py-1 px-3 gap-1 items-center rounded-[8px] bg-border mb-3">
+                                <StyledText className="font-sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
+                            </StyledView>
+                        </Tag>
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>
                             <StyledView className = 'flex justify-between items-start mr-4'>
-                                <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Value</StyledText>
-                                <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >$250.00</StyledText>
+                                <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Final Value</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >$350.00</StyledText>
                             </StyledView>
                             <StyledView className = 'flex flex-col items-start'>
-                                <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Exp Return</StyledText>
-                                <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >5.12%</StyledText>
+                                <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Initial Value</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >$250.00</StyledText>
                             </StyledView>
 
                         </StyledView>
@@ -61,9 +65,9 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                             }}>                       
                         </ImageBackground>
                     </StyledView>
-                    <StyledView className = 'flex flex-col w-full justify-between items-end '>
-                        <StyledText className = 'font-sourceSans3CaptionMedium text-defaultText' >Time Line</StyledText>
-                        <StyledText className = 'font-sourceSans3BodyBold text-defaultText' >6 Years</StyledText>
+                    <StyledView className = 'flex flex-col w-full py-1 justify-between items-end '>
+                        <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Total Returns</StyledText>
+                        <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >+5.12%</StyledText>
                     </StyledView>
                 </StyledView>
             </StyledView>

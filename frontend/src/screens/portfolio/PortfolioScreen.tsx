@@ -36,7 +36,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
       <StyledScrollView contentContainerStyle={{ flexGrow: 1 }} className='flex-1'>
         <StyledView className='flex justify-between items-left self-stretch px-6 py-3'>
           <StyledView className='flex flex-row justify-between'>
-            <StyledText>Your Portfolio</StyledText>
+            <StyledText className = 'font-heading text-[24px]'>Your Portfolio</StyledText>
             <StyledView className='items-right justify-right'>
               <StyledImage
                 source={require('../../../assets/images/settings.png')}
@@ -50,15 +50,15 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
         {/* Tab section */}
         <StyledView className='w-full flex-row justify-center'>
-          <StyledView className = 'w-1/2 rounded'>
-              <StyledTouchableOpacity onPress={() => setActiveTab('Your Projects')} className={`items-center h-14 py-2 rounded-t-lg ${activeTab === 'Your Projects' ? 'bg-white' : 'bg-green-900'}`}>
+          <StyledView className = 'w-1/2'>
+              <StyledTouchableOpacity onPress={() => setActiveTab('Your Projects')} className={`items-center h-14 py-2 rounded-tl-[27px] rounded-tr-[27px] ${activeTab === 'Your Projects' ? 'bg-white' : 'bg-defaultPrimary'}`}>
                 <StyledText className={`text-lg font-bold ${activeTab === 'Your Projects' ? 'text-gray-800' : 'text-white'}`}>
                   Your Projects
                 </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
-            <StyledView className = 'w-1/2 rounded'>
-              <StyledTouchableOpacity onPress={() => setActiveTab('Updates')} className={`items-center h-14 py-2 rounded-t-lg ${activeTab === 'Updates' ? 'bg-white' : 'bg-green-900'}`}>
+            <StyledView className = 'w-1/2'>
+              <StyledTouchableOpacity onPress={() => setActiveTab('Updates')} className={`items-center h-14 py-2 rounded-tl-[27px] rounded-tr-[27px] ${activeTab === 'Updates' ? 'bg-white' : 'bg-defaultPrimary'}`}>
                 <StyledText className={`text-lg font-bold ${ activeTab === 'Updates' ? 'text-gray-800' : 'text-white'}`}>
                   Updates
                 </StyledText>
@@ -67,14 +67,25 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         </StyledView>
 
        
-          {/*Your Projects*/}
+        {/*Your Projects*/}
         {activeTab === 'Your Projects' ? (
-        <StyledView className = 'bg-green-900'>
-        <StyledView className='flex w-98 p-[16px_24px] flex-col items-start gap-2 rounded-[27px] bg-white'>
-          <StyledText className='font-sourceSans3CaptionMedium text-defaultText'>
-          {' '}
+        <StyledView className = 'bg-defaultPrimary'>
+        <StyledView className= {`flex p-[16px] flex-col items-start bg-white ${activeTab === 'Your Projects' ? 'rounded-tr-[27px]' : 'rounded-tl-[27px]'}`}>
+          <StyledText className='font-sourceSans3CaptionMedium text-[14px] mb-4'>
           8 Total Investments
         </StyledText>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
         <PortfolioItem
           address={''}
           location={''}
@@ -84,79 +95,85 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
           completion={0}
           imageUrl={''}
         ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
+        <StyledView className = 'mb-4'>
+          <PortfolioItem
+            address={''}
+            location={''}
+            price={0}
+            duration={''}
+            invested={0}
+            completion={0}
+            imageUrl={''}
+          ></PortfolioItem>
+        </StyledView>
       </StyledView>
       </StyledView>) 
       : 
-        (<StyledView className='flex w-98 p-[16px_24px] flex-col items-start gap-3 rounded-[27px] bg-white'>
+        (<StyledView className = 'bg-defaultPrimary'>
+        <StyledView className={`flex p-[16px] flex-col items-start bg-white ${activeTab === 'Updates' ? 'rounded-tl-[27px]' : 'rounded-tr-[27px]'}`}>
           {/* Updates */}
             <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
             <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
             <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
             <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
             <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
+        </StyledView>
         </StyledView>
           )}
       </StyledScrollView>
