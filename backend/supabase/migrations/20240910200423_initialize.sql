@@ -76,6 +76,7 @@ CREATE TABLE investors (
     first_name varchar(256) NOT NULL,
     last_name varchar(256) NOT NULL,
     access_token varchar(256),
+    cash_balance_cents bigint NOT NULL DEFAULT 0,
     item_id varchar(256)
 );
 

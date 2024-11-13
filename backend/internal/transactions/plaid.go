@@ -62,3 +62,58 @@ func RecordInvestment(db *pgxpool.Pool, investorID uuid.UUID, propertyID, amount
 	_, err = db.Exec(context.Background(), query, investorID, propertyID, amountCents, transferID)
 	return err
 }
+
+func UpdateCashBalance(db *pgxpool.Pool, investorID uuid.UUID, amount string, operation string) error {
+	amountCents, err := strconv.Atoi(amount)
+	if err != nil {
+		return err
+	}
+	query := ""
+	if operation == "deposit" {
+		query = `
+            UPDATE investors
+            SET cash_balance_cents = cash_balance_cents + $1
+            WHERE supabase_id = $2
+        `
+	} else if operation == "withdraw" {
+		query = `
+            UPDATE investors
+            SET cash_balance_cents = cash_balance_cents - $1
+            WHERE supabase_id = $2 AND cash_balance_cents >= $1
+        `
+	} else {
+		return fmt.Errorf("invalid operation")
+	}
+
+	result, err := db.Exec(context.Background(), query, amountCents, investorID)
+	if err != nil {
+		return err
+	}
+	if result.RowsAffected() == 0 {
+		return fmt.Errorf("insufficient funds")
+	}
+
+	return nil
+}
+
+func HasSufficientBalance(db *pgxpool.Pool, investorID uuid.UUID, amount string) (bool, error) {
+	amountCents, err := strconv.Atoi(amount)
+	if err != nil {
+		return false, err
+	}
+
+	var cashBalanceCents int
+	query := `
+        SELECT cash_balance_cents FROM investors WHERE supabase_id = $1
+    `
+	err = db.QueryRow(context.Background(), query, investorID).Scan(&cashBalanceCents)
+	if err != nil {
+		return false, err
+	}
+
+	if cashBalanceCents >= amountCents {
+		return true, nil
+	} else {
+		return false, nil
+	}
+}

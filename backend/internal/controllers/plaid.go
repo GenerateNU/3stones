@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"strconv"
 
 	"backend/internal/api_errors"
 	"backend/internal/transactions"
@@ -131,66 +132,39 @@ func (c *PlaidController) Invest(ctx *fiber.Ctx) error {
 		return &api_errors.MISSING_FIELDS
 	}
 
-	// Retrieve access token
-	accessToken, err := transactions.GetAccessToken(c.ServiceParams.DB, id)
+	// Convert Amount to integer (cents)
+	amountCents, err := strconv.Atoi(body.Amount)
+	if err != nil {
+		return &api_errors.INVALID_INVESTMENT_AMOUNT
+	}
+	if amountCents <= 0 {
+		return &api_errors.INVALID_INVESTMENT_AMOUNT
+	}
+
+	// Check if user has sufficient balance
+	hasFunds, err := transactions.HasSufficientBalance(c.ServiceParams.DB, id, body.Amount)
 	if err != nil {
 		return err
 	}
-	if accessToken == "" {
-		return &api_errors.INTERNAL_SERVER_ERROR
+	if !hasFunds {
+		return &api_errors.INSUFFICIENT_FUNDS
 	}
 
-	// Retrieve account ID (first account)
-	accountID, err := transactions.GetFirstAccountID(c.ServiceParams.Plaid, accessToken)
-	if err != nil {
-		return err
-	}
-
-	// Retrieve user info
-	user, err := transactions.GetUserInfo(c.ServiceParams.DB, id)
-	if err != nil {
-		return err
-	}
-
-	// Create transfer authorization
-	transferAuthResponse, err := c.createTransferAuthorization(
-		ctx, accessToken, accountID, body.Amount, user)
+	// Deduct amount from user's cash balance
+	err = transactions.UpdateCashBalance(c.ServiceParams.DB, id, body.Amount, "withdraw")
 	if err != nil {
 		return err
 	}
 
-	// Handle authorization decision
-	if transferAuthResponse.Decision != "approved" {
-		// Handle declined or user_action_required
-		if transferAuthResponse.Decision == "declined" {
-			return &api_errors.TRANSFER_AUTHORIZATION_DECLINED
-		}
-		if transferAuthResponse.Decision == "user_action_required" {
-			return &api_errors.TRANSFER_AUTHORIZATION_USER_ACTION_REQUIRED
-		}
-		return &api_errors.TRANSFER_AUTHORIZATION_FAILED
-	}
-
-	authorizationID := transferAuthResponse.Id
-
-	// Create transfer
-	transferResponse, err := c.createTransfer(
-		ctx, accessToken, accountID, authorizationID, body.Amount, body.PropertyID)
+	// Record the investment
+	err = transactions.RecordInvestment(c.ServiceParams.DB, id, body.PropertyID, body.Amount, "")
 	if err != nil {
 		return err
 	}
 
-	// Update investment records in your database
-	err = transactions.RecordInvestment(
-		c.ServiceParams.DB, id, body.PropertyID, body.Amount, transferResponse.Id)
-	if err != nil {
-		return err
-	}
-
-	// Return transfer details
+	// Return success response
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"transfer_id":     transferResponse.Id,
-		"transfer_status": transferResponse.Status,
+		"message": "Investment successful",
 	})
 }
 
@@ -245,4 +219,182 @@ func (c *PlaidController) createTransfer(
 
 	transfer := response.GetTransfer()
 	return &transfer, nil
+}
+
+func (c *PlaidController) Deposit(ctx *fiber.Ctx) error {
+	// Extract user ID
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	// Parse request body
+	type RequestBody struct {
+		Amount string `json:"amount"`
+	}
+
+	var body RequestBody
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	// Validate input
+	if body.Amount == "" {
+		return &api_errors.MISSING_FIELDS
+	}
+
+	// Retrieve access token
+	accessToken, err := transactions.GetAccessToken(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+	if accessToken == "" {
+		return &api_errors.ACCESS_TOKEN_NOT_FOUND
+	}
+
+	// Retrieve account ID (first account)
+	accountID, err := transactions.GetFirstAccountID(c.ServiceParams.Plaid, accessToken)
+	if err != nil {
+		return err
+	}
+
+	// Retrieve user info
+	user, err := transactions.GetUserInfo(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+
+	// Create transfer authorization
+	transferAuthResponse, err := c.createTransferAuthorization(
+		ctx, accessToken, accountID, body.Amount, user)
+	if err != nil {
+		return err
+	}
+
+	// Handle authorization decision
+	if transferAuthResponse.Decision != "approved" {
+		// Handle declined or user_action_required
+		if transferAuthResponse.Decision == "declined" {
+			return &api_errors.TRANSFER_AUTHORIZATION_DECLINED
+		}
+		if transferAuthResponse.Decision == "user_action_required" {
+			return &api_errors.TRANSFER_AUTHORIZATION_USER_ACTION_REQUIRED
+		}
+		return &api_errors.TRANSFER_AUTHORIZATION_FAILED
+	}
+
+	authorizationID := transferAuthResponse.Id
+
+	// Create transfer
+	transferResponse, err := c.createTransfer(
+		ctx, accessToken, accountID, authorizationID, body.Amount, "Deposit to cash balance")
+	if err != nil {
+		return err
+	}
+
+	// Update user's cash balance
+	err = transactions.UpdateCashBalance(
+		c.ServiceParams.DB, id, body.Amount, "deposit")
+	if err != nil {
+		return err
+	}
+
+	// Return transfer details
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"transfer_id":     transferResponse.Id,
+		"transfer_status": transferResponse.Status,
+	})
+}
+
+func (c *PlaidController) Withdraw(ctx *fiber.Ctx) error {
+	// Extract user ID
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	// Parse request body
+	type RequestBody struct {
+		Amount string `json:"amount"`
+	}
+
+	var body RequestBody
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	if body.Amount == "" {
+		return &api_errors.MISSING_FIELDS
+	}
+
+	hasFunds, err := transactions.HasSufficientBalance(c.ServiceParams.DB, id, body.Amount)
+	if err != nil {
+		return err
+	}
+	if !hasFunds {
+		return &api_errors.INSUFFICIENT_FUNDS
+	}
+
+	accessToken, err := transactions.GetAccessToken(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+	if accessToken == "" {
+		return &api_errors.ACCESS_TOKEN_NOT_FOUND
+	}
+
+	accountID, err := transactions.GetFirstAccountID(c.ServiceParams.Plaid, accessToken)
+	if err != nil {
+		return err
+	}
+
+	user, err := transactions.GetUserInfo(c.ServiceParams.DB, id)
+	if err != nil {
+		return err
+	}
+
+	transferAuthResponse, err := c.createTransferAuthorization(
+		ctx, accessToken, accountID, body.Amount, user)
+	if err != nil {
+		return err
+	}
+
+	if transferAuthResponse.Decision != "approved" {
+		if transferAuthResponse.Decision == "declined" {
+			return &api_errors.TRANSFER_AUTHORIZATION_DECLINED
+		}
+		if transferAuthResponse.Decision == "user_action_required" {
+			return &api_errors.TRANSFER_AUTHORIZATION_USER_ACTION_REQUIRED
+		}
+		return &api_errors.TRANSFER_AUTHORIZATION_FAILED
+	}
+
+	authorizationID := transferAuthResponse.Id
+
+	transferResponse, err := c.createTransfer(
+		ctx, accessToken, accountID, authorizationID, body.Amount, "Withdraw from cash balance")
+	if err != nil {
+		return err
+	}
+
+	err = transactions.UpdateCashBalance(
+		c.ServiceParams.DB, id, body.Amount, "withdraw")
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"transfer_id":     transferResponse.Id,
+		"transfer_status": transferResponse.Status,
+	})
 }

@@ -15,5 +15,6 @@ var (
 	INVALID_ACH_CLASS                           = NewClientError("invalid_ach_class")
 	TRANSFER_AUTHORIZATION_DECLINED             = NewClientError("transfer_authorization_declined")
 	TRANSFER_AUTHORIZATION_USER_ACTION_REQUIRED = NewClientError("transfer_authorization_user_action_required")
+	INSUFFICIENT_FUNDS                          = NewClientError("insufficient_funds")
 	TRANSFER_AUTHORIZATION_FAILED               = NewServerError("transfer_authorization_failed")
 )
