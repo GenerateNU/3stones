@@ -104,3 +104,27 @@ golangci-lint run
 2. **Keep your branch as up-to-date with main as possible.** The earlier and more frequent you are updating your feature branch with changes from main the less weird merge conflicts and less extra work you will have to do.
 3. **Submit video walkthroughs of you running your endpoint on PRs.** 
 4. **Branch names should be \<JIRA-TICKET\>-\<DESCRIPTOR\>**, i.e _SCRUM-1-get-developers_ or _SCRUM-10-database-fixes_.
+
+# Running frontend and backend with ngrok
+1. Run `ngrok config edit` and it should open a text file.
+2. Paste this in:
+```
+version: "2"
+authtoken: <YOUR AUTH TOKEN HERE>
+
+
+tunnels:
+    supabase:
+        addr: 54321
+        proto: http
+    fiber:
+        addr: 3000
+        proto: http
+```
+Above 2 steps are things you should only need to do once.
+3. Make sure supabase is running, and run server by running `go run ./cmd/server/main.go` in the backend directory.
+4. Run `ngrok start --all` to start ngrok.
+5. Copy the following values into `frontend/src/constants.ts`:
+  - API_URL: Webserver tunnel url (the one pointing to `localhost:3000`)
+  - SUPABASE_URL: Supabase tunnel url (the one pointing to `localhost:54321`)
+  - SUPABASE_JWT_SECRET: `TS3_SUPABASE_API_KEY` field in `config/.env.dev`.

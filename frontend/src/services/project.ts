@@ -2,24 +2,31 @@ import { useQuery } from '@tanstack/react-query';
 import { v4 as UUID } from 'uuid';
 import axios from 'axios';
 
-import { apiUrl } from './apiLinks';
+import { API_URL } from '../constants';
 import { Project } from '../types/project';
 import { dumpAxiosError } from '../util/errors';
+import { useAuth } from '../context/AuthContext';
 
-const getProject = async (id: string): Promise<Project | null> => {
+const getProject = async (id: string, access_token: string): Promise<Project | null> => {
   try {
-    const response = await axios.get<Project>(`${apiUrl}/api/v1/projects/${id}`);
+    const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`, {
+      headers: {
+        Authorization: `${access_token}`,
+      }
+    });
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-};
+}
 
 export const useProject = (id: string) => {
+  const { session } = useAuth();
+  
   const { data: project, isLoading } = useQuery<Project>({
     queryKey: ['project', id],
-    queryFn: () => getProject(id),
+    queryFn: () => getProject(id, session?.access_token),
   });
 
   return {
@@ -30,13 +37,13 @@ export const useProject = (id: string) => {
 
 const getProjectTotalFunded = async (id: string): Promise<number | null> => {
   try {
-    const response = await axios.get<number>(`${apiUrl}/api/v1/projects/${id}/total-funded`);
+    const response = await axios.get<number>(`${API_URL}/api/v1/projects/${id}/total-funded`);
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
     return null; // Return null if there's an error
   }
-};
+}
 
 export const useProjectTotalFunded = (id: string) => {
   const { data: projectTotalFunded, isLoading } = useQuery<number>({
