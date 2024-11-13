@@ -23,3 +23,13 @@ export type Project = {
   longitude: number;
   images: ImageLink[];
 };
+
+
+export type ProjectPost = {
+  id: string;
+  created_at: Date;
+  project_id: string;
+  title: string;
+  description: string;
+  images: ImageLink[];
+};

@@ -3,7 +3,7 @@ import { v4 as UUID } from 'uuid';
 import axios from 'axios';
 
 import { API_URL } from '../constants';
-import { Project } from '../types/project';
+import { Project, ProjectPost } from '../types/project';
 import { dumpAxiosError } from '../util/errors';
 import { useAuth } from '../context/AuthContext';
 
@@ -120,7 +120,7 @@ export const usePostInvestment = (projectId: string, amount: number) => {
 // GET a project's posts
 const getProjectPosts = async (projectId, accessToken): Promise<[] | null> => {
   try {
-    const response = await axios.get<Project[]>(`${API_URL}/api/v1/projects/${projectId}/posts`, {
+    const response = await axios.get<ProjectPost[]>(`${API_URL}/api/v1/projects/${projectId}/posts`, {
       headers: {
         Authorization: `${accessToken}`,
       }
