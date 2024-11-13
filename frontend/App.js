@@ -43,8 +43,9 @@ export default function App() {
     if (!loaded && !error) {
         return null;
     }
-
+    console.log("test App.js");
     return (
+        
         <AuthProvider>
             <QueryClientProvider client={queryClient}>
                 <NavigationContainer>

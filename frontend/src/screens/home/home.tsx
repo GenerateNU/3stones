@@ -20,7 +20,8 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  return (<></>);
+  console.log("Hello, world!");
+  return (<StyledText>hi</StyledText>);
   //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
   //     {/* Some dummy image */}
   //     <StyledView className='align-center'>
