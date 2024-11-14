@@ -36,7 +36,10 @@ export const useDevelopers = () => {
 };
 
 // GET developer by ID
-const getDeveloper = async (developerId: string, accessToken: string): Promise<Developer | null> => {
+const getDeveloper = async (
+  developerId: string,
+  accessToken: string,
+): Promise<Developer | null> => {
   try {
     const response = await axios.get<Developer>(`${API_URL}/api/v1/developers/${developerId}`, {
       headers: {
@@ -49,7 +52,6 @@ const getDeveloper = async (developerId: string, accessToken: string): Promise<D
     return null; // Return null if there's an error
   }
 };
-
 
 export const useDeveloper = (developerId: string) => {
   const { session } = useAuth();

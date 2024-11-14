@@ -8,13 +8,13 @@ export type Portfolio = {
 };
 
 export type History = {
-    [projectId: string]: number;
-  };
+  [projectId: string]: number;
+};
 
 export type Investor = {
-    first: string;
-    last: string;
-    id: string;
-    investment_breakdown: Portfolio;
-    total_investment_amount: number;
-}
+  first: string;
+  last: string;
+  id: string;
+  investment_breakdown: Portfolio;
+  total_investment_amount: number;
+};

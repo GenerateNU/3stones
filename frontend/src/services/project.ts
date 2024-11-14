@@ -11,7 +11,7 @@ const getProject = async (id: string, accessToken: string): Promise<Project | nu
     const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`, {
       headers: {
         Authorization: `${accessToken}`,
-      }
+      },
     });
     return response.data; // Return the project if successful
   } catch (error) {
@@ -22,7 +22,7 @@ const getProject = async (id: string, accessToken: string): Promise<Project | nu
 
 export const useProject = (id: string) => {
   const { session } = useAuth();
-  
+
   const { data: project, isLoading } = useQuery<Project>({
     queryKey: ['project', id],
     queryFn: () => getProject(id, session?.access_token),
@@ -39,7 +39,7 @@ const getProjectTotalFunded = async (id: string, accessToken: string): Promise<n
     const response = await axios.get<number>(`${API_URL}/api/v1/projects/${id}/total-funded`, {
       headers: {
         Authorization: `${accessToken}`,
-      }
+      },
     });
     return response.data; // Return the project if successful
   } catch (error) {
@@ -47,8 +47,6 @@ const getProjectTotalFunded = async (id: string, accessToken: string): Promise<n
     return null; // Return null if there's an error
   }
 };
-
-
 
 export const useProjectTotalFunded = (id: string) => {
   const { session } = useAuth();
@@ -69,7 +67,7 @@ const getAllProjects = async (accessToken): Promise<Project[] | null> => {
     const response = await axios.get<Project[]>(`${API_URL}/api/v1/projects/`, {
       headers: {
         Authorization: `${accessToken}`,
-      }
+      },
     });
     return response.data; // Return the project if successful
   } catch (error) {
@@ -92,9 +90,9 @@ export const useAllProjects = () => {
 
 // POST an investment
 const postInvestment = async (
-  projectId: string, 
-  amount: number, 
-  accessToken: string
+  projectId: string,
+  amount: number,
+  accessToken: string,
 ): Promise<void> => {
   try {
     await axios.post(
@@ -104,7 +102,7 @@ const postInvestment = async (
         headers: {
           Authorization: `${accessToken}`,
         },
-      }
+      },
     );
   } catch (error) {
     dumpAxiosError(error);
@@ -113,15 +111,14 @@ const postInvestment = async (
 };
 
 // returns a mutation object that can be used to post the investment
-// To implement: 
+// To implement:
 // const { triggerPostInvestment, isLoading, error } = await usePostInvestment(projectId);
 // triggerPostInvestment(amount);
 export const usePostInvestment = (projectId: string) => {
   const { session } = useAuth();
 
   const mutation = useMutation({
-    mutationFn: (amount: number) => 
-      postInvestment(projectId, amount, session?.access_token),
+    mutationFn: (amount: number) => postInvestment(projectId, amount, session?.access_token),
   });
   return {
     triggerPostInvestment: mutation.mutate,
@@ -130,15 +127,17 @@ export const usePostInvestment = (projectId: string) => {
   };
 };
 
-
 // GET a project's posts
 const getProjectPosts = async (projectId, accessToken): Promise<ProjectPost[] | null> => {
   try {
-    const response = await axios.get<ProjectPost[]>(`${API_URL}/api/v1/projects/${projectId}/posts`, {
-      headers: {
-        Authorization: `${accessToken}`,
-      }
-    });
+    const response = await axios.get<ProjectPost[]>(
+      `${API_URL}/api/v1/projects/${projectId}/posts`,
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      },
+    );
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
@@ -157,4 +156,3 @@ export const useProjectPosts = (projectId: string) => {
     isLoading,
   };
 };
-

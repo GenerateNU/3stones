@@ -21,7 +21,6 @@ export type Project = {
   images: ImageLink[];
 };
 
-
 export type ProjectPost = {
   id: string;
   created_at: Date;
