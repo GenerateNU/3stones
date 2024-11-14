@@ -3,6 +3,7 @@ import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import { useProjectTotalFunded, useProject, usePostInvestment, useProjectPosts } from '../../services/project';
 
 
 interface HomeScreenProps {
@@ -20,8 +21,20 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  console.log("Hello, world!");
-  return (<StyledText>hi</StyledText>);
+  console.log("Hello, world");
+
+  async function getEndPoint() {
+    try {
+      console.log(await useProjectPosts("c3733692-5a86-441f-8ad0-9c32c648bb72"));
+    }
+    catch (error) {
+      console.log(error);
+    } 
+  }
+  
+  getEndPoint();
+  
+  return (<></>);
   //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
   //     {/* Some dummy image */}
   //     <StyledView className='align-center'>

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { API_URL } from '../constants';
@@ -34,9 +34,13 @@ export const useProject = (id: string) => {
   };
 };
 
-const getProjectTotalFunded = async (id: string): Promise<number | null> => {
+const getProjectTotalFunded = async (id: string, accessToken: string): Promise<number | null> => {
   try {
-    const response = await axios.get<number>(`${API_URL}/api/v1/projects/${id}/total-funded`);
+    const response = await axios.get<number>(`${API_URL}/api/v1/projects/${id}/total-funded`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      }
+    });
     return response.data; // Return the project if successful
   } catch (error) {
     dumpAxiosError(error);
@@ -47,9 +51,10 @@ const getProjectTotalFunded = async (id: string): Promise<number | null> => {
 
 
 export const useProjectTotalFunded = (id: string) => {
+  const { session } = useAuth();
   const { data: projectTotalFunded, isLoading } = useQuery<number>({
     queryKey: ['project_total_funded', id],
-    queryFn: () => getProjectTotalFunded(id),
+    queryFn: () => getProjectTotalFunded(id, session?.access_token),
   });
 
   return {
@@ -58,7 +63,7 @@ export const useProjectTotalFunded = (id: string) => {
   };
 };
 
-// GET all projects
+// GET all projects !!!! Backend endpoint doesn't exist?
 const getAllProjects = async (accessToken): Promise<Project[] | null> => {
   try {
     const response = await axios.get<Project[]>(`${API_URL}/api/v1/projects/`, {
@@ -86,11 +91,15 @@ export const useAllProjects = () => {
 };
 
 // POST an investment
-const postInvestment = async (projectId: string, amount: number, accessToken: string): Promise<void> => {
+const postInvestment = async (
+  projectId: string, 
+  amount: number, 
+  accessToken: string
+): Promise<void> => {
   try {
     await axios.post(
-      `${API_URL}/api/v1/projects/${projectId}/investments`,
-      { amount: amount },
+      `${API_URL}/api/v1/projects/${projectId}/invest`,
+      { amount },
       {
         headers: {
           Authorization: `${accessToken}`,
@@ -99,19 +108,25 @@ const postInvestment = async (projectId: string, amount: number, accessToken: st
     );
   } catch (error) {
     dumpAxiosError(error);
+    throw error;
   }
 };
 
-export const usePostInvestment = (projectId: string, amount: number) => {
+// returns a mutation object that can be used to post the investment
+// To implement: 
+// const { triggerPostInvestment, isLoading, error } = await usePostInvestment(projectId);
+// triggerPostInvestment(amount);
+export const usePostInvestment = (projectId: string) => {
   const { session } = useAuth();
-  const { data: postInvestmentMutation, isLoading } = useQuery({
-    queryKey: ['all_projects'],
-    queryFn: () => postInvestment(projectId, amount, session?.access_token),
-  });
 
+  const mutation = useMutation({
+    mutationFn: (amount: number) => 
+      postInvestment(projectId, amount, session?.access_token),
+  });
   return {
-    postInvestmentMutation,
-    isLoading,
+    triggerPostInvestment: mutation.mutate,
+    isLoading: mutation.isPending,
+    error: mutation.error,
   };
 };
 
@@ -131,7 +146,7 @@ const getProjectPosts = async (projectId, accessToken): Promise<ProjectPost[] | 
   }
 };
 
-export const useProjectPosts = (projectId: number) => {
+export const useProjectPosts = (projectId: string) => {
   const { session } = useAuth();
   const { data: projectPosts, isLoading } = useQuery<ProjectPost[]>({
     queryKey: ['project_posts'],
