@@ -89,3 +89,18 @@ func GetHistory(db *pgxpool.Pool, investorID uuid.UUID, limit int, offset int) (
 
 	return history, nil
 }
+
+func GetCashBalance(pool *pgxpool.Pool, investorID string) (bool, error) {
+	query := "SELECT cash_balance_cents FROM investors WHERE supabase_id = $1"
+
+	var exists int
+	err := pool.QueryRow(context.Background(), query, investorID).Scan(&exists)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			return false, nil
+		}
+		return false, err
+	}
+
+	return true, nil
+}
