@@ -114,7 +114,7 @@ export const useInvestors = () => {
   const { session } = useAuth();
 
   const { data: investor, isLoading } = useQuery<Investor>({
-    queryKey: ['investors'],
+    queryKey: ['investor'],
     queryFn: () => getInvestor(session?.access_token),
   });
 

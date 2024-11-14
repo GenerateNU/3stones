@@ -3,7 +3,7 @@ import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import { useInvestors } from '../../services/investor';
+import { useDeveloper } from '../../services/developer';
 
 
 interface HomeScreenProps {
@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   async function getEndPoint() {
     try {
-      console.log(await useInvestors());
+      console.log(await useDeveloper("56ebee48-d844-4fcd-aa58-fb71688c3e81"));
     }
     catch (error) {
       console.log(error);
