@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { v4 as UUID } from 'uuid';
 import axios from 'axios';
 
 import { API_URL } from '../constants';
@@ -7,11 +6,11 @@ import { Project, ProjectPost } from '../types/project';
 import { dumpAxiosError } from '../util/errors';
 import { useAuth } from '../context/AuthContext';
 
-const getProject = async (id: string, access_token: string): Promise<Project | null> => {
+const getProject = async (id: string, accessToken: string): Promise<Project | null> => {
   try {
     const response = await axios.get<Project>(`${API_URL}/api/v1/projects/${id}`, {
       headers: {
-        Authorization: `${access_token}`,
+        Authorization: `${accessToken}`,
       }
     });
     return response.data; // Return the project if successful
@@ -118,7 +117,7 @@ export const usePostInvestment = (projectId: string, amount: number) => {
 
 
 // GET a project's posts
-const getProjectPosts = async (projectId, accessToken): Promise<[] | null> => {
+const getProjectPosts = async (projectId, accessToken): Promise<ProjectPost[] | null> => {
   try {
     const response = await axios.get<ProjectPost[]>(`${API_URL}/api/v1/projects/${projectId}/posts`, {
       headers: {
@@ -134,7 +133,7 @@ const getProjectPosts = async (projectId, accessToken): Promise<[] | null> => {
 
 export const useProjectPosts = (projectId: number) => {
   const { session } = useAuth();
-  const { data: projectPosts, isLoading } = useQuery<[]>({
+  const { data: projectPosts, isLoading } = useQuery<ProjectPost[]>({
     queryKey: ['project_posts'],
     queryFn: () => getProjectPosts(projectId, session?.access_token),
   });

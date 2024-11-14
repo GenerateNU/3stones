@@ -2,9 +2,10 @@ import { AppState } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
-import { TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET } from '@env';
+// import { TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET } from '@env';
+import { SUPABASE_URL, SUPABASE_JWT_SECRET } from '../constants';
 
-export const supabase = createClient(TS3_SUPABASE_PROJECT_URL, TS3_SUPABASE_JWT_SECRET, {
+export const supabase = createClient(SUPABASE_URL, SUPABASE_JWT_SECRET, {
   auth: {
     storage: AsyncStorage,
     autoRefreshToken: true,
