@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../constants';
 import { dumpAxiosError } from '../util/errors';
 import { useAuth } from '../context/AuthContext';
+import { InvestorProfile, Portfolio, History, Investor } from '../types/investor';
 
 // GET the investor's current profile
 const getInvestorProfile = async (accessToken: string): Promise<InvestorProfile | null> => {
@@ -93,3 +94,33 @@ export const useInvestorHistory = () => {
     isLoading,
   };
 };
+
+// GET investor's information
+const getInvestor = async (accessToken: string): Promise<Investor | null> => {
+  try {
+    const response = await axios.get<Investor>(`${API_URL}/api/v1/investors/`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
+    return response.data; // Return the project if successful
+  } catch (error) {
+    dumpAxiosError(error);
+    return null; // Return null if there's an error
+  }
+};
+
+export const useInvestors = () => {
+  const { session } = useAuth();
+
+  const { data: investor, isLoading } = useQuery<Investor>({
+    queryKey: ['investors'],
+    queryFn: () => getInvestor(session?.access_token),
+  });
+
+  return {
+    investor,
+    isLoading,
+  };
+};
+

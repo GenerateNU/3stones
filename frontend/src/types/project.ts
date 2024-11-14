@@ -1,6 +1,3 @@
-import { DimensionValue } from 'react-native';
-import { v4 as UUID } from 'uuid';
-
 export type ImageLink = {
   id: string;
   url: string;

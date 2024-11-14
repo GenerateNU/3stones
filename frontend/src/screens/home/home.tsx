@@ -3,7 +3,7 @@ import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import { useProjectTotalFunded, useProject, usePostInvestment, useProjectPosts } from '../../services/project';
+import { useInvestors } from '../../services/investor';
 
 
 interface HomeScreenProps {
@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   async function getEndPoint() {
     try {
-      console.log(await useProjectPosts("c3733692-5a86-441f-8ad0-9c32c648bb72"));
+      console.log(await useInvestors());
     }
     catch (error) {
       console.log(error);
