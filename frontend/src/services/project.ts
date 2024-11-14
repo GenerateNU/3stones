@@ -63,7 +63,7 @@ export const useProjectTotalFunded = (id: string) => {
   };
 };
 
-// GET all projects !!!! Backend endpoint doesn't exist?
+// GET all projects
 const getAllProjects = async (accessToken): Promise<Project[] | null> => {
   try {
     const response = await axios.get<Project[]>(`${API_URL}/api/v1/projects/`, {
