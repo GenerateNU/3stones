@@ -43,8 +43,8 @@ export default function App() {
     if (!loaded && !error) {
         return null;
     }
-
     return (
+        
         <AuthProvider>
             <QueryClientProvider client={queryClient}>
                 <NavigationContainer>
