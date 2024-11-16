@@ -11,8 +11,9 @@ export const SignupProvider = ({ children }) => {
     password: '',
     firstName: '',
     lastName: '',
+    socialSecurityNumber: '',
+    address: '',
     investmentPlan: '',
-    // Add any other fields you need
   });
 
   // A helper function to update form data by field

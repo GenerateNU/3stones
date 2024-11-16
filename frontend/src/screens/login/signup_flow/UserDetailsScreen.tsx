@@ -1,15 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import ProgressBar from '../../components/ProgressBar';
-import { SignupContext } from '../../context/SignupContext';
+import Button from '../../../components/Button';
+import ProgressBar from '../../../components/ProgressBar';
+import { SignupContext } from '../../../context/SignupContext';
 
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
+const StyledTextInput = styled(TextInput);
 
 export default function UserDetailsScreen({ navigation }) {
   const { formData, updateForm } = useContext(SignupContext);
@@ -19,7 +20,7 @@ export default function UserDetailsScreen({ navigation }) {
   const handleNext = () => {
     updateForm('firstName', firstName);
     updateForm('lastName', lastName);
-    navigation.navigate('ConnectAccountsScreen'); 
+    navigation.navigate('ConnectAccountsScreen');
   };
 
   return (
@@ -46,6 +47,22 @@ export default function UserDetailsScreen({ navigation }) {
               We need your first and last name to get started.
             </StyledText>
 
+            <StyledTextInput
+              className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+              placeholder="First name"
+              value={firstName}
+              onChangeText={setFirstName}
+              autoCapitalize="words"
+            />
+
+            <StyledTextInput
+              className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+              placeholder="Last Name"
+              value={lastName}
+              onChangeText={setLastName}
+              autoCapitalize="words"
+            />
+
             {/* <TextInputComponent
               placeholder="First Name"
               value={firstName}
@@ -65,7 +82,7 @@ export default function UserDetailsScreen({ navigation }) {
           <StyledView className="w-full mt-6">
             <Button
               type="primary"
-              onPress={() => {handleNext()}}
+              onPress={() => { handleNext() }}
               disabled={!firstName.trim() || !lastName.trim()}
             >Continue</Button>
           </StyledView>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import RadioButtonComponent from './components/RadioButtonComponent';  // Import the new component
-import ProgressBar from '../../components/ProgressBar';
+import Button from '../../../components/Button';
+import RadioButtonComponent from '../components/RadioButtonComponent';  // Import the new component
+import ProgressBar from '../../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -34,8 +34,8 @@ export default function InvestmentPlanScreen({ navigation }) {
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
             <ProgressBar
-                current={5}
-                total={6}
+              current={5}
+              total={6}
             />
           </StyledView>
 
@@ -65,7 +65,7 @@ export default function InvestmentPlanScreen({ navigation }) {
           <StyledView className="w-full mt-6">
             <Button
               type="primary"
-              onPress={() => {() => navigation.navigate('homeScreen')}}
+              onPress={() => { () => navigation.navigate('homeScreen') }}
               disabled={!selectedOption} // Disable if no email
             >Next</Button>
           </StyledView>
