@@ -106,10 +106,12 @@ golangci-lint run
 4. **Branch names should be \<JIRA-TICKET\>-\<DESCRIPTOR\>**, i.e _SCRUM-1-get-developers_ or _SCRUM-10-database-fixes_.
 
 # Running frontend and backend with ngrok
-1. Run `ngrok config edit` and it should open a text file.
-2. Paste this in:
+1. Follow steps 1-4 on [this guide](https://ngrok.com/docs/getting-started/) to install and configure `ngrok`, which we will use to connect from the frontend to the API.
+2. Run `ngrok config add-authtoken <YOUR AUTH TOKEN HERE>` to add your auth token.
+3. Run `ngrok config edit` and it should open a text file.
+4. Match your config matches this:
 ```
-version: "2"
+version: "3"
 authtoken: <YOUR AUTH TOKEN HERE>
 
 
@@ -122,9 +124,9 @@ tunnels:
         proto: http
 ```
 Above 2 steps are things you should only need to do once.
-3. Make sure supabase is running, and run server by running `go run ./cmd/server/main.go` in the backend directory.
-4. Run `ngrok start --all` to start ngrok.
-5. Copy the following values into `frontend/src/constants.ts`:
+5. Make sure supabase is running, and run server by running `go run ./cmd/server/main.go` in the backend directory.
+6. Run `ngrok start --all` to start ngrok.
+7. Copy the following values into `frontend/src/constants.ts`:
   - API_URL: Webserver tunnel url (the one pointing to `localhost:3000`)
   - SUPABASE_URL: Supabase tunnel url (the one pointing to `localhost:54321`)
   - SUPABASE_JWT_SECRET: `TS3_SUPABASE_API_KEY` field in `config/.env.dev`.

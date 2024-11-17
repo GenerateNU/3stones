@@ -20,7 +20,6 @@ const SampleLoginScreen = () => {
     try {
       await signIn(email, password);
     } catch (error) {
-      console.log(error);
       setError(error.message || 'An error occurred during sign-in');
     }
   };

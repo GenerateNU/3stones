@@ -3,6 +3,7 @@ import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import { useContributors } from '../../services/contributor';
 
 
 interface HomeScreenProps {
@@ -20,6 +21,19 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+  console.log("Hello, world");
+
+  async function getEndPoint() {
+    try {
+      console.log(await useContributors());
+    }
+    catch (error) {
+      console.log(error);
+    } 
+  }
+  
+  getEndPoint();
+  
   return (<></>);
   //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
   //     {/* Some dummy image */}

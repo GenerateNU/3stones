@@ -26,6 +26,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/nedpals/postgrest-go v0.1.3 // indirect
+	github.com/plaid/plaid-go v1.10.0
 	github.com/plaid/plaid-go/v29 v29.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/stretchr/testify v1.8.2 // indirect
