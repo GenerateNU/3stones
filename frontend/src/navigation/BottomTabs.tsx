@@ -5,6 +5,7 @@ import PortfolioScreen from '../screens/portfolio/PortfolioScreen';
 import ProjectNavigator from './ProjectNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import HomeScreen from '../screens/home/home';
+import ExploreScreen from '../screens/explore/explore';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,7 @@ export default function TabNavigator() {
           headerShown: false,
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name='Explore'
         component={ExploreScreen}
         options={{
@@ -40,7 +41,7 @@ export default function TabNavigator() {
           title: '',
           headerShown: false,
         }}
-      /> */}
+      />
       <Tab.Screen
         name='Portfolio'
         component={PortfolioScreen}
