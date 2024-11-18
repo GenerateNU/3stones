@@ -1,3 +1,4 @@
+//Change loading page and if a portfolio cant be loaded page
 import React, { useState } from 'react';
 import { Image, Text, View, TouchableOpacity} from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
@@ -6,6 +7,7 @@ import { ScrollView } from 'react-native';
 import PortfolioItem from './components/PortfolioItem';
 import PortfolioDetails from './components/PortfolioDetails';
 import UpdateCard from './components/PortfolioUpdateCard';
+import { useInvestorPortfolio } from '../../../src/services/investor'
 
 
 interface PortfolioScreenProps {
@@ -26,6 +28,17 @@ const StyledTouchableOpacity= styled(TouchableOpacity);
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
   const [activeTab, setActiveTab] = useState('Your Projects');
+
+  const InvestorPortfolio = () => {
+    const { portfolio, isLoading } = useInvestorPortfolio();
+
+    if (isLoading) {
+      return <p>Loading portfolio...</p>;
+    }
+  
+    if (!portfolio) {
+      return <p>Failed to load portfolio. Please try again later.</p>;
+    }
 
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>

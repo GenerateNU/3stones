@@ -8,6 +8,7 @@ import Card from "../../../components/Card"
 import Tag from "../../../components/Tag"
 
 
+
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
@@ -34,11 +35,44 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                             <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Commercial Development</StyledText>
                         </StyledView>
                     
-                        <Tag> 
-                            <StyledView className="flex py-1 px-3 gap-1 items-center rounded-[8px] bg-border mb-3">
-                                <StyledText className="font-sourceSans3CaptionMedium text-defaultText">Land Control Secured</StyledText>
-                            </StyledView>
-                        </Tag>
+                        <StyledView>
+                            {condition && (
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Sold</StyledText>} icon = {'../../../../assets/images/celebration'} level = {'success'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Construction Underway</StyledText>} icon = {'../../../../assets/images/maps_home_work'} level = {'successSubdued'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Construction Complete</StyledText>} icon = {'../../../../assets/images/house'} level = {'successSubdued'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Operational</StyledText>} icon = {'../../../../assets/images/maps_home_work'} level = {'successSubdued'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Construction Started</StyledText>} icon = {'../../../../assets/images/handyman'} level = {'neutralSubdued'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                    Permitting Secured</StyledText>} icon = {'../../../../assets/images/topic'} level = {'neutralSubdued'} >
+                                </Tag>
+                            )}
+                            {condition && (
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                                   Design Complete</StyledText>} icon = {'../../../../assets/images/design_services'} level = {'neutralSubdued'} >
+                                </Tag>
+                            )}
+                        </StyledView>
+
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>
                             <StyledView className = 'flex justify-between items-start mr-4'>
                                 <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Final Value</StyledText>
