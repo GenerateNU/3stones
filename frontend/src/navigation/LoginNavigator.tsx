@@ -10,7 +10,6 @@ import { SignupProvider } from '../context/SignupContext';
 import LoginEmailScreen from '../screens/login/login_flow/LoginEmailScreen';
 import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen';
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
-import ManualAddressScreen from '../screens/login/signup_flow/ManualAddressScreen';
 import SignupMainScreen from '../screens/login/signup_flow/SignupMainScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
 import DummyDoneScreen from '../screens/login/dummyDone';
@@ -60,11 +59,6 @@ export default function LoginNavigator() {
           name='LegalInformationScreen'
           component={LegalInformationScreen}
           options={{ title: 'Legal Info' }}
-        />
-        <Stack.Screen
-          name='ManualAddressScreen'
-          component={ManualAddressScreen}
-          options={{ title: 'Manual Address Entry' }}
         />
         <Stack.Screen
           name='SignupMainScreen'

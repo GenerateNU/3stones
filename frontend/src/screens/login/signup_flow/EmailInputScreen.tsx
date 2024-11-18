@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { Image, View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
+import React, {useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../../components/Button';
 import ProgressBar from '../../../components/ProgressBar';
-import { SignupContext } from '../../../context/SignupContext';
 import TextInputComponent from '../components/TextInputComponent';
 import { useAuth } from '../../../context/AuthContext';
 
