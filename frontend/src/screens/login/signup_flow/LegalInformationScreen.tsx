@@ -1,40 +1,22 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Button from '../../../components/Button';
 import ProgressBar from '../../../components/ProgressBar';
-import { SignupContext } from '../../../context/SignupContext';
+import { useAuth } from '../../../context/AuthContext';
+import TextInputComponent from '../components/TextInputComponent';
 import Config from 'react-native-config';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
-const StyledTextInput = styled(TextInput);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function LegalInformationScreen({ navigation }) {
-  const { formData, updateForm } = useContext(SignupContext);
-  const [socialSecurityNumber, setSocialSecurityNumber] = useState(formData.socialSecurityNumber || '');
-
-  // Unified address state
-  const [address, setAddress] = useState({
-    addressLine: '',
-    city: '',
-    zipCode: '',
-    country: '',
-  });
-
+  const { signupData, updateSignupData } = useAuth(); // Access signupData and updateSignupData from AuthContext
   const [isManualEntry, setIsManualEntry] = useState(false); // Track manual entry mode
-
-  // Update address dynamically (manual entry or Google)
-  const updateAddress = (field, value) => {
-    setAddress((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
 
   // Parse Google Places API response into normalized address format
   const handleAddressSelect = (data, details) => {
@@ -48,13 +30,13 @@ export default function LegalInformationScreen({ navigation }) {
       country: findComponent('country'),
     };
 
-    setAddress(parsedAddress); // Update the unified address state
+    Object.entries(parsedAddress).forEach(([key, value]) => {
+      updateSignupData(`address.${key}`, value); // Update address in signupData
+    });
   };
 
   const handleNext = () => {
-    updateForm('socialSecurityNumber', socialSecurityNumber);
-    updateForm('address', address);
-    navigation.navigate('InvestmentPlanScreen'); // Replace with your actual next screen
+    navigation.navigate('QuestionsScreen'); // Replace with your actual next screen
   };
 
   return (
@@ -83,14 +65,13 @@ export default function LegalInformationScreen({ navigation }) {
             </StyledText>
 
             {/* Social Security Number Input */}
-            <StyledTextInput
-              className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+            <TextInputComponent
               placeholder="Social Security Number"
-              value={socialSecurityNumber}
-              onChangeText={setSocialSecurityNumber}
+              value={signupData.ssn}
+              onChangeText={(input) => updateSignupData('ssn', input)}
               keyboardType="numeric"
-              maxLength={11} // Format: XXX-XX-XXXX
-            />
+            >
+            </TextInputComponent>
 
             {/* Address Input */}
             {!isManualEntry ? (
@@ -99,12 +80,12 @@ export default function LegalInformationScreen({ navigation }) {
                 fetchDetails={true}
                 onPress={handleAddressSelect}
                 query={{
-                  key: Config.GOOGLE_API_KEY, // Replace with your Google API Key
+                  key: Config.GOOGLE_API_KEY,
                   language: 'en',
                 }}
                 styles={{
                   textInputContainer: {
-                    width: '92%',
+                    width: '100%',
                     marginBottom: 10,
                   },
                   textInput: {
@@ -123,31 +104,33 @@ export default function LegalInformationScreen({ navigation }) {
               />
             ) : (
               <>
-                <StyledTextInput
-                  className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+                <TextInputComponent
                   placeholder="Address Line"
-                  value={address.addressLine}
-                  onChangeText={(text) => updateAddress('addressLine', text)}
-                />
-                <StyledTextInput
-                  className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+                  value={signupData.address.addressLine}
+                  onChangeText={(input) => updateSignupData('address.addressLine', input)}
+                  keyboardType='default'
+                >
+                </TextInputComponent>
+                <TextInputComponent
                   placeholder="City"
-                  value={address.city}
-                  onChangeText={(text) => updateAddress('city', text)}
-                />
-                <StyledTextInput
-                  className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+                  value={signupData.address.city}
+                  onChangeText={(input) => updateSignupData('address.city', input)}
+                  keyboardType='default'
+                >
+                </TextInputComponent>
+                <TextInputComponent
                   placeholder="Zip Code"
-                  value={address.zipCode}
-                  onChangeText={(text) => updateAddress('zipCode', text)}
-                  keyboardType="numeric"
-                />
-                <StyledTextInput
-                  className="w-11/12 h-12 px-4 border border-gray-300 rounded-md mb-4"
+                  value={signupData.address.zipCode}
+                  onChangeText={(input) => updateSignupData('address.zipCode', input)}
+                  keyboardType='numeric'
+                >
+                </TextInputComponent>
+                <TextInputComponent
                   placeholder="Country"
-                  value={address.country}
-                  onChangeText={(text) => updateAddress('country', text)}
-                />
+                  value={signupData.address.country}
+                  onChangeText={(input) => updateSignupData('address.country', input)}
+                >
+                </TextInputComponent>
               </>
             )}
 
@@ -164,7 +147,7 @@ export default function LegalInformationScreen({ navigation }) {
             <Button
               type="primary"
               onPress={handleNext}
-              disabled={!socialSecurityNumber.trim() || !address.addressLine.trim()}
+              disabled={!signupData.ssn.trim() || !signupData.address.addressLine.trim()}
             >
               Continue
             </Button>

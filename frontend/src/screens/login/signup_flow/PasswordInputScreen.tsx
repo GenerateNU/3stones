@@ -5,20 +5,20 @@ import Button from '../../../components/Button';
 import { SignupContext } from '../../../context/SignupContext';
 import ProgressBar from '../../../components/ProgressBar';
 import TextInputComponent from '../components/TextInputComponent';
+import { useAuth } from '../../../context/AuthContext';
 
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
-const StyledTextInput = styled(TextInput);
 
 export default function PasswordInputScreen({ navigation }) {
-  const { formData, updateForm } = useContext(SignupContext);
-  const [password, setPassword] = useState(formData.password);
+  const { signupData, updateSignupData } = useAuth();
+  const [password, setPassword] = useState(signupData.password);
 
   const handleNext = () => {
-    updateForm('password', password);
+    updateSignupData('password', password);
     navigation.navigate('UserDetailsScreen');
   };
 
@@ -53,13 +53,6 @@ export default function PasswordInputScreen({ navigation }) {
               isPassword={true}
             >
             </TextInputComponent>
-
-            {/* <TextInputComponent
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              isPassword={true}
-            /> */}
           </StyledView>
 
           {/* Continue Button */}

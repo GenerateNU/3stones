@@ -13,6 +13,7 @@ type TextInputComponentProps = {
     onChangeText: (text: string) => void;
     isPassword?: boolean;
     keyboardType?: KeyboardTypeOptions; // Explicitly typed as KeyboardTypeOptions
+    autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'; // Explicitly typed as autoCapitalize
 };
 
 const TextInputComponent: React.FC<TextInputComponentProps> = ({
@@ -21,6 +22,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
     onChangeText,
     isPassword = false,
     keyboardType = 'default', // Default value
+    autoCapitalize = 'none', // Default value
 }) => {
     const [isSecure, setIsSecure] = useState(isPassword);
 
@@ -36,7 +38,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
                 value={value}
                 onChangeText={onChangeText}
                 secureTextEntry={isPassword ? isSecure : false}
-                autoCapitalize="none"
+                autoCapitalize={autoCapitalize}
                 keyboardType={keyboardType}
             />
             {isPassword && (

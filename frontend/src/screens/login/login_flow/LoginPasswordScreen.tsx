@@ -10,20 +10,18 @@ import TextInputComponent from '../components/TextInputComponent';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledTextInput = styled(TextInput); // Use nativewind to style TextInput
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function LoginPasswordScreen({ navigation }) {
-  const { loginData, updateLoginData, signIn } = useAuth(); // Access loginData and updateLoginData from AuthContext
-  const [password, setPassword] = useState(loginData.password);
+  const { loginData, updateLoginData, login } = useAuth(); // Access loginData and updateLoginData from AuthContext
+  const [password] = useState(loginData.password);
   const [error, setError] = useState(null);
 
-  const handleSignIn = async () => {
-    updateLoginData('password', password);
+  const handleLogin = async () => {
     try {
-      await signIn(loginData.email, password);
+      await login(loginData.email, password);
     } catch (error) {
       setError(error.message || 'An error occurred during sign-in');
     }
@@ -66,7 +64,7 @@ export default function LoginPasswordScreen({ navigation }) {
             <TextInputComponent
               placeholder="Password"
               value={loginData.password}
-              onChangeText={(text) => updateLoginData('password', text)}
+              onChangeText={(input) => updateLoginData('password', input)}
               isPassword={true}
             />
           </StyledView>
@@ -83,7 +81,7 @@ export default function LoginPasswordScreen({ navigation }) {
             </Button>
             <Button
               type="primary"
-              onPress={handleSignIn}
+              onPress={handleLogin}
               disabled={!loginData.password.trim()}
             >
               Login

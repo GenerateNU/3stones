@@ -4,6 +4,7 @@ import { styled } from 'nativewind';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/AuthContext'; // Update import path based on where AuthContext is stored
 import WelcomeToThreeStonesComponent from '../components/WelcomeToThreeStones';
+import Divider from '../../../components/Divider';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -22,7 +23,7 @@ export default function SignUpMainScreen({ navigation }) {
                 {/* Header */}
                 <WelcomeToThreeStonesComponent />
 
-                <StyledText className="text-center text-gray-600 mb-8">
+                <StyledText className="text-center text-gray-900 mb-8">
                     Providing the tools you need to make your first investments in real estate.
                 </StyledText>
 
@@ -33,12 +34,7 @@ export default function SignUpMainScreen({ navigation }) {
                         Continue with Email
                     </Button>
 
-                    {/* OR Separator */}
-                    <StyledView className="w-full flex-row items-center my-4">
-                        <StyledView className="flex-1 h-px bg-gray-300" />
-                        <StyledText className="px-4 text-gray-500">OR</StyledText>
-                        <StyledView className="flex-1 h-px bg-gray-300" />
-                    </StyledView>
+                    <Divider text='OR' />
 
                     {/* Google and Apple Sign-In Buttons (Stub) */}
                     <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">

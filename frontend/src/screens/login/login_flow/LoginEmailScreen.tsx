@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/AuthContext'; // Update import path based on where AuthContext is stored
 import WelcomeToThreeStonesComponent from '../components/WelcomeToThreeStones';
 import TextInputComponent from '../components/TextInputComponent';
+import Divider from '../../../components/Divider';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledTextInput = styled(TextInput);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
@@ -37,17 +37,13 @@ export default function LoginEmailScreen({ navigation }) {
             <TextInputComponent
               placeholder="Email"
               value={loginData.email}
-              onChangeText={(text) => updateLoginData('email', text)}
+              onChangeText={(input) => updateLoginData('email', input)}
               isPassword={false}
               keyboardType="email-address"
             />
 
             {/* OR Separator */}
-            <StyledView className="w-full flex-row items-center my-4">
-              <StyledView className="flex-1 h-px bg-gray-300" />
-              <StyledText className="px-4 text-gray-500">OR</StyledText>
-              <StyledView className="flex-1 h-px bg-gray-300" />
-            </StyledView>
+            <Divider text='OR' />
 
             {/* Google and Apple Sign-In Buttons (Stub) */}
             <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">

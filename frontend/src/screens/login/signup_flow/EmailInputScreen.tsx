@@ -5,6 +5,7 @@ import Button from '../../../components/Button';
 import ProgressBar from '../../../components/ProgressBar';
 import { SignupContext } from '../../../context/SignupContext';
 import TextInputComponent from '../components/TextInputComponent';
+import { useAuth } from '../../../context/AuthContext';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,11 +14,11 @@ const StyledScrollView = styled(ScrollView);
 const StyledTextInput = styled(TextInput);
 
 export default function EmailInputScreen({ navigation }) {
-  const { formData, updateForm } = useContext(SignupContext);
-  const [email, setEmail] = useState(formData.email);
+  const { signupData, updateSignupData } = useAuth();
+  const [email, setEmail] = useState(signupData.email);
 
   const handleNext = () => {
-    updateForm('email', email);
+    updateSignupData('email', email);
     navigation.navigate('PasswordInputScreen');
   };
 
