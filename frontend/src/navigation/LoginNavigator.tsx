@@ -6,7 +6,7 @@ import EmailInputScreen from '../screens/login/signup_flow/EmailInputScreen';
 import PasswordInputScreen from '../screens/login/signup_flow/PasswordInputScreen';
 import UserDetailsScreen from '../screens/login/signup_flow/UserDetailsScreen'; // Add other screens as needed
 import ConnectAccountsScreen from '../screens/login/signup_flow/ConnectAccountsScreen';
-import { SignupProvider } from '../context/SignupContext';
+import { AuthProvider } from '../context/AuthContext';
 import LoginEmailScreen from '../screens/login/login_flow/LoginEmailScreen';
 import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen';
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator();
 
 export default function LoginNavigator() {
   return (
-    <SignupProvider>
+    <AuthProvider>
       <Stack.Navigator initialRouteName='WelcomeScreen'>
         <Stack.Screen
           name='WelcomeScreen'
@@ -76,6 +76,6 @@ export default function LoginNavigator() {
           options={{ title: 'Dummy Done Screen' }}
         />
       </Stack.Navigator>
-    </SignupProvider>
+    </AuthProvider>
   );
 }
