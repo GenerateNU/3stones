@@ -74,7 +74,10 @@ CREATE TABLE investors (
     supabase_id uuid PRIMARY KEY, -- Uses investor uuid provided by Supabase
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     first_name varchar(256) NOT NULL,
-    last_name varchar(256) NOT NULL
+    last_name varchar(256) NOT NULL,
+    access_token varchar(256),
+    cash_balance_cents bigint NOT NULL DEFAULT 0,
+    item_id varchar(256)
 );
 
 CREATE TABLE developers (

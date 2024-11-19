@@ -1,13 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/home/home';
-import SecondScreen from '../screens/secondScreen/secondScreen';
-import ProjectScreen from '../screens/project';
-import ProjectInvestScreen from '../screens/project/invest';
-import ProjectUpdatesScreen from '../screens/project/updates';
-import ProjectImagesScreen from '../screens/project/images';
-import ProjectMapScreen from '../screens/project/map';
+import ProjectScreen from '../screens/project/ProjectScreen';
+import ProjectInvestScreen from '../screens/project/ProjectInvestScreen';
+import ProjectUpdatesScreen from '../screens/project/ProjectUpdatesScreen';
+import ProjectImagesScreen from '../screens/project/ProjectImagesScreen';
+import ProjectMapScreen from '../screens/project/ProjectMapScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +35,7 @@ export default function ProjectNavigator() {
       <Stack.Screen
         name='project-map'
         component={ProjectMapScreen}
-        options={{ title: 'Project location', headerShown: true }}        
+        options={{ title: 'Project location', headerShown: true }}
       />
     </Stack.Navigator>
   );
