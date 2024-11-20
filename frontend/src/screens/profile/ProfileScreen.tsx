@@ -3,8 +3,11 @@ import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
-import NotificationButton from './components/NotificationButton';
+import { useAuth } from '../../context/AuthContext';
+import { useInvestorProfile } from '../../../src/services/investor'
+
 import Button from '../../components/Button';
+import Divider from '../../components/Divider';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,10 +23,25 @@ interface ProfileScreenProps {
 const EditProfileButton = ({ navigation }) => {
     return (
         <StyledView className='h-[4vh] w-[15vh]'>
-            <Button onPress={() => {console.log("Edit profile button clicked")}}
+            <Button onPress={() => {navigation.navigate('profile-edit-profile')}}
                 type='secondary'
             >Edit Profile</Button>
         </StyledView>
+    );
+  };
+
+  const UserName = () => {
+    const { profile, isLoading } = useInvestorProfile();
+    if(isLoading) {
+        return <StyledText>loading...</StyledText>
+    }
+    if(!profile) {
+        return <StyledText>no profile found!</StyledText>
+    }
+    return (
+        <StyledText>
+            {profile.first} {profile.last}
+        </StyledText>
     );
   };
 
@@ -35,34 +53,30 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
                 <StyledText className="text-3xl align-center font-Nunito-BoldItalic text-center">
                     Your Profile
                 </StyledText>
-                <NotificationButton navigation={navigation} onPress = {() => {}}/>
             </StyledView>
             <StyledView className="flex px-[vw] py-[2vh] flex-col items-center space-y-[10vh]">
                 <StyledImage className="w-12 h-12" source={require('../../../assets/images/PlaceHolderPFP.png')}/>
+                <UserName/>
                 <StyledText>
-                    Your Name
-                </StyledText>
-                <StyledText>
-                    yourname@gmail.com
                 </StyledText>
                 <EditProfileButton navigation={navigation}/>
             </StyledView>
             <StyledView className='flex flex-col space-y-[32vw]'>
-                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
+            <Divider/>
                 <StyledView className='flex flex-col gap-y-[40vh]'>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} pageName='Settings'/>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} pageName='Legal Documents'/>
+                <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} navigationName = 'profile-deposit' pageName='Deposit'/>
+                <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} navigationName = 'profile-withdraw' pageName='Withdraw'/>
                 </StyledView>
-                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
-                <StyledView className='flex flex-col gap-y-[40vh]'>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} pageName='Deposit'/>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} pageName='Withdraw'/>
+                <Divider/>
+                <StyledView className='flex flex-col'>
+                <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} navigationName = 'profile-settings' pageName='Settings'/>
+                <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} navigationName = 'profile-legal-documents' pageName='Legal Documents'/>
                 </StyledView>
-                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
-                <StyledView className='flex flex-col gap-y-[40vh]'>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} pageName='Risk Tolerance'/>
+                <Divider/>
+                <StyledView className='flex flex-col'>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} navigationName = 'profile-risk-tolerance' pageName='Risk Tolerance'/>
                 </StyledView>
-                <StyledImage source={require('../../../assets/images/grey-line-spacer.png')}/>
+                <Divider/>
             </StyledView>
         </StyledView>
     );
