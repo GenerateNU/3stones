@@ -22,11 +22,6 @@ module.exports = {
         placeholderText: '#BBBBBB',
         surfaceBG: '#FAFAFC',
         surfaceFG: '#FFFFFF',
-<<<<<<< HEAD
-        border: '#DDDDDD',
-        brand50: '#CADEDB',
-        success: '#0E9888',
-=======
         surfaceDisabled: '#BBBBBB',
         borderPrimary: '#DDDDDD',
         borderSelected: '#4B4B4B',
@@ -58,7 +53,6 @@ module.exports = {
           800: '#4B4B4B',
           900: '#282828',
         },
->>>>>>> b15d172668d1f25c7ca61c888768cf9a044a33ca
       },
       fontFamily: {
         nunitoBlack: ['Nunito-Black'],

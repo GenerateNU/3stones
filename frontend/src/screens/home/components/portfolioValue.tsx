@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import WideButton from '../../components/WideButton';
+import WideButton from '../../../components/WideButton';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,7 +13,7 @@ const AddFundsButton = ({ navigation }) => {
   return (
     <WideButton
       name={'Add Funds'}
-      iconRoute={require('../../../assets/images/attach-money.png')}
+      iconRoute={require('../../../../assets/images/attach-money.png')}
       navigation={navigation}
       intent='secondary'
     ></WideButton>
@@ -25,7 +25,7 @@ const PortfolioButton = ({ navigation }) => {
   return (
     <WideButton
       name={'Portfolio'}
-      iconRoute={require('../../../assets/images/chevron-right.png')}
+      iconRoute={require('../../../../assets/images/chevron-right.png')}
       navigation={navigation}
       intent='primary'
     ></WideButton>
@@ -36,7 +36,7 @@ const PortfolioReturns = ({ portfolioChange }) => {
   return (
     <StyledView className='flex flex-row items-center'>
       <StyledImage
-        source={require('../../../assets/images/arrow-outward.png')}
+        source={require('../../../../assets/images/arrow-outward.png')}
         className='w-[5vw] h-[5vw] mx-[0.75vw]'
       />
       <StyledText className='text-[2vh] font-heading color-success'>
@@ -67,7 +67,7 @@ const PortfolioMoreDetailsIcon = ({ navigation }) => {
     <StyledView className='flex-2 flex justify-center h-[10vh]'>
       <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
         <StyledImage
-          source={require('../../../assets/images/more-details.png')}
+          source={require('../../../../assets/images/more-details.png')}
           className='w-[12vw] h-[12vw]'
         />
       </TouchableOpacity>

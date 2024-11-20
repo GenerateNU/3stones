@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import PortfolioValue from './portfolioValue';
-import WelcomeBlock from './welcomeBlock';
-import BottomSheetComponent from './BottomSheetComponent';
+import PortfolioValue from './components/portfolioValue';
+import WelcomeBlock from './components/welcomeBlock';
+import BottomSheetComponent from './components/BottomSheetComponent';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
 
@@ -28,38 +28,38 @@ const StyledView = styled(View);
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   const mockInvestmentData = [
     {
-      image: "https://s3-alpha-sig.figma.com/img/c1b5/297f/09c829e9e47c8f61bdcd1374fa986706?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L8mZcIrgMXP1QuNfAKUa-UV3fEvuRRql-wJKLeLI5U7cw-C3HWCactXAaoFfrzzm~Gcmr43MTbvF4TDUVYUZplgr76zNCUjZP3Z8pbbCWS0DDojdkhXxm4yl6U-FN7CQjtyyO~e-Z5l5yP~zePSGlnzv6xULnZa3J0wab1zpgJ4WaLSCJsVnzZo-MHTWl-oSEeD5JGX8Q6wNlKby0Y6iBIyw3uQWYMuzu~fdVg-GHB9p7ptY4R-tTAXkOmMZuSoX4ieXH09isq6U67Tb6qxUVvotYnsWK-KedLgd7lKomjmN3xgYzma~aCripaka8In5T6-gFTMxUCCIlVV0LMZi~w__",
+      image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
       status: "Funding"
     }, 
     {
-      image: "https://s3-alpha-sig.figma.com/img/c1b5/297f/09c829e9e47c8f61bdcd1374fa986706?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L8mZcIrgMXP1QuNfAKUa-UV3fEvuRRql-wJKLeLI5U7cw-C3HWCactXAaoFfrzzm~Gcmr43MTbvF4TDUVYUZplgr76zNCUjZP3Z8pbbCWS0DDojdkhXxm4yl6U-FN7CQjtyyO~e-Z5l5yP~zePSGlnzv6xULnZa3J0wab1zpgJ4WaLSCJsVnzZo-MHTWl-oSEeD5JGX8Q6wNlKby0Y6iBIyw3uQWYMuzu~fdVg-GHB9p7ptY4R-tTAXkOmMZuSoX4ieXH09isq6U67Tb6qxUVvotYnsWK-KedLgd7lKomjmN3xgYzma~aCripaka8In5T6-gFTMxUCCIlVV0LMZi~w__",
+      image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
       status: "Funding"
     }, 
     {
-      image: "https://s3-alpha-sig.figma.com/img/c1b5/297f/09c829e9e47c8f61bdcd1374fa986706?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L8mZcIrgMXP1QuNfAKUa-UV3fEvuRRql-wJKLeLI5U7cw-C3HWCactXAaoFfrzzm~Gcmr43MTbvF4TDUVYUZplgr76zNCUjZP3Z8pbbCWS0DDojdkhXxm4yl6U-FN7CQjtyyO~e-Z5l5yP~zePSGlnzv6xULnZa3J0wab1zpgJ4WaLSCJsVnzZo-MHTWl-oSEeD5JGX8Q6wNlKby0Y6iBIyw3uQWYMuzu~fdVg-GHB9p7ptY4R-tTAXkOmMZuSoX4ieXH09isq6U67Tb6qxUVvotYnsWK-KedLgd7lKomjmN3xgYzma~aCripaka8In5T6-gFTMxUCCIlVV0LMZi~w__",
+      image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
       status: "Funding"
     }, 
     {
-      image: "https://s3-alpha-sig.figma.com/img/c1b5/297f/09c829e9e47c8f61bdcd1374fa986706?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L8mZcIrgMXP1QuNfAKUa-UV3fEvuRRql-wJKLeLI5U7cw-C3HWCactXAaoFfrzzm~Gcmr43MTbvF4TDUVYUZplgr76zNCUjZP3Z8pbbCWS0DDojdkhXxm4yl6U-FN7CQjtyyO~e-Z5l5yP~zePSGlnzv6xULnZa3J0wab1zpgJ4WaLSCJsVnzZo-MHTWl-oSEeD5JGX8Q6wNlKby0Y6iBIyw3uQWYMuzu~fdVg-GHB9p7ptY4R-tTAXkOmMZuSoX4ieXH09isq6U67Tb6qxUVvotYnsWK-KedLgd7lKomjmN3xgYzma~aCripaka8In5T6-gFTMxUCCIlVV0LMZi~w__",
+      image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
       status: "Funding"
     }, 
     {
-      image: "https://s3-alpha-sig.figma.com/img/c1b5/297f/09c829e9e47c8f61bdcd1374fa986706?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L8mZcIrgMXP1QuNfAKUa-UV3fEvuRRql-wJKLeLI5U7cw-C3HWCactXAaoFfrzzm~Gcmr43MTbvF4TDUVYUZplgr76zNCUjZP3Z8pbbCWS0DDojdkhXxm4yl6U-FN7CQjtyyO~e-Z5l5yP~zePSGlnzv6xULnZa3J0wab1zpgJ4WaLSCJsVnzZo-MHTWl-oSEeD5JGX8Q6wNlKby0Y6iBIyw3uQWYMuzu~fdVg-GHB9p7ptY4R-tTAXkOmMZuSoX4ieXH09isq6U67Tb6qxUVvotYnsWK-KedLgd7lKomjmN3xgYzma~aCripaka8In5T6-gFTMxUCCIlVV0LMZi~w__",
+      image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
       street: "931 1st Street",
       city: "Venice Beach, CA",
-      amount: 250,
+      amount: 350,
       status: "Funding"
     }, 
   ];
