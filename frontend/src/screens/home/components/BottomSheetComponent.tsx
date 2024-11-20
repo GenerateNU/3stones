@@ -35,7 +35,9 @@ const Investments = ({ investmentsData }) => {
             street={investment.street}
             city={investment.city}
             amount={investment.amount}
+            fundingGoal={1000}
             status={investment.status}
+            developmentType={"Commercial Development"}
           />
           <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
         </StyledView>
