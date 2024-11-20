@@ -1,8 +1,10 @@
 import React from 'react';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SecondScreen from '../screens/secondScreen/secondScreen';
-import StackNavigator from './StackNavigator';
+import PortfolioScreen from '../screens/portfolio/PortfolioScreen';
+import ProjectNavigator from './ProjectNavigator';
+import ProfileNavigator from './ProfileNavigator';
+import HomeScreen from '../screens/home/home';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,25 +18,61 @@ export default function TabNavigator() {
   return (
     <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen
-        name='Stack'
-        component={StackNavigator}
+        name='Home'
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon color={focused ? 'blue' : 'black'} name='circle' />
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='home' />
           ),
           tabBarLabel: 'Home',
           title: '',
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name='secondScreen'
-        component={SecondScreen}
+      {/* <Tab.Screen
+        name='Explore'
+        component={ExploreScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon color={focused ? 'blue' : 'black'} name='square' />
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='search' />
           ),
-          tabBarLabel: 'Second screen',
+          tabBarLabel: 'Explore',
+          title: '',
+          headerShown: false,
+        }}
+      /> */}
+      <Tab.Screen
+        name='Portfolio'
+        component={PortfolioScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='chart-pie' />
+          ),
+          tabBarLabel: 'Portfolio',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='Project'
+        component={ProjectNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='building' />
+          ),
+          tabBarLabel: 'Project',
+          title: '',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name='Profile'
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon color={focused ? 'blue' : 'black'} name='user' />
+          ),
+          tabBarLabel: 'Profile',
           title: '',
           headerShown: false,
         }}

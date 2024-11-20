@@ -3,6 +3,9 @@ BEGIN;
 -- Allows us to use gen_random_uuid()
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+-- Location data
+CREATE EXTENSION IF NOT EXISTS "postgis";
+
 -- not a 'real' table - just for learning/dev purposes
 CREATE TABLE contributors (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -71,7 +74,10 @@ CREATE TABLE investors (
     supabase_id uuid PRIMARY KEY, -- Uses investor uuid provided by Supabase
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     first_name varchar(256) NOT NULL,
-    last_name varchar(256) NOT NULL
+    last_name varchar(256) NOT NULL,
+    access_token varchar(256),
+    cash_balance_cents bigint NOT NULL DEFAULT 0,
+    item_id varchar(256)
 );
 
 CREATE TABLE developers (
@@ -101,7 +107,8 @@ CREATE TABLE projects (
     street varchar(256) NOT NULL,
     locality varchar(256) NOT NULL,
     state us_state NOT NULL,
-    zipcode varchar(10) NOT NULL
+    zipcode varchar(10) NOT NULL,
+    coordinates GEOGRAPHY(point) NOT NULL 
 );
 
 CREATE TABLE investor_investments (

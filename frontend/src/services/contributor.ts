@@ -1,31 +1,36 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { API_URL } from '../constants';
+import { dumpAxiosError } from '../util/errors';
+import { useAuth } from '../context/AuthContext';
 import { Contributor } from '../types/contributor';
-import { apiUrl } from './apiLinks';
 
-export type ContributorQueryParams = {
-  id?: number;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-};
-
-const getContributor = async (id: string): Promise<Contributor> => {
-  if (!parseInt(id)) {
-    return {} as Contributor;
+// GET all contributors
+const getContributors = async (accessToken: string): Promise<Contributor[] | null> => {
+  try {
+    const response = await axios.get<Contributor[]>(`${API_URL}/api/v1/contributors/`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
+    return response.data; // Return the project if successful
+  } catch (error) {
+    dumpAxiosError(error);
+    return null; // Return null if there's an error
   }
-  return await axios.get(`${apiUrl}/contributor/${id}`);
 };
 
-export const useContributorById = (id: string) => {
-  const { data: contributor, isLoading: contributorIsLoading } = useQuery<Contributor>({
-    queryKey: ['contributor', id],
-    queryFn: () => getContributor(id),
+export const useContributors = () => {
+  const { session } = useAuth();
+
+  const { data: contributors, isLoading } = useQuery<Contributor[]>({
+    queryKey: ['contributors'],
+    queryFn: () => getContributors(session?.access_token),
   });
 
   return {
-    contributor,
-    contributorIsLoading,
+    contributors,
+    isLoading,
   };
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
+// import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './portfolioValue';
 import WelcomeBlock from './welcomeBlock';
@@ -14,6 +15,11 @@ interface HomeScreenProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }
+// interface HomeScreenProps {
+//   // This actually should be `any`, so disabling the linter rule
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   navigation: NavigationScreenProp<any, any>;
+// }
 
 const StyledView = styled(View);
 
