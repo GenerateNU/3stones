@@ -36,41 +36,38 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                         </StyledView>
                     
                         <StyledView>
-                            {condition && (
-                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                            
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-white">
                                     Sold</StyledText>} icon = {'../../../../assets/images/celebration'} level = {'success'} >
                                 </Tag>
-                            )}
-                            {condition && (
-                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                
+                            
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-success">
                                     Construction Underway</StyledText>} icon = {'../../../../assets/images/maps_home_work'} level = {'successSubdued'} >
                                 </Tag>
-                            )}
-                            {condition && (
-                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
-                                    Construction Complete</StyledText>} icon = {'../../../../assets/images/house'} level = {'successSubdued'} >
+         
+                            
+                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
+                                    Construction Complete</StyledText>} icon = {'../../../../assets/images/house'} level = {'successSubdued'} className = '' >
                                 </Tag>
-                            )}
-                            {condition && (
-                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                       
+                          
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
                                     Operational</StyledText>} icon = {'../../../../assets/images/maps_home_work'} level = {'successSubdued'} >
                                 </Tag>
-                            )}
-                            {condition && (
-                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                          
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
                                     Construction Started</StyledText>} icon = {'../../../../assets/images/handyman'} level = {'neutralSubdued'} >
                                 </Tag>
-                            )}
-                            {condition && (
-                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                          
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
                                     Permitting Secured</StyledText>} icon = {'../../../../assets/images/topic'} level = {'neutralSubdued'} >
                                 </Tag>
-                            )}
-                            {condition && (
-                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText">
+                          
+                                 <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
                                    Design Complete</StyledText>} icon = {'../../../../assets/images/design_services'} level = {'neutralSubdued'} >
                                 </Tag>
-                            )}
+                    
                         </StyledView>
 
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>

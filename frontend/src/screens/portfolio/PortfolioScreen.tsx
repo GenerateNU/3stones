@@ -39,6 +39,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
     if (!portfolio) {
       return <p>Failed to load portfolio. Please try again later.</p>;
     }
+  }
 
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
