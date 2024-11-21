@@ -8,6 +8,7 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
+/* Card */
 const CategoryCard = ({ category, image }) => {
   return (
     <StyledView>
