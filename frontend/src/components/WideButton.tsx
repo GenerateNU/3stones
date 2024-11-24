@@ -16,10 +16,7 @@ const buttonVariants = cva('button', {
       primary: [
         'w-full',
         'h-full',
-        'border-solid',
         'bg-defaultPrimary',
-        'border-x-[0.3vw]',
-        'border-y-[0.3vw]',
         'rounded-full',
         'flex',
         'items-center',
@@ -49,9 +46,9 @@ const buttonTextVariants = cva('text', {
   variants: {
     intent: {
       //green button text
-      primary: ['text-[2vh]', 'font-nunitoRegular', 'text-white'],
+      primary: ['text-[2vh]', 'font-sourceSans3', 'text-white', 'px-[1vw]'],
       //outline button text
-      secondary: ['text-[2vh]', 'font-nunitoRegular', 'text-defaultPrimary'],
+      secondary: ['text-[2vh]', 'font-sourceSans3', 'text-defaultPrimary', 'px-[1vw]'],
     },
   },
 });
