@@ -2,5 +2,3 @@
 /node_modules
 *.p12
 *.env
-/frontend/yarn.lock
-/frontend/package-lock.json
