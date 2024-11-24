@@ -7,7 +7,7 @@ import { useInvestorProfile } from '../../../src/services/investor'
 
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
-import { BodyBoldText } from '../../components/typography';
+import { BodyBoldText, HeadingText, SubheadingText } from '../../components/typography';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -39,7 +39,7 @@ const EditProfileButton = ({ navigation }) => {
         return <StyledText>no profile found!</StyledText>
     }
     return (
-        <BodyBoldText>{profile.first} {profile.last}</BodyBoldText>
+        <BodyBoldText className='text-lg'>{profile.first} {profile.last}</BodyBoldText>
     );
   };
 
@@ -48,33 +48,46 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
         <StyledView className='flex h-screen py-[6vh]'> 
             {/*Your Profile ...*/}
             <StyledView className="flex-row py-[2vh] px-[4vw] justify-between">
-                <StyledText className="text-3xl align-center font-Nunito-BoldItalic text-center">
-                    Your Profile
-                </StyledText>
+                <SubheadingText className='text-3xl font-semibold'>Your Profile</SubheadingText>
             </StyledView>
             <StyledView className="flex px-[vw] py-[2vh] flex-col items-center space-y-[10vh]">
-                <StyledImage className="w-12 h-12" source={require('../../../assets/images/PlaceHolderPFP.png')}/>
+                <StyledImage className="w-[12vh] h-[12vh] rounded-full" resizeMode='cover' source={require('../../../assets/images/PlaceHolderPFP.png')}/>
                 <UserName/>
                 <StyledText>
                 </StyledText>
                 <EditProfileButton navigation={navigation}/>
             </StyledView>
-            <StyledView className='flex flex-col space-y-[32vw]'>
-            <Divider/>
-                <StyledView className='flex flex-col gap-y-[40vh]'>
-                <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} navigationName = 'profile-deposit' pageName='Deposit'/>
-                <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} navigationName = 'profile-withdraw' pageName='Withdraw'/>
+            <StyledView className='flex flex-col px-[4vh] space-y-[40vh]'>
+                <StyledView>
+                    <Divider/>
                 </StyledView>
-                <Divider/>
+                <StyledView className='flex flex-col space-y-[20vh]'>
+                    <StyledView>
+                        <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} navigationName = 'profile-deposit' pageName='Deposit'/>
+                    </StyledView>
+                    <StyledView>
+                        <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} navigationName = 'profile-withdraw' pageName='Withdraw'/>
+                    </StyledView>
+                </StyledView>
+                <StyledView>
+                    <Divider/>
+                </StyledView>
+                <StyledView className='flex flex-col space-y-[20vh]'>
+                    <StyledView>
+                        <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} navigationName = 'profile-settings' pageName='Settings'/>
+                    </StyledView>
+                    <StyledView>
+                    <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} navigationName = 'profile-legal-documents' pageName='Legal Documents'/>
+                    </StyledView>
+                </StyledView>
+                <StyledView>
+                    <Divider/>
+                </StyledView>
                 <StyledView className='flex flex-col'>
-                <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} navigationName = 'profile-settings' pageName='Settings'/>
-                <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} navigationName = 'profile-legal-documents' pageName='Legal Documents'/>
+                    <StyledView>
+                        <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} navigationName = 'profile-risk-tolerance' pageName='Risk Tolerance'/>
+                    </StyledView>
                 </StyledView>
-                <Divider/>
-                <StyledView className='flex flex-col'>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} navigationName = 'profile-risk-tolerance' pageName='Risk Tolerance'/>
-                </StyledView>
-                <Divider/>
             </StyledView>
         </StyledView>
     );

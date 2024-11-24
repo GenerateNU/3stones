@@ -17,7 +17,14 @@ export default function ProfileNavigator() {
       <Stack.Screen
         name='profile-legal-documents'
         component={ProfileLegalDocumentsScreen}
-        options={{title: "Legal Documents", headerShown: true}}
+        options={
+          {
+            title: "Legal Documents", 
+            headerShown: true,
+            headerStyle: { backgroundColor: '#FAFAFC' },
+            headerTitleStyle: { fontWeight: 'bold' }
+          }
+        }
       />
     </Stack.Navigator>
   );

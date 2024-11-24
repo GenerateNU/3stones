@@ -18,21 +18,32 @@ interface ProfileLegalDocumentsScreenProps {
 
 export default function ProfileLegalDocumentsScreen({ navigation }: ProfileLegalDocumentsScreenProps) {
     return(
-        <StyledView className='flex h-screen py-[6vh]'> 
-            <StyledView className='flex flex-col space-y-[32vw]'>
-                <Divider/>
-                <StyledView className='flex flex-col gap-y-[40vh]'>
-                <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-terms-of-service' pageName='Terms of Service'/>
+        <StyledView className='flex h-screen py-[4vh] bg-surfaceBG'> 
+            <StyledView className='flex flex-col px-[4vh] space-y-[20vh]'>
+                <StyledView className='flex flex-col space-y-[10vh]'>
+                    <StyledView>
+                    <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-terms-of-service' pageName='Terms of Service'/>
+                    </StyledView>
                 </StyledView>
-                <Divider/>
-                <StyledView className='flex flex-col'>
-                <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-user-agreement' pageName='User Agreement'/>
+                <StyledView>
+                    <Divider/>
                 </StyledView>
-                <Divider/>
-                <StyledView className='flex flex-col'>
-                    <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-investment-disclaimer' pageName='Investment Disclaimer'/>
+                <StyledView className='flex flex-col space-y-[10vh]'>
+                    <StyledView>
+                        <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-user-agreement' pageName='User Agreement'/>
+                    </StyledView>
                 </StyledView>
-                <Divider/>
+                <StyledView>
+                    <Divider/>
+                </StyledView>
+                <StyledView className='flex flex-col space-y-[10vh]'>
+                    <StyledView>
+                        <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-investment-disclaimer' pageName='Investment Disclaimer'/>
+                    </StyledView>
+                </StyledView>
+                <StyledView>
+                    <Divider/>
+                </StyledView>
             </StyledView>
         </StyledView>
     );

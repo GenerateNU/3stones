@@ -20,7 +20,7 @@ const StyledImage = styled(Image);
 export default function ProfilePageNavigator({ navigation, navigationName, pageName, iconRoute }: ProfilePageNavigatorProps) {
     return(
         <TouchableOpacity onPress={() => navigation.navigate(navigationName)}>
-            <StyledView className="flex-row justify-between items-center self-stretch px-[4vw]">
+            <StyledView className="flex-row justify-between items-center self-stretch">
                 <StyledView className="flex-row justify-between items-center self-stretch space-x-[4vh]">
                     {iconRoute && <StyledImage source={iconRoute} className='w-[3vh] h-[3vh]'></StyledImage>}
                     <StyledText className="text-[16px] text-[#282828] font-normal">
