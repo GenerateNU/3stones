@@ -33,13 +33,11 @@ const RecentlyViewedCard = ({
     Intent = parsedStatus as 'InProgress' | 'Sold' | 'Funding';
   }
 
-  const Tag = ({status, parsedStatus, intent}) => {
-
+  const Tag = ({ status, parsedStatus, intent }) => {
     let iconRoute;
     if (parsedStatus === 'Sold') {
       iconRoute = require('../../../../assets/images/celebration.png');
-    }
-    else if (parsedStatus === 'Funding') {
+    } else if (parsedStatus === 'Funding') {
       iconRoute = require('../../../../assets/images/money-success.png');
     }
     //Default to InProgress
@@ -59,7 +57,7 @@ const RecentlyViewedCard = ({
   };
 
   return (
-    <Card className='w-[full] h-[23vh] flex flex-col justify-center items-center border-borderPrimary'>
+    <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
       <StyledView className='flex flex-row flex-1'>
         <StyledView className='flex-1 flex-col '>
           <StyledView className='flex-1'>
@@ -70,19 +68,18 @@ const RecentlyViewedCard = ({
             </StyledText>
           </StyledView>
 
-          <Tag status={status} parsedStatus={parsedStatus} intent={Intent}/>
-
+          <Tag status={status} parsedStatus={parsedStatus} intent={Intent} />
         </StyledView>
         <StyledImage
           source={{ uri: image }}
           className='w-[32vw] h-[32vw] flex-2 rounded-md'
         ></StyledImage>
       </StyledView>
-      <StyledView className='w-full h-[2vh] flex-2 flex py-[1vh] py-[2vh]'>
-        {status === 'Funding' && (
-            <ProgressBar current={amount} total={fundingGoal} />
-        )}
-      </StyledView>
+      {status === 'Funding' && (
+        <StyledView className='w-full h-[2vh] flex-2 flex py-[1vh] py-[2vh] '>
+          <ProgressBar current={amount} total={fundingGoal} />
+        </StyledView>
+      )}
     </Card>
   );
 };
