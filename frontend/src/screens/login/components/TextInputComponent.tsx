@@ -14,6 +14,8 @@ type TextInputComponentProps = {
     isPassword?: boolean;
     keyboardType?: KeyboardTypeOptions; // Explicitly typed as KeyboardTypeOptions
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'; // Explicitly typed as autoCapitalize
+    autoFocus?: boolean;
+    error?: boolean;
 };
 
 const TextInputComponent: React.FC<TextInputComponentProps> = ({
@@ -23,6 +25,8 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
     isPassword = false,
     keyboardType = 'default', // Default value
     autoCapitalize = 'none', // Default value
+    autoFocus = true, // Default value
+    error = false,
 }) => {
     const [isSecure, setIsSecure] = useState(isPassword);
 
@@ -31,7 +35,10 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
     };
 
     return (
-        <StyledView className="flex-row items-center border border-gray-300 h-12 rounded-xl p-2 w-full mb-4 bg-white">
+        <StyledView
+            className={`flex-row items-center border h-12 rounded-xl p-2 w-full mb-4 bg-white ${error ? 'border-red-500' : 'border-gray-300'
+                }`}
+        >
             <StyledTextInput
                 className="flex-1 text-base text-gray-900"
                 placeholder={placeholder}
@@ -40,13 +47,14 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
                 secureTextEntry={isPassword ? isSecure : false}
                 autoCapitalize={autoCapitalize}
                 keyboardType={keyboardType}
+                autoFocus={autoFocus}
             />
             {isPassword && (
                 <StyledPressable onPress={toggleSecureEntry}>
                     {isSecure ? (
-                        <StyledImage source={require('../../../../assets/images/visibility-off.png')}/>
+                        <StyledImage source={require('../../../../assets/images/visibility-off.png')} />
                     ) : (
-                        <StyledImage source={require('../../../../assets/images/visibility.png')}/>
+                        <StyledImage source={require('../../../../assets/images/visibility.png')} />
                     )}
                 </StyledPressable>
             )}
