@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
-      status: "Funding"
+      status: "In Progress"
     }, 
     {
       image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",
@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       street: "931 1st Street",
       city: "Venice Beach, CA",
       amount: 250,
-      status: "Funding"
+      status: "Sold"
     }, 
     {
       image: "https://s3-alpha-sig.figma.com/img/19e3/d758/89fc76fe69058e9d77f8b9d8eb86b52a?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qovz446hIf~xAyUTxTiCn6hk2iZrDuiKF4V28Db07yMUANX9acZXKl7yN26bEWAC~P-TKCc4oteHW7MYzfzyavKGIBBmRL4scNyQWYr2EbHj~KaTboeXRSqXCAyZmnDaKb-dt-TsmBKzT7xJu8oVGUDqoFpKA2WiHWgr~EuWGIDGBHItdQFoh-acEUHsWLsmu1PoaB2TZboILtRr-KUoV-rXst-kF164GrMK4XHuHCsfRIerrP9IssKqhv0DFStz0emwlgMyBFfawxPVpwVkeufL~dgQ5TDOSwEfDHQw2jFXuVC4PLol1HGqYbQ9ZQH9B40Kz9NSrYLjZSeccTB2dw__",

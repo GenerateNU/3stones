@@ -27,9 +27,9 @@ const Investments = ({ investmentsData }) => {
         </StyledView>
       ))}
 
-    <StyledText className='text-[5vw] font-heading py-[2vh]'>Recently Viewed</StyledText>
+    <StyledText className='text-[5vw] font-heading pt-[3vh]'>Recently Viewed</StyledText>
     {investmentsData.map((investment, index) => (
-        <StyledView key={index}>
+        <StyledView key={index} className="mt-[3vh]">
           <RecentlyViewedCard
             image={investment.image}
             street={investment.street}
@@ -39,7 +39,6 @@ const Investments = ({ investmentsData }) => {
             status={investment.status}
             developmentType={"Commercial Development"}
           />
-          <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
         </StyledView>
       ))}
     </StyledView>
