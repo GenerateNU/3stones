@@ -33,6 +33,7 @@ const RecentlyViewedCard = ({
     Intent = parsedStatus as 'InProgress' | 'Sold' | 'Funding';
   }
 
+  // recently viewed card tag
   const Tag = ({ status, parsedStatus, intent }) => {
     let iconRoute;
     if (parsedStatus === 'Sold') {
@@ -56,25 +57,31 @@ const RecentlyViewedCard = ({
     );
   };
 
-  return (
-    <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
-      <StyledView className='flex flex-row flex-1'>
-        <StyledView className='flex-1 flex-col '>
-          <StyledView className='flex-1'>
+  const ProjectInformation = ({ street, city, developmentType }) => {
+    return (
+      <StyledView className='flex-1'>
             <StyledText className='text-[5vw] font-sourceSans3Bold'>{street}</StyledText>
             <StyledText className='text-[3vw] font-sourceSans3 '>{city}</StyledText>
             <StyledText className='text-[3vw] font-sourceSans3 mt-[0.75vh]'>
               {developmentType}
             </StyledText>
           </StyledView>
-
+    )
+  };
+  return (
+    <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
+      <StyledView className='flex flex-row flex-1'>
+        <StyledView className='flex-1 flex-col '>
+          <ProjectInformation street={street} city={city} developmentType={developmentType} />
           <Tag status={status} parsedStatus={parsedStatus} intent={Intent} />
         </StyledView>
+        
         <StyledImage
           source={{ uri: image }}
           className='w-[32vw] h-[32vw] flex-2 rounded-md'
         ></StyledImage>
       </StyledView>
+      
       {status === 'Funding' && (
         <StyledView className='w-full h-[2vh] flex-2 flex py-[1vh] py-[2vh] '>
           <ProgressBar current={amount} total={fundingGoal} />
