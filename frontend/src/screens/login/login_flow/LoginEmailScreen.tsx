@@ -39,15 +39,16 @@ export default function LoginEmailScreen({ navigation }) {
         />
 
         {/* OR Separator */}
-        <Divider text='OR' />
+        {/* <Divider text='OR' /> */}
 
         {/* Google and Apple Sign-In Buttons (Stub) */}
-        <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">
+        {/* <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">
           <StyledText className="text-gray-500">Sign in with Google</StyledText>
         </StyledTouchableOpacity>
         <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">
           <StyledText className="text-gray-500">Sign in with Apple</StyledText>
-        </StyledTouchableOpacity>
+        </StyledTouchableOpacity> */}
+
       </StyledView>
 
       {/* Forgot Login and Next Button */}

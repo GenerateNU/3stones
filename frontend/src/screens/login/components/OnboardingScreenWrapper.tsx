@@ -23,12 +23,11 @@ interface OnboardingScreenWrapperProps {
 
 const OnboardingScreenWrapper: React.FC<OnboardingScreenWrapperProps> = ({
   children,
-  keyboardVerticalOffset = 80, // Default keyboard offset
+  keyboardVerticalOffset = 60, // Default keyboard offset
 }) => {
   return (
     <StyledSafeAreaView className="flex-1 bg-white">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
         <StyledKeyboardAvoidingView
           className="flex-1"
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

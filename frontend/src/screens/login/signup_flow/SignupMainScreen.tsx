@@ -5,6 +5,7 @@ import Button from '../../../components/Button';
 import WelcomeToThreeStonesComponent from '../components/WelcomeToThreeStones';
 import Divider from '../../../components/Divider';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
+import NavProgressBar from '../components/NavProgressBar';
 
 
 const StyledView = styled(View);
@@ -18,6 +19,7 @@ export default function SignUpMainScreen({ navigation }) {
 
     return (
         <OnboardingScreenWrapper>
+            <NavProgressBar buttonType={'close'} onPress={() => navigation.goBack()} />
 
             {/* Header */}
             <WelcomeToThreeStonesComponent />
