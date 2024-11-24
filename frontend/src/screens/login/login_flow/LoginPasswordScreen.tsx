@@ -22,8 +22,9 @@ export default function LoginPasswordScreen({ navigation }) {
   const handleLogin = async () => {
     try {
       await login(loginData.email, password);
+      setError(null);
     } catch (error) {
-      setError(error.message || 'An error occurred during sign-in');
+      setError("Invalid username or password");
     }
   };
 
@@ -66,10 +67,14 @@ export default function LoginPasswordScreen({ navigation }) {
               value={loginData.password}
               onChangeText={(input) => updateLoginData('password', input)}
               isPassword={true}
+              error= {!!error}
             />
+            {error && (
+              <StyledText className='text-red-500 text-sm mt-2'>
+                {error}
+              </StyledText>
+            )}
           </StyledView>
-
-          {error && <StyledText className='py-[3vh]'>{error}</StyledText>}
 
           {/* Continue Button */}
           <StyledView className="w-full">

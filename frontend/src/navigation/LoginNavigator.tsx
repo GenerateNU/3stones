@@ -12,7 +12,6 @@ import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
 import SignupMainScreen from '../screens/login/signup_flow/SignupMainScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
-import DummyDoneScreen from '../screens/login/dummyDone';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,11 +68,6 @@ export default function LoginNavigator() {
           name='QuestionsScreen'
           component={QuestionsScreen}
           options={{ title: 'Questions Screen' }}
-        />
-        <Stack.Screen
-          name='DummyDone'
-          component={DummyDoneScreen}
-          options={{ title: 'Dummy Done Screen' }}
         />
       </Stack.Navigator>
     </AuthProvider>

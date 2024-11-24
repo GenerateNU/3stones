@@ -52,6 +52,7 @@ export default function UserDetailsScreen({ navigation }) {
               value={firstName}
               onChangeText={(input) => setFirstName(input)}
               autoCapitalize='words'
+              autoFocus={true}
             >
             </TextInputComponent>
 
@@ -60,6 +61,7 @@ export default function UserDetailsScreen({ navigation }) {
               value={lastName}
               onChangeText={(input) => setLastName(input)}
               autoCapitalize='words'
+              autoFocus={false}
             >
             </TextInputComponent>
           </StyledView>

@@ -12,7 +12,7 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 
 export default function QuestionsScreen({ navigation }) {
-    const { signupData, updateSignupData } = useAuth(); // Use AuthContext to manage signup data
+    const { signupData, updateSignupData, signUp } = useAuth(); // Use AuthContext to manage signup data
     const questions = [
         {
             id: 1,
@@ -48,16 +48,24 @@ export default function QuestionsScreen({ navigation }) {
         updateSignupData(`questions.${currentQuestion.id}`, selectedOptions);
     };
 
+    const handleSignup = async () => {
+        try {
+          await signUp(signupData.email, signupData.password);
+        } catch (error) {
+            console.error('Error signing up:', error.message);
+        }
+      };
+
     const handleNext = () => {
         if (currentIndex < questions.length - 1) {
             setCurrentIndex(currentIndex + 1);
         } else {
-            navigation.navigate('DummyDone');
+            handleSignup();
         }
     };
 
     const handleSaveForLater = () => {
-        navigation.navigate('DummyDone');
+        handleSignup();
     };
 
     return (
