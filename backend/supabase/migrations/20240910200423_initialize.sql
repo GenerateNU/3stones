@@ -111,6 +111,7 @@ CREATE TABLE projects (
     completed boolean NOT NULL DEFAULT FALSE,
     funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
     milestone varchar(256) NOT NULL, -- Very basic but I think this is OK for MVP
+    completion_date varchar(256) NOT NULL,
     premise varchar(10) NOT NULL,
     subpremise varchar(10),
     street varchar(256) NOT NULL,

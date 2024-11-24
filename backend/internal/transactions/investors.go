@@ -35,7 +35,7 @@ func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
 	`
 
 	// Execute the query, setting first_name and last_name as empty strings
-	_, err := pool.Exec(context.Background(), query, supabaseID, "John", "Doe", "unknown@email.com", "000-000-0000", "000-00-0000", "123", "Main St", "Anytown", "USA", "12345")
+	_, err := pool.Exec(context.Background(), query, supabaseID, "John", "Doe", "unknown@email.com", "000-000-0000", "000-00-0000", "123", "Main St", "Anytown", "MA", "12345")
 	if err != nil {
 		return fmt.Errorf("failed to insert investor: %w", err)
 	}
