@@ -35,7 +35,7 @@ export default function ProjectNavigator() {
       <Stack.Screen
         name='project-map'
         component={ProjectMapScreen}
-        options={{ title: 'Project location', headerShown: true }}        
+        options={{ title: 'Project location', headerShown: true }}
       />
     </Stack.Navigator>
   );
