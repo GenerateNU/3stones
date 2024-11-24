@@ -3,11 +3,11 @@ import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
-import { useAuth } from '../../context/AuthContext';
 import { useInvestorProfile } from '../../../src/services/investor'
 
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
+import { BodyBoldText } from '../../components/typography';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -39,9 +39,7 @@ const EditProfileButton = ({ navigation }) => {
         return <StyledText>no profile found!</StyledText>
     }
     return (
-        <StyledText>
-            {profile.first} {profile.last}
-        </StyledText>
+        <BodyBoldText>{profile.first} {profile.last}</BodyBoldText>
     );
   };
 
