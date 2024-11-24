@@ -22,7 +22,6 @@ export default function PasswordInputScreen({ navigation }) {
 
   return (
     <OnboardingScreenWrapper>
-
       <NavProgressBar currentStep={2} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
 
 

@@ -3,8 +3,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Platform,
   SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import { styled } from 'nativewind';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -26,24 +27,24 @@ export default function LegalInformationScreen({ navigation }) {
 
   // Parse Google Places API response into normalized address format
   const handleAddressSelect = (data, details) => {
-  const components = details?.address_components || [];
-  const findComponent = (type) => components.find((c) => c.types.includes(type))?.long_name || '';
+    const components = details?.address_components || [];
+    const findComponent = (type) => components.find((c) => c.types.includes(type))?.long_name || '';
 
-  const streetNumber = findComponent('street_number');
-  const route = findComponent('route');
-  const addressLine = `${streetNumber} ${route}`.trim(); // Combine street number and route
+    const streetNumber = findComponent('street_number');
+    const route = findComponent('route');
+    const addressLine = `${streetNumber} ${route}`.trim(); // Combine street number and route
 
-  const parsedAddress = {
-    addressLine,
-    city: findComponent('locality'),
-    zipCode: findComponent('postal_code'),
-    country: findComponent('country'),
+    const parsedAddress = {
+      addressLine,
+      city: findComponent('locality'),
+      zipCode: findComponent('postal_code'),
+      country: findComponent('country'),
+    };
+
+    Object.entries(parsedAddress).forEach(([key, value]) => {
+      updateSignupData(`address.${key}`, value);
+    });
   };
-
-  Object.entries(parsedAddress).forEach(([key, value]) => {
-    updateSignupData(`address.${key}`, value);
-  });
-};
 
   const handleNext = () => {
     navigation.navigate('QuestionsScreen'); // Replace with your actual next screen
@@ -51,6 +52,7 @@ export default function LegalInformationScreen({ navigation }) {
 
   return (
     <StyledSafeAreaView className="flex-1 bg-surfaceBG">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <StyledView className="flex-1 items-center bg-surfaceBG p-6 justify-between">
           {/* Progress Bar */}
           <NavProgressBar
@@ -162,6 +164,7 @@ export default function LegalInformationScreen({ navigation }) {
             </Button>
           </StyledView>
         </StyledView>
+      </TouchableWithoutFeedback>
     </StyledSafeAreaView>
   );
 }

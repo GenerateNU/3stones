@@ -5,6 +5,8 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { styled } from 'nativewind';
 
@@ -24,21 +26,24 @@ const OnboardingScreenWrapper: React.FC<OnboardingScreenWrapperProps> = ({
   keyboardVerticalOffset = 80, // Default keyboard offset
 }) => {
   return (
-    <StyledSafeAreaView className="flex-1 bg-surfaceBG">
-      <StyledKeyboardAvoidingView
-        className="flex-1"
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={keyboardVerticalOffset}
-      >
-        <StyledScrollView
+    <StyledSafeAreaView className="flex-1 bg-white">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
+        <StyledKeyboardAvoidingView
           className="flex-1"
-          contentContainerStyle={{ flexGrow: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={keyboardVerticalOffset}
         >
-          <StyledView className="flex-1 items-center bg-white p-6 justify-between">
-            {children}
-          </StyledView>
-        </StyledScrollView>
-      </StyledKeyboardAvoidingView>
+          <StyledScrollView
+            className="flex-1"
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
+            <StyledView className="flex-1 items-center bg-white p-6 justify-between">
+              {children}
+            </StyledView>
+          </StyledScrollView>
+        </StyledKeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </StyledSafeAreaView>
   );
 };
