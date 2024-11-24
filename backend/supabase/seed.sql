@@ -79,7 +79,8 @@ INSERT INTO
         street,
         locality,
         state,
-        zipcode
+        zipcode,
+        profile_picture_url
     ) (
         select
             id,
@@ -93,7 +94,8 @@ INSERT INTO
             'Main St',
             'Boston',
             'MA',
-            '02115'
+            '02115',
+            'https://api.dicebear.com/7.x/avataaars/svg?seed=' || (ROW_NUMBER() OVER ())
         from
             auth.users
     );

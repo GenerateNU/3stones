@@ -143,8 +143,7 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 
 	investor := models.Investor{
 		ID:                    id,
-		FirstName:             profile.FirstName,
-		LastName:              profile.LastName,
+		Profile:               profile,
 		TotalInvestmentAmount: totalValue,
 		InvestmentBreakdown:   investments,
 	}

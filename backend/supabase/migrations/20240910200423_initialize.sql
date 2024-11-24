@@ -86,7 +86,8 @@ CREATE TABLE investors (
     zipcode varchar(10) NOT NULL,
     access_token varchar(256),
     cash_balance_cents bigint NOT NULL DEFAULT 0,
-    item_id varchar(256)
+    item_id varchar(256),
+    profile_picture_url varchar(256)
 );
 
 CREATE TABLE developers (

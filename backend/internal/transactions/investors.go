@@ -28,14 +28,38 @@ func CheckInvestorExists(pool *pgxpool.Pool, investorID string) (bool, error) {
 }
 
 func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
-	// Define the INSERT query
 	query := `
-		INSERT INTO investors (supabase_id, first_name, last_name, email, phone_number, ssn, premise, street, locality, state, zipcode)
+		INSERT INTO investors (
+			supabase_id, 
+			first_name, 
+			last_name, 
+			email, 
+			phone_number, 
+			ssn, 
+			premise, 
+			street, 
+			locality, 
+			state, 
+			zipcode
+		)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);
 	`
 
-	// Execute the query, setting first_name and last_name as empty strings
-	_, err := pool.Exec(context.Background(), query, supabaseID, "John", "Doe", "unknown@email.com", "000-000-0000", "000-00-0000", "123", "Main St", "Anytown", "MA", "12345")
+	_, err := pool.Exec(
+		context.Background(),
+		query,
+		supabaseID,
+		"John",
+		"Doe",
+		"unknown@email.com",
+		"000-000-0000",
+		"000-00-0000",
+		"123",
+		"Main St",
+		"Anytown",
+		"MA",
+		"12345",
+	)
 	if err != nil {
 		return fmt.Errorf("failed to insert investor: %w", err)
 	}
@@ -44,7 +68,7 @@ func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
 }
 
 func GetProfile(db *pgxpool.Pool, investorId uuid.UUID) (models.InvestorProfile, error) {
-	query := "SELECT first_name, last_name, email, phone_number, ssn, premise, COALESCE(subpremise, '') as subpremise, street, locality, state, zipcode FROM investors WHERE supabase_id = $1"
+	query := "SELECT first_name, last_name, email, phone_number, ssn, premise, COALESCE(subpremise, '') as subpremise, street, locality, state, zipcode, COALESCE(profile_picture_url, '') as profile_picture_url FROM investors WHERE supabase_id = $1"
 
 	var investorProfile models.InvestorProfile
 	err := db.QueryRow(context.Background(), query, investorId).Scan(
@@ -59,6 +83,7 @@ func GetProfile(db *pgxpool.Pool, investorId uuid.UUID) (models.InvestorProfile,
 		&investorProfile.Locality,
 		&investorProfile.State,
 		&investorProfile.Zipcode,
+		&investorProfile.ProfilePictureUrl,
 	)
 
 	if err != nil {
@@ -140,6 +165,12 @@ func UpdateProfile(db *pgxpool.Pool, investorID uuid.UUID, investorProfile model
 		argPosition++
 		setFields = append(setFields, fmt.Sprintf("zipcode = $%d", argPosition))
 		args = append(args, investorProfile.Zipcode)
+	}
+
+	if investorProfile.ProfilePictureUrl != "" {
+		argPosition++
+		setFields = append(setFields, fmt.Sprintf("profile_picture_url = $%d", argPosition))
+		args = append(args, investorProfile.ProfilePictureUrl)
 	}
 
 	// If no fields to update, return early
