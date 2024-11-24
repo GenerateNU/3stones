@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import 'react-native-get-random-values';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './src/navigation/BottomTabs';
 import { useFonts } from 'expo-font';
