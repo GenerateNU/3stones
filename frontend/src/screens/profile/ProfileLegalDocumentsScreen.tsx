@@ -22,7 +22,7 @@ export default function ProfileLegalDocumentsScreen({ navigation }: ProfileLegal
             <StyledView className='flex flex-col px-[4vh] space-y-[20vh]'>
                 <StyledView className='flex flex-col space-y-[10vh]'>
                     <StyledView>
-                    <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-terms-of-service' pageName='Terms of Service'/>
+                    <ProfilePageNavigator navigation={navigation} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigationName = 'legal-documents-terms-of-service' pageName='Terms of Service'/>
                     </StyledView>
                 </StyledView>
                 <StyledView>
@@ -30,7 +30,7 @@ export default function ProfileLegalDocumentsScreen({ navigation }: ProfileLegal
                 </StyledView>
                 <StyledView className='flex flex-col space-y-[10vh]'>
                     <StyledView>
-                        <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-user-agreement' pageName='User Agreement'/>
+                        <ProfilePageNavigator navigation={navigation} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigationName = 'legal-documents-user-agreement' pageName='User Agreement'/>
                     </StyledView>
                 </StyledView>
                 <StyledView>
@@ -38,7 +38,7 @@ export default function ProfileLegalDocumentsScreen({ navigation }: ProfileLegal
                 </StyledView>
                 <StyledView className='flex flex-col space-y-[10vh]'>
                     <StyledView>
-                        <ProfilePageNavigator navigation={navigation} navigationName = 'legal-documents-investment-disclaimer' pageName='Investment Disclaimer'/>
+                        <ProfilePageNavigator navigation={navigation} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigationName = 'legal-documents-investment-disclaimer' pageName='Investment Disclaimer'/>
                     </StyledView>
                 </StyledView>
                 <StyledView>

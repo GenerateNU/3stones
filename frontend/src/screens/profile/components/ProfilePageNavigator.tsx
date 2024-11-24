@@ -10,24 +10,25 @@ interface ProfilePageNavigatorProps {
     navigationName: string,
     pageName: string;
     //route to button's icon
-    iconRoute?: ImageSourcePropType;
+    leftIconRoute?: ImageSourcePropType;
+    rightIconRoute: ImageSourcePropType;
 }
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-export default function ProfilePageNavigator({ navigation, navigationName, pageName, iconRoute }: ProfilePageNavigatorProps) {
+export default function ProfilePageNavigator({ navigation, navigationName, pageName, leftIconRoute, rightIconRoute }: ProfilePageNavigatorProps) {
     return(
         <TouchableOpacity onPress={() => navigation.navigate(navigationName)}>
             <StyledView className="flex-row justify-between items-center self-stretch">
                 <StyledView className="flex-row justify-between items-center self-stretch space-x-[4vh]">
-                    {iconRoute && <StyledImage source={iconRoute} className='w-[3vh] h-[3vh]'></StyledImage>}
+                    {leftIconRoute && <StyledImage source={leftIconRoute} className='w-[3vh] h-[3vh]'/>}
                     <StyledText className="text-[16px] text-[#282828] font-normal">
                         {pageName}
                     </StyledText>
                 </StyledView>
-                <StyledImage source={require('../../../../assets/images/side-arrow.png')} className='h-[3vh] w-[3vh]'/>
+                {rightIconRoute && <StyledImage source={rightIconRoute} className='w-[3vh] h-[3vh]'/>}
             </StyledView>
         </TouchableOpacity>
     );

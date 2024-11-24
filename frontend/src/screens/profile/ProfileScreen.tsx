@@ -28,7 +28,7 @@ const EditProfileButton = ({ navigation }) => {
             >Edit Profile</Button>
         </StyledView>
     );
-  };
+};
 
   const UserName = () => {
     const { profile, isLoading } = useInvestorProfile();
@@ -63,10 +63,10 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
                 </StyledView>
                 <StyledView className='flex flex-col space-y-[20vh]'>
                     <StyledView>
-                        <ProfilePageNavigator iconRoute={require('../../../assets/images/deposit-icon.png')} navigation={navigation} navigationName = 'profile-deposit' pageName='Deposit'/>
+                        <ProfilePageNavigator leftIconRoute={require('../../../assets/images/deposit-icon.png')} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigation={navigation} navigationName = 'profile-deposit' pageName='Deposit'/>
                     </StyledView>
                     <StyledView>
-                        <ProfilePageNavigator iconRoute={require('../../../assets/images/withdraw-icon.png')} navigation={navigation} navigationName = 'profile-withdraw' pageName='Withdraw'/>
+                        <ProfilePageNavigator leftIconRoute={require('../../../assets/images/withdraw-icon.png')} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigation={navigation} navigationName = 'profile-withdraw' pageName='Withdraw'/>
                     </StyledView>
                 </StyledView>
                 <StyledView>
@@ -74,10 +74,10 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
                 </StyledView>
                 <StyledView className='flex flex-col space-y-[20vh]'>
                     <StyledView>
-                        <ProfilePageNavigator iconRoute={require('../../../assets/images/settings-icon.png')} navigation={navigation} navigationName = 'profile-settings' pageName='Settings'/>
+                        <ProfilePageNavigator leftIconRoute={require('../../../assets/images/settings-icon.png')} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigation={navigation} navigationName = 'profile-settings' pageName='Settings'/>
                     </StyledView>
                     <StyledView>
-                    <ProfilePageNavigator iconRoute={require('../../../assets/images/document-icon.png')} navigation={navigation} navigationName = 'profile-legal-documents' pageName='Legal Documents'/>
+                    <ProfilePageNavigator leftIconRoute={require('../../../assets/images/document-icon.png')} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigation={navigation} navigationName = 'profile-legal-documents' pageName='Legal Documents'/>
                     </StyledView>
                 </StyledView>
                 <StyledView>
@@ -85,7 +85,7 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
                 </StyledView>
                 <StyledView className='flex flex-col'>
                     <StyledView>
-                        <ProfilePageNavigator iconRoute={require('../../../assets/images/risk-tolerance-icon.png')} navigation={navigation} navigationName = 'profile-risk-tolerance' pageName='Risk Tolerance'/>
+                        <ProfilePageNavigator leftIconRoute={require('../../../assets/images/risk-tolerance-icon.png')} rightIconRoute={require('../../../assets/images/side-arrow.png')} navigation={navigation} navigationName = 'profile-risk-tolerance' pageName='Risk Tolerance'/>
                     </StyledView>
                 </StyledView>
             </StyledView>

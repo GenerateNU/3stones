@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ProfileLegalDocumentsScreen from '../screens/profile/ProfileLegalDocumentsScreen';
+import ProfileSettingsScreen from '../screens/profile/ProfileSettingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,18 @@ export default function ProfileNavigator() {
         options={
           {
             title: "Legal Documents", 
+            headerShown: true,
+            headerStyle: { backgroundColor: '#FAFAFC' },
+            headerTitleStyle: { fontWeight: 'bold' }
+          }
+        }
+      />
+      <Stack.Screen
+        name='profile-settings'
+        component={ProfileSettingsScreen}
+        options={
+          {
+            title: "Settings", 
             headerShown: true,
             headerStyle: { backgroundColor: '#FAFAFC' },
             headerTitleStyle: { fontWeight: 'bold' }
