@@ -39,6 +39,30 @@ func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(investorProfile)
 }
 
+func (c *InvestorsController) UpdateProfile(ctx *fiber.Ctx) error {
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	var body models.InvestorProfile
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	updatedInvestorProfile, err := transactions.UpdateProfile(c.ServiceParams.DB, id, body)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(updatedInvestorProfile)
+}
+
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	userId, ok := ctx.Locals("userId").(string)
 	if !ok {

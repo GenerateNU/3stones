@@ -11,8 +11,17 @@ type Investor struct {
 }
 
 type InvestorProfile struct {
-	FirstName string `json:"first"`
-	LastName  string `json:"last"`
+	FirstName   string `json:"first"`
+	LastName    string `json:"last"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
+	SSN         string `json:"ssn"`
+	Premise     string `json:"premise"`
+	Subpremise  string `json:"subpremise"`
+	Street      string `json:"street"`
+	Locality    string `json:"locality"`
+	State       string `json:"state"`
+	Zipcode     string `json:"zipcode"`
 }
 
 type HistoryEntry struct {
