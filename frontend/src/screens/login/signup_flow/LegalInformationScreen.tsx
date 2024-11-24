@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  SafeAreaView,
+} from 'react-native';
 import { styled } from 'nativewind';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Button from '../../../components/Button';
-import ProgressBar from '../../../components/ProgressBar';
+import NavProgressBar from '../components/NavProgressBar';
 import { useAuth } from '../../../context/AuthContext';
 import TextInputComponent from '../components/TextInputComponent';
-import Config from 'react-native-config';
+import Constants from 'expo-constants';
 
+const GOOGLE_API_KEY = Constants.expoConfig.extra.googleApiKey;
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
-const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
+const StyledSafeAreaView = styled(SafeAreaView);
 
 export default function LegalInformationScreen({ navigation }) {
   const { signupData, updateSignupData } = useAuth(); // Access signupData and updateSignupData from AuthContext
@@ -20,46 +26,45 @@ export default function LegalInformationScreen({ navigation }) {
 
   // Parse Google Places API response into normalized address format
   const handleAddressSelect = (data, details) => {
-    const components = details?.address_components || [];
-    const findComponent = (type) => components.find((c) => c.types.includes(type))?.long_name || '';
+  const components = details?.address_components || [];
+  const findComponent = (type) => components.find((c) => c.types.includes(type))?.long_name || '';
 
-    const parsedAddress = {
-      addressLine: findComponent('route') || findComponent('street_address'),
-      city: findComponent('locality'),
-      zipCode: findComponent('postal_code'),
-      country: findComponent('country'),
-    };
+  const streetNumber = findComponent('street_number');
+  const route = findComponent('route');
+  const addressLine = `${streetNumber} ${route}`.trim(); // Combine street number and route
 
-    Object.entries(parsedAddress).forEach(([key, value]) => {
-      updateSignupData(`address.${key}`, value); // Update address in signupData
-    });
+  const parsedAddress = {
+    addressLine,
+    city: findComponent('locality'),
+    zipCode: findComponent('postal_code'),
+    country: findComponent('country'),
   };
+
+  Object.entries(parsedAddress).forEach(([key, value]) => {
+    updateSignupData(`address.${key}`, value);
+  });
+};
 
   const handleNext = () => {
     navigation.navigate('QuestionsScreen'); // Replace with your actual next screen
   };
 
   return (
-    <StyledKeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
-      <StyledScrollView
-        className="flex-1"
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled" // Ensures taps are passed through to nested components
-      >
+    <StyledSafeAreaView className="flex-1 bg-surfaceBG">
         <StyledView className="flex-1 items-center bg-surfaceBG p-6 justify-between">
-
           {/* Progress Bar */}
-          <StyledView className="w-full mb-4">
-            <ProgressBar current={4} total={6} />
-          </StyledView>
+          <NavProgressBar
+            currentStep={4}
+            totalSteps={6}
+            buttonType="back"
+            onPress={() => navigation.goBack()}
+          />
 
           {/* Legal Information Input Section */}
           <StyledView className="w-full flex-1 justify-center items-center">
-            <StyledText className="text-center text-2xl font-bold text-black mb-2">Some legal information</StyledText>
+            <StyledText className="text-center text-2xl font-bold text-black mb-2">
+              Some legal information
+            </StyledText>
             <StyledText className="text-center text-gray-600 mb-8">
               We need this information to get you started investing in 3 Stones.
             </StyledText>
@@ -70,8 +75,8 @@ export default function LegalInformationScreen({ navigation }) {
               value={signupData.ssn}
               onChangeText={(input) => updateSignupData('ssn', input)}
               keyboardType="numeric"
-            >
-            </TextInputComponent>
+              maxLength={9}
+            />
 
             {/* Address Input */}
             {!isManualEntry ? (
@@ -80,7 +85,7 @@ export default function LegalInformationScreen({ navigation }) {
                 fetchDetails={true}
                 onPress={handleAddressSelect}
                 query={{
-                  key: Config.GOOGLE_API_KEY,
+                  key: GOOGLE_API_KEY,
                   language: 'en',
                 }}
                 styles={{
@@ -107,37 +112,41 @@ export default function LegalInformationScreen({ navigation }) {
                 <TextInputComponent
                   placeholder="Address Line"
                   value={signupData.address.addressLine}
-                  onChangeText={(input) => updateSignupData('address.addressLine', input)}
-                  keyboardType='default'
-                >
-                </TextInputComponent>
+                  onChangeText={(input) =>
+                    updateSignupData('address.addressLine', input)
+                  }
+                  keyboardType="default"
+                />
                 <TextInputComponent
                   placeholder="City"
                   value={signupData.address.city}
                   onChangeText={(input) => updateSignupData('address.city', input)}
-                  keyboardType='default'
-                >
-                </TextInputComponent>
+                  keyboardType="default"
+                />
                 <TextInputComponent
                   placeholder="Zip Code"
                   value={signupData.address.zipCode}
-                  onChangeText={(input) => updateSignupData('address.zipCode', input)}
-                  keyboardType='numeric'
-                >
-                </TextInputComponent>
+                  onChangeText={(input) =>
+                    updateSignupData('address.zipCode', input)
+                  }
+                  keyboardType="numeric"
+                />
                 <TextInputComponent
                   placeholder="Country"
                   value={signupData.address.country}
-                  onChangeText={(input) => updateSignupData('address.country', input)}
-                >
-                </TextInputComponent>
+                  onChangeText={(input) =>
+                    updateSignupData('address.country', input)
+                  }
+                />
               </>
             )}
 
             {/* Toggle Manual Entry */}
             <StyledTouchableOpacity onPress={() => setIsManualEntry((prev) => !prev)}>
               <StyledText className="text-primary underline">
-                {isManualEntry ? 'Use Address Autocomplete' : 'Enter Address Manually'}
+                {isManualEntry
+                  ? 'Use Address Autocomplete'
+                  : 'Enter Address Manually'}
               </StyledText>
             </StyledTouchableOpacity>
           </StyledView>
@@ -153,7 +162,6 @@ export default function LegalInformationScreen({ navigation }) {
             </Button>
           </StyledView>
         </StyledView>
-      </StyledScrollView>
-    </StyledKeyboardAvoidingView>
+    </StyledSafeAreaView>
   );
 }
