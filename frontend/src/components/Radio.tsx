@@ -4,62 +4,74 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { styled } from 'nativewind';
 
 // Define CVA with NativeWind classes
-const radioStyles = cva('rounded-full items-center justify-center', {
-    variants: {
-        state: {
-            default: 'border-4 border-gray-200',
-            pressed: 'border-4 border-gray-300',
-            disabled: 'border-4 border-gray-500 bg-gray-50',
-            disabledSelected: 'border-4 border-gray-500 bg-gray-500'
-        },
-        selected: {
-            true: 'border-5 border-gray-900 bg-gray-900', // Dark border and background for selected state
-            false: 'bg-transparent',
-        },
+const radioStyles = cva('items-center justify-center', {
+  variants: {
+    shape: {
+      circle: 'rounded-full',
+      square: 'rounded-md', // Use rounded corners for square checkboxes
     },
-    defaultVariants: {
-        state: 'default',
-        selected: false,
+    state: {
+      default: 'border-4 border-gray-200',
+      pressed: 'border-4 border-gray-300',
+      disabled: 'border-4 border-gray-500 bg-gray-50',
+      disabledSelected: 'border-4 border-gray-500 bg-gray-500',
     },
+    selected: {
+      true: 'border-4 border-gray-900 bg-gray-900', // Dark border and background for selected state
+      false: 'bg-transparent',
+    },
+  },
+  defaultVariants: {
+    shape: 'circle', // Default to circular radio buttons
+    state: 'default',
+    selected: false,
+  },
 });
 
-// Radio buttons can be in one of three states: default, pressed, or disabled. Each of these can also be selected or not.
+// Props for RadioButton
 type RadioProps = VariantProps<typeof radioStyles> & {
-    selected: boolean;
-    onPress: () => void;
-    disabled?: boolean;
+  selected: boolean;
+  onPress: () => void;
+  disabled?: boolean;
+  isSquare?: boolean; // New prop to toggle between circle and square
 };
 
 // Styled components
 const StyledRadioButton = styled(TouchableOpacity);
-const StyledInnerCircle = styled(View);
+const StyledInnerFill = styled(View);
 
-// RadioButton component
-const RadioButton: React.FC<RadioProps> = ({ selected, onPress, disabled = false }) => {
-    const [isPressed, setIsPressed] = useState(false);
+const RadioButton: React.FC<RadioProps> = ({
+  selected,
+  onPress,
+  disabled = false,
+  isSquare = false,
+}) => {
+  const [isPressed, setIsPressed] = useState(false);
 
-    return (
-        <StyledRadioButton
-            onPressIn={() => !disabled && setIsPressed(true)}  // Activate "pressed" state when touched
-            onPressOut={() => {
-                setIsPressed(false);  // Deactivate "pressed" state on release
-                if (!disabled) onPress();
-            }}
-            className={`${radioStyles({
-                state: disabled ? 'disabled' : isPressed ? 'pressed' : 'default',
-                selected,
-            })} w-6 h-6`}
-            disabled={disabled}
-        >
-            {/* Conditionally render the inner circle based on selected and disabled states */}
-            {selected && (
-                <StyledInnerCircle
-                    className={`w-2 h-2 rounded-full ${disabled ? 'bg-gray-400' : 'bg-white'
-                        }`}
-                />
-            )}
-        </StyledRadioButton>
-    );
+  return (
+    <StyledRadioButton
+      onPressIn={() => !disabled && setIsPressed(true)} // Activate "pressed" state when touched
+      onPressOut={() => {
+        setIsPressed(false); // Deactivate "pressed" state on release
+        if (!disabled) onPress();
+      }}
+      className={`${radioStyles({
+        shape: isSquare ? 'square' : 'circle', // Toggle shape
+        state: disabled ? 'disabled' : isPressed ? 'pressed' : 'default',
+        selected,
+      })} w-5 h-5`}
+      disabled={disabled}
+    >
+      {/* Render the inner fill for selected state */}
+      {selected && (
+        <StyledInnerFill
+          className={`w-2 h-2 ${isSquare ? 'rounded-sm' : 'rounded-full'} ${
+            disabled ? 'bg-gray-400' : 'bg-white'
+          }`}
+        />
+      )}
+    </StyledRadioButton>
+  );
 };
 
 export default RadioButton;
