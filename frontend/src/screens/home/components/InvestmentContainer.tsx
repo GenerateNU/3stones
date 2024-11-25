@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { styled } from 'nativewind';
+import { useProject } from '../../../services/project';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -19,7 +20,7 @@ const InvestmentStatus = ({ amount, status }) => {
   );
 };
 
-const InvestmentImageAndAddress = ({ image, street, city }) => {
+const InvestmentImageAndAddress = ({ image, street, city, state }) => {
   return (
     <StyledView className='flex flex-1 flex-row space-x-[17vw]'>
       <StyledImage
@@ -28,18 +29,25 @@ const InvestmentImageAndAddress = ({ image, street, city }) => {
       ></StyledImage>
       <StyledView className='flex-col space-y-[5vh]'>
         <StyledText className='font-sourceSans3Bold text-[4.5vw]'>{street}</StyledText>
-        <StyledText className='text-[3vw] font-sourceSans3'>{city}</StyledText>
+        <StyledText className='text-[3vw] font-sourceSans3'>{city}, {state}</StyledText>
       </StyledView>
     </StyledView>
   );
 };
 
-const InvestmentContainer = ({ image, street, city, amount, status }) => {
+const InvestmentContainer = ({ status, projectId }) => {
+  console.log(projectId);
+  // Get the project using the id
+  const {project, isLoading} = useProject(projectId);
+  // console.log(project);
+
+  // const projectStatus = project?
+  
   return (
     <StyledView className='w-[full] h-[10vh] flex flex-row justify-center items-center'>
 
-      <InvestmentImageAndAddress image={image} street={street} city={city}></InvestmentImageAndAddress>
-      <InvestmentStatus amount={amount} status={status}></InvestmentStatus>
+      <InvestmentImageAndAddress image={project?.images[0]?.url} street={project?.street} city={project?.locality} state={project?.state}></InvestmentImageAndAddress>
+      <InvestmentStatus amount={project?.funding_goal_cents / 100} status={status}></InvestmentStatus>
 
       <StyledImage
         source={require('../../../../assets/images/chevron-right-black.png')}

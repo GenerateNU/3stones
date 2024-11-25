@@ -8,8 +8,7 @@ import WelcomeBlock from './components/welcomeBlock';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
-import { useInvestorProfile, useInvestorPortfolio, useInvestorHistory } from '../../services/investor';
-import { useProject } from '../../services/project';
+import { useInvestorProfile, useInvestorPortfolio } from '../../services/investor';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -68,9 +67,17 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     },
   ];
 
-  // Get the investor's data
   const userProfile = useInvestorProfile();
-
+  const [totalInvested, setTotalInvested] = useState(0);
+  const { portfolio, isLoading } = useInvestorPortfolio();
+  
+  useEffect(() => {
+    if (portfolio) {
+      // Sum up the total invested amount
+      const total = Object.values(portfolio).reduce((sum, value) => sum + value, 0);
+      setTotalInvested(total);
+    }
+  }, [portfolio]);
 
 
 
@@ -81,12 +88,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <StyledView className='pt-[5vh]'>
           <WelcomeBlock name={userProfile?.profile?.first} />
           <PortfolioValue
-            Portfoliovalue={12345.67}
+            Portfoliovalue={totalInvested}
             portfolioChange={350.23}
             navigation={navigation}
           />
         </StyledView>
-        <BottomSheetComponent investmentsData={mockInvestmentData} />
+        <BottomSheetComponent investmentsData={mockInvestmentData} portfolio={portfolio} />
       </StyledView>
     </GestureHandlerRootView>
   );

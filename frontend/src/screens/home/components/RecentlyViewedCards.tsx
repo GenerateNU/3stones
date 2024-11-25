@@ -4,6 +4,7 @@ import { styled } from 'nativewind';
 import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
 import StatusTag from './StatusTag';
+import { useProject, useProjectTotalFunded } from '../../../services/project';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -18,6 +19,7 @@ const RecentlyViewedCard = ({
   amount,
   fundingGoal,
   status,
+  projectId
 }: {
   image: string;
   street: string;
@@ -26,7 +28,16 @@ const RecentlyViewedCard = ({
   amount: number;
   fundingGoal: number;
   status: string;
+  projectId: string;
 }) => {
+
+    // Get project data
+    const { project, isLoading } = useProject(projectId);
+    console.log(project);
+
+    // Get total project funding
+    const totalFunding = useProjectTotalFunded(projectId);  
+
   const parsedStatus = status.split(' ').join('');
   let Intent: 'InProgress' | 'Sold' | 'Funding' | undefined;
   if (parsedStatus === 'InProgress' || parsedStatus === 'Sold' || parsedStatus === 'Funding') {
@@ -57,13 +68,13 @@ const RecentlyViewedCard = ({
     );
   };
 
-  const ProjectInformation = ({ street, city, developmentType }) => {
+  const ProjectInformation = () => {
     return (
       <StyledView className='flex-1'>
-            <StyledText className='text-[5vw] font-sourceSans3Bold'>{street}</StyledText>
-            <StyledText className='text-[3vw] font-sourceSans3 '>{city}</StyledText>
+            <StyledText className='text-[5vw] font-sourceSans3Bold'>{project?.street}</StyledText>
+            <StyledText className='text-[3vw] font-sourceSans3 '>{project?.locality}, {project?.state} </StyledText>
             <StyledText className='text-[3vw] font-sourceSans3 mt-[0.75vh]'>
-              {developmentType}
+              {project?.title}
             </StyledText>
           </StyledView>
     );
@@ -72,21 +83,21 @@ const RecentlyViewedCard = ({
     <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
       <StyledView className='flex flex-row flex-1'>
         <StyledView className='flex-1 flex-col '>
-          <ProjectInformation street={street} city={city} developmentType={developmentType} />
+          <ProjectInformation />
           <Tag status={status} parsedStatus={parsedStatus} intent={Intent} />
         </StyledView>
         
         <StyledImage
-          source={{ uri: image }}
+          source={{ uri: project?.images[0]?.url }}
           className='w-[32vw] h-[32vw] flex-2 rounded-md'
         ></StyledImage>
       </StyledView>
 
       {status === 'Funding' && (
         <StyledView className='w-full h-[2vh] flex-2 flex py-[1vh] py-[2vh] '>
-          <ProgressBar current={amount} total={fundingGoal} />
+          <ProgressBar current={totalFunding} total={project?.funding_goal_cents} />
         </StyledView>
-      )}
+      )} 
     </Card>
   );
 };

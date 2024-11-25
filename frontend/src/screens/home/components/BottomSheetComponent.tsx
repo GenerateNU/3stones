@@ -9,38 +9,35 @@ import WideButton from '../../../components/WideButton';
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const Investments = ({ investmentsData }) => {
+const Investments = ({ investmentsData, portfolio }) => {
+  console.log(portfolio);
   return (
     <StyledView>
       <StyledText className='text-[5vw] font-heading py-[2vh]'>Your Investments</StyledText>
-
-      {investmentsData.map((investment, index) => (
-        <StyledView key={index}>
-          <InvestmentContainer
-            image={investment.image}
-            street={investment.street}
-            city={investment.city}
-            amount={investment.amount}
-            status={investment.status}
-          />
-          <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
-        </StyledView>
-      ))}
+      {portfolio &&
+        Object.keys(portfolio).map((projectId) => (
+          <StyledView key={projectId}>
+            <InvestmentContainer status={investmentsData[0].status} projectId={projectId} />
+            <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
+          </StyledView>
+        ))}
 
       <StyledText className='text-[5vw] font-heading pt-[3vh]'>Recently Viewed</StyledText>
-      {investmentsData.map((investment, index) => (
-        <StyledView key={index} className='mt-[3vh]'>
-          <RecentlyViewedCard
-            image={investment.image}
-            street={investment.street}
-            city={investment.city}
-            amount={investment.amount}
-            fundingGoal={1000}
-            status={investment.status}
-            developmentType={'Commercial Development'}
-          />
-        </StyledView>
-      ))}
+      {portfolio &&
+        Object.keys(portfolio).map((projectId) => (
+          <StyledView key={projectId} className='mt-[3vh]'>
+            <RecentlyViewedCard
+              image={investmentsData[0].image}
+              street={investmentsData[0].street}
+              city={investmentsData[0].city}
+              amount={investmentsData[0].amount}
+              status={investmentsData[0].status}
+              fundingGoal={1000}
+              projectId={projectId}
+              developmentType={'Commercial Development'}
+            />
+          </StyledView>
+        ))}
 
       <StyledView className='w-full my-[3vh] h-[5vh]'>
         <WideButton
@@ -54,8 +51,9 @@ const Investments = ({ investmentsData }) => {
   );
 };
 
-const BottomSheetComponent = ({ investmentsData }) => {
+const BottomSheetComponent = ({ investmentsData, portfolio }) => {
   const sheetRef = useRef<BottomSheet>(null);
+
   return (
     <BottomSheet
       ref={sheetRef}
@@ -65,7 +63,7 @@ const BottomSheetComponent = ({ investmentsData }) => {
     >
       <BottomSheetScrollView>
         <StyledView className='w-[100vw] px-[7vw]'>
-          <Investments investmentsData={investmentsData} />
+          <Investments investmentsData={investmentsData} portfolio={portfolio} />
         </StyledView>
       </BottomSheetScrollView>
     </BottomSheet>
