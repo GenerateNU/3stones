@@ -66,7 +66,7 @@ const RecentlyViewedCard = ({
               {developmentType}
             </StyledText>
           </StyledView>
-    )
+    );
   };
   return (
     <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
@@ -81,7 +81,7 @@ const RecentlyViewedCard = ({
           className='w-[32vw] h-[32vw] flex-2 rounded-md'
         ></StyledImage>
       </StyledView>
-      
+
       {status === 'Funding' && (
         <StyledView className='w-full h-[2vh] flex-2 flex py-[1vh] py-[2vh] '>
           <ProgressBar current={amount} total={fundingGoal} />
