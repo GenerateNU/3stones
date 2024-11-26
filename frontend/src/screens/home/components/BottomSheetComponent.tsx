@@ -9,7 +9,7 @@ import WideButton from '../../../components/WideButton';
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const Investments = ({ investmentsData, portfolio }) => {
+const Investments = ({ portfolio }) => {
   console.log(portfolio);
   return (
     <StyledView>
@@ -17,7 +17,7 @@ const Investments = ({ investmentsData, portfolio }) => {
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
           <StyledView key={projectId}>
-            <InvestmentContainer status={investmentsData[0].status} projectId={projectId} />
+            <InvestmentContainer  projectId={projectId} />
             <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
           </StyledView>
         ))}
@@ -27,14 +27,7 @@ const Investments = ({ investmentsData, portfolio }) => {
         Object.keys(portfolio).map((projectId) => (
           <StyledView key={projectId} className='mt-[3vh]'>
             <RecentlyViewedCard
-              image={investmentsData[0].image}
-              street={investmentsData[0].street}
-              city={investmentsData[0].city}
-              amount={investmentsData[0].amount}
-              status={investmentsData[0].status}
-              fundingGoal={1000}
               projectId={projectId}
-              developmentType={'Commercial Development'}
             />
           </StyledView>
         ))}
@@ -51,7 +44,7 @@ const Investments = ({ investmentsData, portfolio }) => {
   );
 };
 
-const BottomSheetComponent = ({ investmentsData, portfolio }) => {
+const BottomSheetComponent = ({ portfolio }) => {
   const sheetRef = useRef<BottomSheet>(null);
 
   return (
@@ -63,7 +56,7 @@ const BottomSheetComponent = ({ investmentsData, portfolio }) => {
     >
       <BottomSheetScrollView>
         <StyledView className='w-[100vw] px-[7vw]'>
-          <Investments investmentsData={investmentsData} portfolio={portfolio} />
+          <Investments  portfolio={portfolio} />
         </StyledView>
       </BottomSheetScrollView>
     </BottomSheet>

@@ -35,11 +35,14 @@ const InvestmentImageAndAddress = ({ image, street, city, state }) => {
   );
 };
 
-const InvestmentContainer = ({ status, projectId }) => {
+const InvestmentContainer = ({ projectId }) => {
   console.log(projectId);
   // Get the project using the id
   const {project, isLoading} = useProject(projectId);
   // console.log(project);
+  if (isLoading) {
+    return <Text>Loading ...</Text>;
+  }
 
   // const projectStatus = project?
   
@@ -47,7 +50,7 @@ const InvestmentContainer = ({ status, projectId }) => {
     <StyledView className='w-[full] h-[10vh] flex flex-row justify-center items-center'>
 
       <InvestmentImageAndAddress image={project?.images[0]?.url} street={project?.street} city={project?.locality} state={project?.state}></InvestmentImageAndAddress>
-      <InvestmentStatus amount={project?.funding_goal_cents / 100} status={status}></InvestmentStatus>
+      <InvestmentStatus amount={project?.funding_goal_cents / 100} status={project.milestone}></InvestmentStatus>
 
       <StyledImage
         source={require('../../../../assets/images/chevron-right-black.png')}

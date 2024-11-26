@@ -11,39 +11,44 @@ const StyledImage = styled(Image);
 const statusTagVariants = cva('button', {
   variants: {
     intent: {
-      //green button
-      InProgress: [
-        'w-[30vw]',
-        'h-full',
-        'rounded-xl',
+      //InProgress button
+      InProgressGreen: [
+        'rounded-lg',
         'flex',
         'items-center',
         'justify-center',
         'bg-mint',
         'flex-row',
       ],
-      //Funding button
-      Funding: [
-        'w-[25vw]',
-        'h-full',
-        'border-borderPrimary',
-        'border-x-[0.3vw]',
-        'border-y-[0.3vw]',
-        'rounded-xl',
+      InProgressNeutral: [
+        'rounded-lg',
         'flex',
         'items-center',
         'justify-center',
+        'flex-shrink',
+        'bg-gray-200',
+        'flex-row',
+      ],
+      //Funding button
+      Funding: [
+        'border-borderPrimary',
+        'border-x-[0.3vw]',
+        'border-y-[0.3vw]',
+        'rounded-lg',
+        'flex',
+        'items-center',
+        'justify-center',
+        'w-[20vw]',
         'flex-row',
       ],
       Sold: [
-        'h-full',
-        'rounded-xl',
+        'rounded-lg',
+        'w-[20vw]',
         'flex',
         'items-center',
         'justify-center',
         'flex-row',
         'bg-success',
-        'w-[20vw]'
       ],
     },
   },
@@ -53,12 +58,10 @@ const statusTagVariants = cva('button', {
 const statusTagTextVariants = cva('text', {
   variants: {
     intent: {
-      //green button text
-      InProgress: ['text-[3.5vw]', 'font-sourceSans3', 'text-success', 'ml-[1vw]'],
-      //outline button text
-      Funding: ['text-[3.5vw]', 'font-sourceSans3', 'text-success'],
-      //Sold button
-      Sold: ['text-[3.5vw]', 'font-sourceSans3', 'text-white', 'ml-[1vw]'],
+      InProgressNeutral: ['text-[2.5vw]', 'font-sourceSans3', 'text-gray-600', 'px-[1vw]', 'py-[2vw]',],
+      InProgressGreen: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]', ],
+      Funding: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]', ],
+      Sold: ['text-[2.5vw]', 'font-sourceSans3', 'text-white', 'px-[1vw]', 'py-[2vw]', ],
     },
   },
 });
@@ -72,7 +75,7 @@ export interface TagProps
   iconRoute: ImageSourcePropType;
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  intent: 'InProgress' | 'Funding' | 'Sold';
+  intent: 'InProgressGreen' | 'InProgressNeutral' | 'Funding' | 'Sold';
 }
 
 /**
@@ -84,7 +87,7 @@ export interface TagProps
 const StatusTag: React.FC<TagProps> = ({ name, iconRoute, intent }) => {
   return (
     <StyledView className={statusTagVariants({ intent })}>
-      <StyledImage source={iconRoute} className='w-[4vw] h-[4vw]'></StyledImage>
+      <StyledImage source={iconRoute} className='w-[3.5vw] h-[3.5vw] pl-[1vw]'></StyledImage>
       <StyledText className={statusTagTextVariants({ intent })}>{name}</StyledText>
     </StyledView>
   );
