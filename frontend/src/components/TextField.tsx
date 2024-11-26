@@ -114,6 +114,7 @@ export interface TextFieldProps extends TextInputProps, VariantProps<typeof text
   suffix?: string;
   //counter value
   count?: string;
+  onChangeText?: (text: string) => void; // Add this line
 }
 
 /**
@@ -139,11 +140,15 @@ const TextField: React.FC<TextFieldProps> = ({
   prefix,
   suffix,
   count,
+  onChangeText,
 }) => {
   const [value, setValue] = React.useState('');
 
   function onChangeInput(text) {
     setValue(text);
+    if (onChangeText) {
+      onChangeText(text); // Call the parent-provided onChangeText
+    }
   }
 
   return (

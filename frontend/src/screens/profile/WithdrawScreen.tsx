@@ -1,14 +1,50 @@
-import React from 'react';
+// WithdrawScreen.js
+import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import TextField from '../../components/TextField';
+import ConfirmDialog from './components/ConfirmDialog'; // Adjust the import path if necessary
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function WithdrawScreen({ navigation }) {
+  const [inputValue, setInputValue] = useState('');
+  const [isValidInput, setIsValidInput] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+
+    // Validate the input
+    const regex = /^\d+(\.\d{1,2})?$/;
+    const amount = Number(text);
+
+    if (regex.test(text) && !isNaN(amount) && amount > 0) {
+      setIsValidInput(true);
+    } else {
+      setIsValidInput(false);
+    }
+  };
+
+  const handleWithdrawPress = () => {
+    setConfirmVisible(true);
+  };
+
+  const handleConfirm = () => {
+    setConfirmVisible(false);
+    // Proceed with the withdrawal logic
+    console.log('Confirmed withdrawal of amount:', inputValue);
+  };
+
+  const handleCancel = () => {
+    setConfirmVisible(false);
+  };
+
+  const buttonBgColor = isValidInput ? 'bg-defaultPrimary' : 'bg-gray-300';
+
   return (
     <StyledView className='flex-1 bg-white p-4'>
       <StyledView className='py-8 px-6'>
@@ -46,11 +82,12 @@ export default function WithdrawScreen({ navigation }) {
             placeholder='Enter Amount'
             prefix='$'
             suffix='USD'
+            onChangeText={handleInputChange}
+            value={inputValue}
           />
         </StyledView>
       </StyledView>
 
-      {/* Updated StyledView */}
       <StyledView className='flex flex-col justify-end items-start flex-grow py-4 px-6 gap-4'>
         <StyledText className='font-sourceSans3 font-medium text-black leading-6'>
           Transferring to
@@ -80,13 +117,17 @@ export default function WithdrawScreen({ navigation }) {
           <Button
             type='primary'
             size='large'
-            className='w-full rounded-[50px] bg-gray-300'
-            onPress={() => console.log('Withdraw button pressed')}
+            className={`w-full rounded-[50px] ${buttonBgColor} ${isValidInput ? '' : 'opacity-50'}`}
+            onPress={handleWithdrawPress}
+            disabled={!isValidInput}
           >
             Withdraw
           </Button>
         </StyledView>
       </StyledView>
+
+      {/* Confirm Dialog */}
+      <ConfirmDialog visible={confirmVisible} onConfirm={handleConfirm} onCancel={handleCancel} />
     </StyledView>
   );
 }

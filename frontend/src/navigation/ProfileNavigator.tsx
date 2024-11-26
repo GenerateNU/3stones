@@ -25,6 +25,11 @@ export default function ProfileNavigator() {
         component={WithdrawScreen}
         options={{ title: 'Withdraw', headerShown: true }}
       />
+      <Stack.Screen
+        name='profile-withdraw-2'
+        component={WithdrawScreen}
+        options={{ title: 'Withdraw', headerShown: true }}
+      />
     </Stack.Navigator>
   );
 }
