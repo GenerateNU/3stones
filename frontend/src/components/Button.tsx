@@ -11,18 +11,18 @@ const buttonVariants = cva('flex', {
     type: {
       primary: 'bg-defaultPrimary',
       secondary: 'border border-defaultPrimary',
-      plainDark: ''
+      plainDark: '',
     },
     size: {
       small: 'px-3 py-1 rounded-[25px]',
       medium: 'px-4 py-2 rounded-[50px]',
       large: 'px-5 py-4 rounded-[50px]',
-    }
+    },
   },
   defaultVariants: {
     type: 'primary',
-    size: 'medium'
-  }
+    size: 'medium',
+  },
 });
 
 const buttonTextVariants = cva('font-sourceSans3 text-sm font-medium leading-[18px] text-center', {
@@ -30,12 +30,12 @@ const buttonTextVariants = cva('font-sourceSans3 text-sm font-medium leading-[18
     type: {
       primary: 'text-white',
       secondary: 'text-defaultPrimary',
-      plainDark: 'text-defaultPrimary'
+      plainDark: 'text-defaultPrimary',
     },
   },
   defaultVariants: {
     type: 'primary',
-  }
+  },
 });
 
 interface ButtonProps extends TouchableOpacityProps, VariantProps<typeof buttonVariants> {
@@ -43,26 +43,23 @@ interface ButtonProps extends TouchableOpacityProps, VariantProps<typeof buttonV
   icon?: React.ReactNode;
 }
 
-export function Button({ 
+export function Button({
   children,
   type,
   size,
   icon,
   className,
-  ...props 
+  ...props
 }: ButtonProps & { className?: string }) {
   return (
-    <StyledTouchableOpacity 
+    <StyledTouchableOpacity
       className={`${buttonVariants({ type, size })} ${className || ''}`}
       {...props}
     >
       {icon}
-      <StyledText className={buttonTextVariants({ type })}>
-        {children}
-      </StyledText>
+      <StyledText className={buttonTextVariants({ type })}>{children}</StyledText>
     </StyledTouchableOpacity>
   );
 }
 
 export default Button;
-

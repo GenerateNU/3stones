@@ -65,7 +65,11 @@ export const useInvestorPortfolio = () => {
 };
 
 // GET investor's history of transactions
-const getInvestorHistory = async (accessToken: string, offset: number, limit: number): Promise<History | null> => {
+const getInvestorHistory = async (
+  accessToken: string,
+  offset: number,
+  limit: number,
+): Promise<History | null> => {
   try {
     const response = await axios.get<History>(`${API_URL}/api/v1/investors/history`, {
       headers: {

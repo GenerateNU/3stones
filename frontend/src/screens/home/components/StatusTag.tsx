@@ -58,10 +58,16 @@ const statusTagVariants = cva('button', {
 const statusTagTextVariants = cva('text', {
   variants: {
     intent: {
-      InProgressNeutral: ['text-[2.5vw]', 'font-sourceSans3', 'text-gray-600', 'px-[1vw]', 'py-[2vw]',],
-      InProgressGreen: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]', ],
-      Funding: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]', ],
-      Sold: ['text-[2.5vw]', 'font-sourceSans3', 'text-white', 'px-[1vw]', 'py-[2vw]', ],
+      InProgressNeutral: [
+        'text-[2.5vw]',
+        'font-sourceSans3',
+        'text-gray-600',
+        'px-[1vw]',
+        'py-[2vw]',
+      ],
+      InProgressGreen: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]'],
+      Funding: ['text-[2.5vw]', 'font-sourceSans3', 'text-success', 'px-[1vw]', 'py-[2vw]'],
+      Sold: ['text-[2.5vw]', 'font-sourceSans3', 'text-white', 'px-[1vw]', 'py-[2vw]'],
     },
   },
 });

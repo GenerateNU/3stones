@@ -18,15 +18,13 @@ export const SignupProvider = ({ children }) => {
   // A helper function to update form data by field
   const updateForm = (key, value) => {
     setFormData((prev) => ({
-      ...prev,    // Spread previous data to retain it
-      [key]: value,  // Update the specific field
+      ...prev, // Spread previous data to retain it
+      [key]: value, // Update the specific field
     }));
   };
 
   // Return the provider with the formData and updateForm function available
   return (
-    <SignupContext.Provider value={{ formData, updateForm }}>
-      {children}
-    </SignupContext.Provider>
+    <SignupContext.Provider value={{ formData, updateForm }}>{children}</SignupContext.Provider>
   );
 };

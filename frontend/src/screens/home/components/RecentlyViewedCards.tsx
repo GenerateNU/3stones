@@ -12,11 +12,7 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 // Card component for recently viewed Projects
-const RecentlyViewedCard = ({
-  projectId,
-}: {
-  projectId: string;
-}) => {
+const RecentlyViewedCard = ({ projectId }: { projectId: string }) => {
   // Get project data
   const { project, isLoading } = useProject(projectId);
 
@@ -53,12 +49,14 @@ const RecentlyViewedCard = ({
       intent = 'Sold';
     } else if (project.milestone === 'Funding') {
       intent = 'Funding';
-    } else if (project.milestone === 'Construction Complete' || project.milestone === 'Operational') {
+    } else if (
+      project.milestone === 'Construction Complete' ||
+      project.milestone === 'Operational'
+    ) {
       intent = 'InProgressGreen';
     } else {
       intent = 'InProgressNeutral';
     }
-
 
     return (
       <StyledView className='flex-2 bottom-0'>

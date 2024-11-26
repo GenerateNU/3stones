@@ -29,7 +29,9 @@ const InvestmentImageAndAddress = ({ image, street, city, state }) => {
       ></StyledImage>
       <StyledView className='flex-col space-y-[5vh]'>
         <StyledText className='font-sourceSans3Bold text-[4.5vw]'>{street}</StyledText>
-        <StyledText className='text-[3vw] font-sourceSans3'>{city}, {state}</StyledText>
+        <StyledText className='text-[3vw] font-sourceSans3'>
+          {city}, {state}
+        </StyledText>
       </StyledView>
     </StyledView>
   );
@@ -38,19 +40,26 @@ const InvestmentImageAndAddress = ({ image, street, city, state }) => {
 const InvestmentContainer = ({ projectId }) => {
   console.log(projectId);
   // Get the project using the id
-  const {project, isLoading} = useProject(projectId);
+  const { project, isLoading } = useProject(projectId);
   // console.log(project);
   if (isLoading) {
     return <Text>Loading ...</Text>;
   }
 
   // const projectStatus = project?
-  
+
   return (
     <StyledView className='w-[full] h-[10vh] flex flex-row justify-center items-center'>
-
-      <InvestmentImageAndAddress image={project?.images[0]?.url} street={project?.street} city={project?.locality} state={project?.state}></InvestmentImageAndAddress>
-      <InvestmentStatus amount={project?.funding_goal_cents / 100} status={project.milestone}></InvestmentStatus>
+      <InvestmentImageAndAddress
+        image={project?.images[0]?.url}
+        street={project?.street}
+        city={project?.locality}
+        state={project?.state}
+      ></InvestmentImageAndAddress>
+      <InvestmentStatus
+        amount={project?.funding_goal_cents / 100}
+        status={project.milestone}
+      ></InvestmentStatus>
 
       <StyledImage
         source={require('../../../../assets/images/chevron-right-black.png')}

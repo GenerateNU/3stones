@@ -17,7 +17,7 @@ const Investments = ({ portfolio }) => {
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
           <StyledView key={projectId}>
-            <InvestmentContainer  projectId={projectId} />
+            <InvestmentContainer projectId={projectId} />
             <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
           </StyledView>
         ))}
@@ -26,9 +26,7 @@ const Investments = ({ portfolio }) => {
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
           <StyledView key={projectId} className='mt-[3vh]'>
-            <RecentlyViewedCard
-              projectId={projectId}
-            />
+            <RecentlyViewedCard projectId={projectId} />
           </StyledView>
         ))}
 
@@ -56,7 +54,7 @@ const BottomSheetComponent = ({ portfolio }) => {
     >
       <BottomSheetScrollView>
         <StyledView className='w-[100vw] px-[7vw]'>
-          <Investments  portfolio={portfolio} />
+          <Investments portfolio={portfolio} />
         </StyledView>
       </BottomSheetScrollView>
     </BottomSheet>

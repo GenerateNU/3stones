@@ -24,13 +24,10 @@ interface HomeScreenProps {
 const StyledView = styled(View);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-
   const userProfile = useInvestorProfile();
   const [totalInvested, setTotalInvested] = useState(0);
   const { portfolio, isLoading } = useInvestorPortfolio();
 
-
-  
   useEffect(() => {
     if (portfolio) {
       // Sum up the total invested amount
@@ -38,9 +35,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       setTotalInvested(total);
     }
   }, [portfolio]);
-
-
-
 
   return (
     <GestureHandlerRootView>

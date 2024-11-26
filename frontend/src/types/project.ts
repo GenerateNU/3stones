@@ -3,7 +3,6 @@ export type ImageLink = {
   url: string;
 };
 
-
 export type Project = {
   id: string;
   developerId: string;
