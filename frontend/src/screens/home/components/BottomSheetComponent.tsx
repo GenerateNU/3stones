@@ -1,33 +1,40 @@
 import React, { useRef } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import InvestmentContainer from './InvestmentContainer';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import RecentlyViewedCard from './RecentlyViewedCards';
 import WideButton from '../../../components/WideButton';
+import { Portfolio } from '../../../types/investor';
 
+const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const Investments = ({ portfolio }) => {
+const Investments = ({ portfolio, navigation }: {
+  portfolio: Portfolio
+  // This actually should be `any`, so disabling the linter rule
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: any;
+}) => {
   console.log(portfolio);
   return (
     <StyledView>
       <StyledText className='text-[5vw] font-heading py-[2vh]'>Your Investments</StyledText>
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
-          <StyledView key={projectId}>
+          <StyledTouchableOpacity onPress={() => navigation.navigate('Project')} key={projectId}>
             <InvestmentContainer projectId={projectId} />
             <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
-          </StyledView>
+          </StyledTouchableOpacity>
         ))}
 
       <StyledText className='text-[5vw] font-heading pt-[3vh]'>Recently Viewed</StyledText>
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
-          <StyledView key={projectId} className='mt-[3vh]'>
+          <StyledTouchableOpacity onPress={() => navigation.navigate('Project')} key={projectId} className='mt-[3vh]'>
             <RecentlyViewedCard projectId={projectId} />
-          </StyledView>
+          </StyledTouchableOpacity>
         ))}
 
       <StyledView className='w-full my-[3vh] h-[5vh]'>
@@ -35,14 +42,19 @@ const Investments = ({ portfolio }) => {
           name={'Find More'}
           intent={'primary'}
           iconRoute={require('../../../../assets/images/search-white.png')}
-          navigation={() => {}}
+          navigation={() => navigation.navigate('Project')}
         ></WideButton>
       </StyledView>
     </StyledView>
   );
 };
 
-const BottomSheetComponent = ({ portfolio }) => {
+const BottomSheetComponent = ({ portfolio, navigation }: {
+  portfolio: Portfolio
+  // This actually should be `any`, so disabling the linter rule
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: any;
+}) => {
   const sheetRef = useRef<BottomSheet>(null);
 
   return (
@@ -54,7 +66,7 @@ const BottomSheetComponent = ({ portfolio }) => {
     >
       <BottomSheetScrollView>
         <StyledView className='w-[100vw] px-[7vw]'>
-          <Investments portfolio={portfolio} />
+          <Investments portfolio={portfolio} navigation={navigation} />
         </StyledView>
       </BottomSheetScrollView>
     </BottomSheet>

@@ -3,7 +3,6 @@ import { Text, View, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
-import Tag from '../../../components/Tag';
 import StatusTag from '../components/StatusTag';
 import { useProject, useProjectTotalFunded } from '../../../services/project';
 

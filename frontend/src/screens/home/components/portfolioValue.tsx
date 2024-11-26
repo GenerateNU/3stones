@@ -9,12 +9,16 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 //Button to add funds to the account
-const AddFundsButton = ({ navigation }) => {
+const AddFundsButton = ({ navigation }: 
+  {// This actually should be `any`, so disabling the linter rule
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: NavigationScreenProp<any, any>;
+}) => {
   return (
     <WideButton
       name={'Add Funds'}
       iconRoute={require('../../../../assets/images/attach-money.png')}
-      navigation={navigation}
+      navigation={() => navigation.navigate('Profile')}
       intent='secondary'
     ></WideButton>
   );
@@ -26,7 +30,7 @@ const PortfolioButton = ({ navigation }) => {
     <WideButton
       name={'Portfolio'}
       iconRoute={require('../../../../assets/images/chevron-right.png')}
-      navigation={navigation}
+      navigation={() => navigation.navigate('Portfolio')}
       intent='primary'
     ></WideButton>
   );
@@ -75,7 +79,11 @@ const PortfolioMoreDetailsIcon = ({ navigation }) => {
   );
 };
 
-const PortfolioButtons = ({ navigation }) => {
+const PortfolioButtons = ({ navigation }: {
+  // This actually should be `any`, so disabling the linter rule
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: NavigationScreenProp<any, any>;
+}) => {
   return (
     <StyledView className='flex-2 flex flex-row gap-x-4'>
       <StyledView className='flex-1 h-[5vh]'>

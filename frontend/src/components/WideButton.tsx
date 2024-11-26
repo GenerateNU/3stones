@@ -75,7 +75,7 @@ export interface ButtonProps
 const WideButton: React.FC<ButtonProps> = ({ name, iconRoute, intent, navigation }) => {
   return (
     <StyledTouchableOpacity
-      onPress={() => navigation.navigate('secondScreen')}
+      onPress={navigation}
       className={buttonVariants({ intent })}
     >
       <StyledText className={buttonTextVariants({ intent })}>{name}</StyledText>
