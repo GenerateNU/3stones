@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../components/Button';
-import NotificationButton from './components/NotificationButton';
+import TextField from '../../components/TextField';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -10,92 +10,82 @@ const StyledImage = styled(Image);
 
 export default function WithdrawScreen({ navigation }) {
   return (
-    <StyledView className='flex-1 bg-surfaceBG px-[4vw] py-[6vh]'>
-      {/* Balance Info */}
-      <StyledView className='bg-white rounded-lg p-[5vw] mb-[10px] w-full gap-y-[10px]'>
-        <StyledImage
-          className='w-8 h-8 mx-auto'
-          source={require('../../../assets/images/withdraw-error.png')}
-          alt='Withdraw Error'
-        />
-        <StyledText className='font-nunito-sans text-gray-600 text-lg not-italic font-bold leading-6'>
-          Please verify before proceeding:
-        </StyledText>
-        <StyledText className='text-base font-sourceSans3 text-gray-500 leading-[22px] mb-[10px]'>
-          You can withdraw your full balance or leave a small amount in your account.
-        </StyledText>
+    <StyledView className='flex-1 bg-white p-4'>
+      <StyledView className='py-8 px-6'>
+        <StyledView className='bg-brand-400 rounded-2xl w-full gap-y-[10px]'>
+          <StyledView className='bg-brand-400 rounded-lg p-[4vw] flex-col w-full'>
+            <StyledView className='flex-row justify-between items-center mb-4'>
+              <StyledText className='text-inverseText font-sourceSans3 font-bold text-[16px] leading-[22px]'>
+                Available Balance
+              </StyledText>
+              <Button
+                type='primary'
+                size='small'
+                className='rounded-[50px] bg-defaultPrimary'
+                onPress={() => console.log('View Portfolio button pressed')}
+              >
+                View Portfolio
+              </Button>
+            </StyledView>
 
-        {/* Brand Section */}
-        <StyledView className='bg-brand-400 rounded-lg p-[4vw] flex-col w-full'>
-          {/* Row with "Available Balance" and the Edit Icon */}
-          <StyledView className='flex-row justify-between items-center mb-4'>
-            <StyledText className='text-inverseText font-sourceSans3 font-bold text-[16px] leading-[22px]'>
-              Available Balance
+            <StyledText className='text-[32px] text-inverseText font-nunito-sans font-extrabold leading-[40px] mb-2'>
+              $700.00
             </StyledText>
-            <StyledImage
-              className='w-[6vw] h-[6vw]'
-              source={require('../../../assets/images/edit-icon-light.png')}
-              alt='Edit Balance'
-            />
+
+            <StyledText className='font-sourceSans3 text-inverseText font-medium text-[12px] leading-[14px]'>
+              Total Available Cash
+            </StyledText>
           </StyledView>
+        </StyledView>
 
-          {/* "$700.00" Text */}
-          <StyledText className='text-[32px] text-inverseText font-nunito-sans font-extrabold leading-[40px] mb-2'>
-            $700.00
-          </StyledText>
-
-          {/* "Total Available Cash" Text */}
-          <StyledText className='font-sourceSans3 text-inverseText font-medium text-[12px] leading-[14px]'>
-            Total Available Cash
-          </StyledText>
+        <StyledView className='pt-6 -m-4'>
+          <TextField
+            intent='default'
+            size='large'
+            icon='suffix'
+            placeholder='Enter Amount'
+            prefix='$'
+            suffix='USD'
+          />
         </StyledView>
       </StyledView>
 
-      {/* Connected Bank Section */}
-      <StyledView className='rounded-[16px] bg-surfaceBG border border-borderPrimary p-[5vw] w-full mt-[10px]'>
-        {/* Connected Bank Header */}
-        <StyledView className='flex flex-row justify-between items-center mb-4'>
-          <StyledText className='text-lg font-sourceSans3 text-defaultText'>
-            Connected Bank
-          </StyledText>
+      {/* Updated StyledView */}
+      <StyledView className='flex flex-col justify-end items-start flex-grow py-4 px-6 gap-4'>
+        <StyledText className='font-sourceSans3 font-medium text-black leading-6'>
+          Transferring to
+        </StyledText>
+        <StyledView className='flex-row items-center justify-between w-full'>
+          <StyledView className='flex-row items-center'>
+            <StyledImage source={require('../../../assets/images/chase.png')} className='w-8 h-8' />
+            <StyledView className='flex-row px-2 py-1 items-center'>
+              <StyledText className='font-sourceSans3 font-bold text-black leading-6 pr-2'>
+                Chase Bank
+              </StyledText>
+              <StyledText className='font-sourceSans3 font-medium text-defaultText leading-6'>
+                xxxx2731
+              </StyledText>
+            </StyledView>
+          </StyledView>
           <StyledImage
-            className='w-8 h-8 hover:opacity-75 cursor-pointer'
             source={require('../../../assets/images/edit-icon-dark.png')}
-            alt='Edit Connected Bank'
+            className='w-8 h-8 ml-4'
           />
         </StyledView>
-
-        {/* Chase Bank Information */}
-        <StyledView className='flex flex-row items-center'>
-          <StyledImage
-            className='w-8 h-8 mr-4'
-            source={require('../../../assets/images/chase.png')}
-            alt='Chase Bank Logo'
-          />
-          <StyledView className='flex flex-col'>
-            <StyledText className='text-base font-sourceSans3 font-bold text-defaultText'>
-              Chase Bank
-            </StyledText>
-            <StyledText className='text-sm font-sourceSans3 font-medium text-defaultText'>
-              XXXXXX
-            </StyledText>
-          </StyledView>
+        <StyledText className='font-sourceSans3 font-normal text-xs text-gray-800 leading-4'>
+          Transfer speed depends on your bank and could take up to 30 minutes. Transfers are
+          reviewed which may result in delays or funds being frozen or removed from your account.
+        </StyledText>
+        <StyledView className='w-full'>
+          <Button
+            type='primary'
+            size='large'
+            className='w-full rounded-[50px] bg-gray-300'
+            onPress={() => console.log('Withdraw button pressed')}
+          >
+            Withdraw
+          </Button>
         </StyledView>
-      </StyledView>
-
-      {/* Spacer View to Push Button to Bottom */}
-      <StyledView className='flex-grow'></StyledView>
-
-      {/* Withdraw Button */}
-      <StyledView className='w-full'>
-        <Button
-          type='primary'
-          size='large'
-          className='w-full rounded-[50px] bg-defaultPrimary'
-          onPress={() => console.log('Withdraw button pressed')}
-        >
-          Withdraw
-        </Button>
       </StyledView>
     </StyledView>
   );
