@@ -225,7 +225,7 @@ const TextField: React.FC<TextFieldProps> = ({iconRoute, intent, size, icon, err
       </StyledView>
       {intent === 'error' && errorMessage && (
         <StyledView className = "flex-row items-center gap-2">
-          <Image source={require('../../../assets/images/error.png')} />
+          <Image source={require('../../assets/images/error.png')} />
           <StyledText className="text-error mt-1">{errorMessage}</StyledText>
        </StyledView>
       )}

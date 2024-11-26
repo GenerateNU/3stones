@@ -8,6 +8,8 @@ import PortfolioItem from './components/PortfolioItem';
 import PortfolioDetails from './components/PortfolioDetails';
 import UpdateCard from './components/PortfolioUpdateCard';
 import { useInvestorPortfolio } from '../../../src/services/investor'
+import { useAuth } from "../../../src/context/AuthContext";
+import { useProjectTotalFunded, useAllProjects } from "../../services/project";
 
 
 interface PortfolioScreenProps {
@@ -30,16 +32,27 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   const [activeTab, setActiveTab] = useState('Your Projects');
 
   const InvestorPortfolio = () => {
+    const { session } = useAuth();
     const { portfolio, isLoading } = useInvestorPortfolio();
-
-    if (isLoading) {
-      return <p>Loading portfolio...</p>;
-    }
   
     if (!portfolio) {
       return <p>Failed to load portfolio. Please try again later.</p>;
     }
-  }
+
+    const { allProjects} = useAllProjects();
+
+      if (isLoading) {
+        return <StyledText className='text-lg font-bold '>
+        Your Projects
+      </StyledText>;
+      }
+
+      if (!allProjects || allProjects.length === 0) {
+        return <p>No projects found.</p>;
+      }
+
+      const projectIds = allProjects.map((project) => project.id);
+  
 
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
@@ -64,20 +77,27 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
         {/* Tab section */}
         <StyledView className='w-full flex-row justify-center'>
-          <StyledView className = 'w-1/2'>
-              <StyledTouchableOpacity onPress={() => setActiveTab('Your Projects')} className={`items-center h-14 py-2 rounded-tl-[27px] rounded-tr-[27px] ${activeTab === 'Your Projects' ? 'bg-white' : 'bg-defaultPrimary'}`}>
-                <StyledText className={`text-lg font-bold ${activeTab === 'Your Projects' ? 'text-gray-800' : 'text-white'}`}>
+          <StyledView className = 'w-40'>
+              <StyledTouchableOpacity onPress={() => setActiveTab('Your Projects')} className={`items-center h-14 py-2 rounded-tr-[27px] rounded-tl-[27px] ${activeTab === 'Your Projects' ? 'bg-white' : 'bg-defaultPrimary'}`}>
+                <StyledText className={`text-lg font-bold  ${activeTab === 'Your Projects' ? 'text-gray-800' : 'text-white'}`}>
                   Your Projects
                 </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
-            <StyledView className = 'w-1/2'>
-              <StyledTouchableOpacity onPress={() => setActiveTab('Updates')} className={`items-center h-14 py-2 rounded-tl-[27px] rounded-tr-[27px] ${activeTab === 'Updates' ? 'bg-white' : 'bg-defaultPrimary'}`}>
+            {/* {activeTab === 'Updates' ? (
+              <StyledImage className = 'h-14 w-10 z=1'
+                source={require('../../../assets/images/Tab2.png')}
+              />
+              ) : <StyledImage className = 'h-14 z=1'
+              source={require('../../../assets/images/Tab1.png')}
+            />} */}
+            <StyledView className = 'w-40'>
+              <StyledTouchableOpacity onPress={() => setActiveTab('Updates')} className={`items-center h-14 py-2  rounded-tr-[27px] ${activeTab === 'Updates' ? 'bg-white' : 'bg-defaultPrimary'}`}>
                 <StyledText className={`text-lg font-bold ${ activeTab === 'Updates' ? 'text-gray-800' : 'text-white'}`}>
                   Updates
                 </StyledText>
               </StyledTouchableOpacity>
-        </StyledView>
+            </StyledView>
         </StyledView>
 
        
@@ -86,30 +106,27 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         <StyledView className = 'bg-defaultPrimary'>
         <StyledView className= {`flex p-[16px] flex-col items-start bg-white ${activeTab === 'Your Projects' ? 'rounded-tr-[27px]' : 'rounded-tl-[27px]'}`}>
           <StyledText className='font-sourceSans3CaptionMedium text-[14px] mb-4'>
-          8 Total Investments
+          {allProjects.length} Total Investments
         </StyledText>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-        <PortfolioItem
-          address={''}
-          location={''}
-          price={0}
-          duration={''}
-          invested={0}
-          completion={0}
-          imageUrl={''}
-        ></PortfolioItem>
-        </StyledView>
+            {allProjects.map((project) => (
+              <StyledView className = 'mb-4'>
+                <PortfolioItem
+                  address={project.street}
+                  location={project.state}
+                  price={project.funding_goal_cents/100}
+                  duration={''}
+                  invested={-1}
+                  completion={useProjectTotalFunded(project.id).projectTotalFunded}
+                  image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />}
+                ></PortfolioItem>
+              </StyledView>))}
+
+
+
+
+
+   
+        
         <StyledView className = 'mb-4'>
           <PortfolioItem
             address={''}
@@ -194,3 +211,4 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
     </StyledView>
   );
 }
+};
