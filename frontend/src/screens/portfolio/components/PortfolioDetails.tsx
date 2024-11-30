@@ -32,8 +32,8 @@ const PortfolioDetails = ({netPortfolioValue, portfolioChangeAmount, marketValue
                 </StyledView>
                 <StyledText className = 'font-bold text-[32px]'>{netPortfolioValue}</StyledText>
                 <StyledView className = 'flex flex-row justify-between items-center'>
-                    <StyledText className = 'color-success font-sourceSans3Bold text-[16px]'> {portfolioChangeAmount}</StyledText>
-                    <StyledText className = 'color-success px-4 font-sourceSans3Bold text-[16px]'>{portfolioChangeAmount/netPortfolioValue*100}</StyledText>
+                    <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} font-sourceSans3Bold text-[16px]`}> {portfolioChangeAmount}</StyledText>
+                    <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} px-4 font-sourceSans3Bold text-[16px]`}>{portfolioChangeAmount/netPortfolioValue*100}</StyledText>
                     <StyledText className = 'font-bodyBold text-[16px]'>Total Return</StyledText>
                 </StyledView>
             </StyledView>
