@@ -10,7 +10,6 @@ import { AuthProvider } from '../context/AuthContext';
 import LoginEmailScreen from '../screens/login/login_flow/LoginEmailScreen';
 import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen';
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
-import SignupMainScreen from '../screens/login/signup_flow/SignupMainScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -58,11 +57,6 @@ export default function LoginNavigator() {
           name='LegalInformationScreen'
           component={LegalInformationScreen}
           options={{ title: 'Legal Info' }}
-        />
-        <Stack.Screen
-          name='SignupMainScreen'
-          component={SignupMainScreen}
-          options={{ title: 'Manual Address Entry' }}
         />
         <Stack.Screen
           name='QuestionsScreen'

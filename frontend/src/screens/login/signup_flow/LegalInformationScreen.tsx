@@ -68,7 +68,7 @@ export default function LegalInformationScreen({ navigation }) {
             <TextInputComponent
               placeholder="Social Security Number"
               value={signupData.ssn}
-              onChangeText={(input) => updateSignupData('ssn', input)}
+              onChangeText={(input) => updateSignupData('ssn', input.replace(/\D/g, '').slice(0, 9))}
               keyboardType="numeric"
             >
             </TextInputComponent>

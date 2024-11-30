@@ -26,6 +26,8 @@ type AuthContextType = {
   signOut: () => Promise<void>;
   updateLoginData: (field: string, value: string) => void;
   updateSignupData: (key: string, value: any) => void;
+  isInSignupFlow: boolean;
+  setIsInSignupFlow: (value: boolean) => void;
 };
 
 
@@ -50,6 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
     questions: {},
   });
+  const [isInSignupFlow, setIsInSignupFlow] = useState(false);
 
   // Fetches the current session from Supabase when the app loads and stores it in the session state.
   useEffect(() => {
@@ -65,6 +68,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    console.log(`IsInSignupflow: ${isInSignupFlow}`)
+  }, [isInSignupFlow])
 
   // signs in the user with email and password
   const login = async (email: string, password: string) => {
@@ -124,6 +131,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signOut,
         updateLoginData,
         updateSignupData,
+        isInSignupFlow,
+        setIsInSignupFlow,
       }}
     >
       {children}

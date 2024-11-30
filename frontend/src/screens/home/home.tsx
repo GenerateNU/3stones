@@ -1,9 +1,11 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity, Button } from 'react-native';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 // import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { useContributors } from '../../services/contributor';
+import Button from '../../components/Button';
+import { useAuth } from '../../context/AuthContext';
 
 
 interface HomeScreenProps {
@@ -21,6 +23,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const { signOut } = useAuth();
   console.log("Hello, world");
 
   async function getEndPoint() {
@@ -34,7 +37,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   
   getEndPoint();
   
-  return (<></>);
+  return (
+    <StyledView className='flex-1 mt-12'>
+      <Button onPress={() => { signOut(); }}>SIGN ME OUT</Button>
+    </StyledView>
+  );
   //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
   //     {/* Some dummy image */}
   //     <StyledView className='align-center'>

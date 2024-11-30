@@ -20,7 +20,7 @@ export default function UserDetailsScreen({ navigation }) {
   const handleNext = () => {
     updateSignupData('firstName', firstName);
     updateSignupData('lastName', lastName);
-    navigation.navigate('ConnectAccountsScreen');
+    navigation.navigate('LegalInformationScreen')
   };
 
   return (

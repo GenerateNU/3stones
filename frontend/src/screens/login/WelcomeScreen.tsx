@@ -3,12 +3,15 @@ import { Image, View, Text } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import WelcomeToThreeStonesComponent from './components/WelcomeToThreeStones';
+import { useAuth } from '../../context/AuthContext';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function WelcomeScreen({ navigation }) {
+  const { setIsInSignupFlow } = useAuth();
+
   return (
     <StyledView className="flex-1 justify-center items-center bg-surfaceBG p-6">
       <WelcomeToThreeStonesComponent />
@@ -25,7 +28,10 @@ export default function WelcomeScreen({ navigation }) {
       <StyledView className="w-full">
         <Button
           type="primary"
-          onPress={() => navigation.navigate('SignupMainScreen')} // Replace with your actual navigation route
+          onPress={() => {
+            setIsInSignupFlow(true);
+            navigation.navigate('EmailInputScreen')
+          }} // Replace with your actual navigation route
           disabled={false}
         >Sign Up</Button>
         <StyledView className="my-2" />

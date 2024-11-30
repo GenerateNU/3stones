@@ -44,13 +44,17 @@ export default function QuestionsScreen({ navigation }) {
     const currentQuestion = questions[currentIndex];
 
     const handleSelectOption = (selectedOptions) => {
-        // Update answers in AuthContext
-        updateSignupData(`questions.${currentQuestion.id}`, selectedOptions);
+        // Only update if the value has actually changed
+        const currentAnswers = signupData.questions[currentQuestion.id] || [];
+        if (JSON.stringify(currentAnswers) !== JSON.stringify(selectedOptions)) {
+            updateSignupData(`questions.${currentQuestion.id}`, selectedOptions);
+        }
     };
 
     const handleSignup = async () => {
         try {
           await signUp(signupData.email, signupData.password);
+          console.log("Sign up worked.")
         } catch (error) {
             console.error('Error signing up:', error.message);
         }

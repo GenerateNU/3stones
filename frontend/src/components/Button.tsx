@@ -109,6 +109,7 @@ const Button: React.FC<ButtonProps> = ({
       onPressOut={handlePressOut}
       onPress={onPress}
       disabled={disabled}
+      activeOpacity={1}
       className={backgroundStyles({ type, state, size })}
       {...props}
     >
