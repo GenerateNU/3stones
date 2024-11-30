@@ -9,7 +9,8 @@ import PortfolioDetails from './components/PortfolioDetails';
 import UpdateCard from './components/PortfolioUpdateCard';
 import { useInvestorPortfolio } from '../../../src/services/investor'
 import { useAuth } from "../../../src/context/AuthContext";
-import { useProjectTotalFunded, useAllProjects } from "../../services/project";
+import { useProjectTotalFunded, useAllProjects, useProjectPosts } from "../../services/project";
+
 
 
 interface PortfolioScreenProps {
@@ -31,28 +32,20 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
   const [activeTab, setActiveTab] = useState('Your Projects');
 
-  const InvestorPortfolio = () => {
-    const { session } = useAuth();
-    const { portfolio, isLoading } = useInvestorPortfolio();
-  
-    if (!portfolio) {
-      return <p>Failed to load portfolio. Please try again later.</p>;
-    }
+  const { portfolio, isLoading: portfolioLoading } = useInvestorPortfolio();
+  const { allProjects, isLoading: projectsLoading } = useAllProjects();
 
-    const { allProjects} = useAllProjects();
+  if (portfolioLoading || projectsLoading) {
+    return <StyledText className='text-lg font-bold'>Loading...</StyledText>;
+  }
 
-      if (isLoading) {
-        return <StyledText className='text-lg font-bold '>
-        Your Projects
-      </StyledText>;
-      }
+  if (!portfolio) {
+    return <StyledText>Failed to load portfolio. Please try again later.</StyledText>;
+  }
 
-      if (!allProjects || allProjects.length === 0) {
-        return <p>No projects found.</p>;
-      }
-
-      const projectIds = allProjects.map((project) => project.id);
-  
+  if (!allProjects || allProjects.length === 0) {
+    return <StyledText>No projects found.</StyledText>;
+  }
 
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
@@ -120,95 +113,26 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                   image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />}
                 ></PortfolioItem>
               </StyledView>))}
-
-
-
-
-
-   
+        </StyledView>
+       </StyledView>
         
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-        <StyledView className = 'mb-4'>
-          <PortfolioItem
-            address={''}
-            location={''}
-            price={0}
-            duration={''}
-            invested={0}
-            completion={0}
-            imageUrl={''}
-          ></PortfolioItem>
-        </StyledView>
-      </StyledView>
-      </StyledView>) 
+        ) 
       : 
         (<StyledView className = 'bg-defaultPrimary'>
         <StyledView className={`flex p-[16px] flex-col items-start bg-white ${activeTab === 'Updates' ? 'rounded-tl-[27px]' : 'rounded-tr-[27px]'}`}>
           {/* Updates */}
-            <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
-            <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
-            <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
-            <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
-            <UpdateCard topText='931 1st Street' bottomText='You invested $200' quantity='+$200.00' />
+          {allProjects.flatMap(project => {
+                const { projectPosts = [] } = useProjectPosts(project.id) ?? {};
+                return projectPosts.map((post) => (
+                  <StyledView key={post.id} className="mb-2">
+                    <UpdateCard topText={post.title} bottomText={post.description} quantity={''} />
+                  </StyledView>
+                ));
+              })}
         </StyledView>
         </StyledView>
           )}
       </StyledScrollView>
     </StyledView>
   );
-}
 };
