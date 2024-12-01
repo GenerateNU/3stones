@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ProfileLegalDocumentsScreen from '../screens/profile/ProfileLegalDocumentsScreen';
 import ProfileSettingsScreen from '../screens/profile/ProfileSettingsScreen';
+import ProfileEditScreen from '../screens/profile/ProfileEditScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,9 +22,7 @@ export default function ProfileNavigator() {
         options={
           {
             title: "Legal Documents", 
-            headerShown: true,
-            headerStyle: { backgroundColor: '#FAFAFC' },
-            headerTitleStyle: { fontWeight: 'bold' }
+            headerShown: false,
           }
         }
       />
@@ -33,9 +32,17 @@ export default function ProfileNavigator() {
         options={
           {
             title: "Settings", 
-            headerShown: true,
-            headerStyle: { backgroundColor: '#FAFAFC' },
-            headerTitleStyle: { fontWeight: 'bold' }
+            headerShown: false,
+          }
+        }
+      />
+      <Stack.Screen
+        name='profile-edit'
+        component={ProfileEditScreen}
+        options={
+          {
+            title: "Edit Profile", 
+            headerShown: false,
           }
         }
       />
