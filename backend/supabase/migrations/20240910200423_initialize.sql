@@ -75,9 +75,19 @@ CREATE TABLE investors (
     created_at timestamp WITH time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     first_name varchar(256) NOT NULL,
     last_name varchar(256) NOT NULL,
+    email varchar(256) NOT NULL,
+    phone_number varchar(20) NOT NULL,
+    ssn varchar(20) NOT NULL,
+    premise varchar(10) NOT NULL,
+    subpremise varchar(10),
+    street varchar(256) NOT NULL,
+    locality varchar(256) NOT NULL,
+    state us_state NOT NULL,
+    zipcode varchar(10) NOT NULL,
     access_token varchar(256),
     cash_balance_cents bigint NOT NULL DEFAULT 0,
-    item_id varchar(256)
+    item_id varchar(256),
+    profile_picture_url varchar(256)
 );
 
 CREATE TABLE developers (
@@ -102,6 +112,7 @@ CREATE TABLE projects (
     completed boolean NOT NULL DEFAULT FALSE,
     funding_goal_cents bigint NOT NULL, -- Total funding is in cents - 1234 = $12.34
     milestone varchar(256) NOT NULL, -- Very basic but I think this is OK for MVP
+    completion_date varchar(256) NOT NULL,
     premise varchar(10) NOT NULL,
     subpremise varchar(10),
     street varchar(256) NOT NULL,

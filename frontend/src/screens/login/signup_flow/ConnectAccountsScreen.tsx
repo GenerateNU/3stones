@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import ProgressBar from '../../components/ProgressBar';
+import Button from '../../../components/Button';
+import ProgressBar from '../../../components/ProgressBar';
 
 
 const StyledView = styled(View);
@@ -23,8 +23,8 @@ export default function ConnectAccountsScreen({ navigation }) {
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
             <ProgressBar
-              current={4} 
-              total={6} 
+              current={4}
+              total={6}
             />
           </StyledView>
 
@@ -45,7 +45,7 @@ export default function ConnectAccountsScreen({ navigation }) {
           <StyledView className="w-full mt-6">
             <Button
               type="primary"
-              onPress={() => navigation.navigate('InvestmentPlanScreen')}
+              onPress={() => navigation.navigate('LegalInformationScreen')}
               disabled={false}
             >Continue</Button>
           </StyledView>

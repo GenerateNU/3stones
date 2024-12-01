@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import React, {useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import { SignupContext } from '../../context/SignupContext';
-import ProgressBar from '../../components/ProgressBar';
+import Button from '../../../components/Button';
+import ProgressBar from '../../../components/ProgressBar';
+import TextInputComponent from '../components/TextInputComponent';
+import { useAuth } from '../../../context/AuthContext';
 
 
 const StyledView = styled(View);
@@ -12,12 +13,12 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 
 export default function PasswordInputScreen({ navigation }) {
-  const { formData, updateForm } = useContext(SignupContext);
-  const [password, setPassword] = useState(formData.password);
+  const { signupData, updateSignupData } = useAuth();
+  const [password, setPassword] = useState(signupData.password);
 
   const handleNext = () => {
-    updateForm('password', password);
-    navigation.navigate('UserDetailsScreen'); 
+    updateSignupData('password', password);
+    navigation.navigate('UserDetailsScreen');
   };
 
   return (
@@ -28,12 +29,12 @@ export default function PasswordInputScreen({ navigation }) {
     >
       <StyledScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }}>
         <StyledView className="flex-1 items-center bg-surfaceBG p-6 justify-between">
-          
+
           {/* Progress Bar */}
           <StyledView className="w-full mb-4">
             <ProgressBar
-              current={2} 
-              total={6} 
+              current={2}
+              total={6}
             />
           </StyledView>
 
@@ -44,19 +45,20 @@ export default function PasswordInputScreen({ navigation }) {
               Choose a strong password for your account.
             </StyledText>
 
-            {/* <TextInputComponent
+            <TextInputComponent
               placeholder="Password"
               value={password}
-              onChangeText={setPassword}
+              onChangeText={(text) => setPassword(text)}
               isPassword={true}
-            /> */}
+            >
+            </TextInputComponent>
           </StyledView>
 
           {/* Continue Button */}
           <StyledView className="w-full mt-6">
             <Button
               type="primary"
-              onPress={() => {handleNext()}}
+              onPress={() => { handleNext() }}
               disabled={!password.trim()} // Disable if password is empty
             >Continue</Button>
           </StyledView>
