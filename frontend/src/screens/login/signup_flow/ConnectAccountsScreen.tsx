@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import ProgressBar from '../../components/ProgressBar';
+import Button from '../../../components/Button';
+import ProgressBar from '../../../components/ProgressBar';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -40,7 +40,7 @@ export default function ConnectAccountsScreen({ navigation }) {
           <StyledView className='w-full mt-6'>
             <Button
               type='primary'
-              onPress={() => navigation.navigate('InvestmentPlanScreen')}
+              onPress={() => navigation.navigate('LegalInformationScreen')}
               disabled={false}
             >
               Continue

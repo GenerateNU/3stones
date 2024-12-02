@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
 import { styled } from 'nativewind';
-import Button from '../../components/Button';
-import ProgressBar from '../../components/ProgressBar';
-import { SignupContext } from '../../context/SignupContext';
+import Button from '../../../components/Button';
+import ProgressBar from '../../../components/ProgressBar';
+import { useAuth } from '../../../context/AuthContext';
+import TextInputComponent from '../components/TextInputComponent';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -11,13 +12,13 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 
 export default function UserDetailsScreen({ navigation }) {
-  const { formData, updateForm } = useContext(SignupContext);
-  const [firstName, setFirstName] = useState(formData.firstName);
-  const [lastName, setLastName] = useState(formData.lastName);
+  const { signupData, updateSignupData } = useAuth();
+  const [firstName, setFirstName] = useState(signupData.firstName);
+  const [lastName, setLastName] = useState(signupData.lastName);
 
   const handleNext = () => {
-    updateForm('firstName', firstName);
-    updateForm('lastName', lastName);
+    updateSignupData('firstName', firstName);
+    updateSignupData('lastName', lastName);
     navigation.navigate('ConnectAccountsScreen');
   };
 
@@ -43,19 +44,21 @@ export default function UserDetailsScreen({ navigation }) {
               We need your first and last name to get started.
             </StyledText>
 
-            {/* <TextInputComponent
-              placeholder="First Name"
+            <TextInputComponent
+              placeholder='First Name'
               value={firstName}
-              onChangeText={setFirstName}
-              isPassword={false}
-            />
+              onChangeText={(input) => setFirstName(input)}
+              autoCapitalize='words'
+              autoFocus={true}
+            ></TextInputComponent>
 
             <TextInputComponent
-              placeholder="Last Name"
+              placeholder='Last Name'
               value={lastName}
-              onChangeText={setLastName}
-              isPassword={false}
-            /> */}
+              onChangeText={(input) => setLastName(input)}
+              autoCapitalize='words'
+              autoFocus={false}
+            ></TextInputComponent>
           </StyledView>
 
           {/* Continue Button */}

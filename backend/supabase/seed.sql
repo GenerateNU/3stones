@@ -65,6 +65,41 @@ INSERT INTO
             auth.users
     );
 
+-- test investor data matching auth users
+INSERT INTO
+    investors (
+        supabase_id,
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        ssn,
+        premise,
+        subpremise,
+        street,
+        locality,
+        state,
+        zipcode,
+        profile_picture_url
+    ) (
+        select
+            id,
+            'Test',
+            'User' || (ROW_NUMBER() OVER ()),
+            email,
+            '555-555-5555',
+            '123-45-6789',
+            '123',
+            null,
+            'Main St',
+            'Boston',
+            'MA',
+            '02115',
+            'https://api.dicebear.com/7.x/avataaars/svg?seed=' || (ROW_NUMBER() OVER ())
+        from
+            auth.users
+    );
+
 -- SQLBook: Code
 INSERT INTO contributors (first_name, last_name, email) VALUES ('Michael', 'Brennan', 'brennan.mic@northeastern.edu');
 INSERT INTO contributors (first_name, last_name, email) VALUES ('Ryan', 'Saperstein', 'saperstein.r@northeastern.edu');
@@ -83,9 +118,6 @@ INSERT INTO project_images (project_id, image_url) VALUES ('c3733692-5a86-441f-8
 INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'https://cdn2.thecatapi.com/images/MTk3OTMzMg.jpg');
 INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'https://cdn2.thecatapi.com/images/MjA1MTYzNg.jpg');
 INSERT INTO project_images (project_id, image_url) VALUES ('d09c8f0f-13d3-4336-92e9-b0b2c8bce570', 'https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg');
-
-INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user1@example.com'), 'Dwight', 'Howard');
-INSERT INTO investors (supabase_id, first_name, last_name) VALUES ((SELECT id from auth.users where email='user2@example.com'), 'Taj', 'Gibson');
 
 INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('bdd66406-64bd-41a5-b797-a486751ea429', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email='user1@example.com'), '1200');
 INSERT INTO investor_investments (id, project_id, investor_id, funded_cents) VALUES ('ba995313-1b8a-4b4e-ad02-0b72efd22309', 'c3733692-5a86-441f-8ad0-9c32c648bb72', (SELECT id FROM auth.users WHERE email='user1@example.com'), '400');
