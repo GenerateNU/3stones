@@ -1,22 +1,20 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
-import ProgressBar from '../../../components/ProgressBar';
+import Card from '../../../components/Card';
 
-const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-/* Card */
 const CategoryCard = ({ category, image }) => {
   return (
-    <StyledView>
-      <StyledTouchableOpacity>
+    <Card>
+      <StyledTouchableOpacity activeOpacity={0.8} accessibilityRole='button'>
         <StyledImage source={image} />
         <StyledText>{category}</StyledText>
       </StyledTouchableOpacity>
-    </StyledView>
+    </Card>
   );
 };
 

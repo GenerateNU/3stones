@@ -9,6 +9,7 @@ import ConnectAccountsScreen from '../screens/login/ConnectAccountsScreen';
 import InvestmentPlanScreen from '../screens/login/InvestmentPlanScreen';
 import { SignupProvider } from '../context/SignupContext';
 import SampleLoginScreen from '../screens/login/SampleLoginScreen';
+import ExploreScreen from '../screens/explore/explore';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ export default function LoginNavigator() {
       <Stack.Navigator initialRouteName='WelcomeScreen'>
         <Stack.Screen
           name='WelcomeScreen'
-          component={WelcomeScreen}
+          component={ExploreScreen}
           options={{ title: '', headerShown: false }}
         />
         <Stack.Screen
