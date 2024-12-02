@@ -1,4 +1,4 @@
-// WithdrawScreen.js
+// DepositScreen.js
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
@@ -10,7 +10,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-export default function WithdrawScreen({ navigation }) {
+export default function DepositScreen({ navigation }) {
   const [inputValue, setInputValue] = useState('');
   const [isValidInput, setIsValidInput] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -29,13 +29,13 @@ export default function WithdrawScreen({ navigation }) {
     }
   };
 
-  const handleWithdrawPress = () => {
+  const handleDepositPress = () => {
     setConfirmVisible(true);
   };
 
   const handleConfirm = () => {
     setConfirmVisible(false);
-    navigation.navigate('profile-withdraw-confirm');
+    navigation.navigate('profile-deposit-confirm');
   };
 
   const handleCancel = () => {
@@ -88,7 +88,7 @@ export default function WithdrawScreen({ navigation }) {
       </StyledView>
 
       <StyledView className='flex flex-col justify-end items-start flex-grow py-4 px-6 gap-4'>
-        <StyledText className='font-sourceSans3'>Transferring to</StyledText>
+        <StyledText className='font-sourceSans3'>Transferring from</StyledText>
         <StyledView className='flex-row items-center justify-between w-full'>
           <StyledView className='flex-row items-center'>
             <StyledImage source={require('../../../assets/images/chase.png')} className='w-8 h-8' />
@@ -111,10 +111,10 @@ export default function WithdrawScreen({ navigation }) {
             type='primary'
             size='large'
             className={`w-full rounded-[50px] ${buttonBgColor} ${isValidInput ? '' : 'bg-gray-300'}`}
-            onPress={handleWithdrawPress}
+            onPress={handleDepositPress}
             disabled={!isValidInput}
           >
-            Withdraw
+            Deposit
           </Button>
         </StyledView>
       </StyledView>
@@ -124,7 +124,7 @@ export default function WithdrawScreen({ navigation }) {
         visible={confirmVisible}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
-        withdraw={true}
+        withdraw={false}
       />
     </StyledView>
   );

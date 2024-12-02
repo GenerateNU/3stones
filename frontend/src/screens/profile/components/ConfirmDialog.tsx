@@ -1,4 +1,3 @@
-// ConfirmDialog.js
 import React from 'react';
 import { View, Text, Modal, Image } from 'react-native';
 import { styled } from 'nativewind';
@@ -8,7 +7,7 @@ const StyledText = styled(Text);
 const StyledView = styled(View);
 const StyledImage = styled(Image);
 
-function ConfirmDialog({ visible, onConfirm, onCancel }) {
+function ConfirmDialog({ visible, onConfirm, onCancel, withdraw }) {
   return (
     <Modal transparent visible={visible} animationType='fade'>
       {/* Background Overlay */}
@@ -23,7 +22,6 @@ function ConfirmDialog({ visible, onConfirm, onCancel }) {
           className='bg-white p-4 rounded-lg shadow-lg'
           style={{
             width: 328,
-            // Box shadow and border styles
             shadowColor: 'rgba(100, 116, 139, 0.10)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 1,
@@ -39,44 +37,40 @@ function ConfirmDialog({ visible, onConfirm, onCancel }) {
           />
 
           {/* Dialog Title */}
-          <StyledText
-            className='text-gray-900 font-bold font-nunito-sans mb-1'
-            style={{ width: '100%' }}
-          >
-            Are you sure?
+          <StyledText className='font-heading mb-1' style={{ width: '100%' }}>
+            {withdraw ? 'Are you sure?' : 'Confirm Deposit'}
           </StyledText>
 
           {/* Dialog Message */}
           <StyledText
-            className='text-gray-900 font-sans font-normal leading-5 mb-4'
+            className='text-gray-900 font-sourceSans3 leading-5 mb-4'
             style={{ width: '100%' }}
           >
-            Withdrawing funds could impact your real estate investments and returns. Review your
-            portfolio before continuing.
+            {withdraw
+              ? 'Withdrawing funds could impact your real estate investments and returns. Review your portfolio before continuing.'
+              : "You're about to deposit funds into your real estate portfolio. Review the amount and allocation before proceeding."}
           </StyledText>
 
           {/* Buttons Container */}
           <StyledView className='flex-row justify-between'>
-            {/* Secondary Button */}
+            {/* Primary Button */}
             <Button
               type='secondary'
               size='medium'
-              className='flex-1 rounded-full'
-              onPress={onConfirm}
-              style={{ marginRight: 8 }}
+              className='flex-1 rounded-full mr-2'
+              onPress={onCancel}
             >
-              <StyledText className='text-defaultPrimary'>Withdraw</StyledText>
+              <StyledText>Cancel</StyledText>
             </Button>
 
-            {/* Primary Button */}
+            {/* Secondary Button */}
             <Button
               type='primary'
               size='medium'
-              className='flex-1 rounded-full'
-              onPress={onCancel}
-              style={{ marginLeft: 8 }}
+              className='flex-1 rounded-full ml-2'
+              onPress={onConfirm}
             >
-              <StyledText className='text-white'>Cancel</StyledText>
+              <StyledText>{withdraw ? 'Withdraw' : 'Deposit'}</StyledText>
             </Button>
           </StyledView>
         </StyledView>

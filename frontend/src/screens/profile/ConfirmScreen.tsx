@@ -1,4 +1,3 @@
-// WithdrawConfirmScreen.js
 import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { styled } from 'nativewind';
@@ -11,7 +10,8 @@ const Ellipse = styled(View);
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-export default function WithdrawConfirmScreen() {
+export default function ConfirmScreen({ route }) {
+  const { withdraw } = route.params || {}; // Get the `withdraw` prop from the route params
   const numberOfEllipses = 15;
   const ellipsesArray = Array.from({ length: numberOfEllipses });
   const ellipseWidth = 18;
@@ -48,16 +48,19 @@ export default function WithdrawConfirmScreen() {
 
       {/* White Card */}
       <StyledView className='bg-white rounded-t-2xl mx-6 px-7 py-8 pb-10'>
-        {/* The 'pb-10' adds padding at the bottom to accommodate the perforated ellipses */}
         <StyledView>
+          {/* Conditional Title and Message */}
           <StyledText className='text-2xl font-heading font-bold text-defaultText mb-2'>
-            Pending transfer
+            {withdraw ? 'Pending Withdrawal' : 'Pending Deposit'}
           </StyledText>
           <StyledText className='font-nunitoRegular text-base'>
-            You successfully withdrew $200 out of your 3 Stones account.
+            {withdraw
+              ? 'You successfully withdrew $200 out of your 3 Stones account.'
+              : 'You successfully deposited $200 into your 3 Stones account.'}
           </StyledText>
+
+          {/* Transaction Details */}
           <StyledView className='py-6'>
-            {/* Transaction Details */}
             <StyledView className='flex-row justify-between items-center mb-2'>
               <StyledText className='font-sourceSans3Bold text-base'>Transaction ID</StyledText>
               <StyledText className='font-sourceSans3 text-gray-900'>
