@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { supabase } from './supabase';
 import { Session } from '@supabase/supabase-js';
 
@@ -54,6 +54,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
   const [isInSignupFlow, setIsInSignupFlow] = useState(false);
 
+  // Add a ref to track auth state changes
+  const isAuthStateChange = useRef(false);
+
   // Fetches the current session from Supabase when the app loads and stores it in the session state.
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -62,6 +65,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state change:', event);
+      isAuthStateChange.current = true;
       setSession(session);
       setIsLoading(false);
     });
@@ -84,8 +89,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
-    setSession(data.session);
+    // Don't set session directly, let the auth state change handler do it
+    // setSession(data.session);
   };
+
+  // Add an effect to handle session changes
+  useEffect(() => {
+    if (isAuthStateChange.current && session) {
+      // Don't reset isInSignupFlow when session changes due to signup
+      isAuthStateChange.current = false;
+    }
+  }, [session]);
 
   // signs out the user
   const signOut = async () => {

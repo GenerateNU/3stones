@@ -16,7 +16,6 @@ const Stack = createNativeStackNavigator();
 
 export default function LoginNavigator() {
   return (
-    <AuthProvider>
       <Stack.Navigator initialRouteName='WelcomeScreen'>
         <Stack.Screen
           name='WelcomeScreen'
@@ -64,6 +63,5 @@ export default function LoginNavigator() {
           options={{ title: 'Questions Screen' }}
         />
       </Stack.Navigator>
-    </AuthProvider>
   );
 }
