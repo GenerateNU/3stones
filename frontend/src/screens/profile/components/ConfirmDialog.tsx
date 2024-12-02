@@ -1,38 +1,83 @@
+// ConfirmDialog.js
 import React from 'react';
-import { View, Text, Modal, Pressable } from 'react-native';
+import { View, Text, Modal, Image } from 'react-native';
 import { styled } from 'nativewind';
+import Button from '../../../components/Button';
 
-const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledPressable = styled(Pressable);
+const StyledView = styled(View);
+const StyledImage = styled(Image);
 
 function ConfirmDialog({ visible, onConfirm, onCancel }) {
   return (
     <Modal transparent visible={visible} animationType='fade'>
+      {/* Background Overlay */}
       <StyledView
         className='flex-1 justify-center items-center'
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} // Black with 50% opacity
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.1)',
+        }}
       >
+        {/* Dialog Container */}
         <StyledView
-          className='bg-white p-4 flex-col items-start gap-4 self-stretch rounded-lg border border-gray-300 mx-6'
+          className='bg-white p-4 rounded-lg shadow-lg'
           style={{
-            shadowColor: 'rgba(100, 116, 139, 0.1)',
+            width: 328,
+            // Box shadow and border styles
+            shadowColor: 'rgba(100, 116, 139, 0.10)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 1,
             shadowRadius: 30,
-            elevation: 5, // For Android shadow
+            borderWidth: 1,
+            borderColor: '#DDD',
           }}
         >
-          <StyledText className='text-base font-medium text-black'>
-            Are you sure you want to proceed?
+          {/* Dialog Image */}
+          <StyledImage
+            source={require('../../../../assets/images/withdraw-error.png')}
+            className='w-8 h-8 mb-4'
+          />
+
+          {/* Dialog Title */}
+          <StyledText
+            className='text-gray-900 font-bold font-nunito-sans mb-1'
+            style={{ width: '100%' }}
+          >
+            Are you sure?
           </StyledText>
-          <StyledView className='flex-row gap-4 self-end'>
-            <StyledPressable className='px-4 py-2 bg-gray-200 rounded' onPress={onCancel}>
-              <StyledText className='text-black'>Cancel</StyledText>
-            </StyledPressable>
-            <StyledPressable className='px-4 py-2 bg-blue-500 rounded' onPress={onConfirm}>
-              <StyledText className='text-white'>Confirm</StyledText>
-            </StyledPressable>
+
+          {/* Dialog Message */}
+          <StyledText
+            className='text-gray-900 font-sans font-normal leading-5 mb-4'
+            style={{ width: '100%' }}
+          >
+            Withdrawing funds could impact your real estate investments and returns. Review your
+            portfolio before continuing.
+          </StyledText>
+
+          {/* Buttons Container */}
+          <StyledView className='flex-row justify-between'>
+            {/* Secondary Button */}
+            <Button
+              type='secondary'
+              size='medium'
+              className='flex-1 rounded-full'
+              onPress={onConfirm}
+              style={{ marginRight: 8 }}
+            >
+              <StyledText className='text-defaultPrimary'>Withdraw</StyledText>
+            </Button>
+
+            {/* Primary Button */}
+            <Button
+              type='primary'
+              size='medium'
+              className='flex-1 rounded-full'
+              onPress={onCancel}
+              style={{ marginLeft: 8 }}
+            >
+              <StyledText className='text-white'>Cancel</StyledText>
+            </Button>
           </StyledView>
         </StyledView>
       </StyledView>

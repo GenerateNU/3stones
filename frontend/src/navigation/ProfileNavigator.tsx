@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ProfileLegalDocumentsScreen from '../screens/profile/ProfileLegalDocumentsScreen';
 import WithdrawScreen from '../screens/profile/WithdrawScreen';
+import WithdrawConfirmScreen from '../screens/profile/WithdrawConfirmScreen'; // Ensure this path is correct
 
 const Stack = createNativeStackNavigator();
 
@@ -26,8 +27,8 @@ export default function ProfileNavigator() {
         options={{ title: 'Withdraw', headerShown: true }}
       />
       <Stack.Screen
-        name='profile-withdraw-2'
-        component={WithdrawScreen}
+        name='profile-withdraw-confirm'
+        component={WithdrawConfirmScreen}
         options={{ title: 'Withdraw', headerShown: true }}
       />
     </Stack.Navigator>

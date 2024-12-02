@@ -35,8 +35,7 @@ export default function WithdrawScreen({ navigation }) {
 
   const handleConfirm = () => {
     setConfirmVisible(false);
-    // Proceed with the withdrawal logic
-    console.log('Confirmed withdrawal of amount:', inputValue);
+    navigation.navigate('profile-withdraw-confirm');
   };
 
   const handleCancel = () => {
