@@ -1,10 +1,11 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 interface PortfolioDetailsProps {
     netPortfolioValue: number;
@@ -17,23 +18,42 @@ interface PortfolioDetailsProps {
 }
 
 const PortfolioDetails = ({netPortfolioValue, portfolioChangeAmount, marketValue, cashValue, totalProjects, expMaturity} : PortfolioDetailsProps & { className?: string })=> {
+
+    const [hideValues, setHideValues] = useState(false);
+
+    const toggleHideValues = () => {
+        setHideValues(!hideValues);
+    };
+
+    const displayValue = (value) => {
+        return hideValues ? '****' : value;
+    };
+
+    const [isEyeOpen, setIsEyeOpen] = useState(true);
+
+    const toggleEye = () => {
+        setIsEyeOpen(!isEyeOpen);
+    };
+
     return (
         <StyledView className = 'w-full flex flex-col items-start gap-6 self-stretch px-6 pb-8 pt-0'>
             {/* Top Part */}
             <StyledView className = 'flex flex-col items-start gap-1 self-stretch'>
                 <StyledView className = 'flex flex-row'> 
                     <StyledText className = 'font-body text-[16px]'>Net Portfolio Value</StyledText>
-                    <StyledView className = 'px-2'>
+                    <StyledTouchableOpacity onPress={toggleHideValues} className = 'px-2'>
                         <StyledImage
-                            source={require('../../../../assets/images/remove_red_eye.png')}
+                            source={isEyeOpen 
+                                ? require('../../../../assets/images/remove_red_eye.png')
+                                : require('../../../../assets/images/View-Icon.png')}
                             className='w-[5vw] h-[5vw]'
-                        ></StyledImage>
-                    </StyledView>
+                        />
+                    </StyledTouchableOpacity>
                 </StyledView>
                 <StyledText className = 'font-bold text-[32px]'>{netPortfolioValue}</StyledText>
                 <StyledView className = 'flex flex-row justify-between items-center'>
                     <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} font-sourceSans3Bold text-[16px]`}> {portfolioChangeAmount}</StyledText>
-                    <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} px-4 font-sourceSans3Bold text-[16px]`}>{portfolioChangeAmount/netPortfolioValue*100}</StyledText>
+                    <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} px-4 font-sourceSans3Bold text-[16px]`}>{displayValue((portfolioChangeAmount/netPortfolioValue*100).toFixed(2) + '%')}</StyledText>
                     <StyledText className = 'font-bodyBold text-[16px]'>Total Return</StyledText>
                 </StyledView>
             </StyledView>

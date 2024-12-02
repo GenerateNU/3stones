@@ -7,9 +7,8 @@ import { ScrollView } from 'react-native';
 import PortfolioItem from './components/PortfolioItem';
 import PortfolioDetails from './components/PortfolioDetails';
 import UpdateCard from './components/PortfolioUpdateCard';
-import { useInvestorPortfolio } from '../../../src/services/investor'
-import { useAuth } from "../../../src/context/AuthContext";
 import { useProjectTotalFunded, useAllProjects, useProjectPosts } from "../../services/project";
+import {useInvestorPortfolio} from "../../services/investor";
 
 
 
@@ -66,7 +65,15 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
           </StyledView>
         </StyledView>
         
-        <PortfolioDetails></PortfolioDetails>
+        <PortfolioDetails 
+        netPortfolioValue={0} 
+        portfolioChangeAmount={0} 
+        marketValue={0} 
+        cashValue={0} 
+        totalProjects={allProjects.length} 
+        expMaturity={0}>
+
+        </PortfolioDetails>
 
         {/* Tab section */}
         <StyledView className='w-full flex-row justify-center'>
