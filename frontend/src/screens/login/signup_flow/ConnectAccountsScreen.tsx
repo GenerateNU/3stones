@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styled } from 'nativewind';
 import ProgressBar from '../../../components/ProgressBar';;
-import PlaidLink from '@burstware/expo-plaid-link';
+import PlaidLink from '../../../expo-plaid-link/Index';
 import { useLink } from '../../../services/plaid';
 
 

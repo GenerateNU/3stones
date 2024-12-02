@@ -27,9 +27,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "27b7d706-8b3c-45f8-ba59-ae05df33c4de"
+        "projectId": "a7c45442-9eda-44c5-aebc-3ade5acb9f4c"
       }
     },
-    "plugins": ["expo-font"]
+    "plugins": [
+      "expo-font"
+    ],
+    "owner": "michael-brennan2005"
   }
 }
