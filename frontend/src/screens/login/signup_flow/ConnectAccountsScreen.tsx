@@ -3,10 +3,8 @@ import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-na
 import { styled } from 'nativewind';
 import Button from '../../../components/Button';
 import ProgressBar from '../../../components/ProgressBar';
-import PlaidLink, { create, LinkExit, LinkLogLevel, LinkSuccess } from 'react-native-plaid-link-sdk';
+import { create, open } from 'react-native-plaid-link-sdk';
 import { useLink } from '../../../services/plaid';
-import { open as plaidOpen } from 'react-native-plaid-link-sdk';
-
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -15,15 +13,35 @@ const StyledScrollView = styled(ScrollView);
 
 export default function ConnectAccountsScreen({ navigation }) {
   const { linkToken, isLoading: isLinkTokenLoading } = useLink();
-  const [plaidInitialized, setPlaidInitialized] = useState(false);
+  const [isLinkReady, setIsLinkReady] = useState(false);
 
+  // Preload Plaid when linkToken is available
   useEffect(() => {
-    if (linkToken && !plaidInitialized) {
-      setPlaidInitialized(true);
-      create({ token: linkToken })
+    if (linkToken) {
+      create({
+        token: linkToken,
+        noLoadingState: false, // Optional: shows/hides native loading indicator
+      });
+      setIsLinkReady(true);
     }
-    console.log(`${linkToken} | ${isLinkTokenLoading} | ${plaidInitialized}`)
-  }, [linkToken, isLinkTokenLoading])
+  }, [linkToken]);
+
+  const openPlaid = async () => {
+    try {
+      const result = await open({
+        onSuccess: (success) => {
+          console.log('Success:', success);
+          // Handle success - send public token to your server
+        },
+        onExit: (exit) => {
+          console.log('Exit:', exit);
+          // Handle user exit
+        },
+      });
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
 
   return (
     <StyledKeyboardAvoidingView
@@ -49,22 +67,14 @@ export default function ConnectAccountsScreen({ navigation }) {
               Connect your bank accounts to proceed.
             </StyledText>
 
-            <Button
-              onPress={() => {
-                const openProps = {
-                  onSuccess: (success: LinkSuccess) => {
-                    console.log(success);
-                  },
-                  onExit: (linkExit: LinkExit) => {
-                    console.log("exit");
-                  },
-                  logLevel: LinkLogLevel.DEBUG 
-                }
-                plaidOpen(openProps);
-                console.log("Does this do anyting")
-              }}>
-              Connect with Plaid
-            </Button>
+            {!isLinkTokenLoading && isLinkReady && (
+              <Button
+                type="primary"
+                onPress={openPlaid}
+              >
+                Connect Bank Account
+              </Button>
+            )}
           </StyledView>
 
           {/* Continue Button
