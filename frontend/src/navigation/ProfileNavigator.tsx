@@ -3,11 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ProfileLegalDocumentsScreen from '../screens/profile/ProfileLegalDocumentsScreen';
-import WithdrawScreen from '../screens/profile/WithdrawScreen';
-import DepositScreen from '../screens/profile/DepositScreen';
+import TransactionScreen from '../screens/profile/TransactionScreen';
 import ConfirmScreen from '../screens/profile/ConfirmScreen';
 
-const Stack = createNativeStackNavigator();
+type ProfileNavigatorParamList = {
+  profile: undefined;
+  'profile-legal-documents': undefined;
+  'profile-transaction': { withdraw: boolean }; // Define withdraw parameter
+  'profile-withdraw-confirm': { withdraw: boolean };
+  'profile-deposit-confirm': { withdraw: boolean };
+};
+
+const Stack = createNativeStackNavigator<ProfileNavigatorParamList>();
 
 export default function ProfileNavigator() {
   return (
@@ -23,20 +30,18 @@ export default function ProfileNavigator() {
         options={{ title: 'Legal Documents', headerShown: true }}
       />
       <Stack.Screen
-        name='profile-withdraw'
-        component={WithdrawScreen}
-        options={{ title: 'Withdraw', headerShown: true }}
+        name='profile-transaction'
+        component={TransactionScreen}
+        options={({ route }) => ({
+          title: route.params.withdraw ? 'Withdraw' : 'Deposit', // Dynamic title
+          headerShown: true,
+        })}
       />
       <Stack.Screen
         name='profile-withdraw-confirm'
         component={ConfirmScreen}
         initialParams={{ withdraw: true }} // Pass withdraw as true
         options={{ title: 'Withdraw Confirm', headerShown: true }}
-      />
-      <Stack.Screen
-        name='profile-deposit'
-        component={DepositScreen}
-        options={{ title: 'Deposit', headerShown: true }}
       />
       <Stack.Screen
         name='profile-deposit-confirm'

@@ -74,14 +74,16 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
           <ProfilePageNavigator
             iconRoute={require('../../../assets/images/deposit-icon.png')}
             navigation={navigation}
-            navigationName='profile-deposit'
+            navigationName='profile-transaction'
             pageName='Deposit'
+            navigationParams={{ withdraw: false }} // Pass withdraw as false
           />
           <ProfilePageNavigator
             iconRoute={require('../../../assets/images/withdraw-icon.png')}
             navigation={navigation}
-            navigationName='profile-withdraw'
+            navigationName='profile-transaction'
             pageName='Withdraw'
+            navigationParams={{ withdraw: true }} // Pass withdraw as true
           />
         </StyledView>
         <Divider />

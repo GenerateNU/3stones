@@ -1,4 +1,3 @@
-// DepositScreen.js
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
@@ -10,7 +9,8 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-export default function DepositScreen({ navigation }) {
+export default function TransactionScreen({ route, navigation }) {
+  const { withdraw } = route.params; // Get the withdraw variable
   const [inputValue, setInputValue] = useState('');
   const [isValidInput, setIsValidInput] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -29,13 +29,13 @@ export default function DepositScreen({ navigation }) {
     }
   };
 
-  const handleDepositPress = () => {
+  const handleTransactionPress = () => {
     setConfirmVisible(true);
   };
 
   const handleConfirm = () => {
     setConfirmVisible(false);
-    navigation.navigate('profile-deposit-confirm');
+    navigation.navigate(withdraw ? 'profile-withdraw-confirm' : 'profile-deposit-confirm');
   };
 
   const handleCancel = () => {
@@ -78,7 +78,7 @@ export default function DepositScreen({ navigation }) {
             intent='default'
             size='large'
             icon='suffix'
-            placeholder='Enter Amount'
+            placeholder={`Enter Amount to ${withdraw ? 'Withdraw' : 'Deposit'}`}
             prefix='$'
             suffix='USD'
             onChangeText={handleInputChange}
@@ -88,7 +88,9 @@ export default function DepositScreen({ navigation }) {
       </StyledView>
 
       <StyledView className='flex flex-col justify-end items-start flex-grow py-4 px-6 gap-4'>
-        <StyledText className='font-sourceSans3'>Transferring from</StyledText>
+        <StyledText className='font-sourceSans3'>
+          {withdraw ? 'Transferring to' : 'Transferring from'}
+        </StyledText>
         <StyledView className='flex-row items-center justify-between w-full'>
           <StyledView className='flex-row items-center'>
             <StyledImage source={require('../../../assets/images/chase.png')} className='w-8 h-8' />
@@ -110,11 +112,13 @@ export default function DepositScreen({ navigation }) {
           <Button
             type='primary'
             size='large'
-            className={`w-full rounded-[50px] ${buttonBgColor} ${isValidInput ? '' : 'bg-gray-300'}`}
-            onPress={handleDepositPress}
+            className={`w-full rounded-[50px] ${buttonBgColor} ${
+              isValidInput ? '' : 'bg-gray-300'
+            }`}
+            onPress={handleTransactionPress}
             disabled={!isValidInput}
           >
-            Deposit
+            {withdraw ? 'Withdraw' : 'Deposit'}
           </Button>
         </StyledView>
       </StyledView>
@@ -124,7 +128,7 @@ export default function DepositScreen({ navigation }) {
         visible={confirmVisible}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
-        withdraw={false}
+        withdraw={withdraw}
       />
     </StyledView>
   );

@@ -9,8 +9,10 @@ interface ProfilePageNavigatorProps {
   navigation: NavigationScreenProp<any, any>;
   navigationName: string;
   pageName: string;
-  //route to button's icon
+  // Route to button's icon
   iconRoute?: ImageSourcePropType;
+  // Optional additional navigation parameters
+  navigationParams?: boolean;
 }
 
 const StyledView = styled(View);
@@ -22,12 +24,13 @@ export default function ProfilePageNavigator({
   navigationName,
   pageName,
   iconRoute,
+  navigationParams, // Accept additional params
 }: ProfilePageNavigatorProps) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(navigationName)}>
+    <TouchableOpacity onPress={() => navigation.navigate(navigationName, navigationParams)}>
       <StyledView className='flex-row justify-between items-center self-stretch px-[4vw]'>
         <StyledView className='flex-row justify-between items-center self-stretch space-x-[4vh]'>
-          {iconRoute && <StyledImage source={iconRoute} className='w-[3vh] h-[3vh]'></StyledImage>}
+          {iconRoute && <StyledImage source={iconRoute} className='w-[3vh] h-[3vh]' />}
           <StyledText className='text-[16px] text-[#282828] font-normal'>{pageName}</StyledText>
         </StyledView>
         <StyledImage
