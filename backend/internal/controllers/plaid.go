@@ -51,6 +51,13 @@ func (c *PlaidController) CreateLinkToken(ctx *fiber.Ctx) error {
 	// Specify the products
 	request.SetProducts([]plaid.Products{plaid.PRODUCTS_AUTH, plaid.PRODUCTS_TRANSACTIONS})
 
+	redirectUri := "threestones://hosted-link-complete"
+	isMobileApp := true
+	request.SetHostedLink(plaid.LinkTokenCreateHostedLink{
+		CompletionRedirectUri: &redirectUri,
+		IsMobileApp:           &isMobileApp,
+	})
+
 	// Execute the request to create a link token
 	response, _, err := c.ServiceParams.Plaid.PlaidApi.LinkTokenCreate(ctx.Context()).LinkTokenCreateRequest(*request).Execute()
 	if err != nil {
@@ -58,7 +65,8 @@ func (c *PlaidController) CreateLinkToken(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"link_token": response.GetLinkToken(),
+		"link_token":      response.GetLinkToken(),
+		"hosted_link_url": response.GetHostedLinkUrl(),
 	})
 }
 

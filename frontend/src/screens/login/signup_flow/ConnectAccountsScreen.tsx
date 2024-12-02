@@ -44,7 +44,7 @@ export default function ConnectAccountsScreen({ navigation }) {
           </StyledView>
 
           {/* Plaid webview */}
-          {linkToken ? 
+          {/* {linkToken ? 
               <StyledView className="w-full flex-1">
                 <PlaidLink 
                   linkToken={linkToken}
@@ -54,7 +54,9 @@ export default function ConnectAccountsScreen({ navigation }) {
                     console.log("SUCCESS!!!!!!!!")
                     console.log(success)
                   }}/>
-              </StyledView> : <></>}
+              </StyledView> : <></>} */}
+
+              
         </StyledView>
       </StyledScrollView>
     </StyledKeyboardAvoidingView>
