@@ -10,18 +10,18 @@ const tagVariants = cva('flex flex-row items-center rounded-lg px-3 py-1', {
   variants: {
     level: {
       neutral: 'bg-gray-900',
-      success: 'bg-success', 
+      success: 'bg-success',
       warning: 'bg-[#F7B418]',
       critical: 'bg-[#D32246]',
       neutralSubdued: 'bg-gray-200',
       successSubdued: 'bg-[#ECF3ED]',
       warningSubdued: 'bg-[#F9EFD7]',
-      criticalSubdued: 'bg-[#F8EDED]'
+      criticalSubdued: 'bg-[#F8EDED]',
     },
   },
   defaultVariants: {
     level: 'neutral',
-  }
+  },
 });
 
 const tagIconVariants = cva('', {
@@ -34,10 +34,10 @@ const tagIconVariants = cva('', {
       neutralSubdued: 'text-gray-600',
       successSubdued: 'text-success',
       warningSubdued: 'text-[#F7B418]',
-      criticalSubdued: 'text-[#D32246]'
-    }
-  }
-})
+      criticalSubdued: 'text-[#D32246]',
+    },
+  },
+});
 
 const tagTextVariants = cva('text-xs font-sourceSans3Medium', {
   variants: {
@@ -49,12 +49,12 @@ const tagTextVariants = cva('text-xs font-sourceSans3Medium', {
       neutralSubdued: 'text-gray-600',
       successSubdued: 'text-success',
       warningSubdued: 'text-[#F7B418]',
-      criticalSubdued: 'text-[#D32246]'
-    }
+      criticalSubdued: 'text-[#D32246]',
+    },
   },
   defaultVariants: {
     level: 'neutral',
-  }
+  },
 });
 
 interface TagProps extends ViewProps, VariantProps<typeof tagVariants> {
@@ -70,10 +70,7 @@ export function Tag({
   ...props
 }: TagProps & { className?: string }) {
   return (
-    <StyledView
-      className={`${tagVariants({ level })} ${className || ''}`}
-      {...props}
-    >
+    <StyledView className={`${tagVariants({ level })} ${className || ''}`} {...props}>
       <StyledView className={`${tagIconVariants({ level })}`}>{icon}</StyledView>
       <StyledText className={`${tagTextVariants({ level })} ${icon ? 'ml-1' : ''}`}>
         {children}

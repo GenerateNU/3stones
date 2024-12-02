@@ -27,6 +27,7 @@ module.exports = {
         borderSelected: '#4B4B4B',
         brand50: '#CADEDB',
         success: '#0E9888',
+        mint: '#ECF3ED',
         warning: '#F7B418',
         error: '#D32246',
         brand: {

@@ -7,23 +7,16 @@ const StyledView = styled(View);
 
 const cardVariants = cva('bg-white rounded-[16px] border border-border p-4', {
   variants: {},
-  defaultVariants: {}
+  defaultVariants: {},
 });
 
 interface CardProps extends ViewProps, VariantProps<typeof cardVariants> {
   children: React.ReactNode;
 }
 
-export function Card({
-  children,
-  className,
-  ...props
-}: CardProps & { className?: string }) {
+export function Card({ children, className, ...props }: CardProps & { className?: string }) {
   return (
-    <StyledView
-      className={`${cardVariants()} ${className || ''}`}
-      {...props}
-    >
+    <StyledView className={`${cardVariants()} ${className || ''}`} {...props}>
       {children}
     </StyledView>
   );
