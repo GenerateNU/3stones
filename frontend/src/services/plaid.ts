@@ -5,7 +5,6 @@ import axios from 'axios';
 import { API_URL } from '../constants';
 import { dumpAxiosError } from '../util/errors';
 import { useAuth } from '../context/AuthContext';
-import { create } from 'react-native-plaid-link-sdk';
 
 const createLinkToken = async (accessToken: string): Promise<string | null> => {
     try {

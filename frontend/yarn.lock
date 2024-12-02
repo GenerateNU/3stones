@@ -1164,6 +1164,13 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@burstware/expo-plaid-link@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@burstware/expo-plaid-link/-/expo-plaid-link-1.0.7.tgz#7e12f82310b9523a513d08504f7ab50f126cf86b"
+  integrity sha512-pfsZSOsKd3MpLFGWP6XtTFdtAck7YWE97o7/1QPPNiKPFuFhVvzoTddg2s0bhZ6aXShC62uWHfxuLj3wpq0Vvw==
+  dependencies:
+    query-string "^7.0.1"
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.npmjs.org/@egjs/hammerjs/-/hammerjs-2.0.17.tgz"
@@ -7582,7 +7589,7 @@ qs@~6.9.1:
   resolved "https://registry.npmjs.org/qs/-/qs-6.9.7.tgz"
   integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
 
-query-string@^7.1.3:
+query-string@^7.0.1, query-string@^7.1.3:
   version "7.1.3"
   resolved "https://registry.npmjs.org/query-string/-/query-string-7.1.3.tgz"
   integrity sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==
@@ -7710,11 +7717,6 @@ react-native-maps@1.18.0:
   integrity sha512-S17nYUqeMptgIPaAZuVRo+eRelPreBBYQWw6jsxU7qQ12p+THSfFaqabcNn7fBmsXhT3T27iIl8ek8v1H8BaGw==
   dependencies:
     "@types/geojson" "^7946.0.13"
-
-react-native-plaid-link-sdk@^11.13.2:
-  version "11.13.2"
-  resolved "https://registry.yarnpkg.com/react-native-plaid-link-sdk/-/react-native-plaid-link-sdk-11.13.2.tgz#6c5ab3809e59ba4223dc844a0b590c292c047f6a"
-  integrity sha512-Lba5OFgOzf8UH76dp/mfa5PzXBt0lTi9DVo9H4NjbgfWqB7UsoPgKfTiJFSLLxtZ+9+CTd3yPMfu6uyOIPKE0w==
 
 react-native-reanimated-carousel@^3.5.1:
   version "3.5.1"
