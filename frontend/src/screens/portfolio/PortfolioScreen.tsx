@@ -34,16 +34,33 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   const { portfolio, isLoading: portfolioLoading } = useInvestorPortfolio();
   const { allProjects, isLoading: projectsLoading } = useAllProjects();
 
+  console.log(portfolio);
+
   if (portfolioLoading || projectsLoading) {
-    return <StyledText className='text-lg font-bold'>Loading...</StyledText>;
+    return (
+      <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
+      <StyledView className='flex w-93 h-150 items-center shrink-0'></StyledView>
+        <StyledText className = 'text-error justify-center'>Loading</StyledText>
+      </StyledView>
+    );
   }
 
   if (!portfolio) {
-    return <StyledText>Failed to load portfolio. Please try again later.</StyledText>;
+    return (
+      <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
+        <StyledView className='flex w-93 h-150 items-center shrink-0'></StyledView>
+        <StyledText className = 'text-error justify-center'>Failed to load portfolio. Please try again later.</StyledText>
+      </StyledView>
+    )
   }
 
   if (!allProjects || allProjects.length === 0) {
-    return <StyledText>No projects found.</StyledText>;
+    return (
+      <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
+        <StyledView className='flex w-93 h-14 items-center shrink-0'></StyledView>
+        <StyledText className = 'text-error justify-center'>No projects.</StyledText>
+      </StyledView>
+    )
   }
 
   return (
@@ -113,12 +130,12 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                 <PortfolioItem
                   address={project.street}
                   location={project.state}
-                  price={project.funding_goal_cents/100}
+                  price={project.funding_goal_cents / 100}
                   duration={''}
                   invested={-1}
                   completion={useProjectTotalFunded(project.id).projectTotalFunded}
-                  image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />}
-                ></PortfolioItem>
+                  image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />} 
+                  status={project.milestone}></PortfolioItem>
               </StyledView>))}
         </StyledView>
        </StyledView>
@@ -132,7 +149,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                 const { projectPosts = [] } = useProjectPosts(project.id) ?? {};
                 return projectPosts.map((post) => (
                   <StyledView key={post.id} className="mb-2">
-                    <UpdateCard topText={post.title} bottomText={post.description} quantity={''} />
+                    <UpdateCard topText={post.title} bottomText={post.description} status={project.milestone} />
                   </StyledView>
                 ));
               })}

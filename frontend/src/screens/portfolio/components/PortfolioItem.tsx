@@ -2,7 +2,7 @@
 //TO DO Make the updates page inline with the figma 
 
 import React from 'react';
-import { View, Text, Image, ImageBackground } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Card from "../../../components/Card"
 import Tag from "../../../components/Tag"
@@ -21,9 +21,10 @@ interface PortfolioItemProps {
     invested: number;
     completion: number;
     image: React.ReactNode;
+    status: string;
 }
 
-const PortfolioItem = ({address, location, price, duration, invested, completion, image} : PortfolioItemProps & { className?: string })=> {
+const PortfolioItem = ({address, location, price, duration, invested, completion, image, status} : PortfolioItemProps & { className?: string })=> {
     return (
         <Card className = 'h-100'>
             <StyledView className = 'flex w-full min-w-38 flex-row items-start self-stretch'>
@@ -35,40 +36,42 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                         <StyledView className = 'py-3'>
                             <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Commercial Development</StyledText>
                         </StyledView>
-                    
                         <StyledView>
-                            
-                                <Tag className = 'w-1/2' children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-white">
-                                    Sold</StyledText>} icon = {<Image source={require('../../../../assets/images/celebration.png')}></Image>} level = {'success'} >
-                                </Tag>
-                
-                            
-                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-success">
-                                    Construction Underway</StyledText>} icon = {<Image source={require('../../../../assets/images/maps_home_work.png')}></Image>} level = {'successSubdued'} >
-                                </Tag>
-         
-                            
-                                <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
-                                    Construction Complete</StyledText>} icon = {<Image source={require('../../../../assets/images/house.png')}></Image>} level = {'successSubdued'} className = '' >
-                                </Tag>
-                       
-                          
-                                 <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
-                                    Operational</StyledText>} icon = {<Image source={require('../../../../assets/images/maps_home_work.png')}></Image>} level = {'successSubdued'} >
-                                </Tag>
-                          
-                                 <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
-                                    Construction Started</StyledText>} icon = {<Image source={require('../../../../assets/images/handyman.png')}></Image>} level = {'neutralSubdued'} >
-                                </Tag>
-                          
-                                 <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
-                                    Permitting Secured</StyledText>} icon = {<Image source={require('../../../../assets/images/topic.png')}></Image>} level = {'neutralSubdued'} >
-                                </Tag>
-                          
-                                 <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
-                                   Design Complete</StyledText>} icon = {<Image source={require('../../../../assets/images/design_services.png')}></Image>} level = {'neutralSubdued'} >
-                                </Tag>
-                    
+            {status == "Sold" &&
+              <Tag className = 'w-1/2' children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-white">
+                  Sold</StyledText>} icon = {<Image source={require('../../../../assets/images/celebration.png')}></Image>} level = {'success'} >
+              </Tag>
+              }
+              {status == "Construction Underway" &&
+              <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-defaultText text-success">
+                  Construction Underway</StyledText>} icon = {<Image source={require('../../../../assets/images/maps_home_work.png')}></Image>} level = {'successSubdued'} >
+              </Tag>
+              }
+              {status == "Construction Complete" &&
+              <Tag children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
+                  Construction Complete</StyledText>} icon = {<Image source={require('../../../../assets/images/house.png')}></Image>} level = {'successSubdued'} className = '' >
+              </Tag>
+              }
+              {status == "Operational" &&
+                <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-success">
+                  Operational</StyledText>} icon = {<Image source={require('../../../../assets/images/maps_home_work.png')}></Image>} level = {'successSubdued'} >
+                </Tag>
+              }
+              {status == "Construction Started" &&
+                <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
+                  Construction Started</StyledText>} icon = {<Image source={require('../../../../assets/images/handyman.png')}></Image>} level = {'neutralSubdued'} >
+              </Tag>
+              }
+              {status == "Permitting Secured" &&
+                <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
+                  Permitting Secured</StyledText>} icon = {<Image source={require('../../../../assets/images/topic.png')}></Image>} level = {'neutralSubdued'} >
+                </Tag>
+              }
+              {status == "Design Complete" &&
+                <Tag className = 'w-3/4' children = {<StyledText className="font-sourceSans3CaptionMedium text-gray-600">
+                  Design Complete</StyledText>} icon = {<Image source={require('../../../../assets/images/design_services.png')}></Image>} level = {'neutralSubdued'} >
+                </Tag>
+              }
                         </StyledView>
 
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>

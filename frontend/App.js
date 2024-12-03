@@ -16,8 +16,18 @@ function RootNavigator() {
     if (isLoading) {
         return null; // or some loading screen (maybe we make in future?)
     }
-    return session ? <TabNavigator /> : <LoginNavigator />;
+    return session ? <TabNavigator /> : <TabNavigator />;
 }
+
+function TestNavigator() {
+    const { login } = useAuth();
+    login("user1@example.com", "password123")
+    if (isLoading) {
+        return null; // or some loading screen (maybe we make in future?)
+    }
+    return <TabNavigator/>
+}
+
 
 export default function App() {
     const [loaded, error] = useFonts({
@@ -49,7 +59,7 @@ export default function App() {
         <AuthProvider>
             <QueryClientProvider client={queryClient}>
                 <NavigationContainer>
-                    <RootNavigator />
+                    <TestNavigator />
                 </NavigationContainer>
             </QueryClientProvider>
         </AuthProvider>

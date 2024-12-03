@@ -21,19 +21,18 @@ const PortfolioDetails = ({netPortfolioValue, portfolioChangeAmount, marketValue
 
     const [hideValues, setHideValues] = useState(false);
 
-    const toggleHideValues = () => {
-        setHideValues(!hideValues);
-    };
-
+    
     const displayValue = (value) => {
         return hideValues ? '****' : value;
     };
 
     const [isEyeOpen, setIsEyeOpen] = useState(true);
 
-    const toggleEye = () => {
+    const toggleHideValues = () => {
+        setHideValues(!hideValues);
         setIsEyeOpen(!isEyeOpen);
     };
+
 
     return (
         <StyledView className = 'w-full flex flex-col items-start gap-6 self-stretch px-6 pb-8 pt-0'>
