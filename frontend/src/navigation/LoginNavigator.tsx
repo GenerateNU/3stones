@@ -12,6 +12,7 @@ import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
 import SignupMainScreen from '../screens/login/signup_flow/SignupMainScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
+import ExploreScreen from '../screens/explore/explore';
 
 const Stack = createNativeStackNavigator();
 
