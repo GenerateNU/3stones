@@ -1,5 +1,5 @@
 //Change loading page and if a portfolio cant be loaded page
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
@@ -8,7 +8,7 @@ import PortfolioItem from './components/PortfolioItem';
 import PortfolioDetails from './components/PortfolioDetails';
 import UpdateCard from './components/PortfolioUpdateCard';
 import { useProjectTotalFunded, useAllProjects, useProjectPosts } from "../../services/project";
-import {useInvestorPortfolio} from "../../services/investor";
+import {useInvestorHistory, useInvestorPortfolio} from "../../services/investor";
 
 
 
@@ -65,15 +65,37 @@ function netPortfolioValue(projects) {
     return value / 100;
 }
 
+function calculateMarketValue(investments) {
+  let marketValue = 0;
+
+  investments.forEach(investment => {
+      marketValue = marketValue + investment.fundedCents
+  });
+
+  return marketValue/100;
+}
+
+const [totalInvested, setTotalInvested] = useState(0);
+  const { portfolio } = useInvestorPortfolio();
+
+  useEffect(() => {
+    if (portfolio) {
+      const total = Object.values(portfolio).reduce((sum, value) => sum + value, 0);
+      setTotalInvested(total);
+    }
+  }, [portfolio]);
+
+
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   const [activeTab, setActiveTab] = useState('Your Projects');
 
   const { portfolio, isLoading: portfolioLoading } = useInvestorPortfolio();
   const { allProjects, isLoading: projectsLoading } = useAllProjects();
+  const {history, isLoading: historyLoading } = useInvestorHistory(1, 1000); //dont know what to put for the pages - maybe change later?
 
   console.log(portfolio);
 
-  if (portfolioLoading || projectsLoading) {
+  if (portfolioLoading || projectsLoading || historyLoading) {
     return (
       <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
       <StyledView className='flex w-93 h-150 items-center shrink-0'></StyledView>
@@ -121,8 +143,8 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         <PortfolioDetails 
         netPortfolioValue={netPortfolioValue(allProjects)} 
         portfolioChangeAmount={350} // HARD CODED VALUE
-        marketValue={10000} // HARD CODED VALUE 
-        cashValue={2345.67} //HARD CODED VALUE
+        marketValue={calculateMarketValue(history)}
+        cashValue={totalInvested}
         totalProjects={allProjects.length} 
         expMaturity={calculateExpMaturity(allProjects)}>
 
