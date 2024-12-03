@@ -40,7 +40,7 @@ export default function EmailInputScreen({ navigation }) {
 
           {/* Email Input Section */}
           <StyledView className="w-full flex-1 justify-center items-center">
-            <StyledText className="text-center text-2xl font-bold text-black mb-2">Let's start with your email</StyledText>
+            <StyledText className="text-center text-2xl font-bold text-black mb-2 font-heading">Let's start with your email</StyledText>
             <StyledText className="text-center text-gray-600 mb-8">
               You’ll use this email to log in next time.
             </StyledText>

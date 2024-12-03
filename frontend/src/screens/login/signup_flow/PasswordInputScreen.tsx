@@ -17,15 +17,7 @@ export default function PasswordInputScreen({ navigation }) {
   const [password, setPassword] = useState(signupData.password);
 
   const handleNext = async () => {
-    // We do sign up here because the remaining parts of the sign up flow (plaid integration)
-    // require hitting auth'ed endpoints. 
-    try {
-      await signUp(signupData.email, password);
-      console.log("Sign up worked.")
-      updateSignupData('password', password);
-    } catch (error) {
-      console.error('Error signing up:', error.message);
-    }
+    updateSignupData("password", password)
     navigation.navigate('UserDetailsScreen');
   };
 

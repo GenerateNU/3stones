@@ -22,7 +22,7 @@ type AuthContextType = {
     questions: { [key: string]: string[] }; // A flexible type for questions
   };
   login: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<Session>;
   signOut: () => Promise<void>;
   updateLoginData: (field: string, value: string) => void;
   updateSignupData: (key: string, value: any) => void;
@@ -89,8 +89,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
-    // Don't set session directly, let the auth state change handler do it
-    // setSession(data.session);
+
+    setSession(data.session);
+    return data.session;
   };
 
   // Add an effect to handle session changes

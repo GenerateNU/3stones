@@ -18,9 +18,5 @@ export default function RootNavigator() {
         return null; // or some loading screen (maybe we make in future?)
     }
 
-    if (isInSignupFlow) {
-        return <LoginNavigator />
-    }
-
     return session ? <TabNavigator /> : <LoginNavigator />;
 }

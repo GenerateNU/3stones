@@ -147,8 +147,7 @@ export default function LegalInformationScreen({ navigation }) {
             <Button
               type="primary"
               onPress={handleNext}
-              disabled={!signupData.ssn.trim() || !signupData.address.addressLine.trim()}
-            >
+              disabled={!signupData.ssn.trim() || !signupData.address.addressLine.trim()}>
               Continue
             </Button>
           </StyledView>

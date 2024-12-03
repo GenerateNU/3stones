@@ -5,6 +5,7 @@ import Button from '../../../components/Button';
 import ProgressBar from '../../../components/ProgressBar';
 import QuestionCard from '../components/QuestionCard';
 import { useAuth } from '../../../context/AuthContext'; // Import AuthContext
+import { updateInvestorProfile } from '../../../services/investor';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -12,7 +13,7 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 
 export default function QuestionsScreen({ navigation }) {
-    const { signupData, updateSignupData, signUp } = useAuth(); // Use AuthContext to manage signup data
+    const { signupData, updateSignupData, signUp, setIsInSignupFlow } = useAuth(); // Use AuthContext to manage signup data
     const questions = [
         {
             id: 1,
@@ -53,12 +54,26 @@ export default function QuestionsScreen({ navigation }) {
 
     const handleSignup = async () => {
         try {
-          await signUp(signupData.email, signupData.password);
-          console.log("Sign up worked.")
+            console.log(signupData.password)
+            const session = await signUp(signupData.email, signupData.password);
+            if (!session) {
+                throw Error("Session expected after successful signup, instead found null.");
+            }
+
+            await updateInvestorProfile(session.access_token, {
+                first: signupData.firstName ?? undefined,
+                last: signupData.lastName ?? undefined,
+                email: signupData.email,
+                ssn: signupData.ssn ?? undefined
+            })
+
+            console.log("Sign up worked.")
         } catch (error) {
             console.error('Error signing up:', error.message);
         }
-      };
+
+
+    };
 
     const handleNext = () => {
         if (currentIndex < questions.length - 1) {
@@ -112,7 +127,6 @@ export default function QuestionsScreen({ navigation }) {
                             Next
                         </Button>
                     </StyledView>
-
                 </StyledView>
             </StyledScrollView>
         </StyledKeyboardAvoidingView>
