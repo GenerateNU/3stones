@@ -1,12 +1,12 @@
 package controllers
 
 import (
+	"strings"
+
 	"backend/internal/api_errors"
 	"backend/internal/models"
 	"backend/internal/transactions"
 	"backend/internal/types"
-
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
