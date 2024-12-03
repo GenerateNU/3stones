@@ -90,7 +90,7 @@ func GetHistory(db *pgxpool.Pool, investorID uuid.UUID, limit int, offset int) (
 	return history, nil
 }
 
-func GetCashBalance(pool *pgxpool.Pool, investorID string) (int, error) {
+func GetCashBalance(pool *pgxpool.Pool, investorID uuid.UUID) (int, error) {
 	query := "SELECT cash_balance_cents FROM investors WHERE supabase_id = $1"
 
 	var balance int

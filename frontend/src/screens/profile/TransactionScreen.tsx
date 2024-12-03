@@ -4,16 +4,43 @@ import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import TextField from '../../components/TextField';
 import ConfirmDialog from './components/ConfirmDialog';
+import { useInvestors } from '../../../src/services/investor';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
+
+const CashBalance = ({ setBalance }) => {
+  const { investor, isLoading } = useInvestors();
+
+  if (isLoading) {
+    return <StyledText>loading...</StyledText>;
+  }
+
+  if (!investor) {
+    return (
+      <StyledText className='text-[32px] text-inverseText font-title mb-2'>
+        no investor found!
+      </StyledText>
+    );
+  }
+
+  const cashBalance = investor.cash_balance / 100;
+  setBalance(cashBalance);
+
+  return (
+    <StyledText className='text-[32px] text-inverseText font-title mb-2'>
+      ${cashBalance === 0 ? '0.00' : cashBalance.toFixed(2)}
+    </StyledText>
+  );
+};
 
 export default function TransactionScreen({ route, navigation }) {
   const { withdraw } = route.params;
   const [inputValue, setInputValue] = useState('');
   const [isValidInput, setIsValidInput] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const [cashBalance, setCashBalance] = useState(0);
 
   const handleInputChange = (text) => {
     setInputValue(text);
@@ -21,7 +48,11 @@ export default function TransactionScreen({ route, navigation }) {
     const regex = /^\d+(\.\d{1,2})?$/;
     const amount = Number(text);
 
-    if (regex.test(text) && !isNaN(amount) && amount > 0) {
+    if (
+      regex.test(text) &&
+      !isNaN(amount) &&
+      ((withdraw && amount > 0 && amount <= cashBalance) || (!withdraw && amount > 0.01))
+    ) {
       setIsValidInput(true);
     } else {
       setIsValidInput(false);
@@ -33,8 +64,27 @@ export default function TransactionScreen({ route, navigation }) {
   };
 
   const handleConfirm = () => {
+    const nominal = Number(inputValue);
+    const adminFee = 0.25;
+    let updatedBalance;
+
+    if (withdraw) {
+      const totalDebit = nominal + adminFee;
+      updatedBalance = cashBalance - totalDebit;
+    } else {
+      const creditedAmount = nominal - adminFee;
+      updatedBalance = cashBalance + creditedAmount;
+    }
+
     setConfirmVisible(false);
-    navigation.navigate('profile-confirm', { withdraw });
+
+    navigation.navigate('profile-confirm', {
+      withdraw,
+      nominal,
+      adminFee,
+      finalAmount: withdraw ? nominal + adminFee : nominal - adminFee,
+      cashBalance: updatedBalance,
+    });
   };
 
   const handleCancel = () => {
@@ -62,9 +112,7 @@ export default function TransactionScreen({ route, navigation }) {
               </Button>
             </StyledView>
 
-            <StyledText className='text-[32px] text-inverseText font-title mb-2'>
-              $700.00
-            </StyledText>
+            <CashBalance setBalance={setCashBalance} />
 
             <StyledText className='font-sourceSans3 text-inverseText'>
               Total Available Cash

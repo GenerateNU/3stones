@@ -4,7 +4,6 @@ import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import Tag from '../../components/Tag';
 
-// Reusable Ellipse Component
 const Ellipse = styled(View);
 
 const StyledView = styled(View);
@@ -12,7 +11,15 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function ConfirmScreen({ route }) {
-  const { withdraw } = route.params || {}; // Get the `withdraw` prop from the route params
+  const { withdraw, nominal, adminFee, finalAmount, cashBalance } = route.params || {};
+
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   const numberOfEllipses = 15;
   const ellipsesArray = Array.from({ length: numberOfEllipses });
   const ellipseWidth = 18;
@@ -26,16 +33,14 @@ export default function ConfirmScreen({ route }) {
 
   return (
     <StyledView className='flex-1 bg-gray-50 relative'>
-      {/* Top Section */}
       <StyledView className='mb-6 py-8 px-6'>
         <StyledText className='text-base font-sourceSans3 text-defaultText leading-5 mb-1'>
           Total Cash Available
         </StyledText>
 
-        {/* Row for Balance and Button */}
         <StyledView className='flex-row justify-between items-center'>
           <StyledText className='text-3xl text-defaultText font-title leading-10'>
-            $1,234.67
+            ${cashBalance.toFixed(2)}
           </StyledText>
           <Button
             type='secondary'
@@ -54,8 +59,8 @@ export default function ConfirmScreen({ route }) {
           </StyledText>
           <StyledText className='font-nunitoRegular text-base'>
             {withdraw
-              ? 'You successfully withdrew $200 out of your 3 Stones account.'
-              : 'You successfully deposited $200 into your 3 Stones account.'}
+              ? `You successfully withdrew $${nominal.toFixed(2)} out of your 3 Stones account.`
+              : `You successfully deposited $${nominal.toFixed(2)} into your 3 Stones account.`}
           </StyledText>
 
           <StyledView className='py-6'>
@@ -67,15 +72,19 @@ export default function ConfirmScreen({ route }) {
             </StyledView>
             <StyledView className='flex-row justify-between items-center mb-2'>
               <StyledText className='font-sourceSans3Bold text-base'>Date</StyledText>
-              <StyledText className='font-sourceSans3 text-gray-900'>September 1, 2024</StyledText>
+              <StyledText className='font-sourceSans3 text-gray-900'>{formattedDate}</StyledText>
             </StyledView>
             <StyledView className='flex-row justify-between items-center mb-2'>
               <StyledText className='font-sourceSans3Bold text-base'>Nominal</StyledText>
-              <StyledText className='font-sourceSans3 text-gray-900'>$200.00</StyledText>
+              <StyledText className='font-sourceSans3 text-gray-900'>
+                ${nominal.toFixed(2)}
+              </StyledText>
             </StyledView>
             <StyledView className='flex-row justify-between items-center mb-2'>
               <StyledText className='font-sourceSans3Bold text-base'>Administrative Fee</StyledText>
-              <StyledText className='font-sourceSans3 text-gray-900'>$0.25</StyledText>
+              <StyledText className='font-sourceSans3 text-gray-900'>
+                ${adminFee.toFixed(2)}
+              </StyledText>
             </StyledView>
             <StyledView className='flex-row justify-between items-center'>
               <StyledText className='font-sourceSans3Bold text-base'>Status</StyledText>
@@ -96,7 +105,7 @@ export default function ConfirmScreen({ route }) {
 
             <StyledView className='flex-row justify-between pt-6'>
               <StyledText className='font-heading text-lg'>Total</StyledText>
-              <StyledText className='font-heading text-lg'>$199.75</StyledText>
+              <StyledText className='font-heading text-lg'>${finalAmount.toFixed(2)}</StyledText>
             </StyledView>
           </StyledView>
         </StyledView>
