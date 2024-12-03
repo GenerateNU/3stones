@@ -8,6 +8,10 @@ import GenericCarousel from '../../components/carousel';
 import PropertyCard from './components/PropertyCard';
 import SearchBar from '../../components/SearchBar';
 import property1 from './components/property-placeholder1.png';
+import residential from './components/residential.png';
+import newlyAdded from './components/newlyadded.png';
+import commercial1 from './components/commercial.png';
+import commercial2 from './components/commercial2.png';
 
 interface ExploreScreenProps {
   navigation: NavigationScreenProp<any, any>;
@@ -70,12 +74,12 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
         <StyledText className='text-3xl font-nunitoSemiBold mb-2'>Popular Projects</StyledText>
 
         <SideBySide
-          leftComponent={<CategoryCard category='Residential' image={undefined} />}
-          rightComponent={<CategoryCard category='Commercial' image={undefined} />}
+          leftComponent={<CategoryCard category='Residential' image={residential} />}
+          rightComponent={<CategoryCard category='Commercial' image={commercial1} />}
         />
         <SideBySide
-          leftComponent={<CategoryCard category='Newly Added' image={undefined} />}
-          rightComponent={<CategoryCard category='Popular' image={undefined} />}
+          leftComponent={<CategoryCard category='Newly Added' image={newlyAdded} />}
+          rightComponent={<CategoryCard category='Popular' image={commercial2} />}
         />
       </StyledView>
     </StyledView>
