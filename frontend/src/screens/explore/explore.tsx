@@ -46,7 +46,7 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
       </StyledView>
 
       {/* Carousel Section */}
-      <StyledView className='pl-[2vh] pr-[2vh] pb-[3vh]'>
+      <StyledView className='pl-[2vh] pr-[2vh] pb-[3vh] pt-[3vh]'>
         <GenericCarousel
           components={[
             <PropertyCard
@@ -70,17 +70,18 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
       </StyledView>
 
       {/* Popular Projects */}
-      <StyledView className='pl-[2vh] pt-[2vh]'>
+      <StyledView className='pl-[2vh] pt-[2vh] pb-[10vh]'>
         <StyledText className='text-3xl font-nunitoSemiBold mb-2'>Popular Projects</StyledText>
-
-        <SideBySide
-          leftComponent={<CategoryCard category='Residential' image={residential} />}
-          rightComponent={<CategoryCard category='Commercial' image={commercial1} />}
-        />
-        <SideBySide
-          leftComponent={<CategoryCard category='Newly Added' image={newlyAdded} />}
-          rightComponent={<CategoryCard category='Popular' image={commercial2} />}
-        />
+        <StyledView className='pr-[2vh]'>
+          <SideBySide
+            leftComponent={<CategoryCard category='Residential' image={residential} />}
+            rightComponent={<CategoryCard category='Commercial' image={commercial1} />}
+          />
+          <SideBySide
+            leftComponent={<CategoryCard category='Newly Added' image={newlyAdded} />}
+            rightComponent={<CategoryCard category='Popular' image={commercial2} />}
+          />
+        </StyledView>
       </StyledView>
     </StyledView>
   );
