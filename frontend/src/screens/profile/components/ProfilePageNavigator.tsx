@@ -7,9 +7,11 @@ interface ProfilePageNavigatorProps {
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
+  navigationName: string;
   pageName: string;
   //route to button's icon
-  iconRoute?: ImageSourcePropType;
+  leftIconRoute?: ImageSourcePropType;
+  rightIconRoute: ImageSourcePropType;
 }
 
 const StyledView = styled(View);
@@ -18,20 +20,19 @@ const StyledImage = styled(Image);
 
 export default function ProfilePageNavigator({
   navigation,
+  navigationName,
   pageName,
-  iconRoute,
+  leftIconRoute,
+  rightIconRoute,
 }: ProfilePageNavigatorProps) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate({ pageName })}>
-      <StyledView className='flex-row justify-between items-center self-stretch px-[4vw]'>
+    <TouchableOpacity onPress={() => navigation.navigate(navigationName)}>
+      <StyledView className='flex-row justify-between items-center self-stretch'>
         <StyledView className='flex-row justify-between items-center self-stretch space-x-[4vh]'>
-          {iconRoute && <StyledImage source={iconRoute} className='w-[3vh] h-[3vh]'></StyledImage>}
+          {leftIconRoute && <StyledImage source={leftIconRoute} className='w-[3vh] h-[3vh]' />}
           <StyledText className='text-[16px] text-[#282828] font-normal'>{pageName}</StyledText>
         </StyledView>
-        <StyledImage
-          source={require('../../../../assets/images/side-arrow.png')}
-          className='h-[3vh] w-[3vh]'
-        />
+        {rightIconRoute && <StyledImage source={rightIconRoute} className='w-[3vh] h-[3vh]' />}
       </StyledView>
     </TouchableOpacity>
   );
