@@ -10,7 +10,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-const CashBalance = ({ setBalance }) => {
+const CashBalance = () => {
   const { investor, isLoading } = useInvestors();
 
   if (isLoading) {
@@ -26,7 +26,6 @@ const CashBalance = ({ setBalance }) => {
   }
 
   const cashBalance = investor.cash_balance / 100;
-  setBalance(cashBalance);
 
   return (
     <StyledText className='text-[32px] text-inverseText font-title mb-2'>
@@ -40,7 +39,7 @@ export default function TransactionScreen({ route, navigation }) {
   const [inputValue, setInputValue] = useState('');
   const [isValidInput, setIsValidInput] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
+  const [cashBalance] = useState(0);
 
   const handleInputChange = (text) => {
     setInputValue(text);
@@ -112,7 +111,7 @@ export default function TransactionScreen({ route, navigation }) {
               </Button>
             </StyledView>
 
-            <CashBalance setBalance={setCashBalance} />
+            <CashBalance />
 
             <StyledText className='font-sourceSans3 text-inverseText'>
               Total Available Cash
