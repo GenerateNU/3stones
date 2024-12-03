@@ -10,14 +10,12 @@ const StyledImage = styled(Image);
 function ConfirmDialog({ visible, onConfirm, onCancel, withdraw }) {
   return (
     <Modal transparent visible={visible} animationType='fade'>
-      {/* Background Overlay */}
       <StyledView
         className='flex-1 justify-center items-center'
         style={{
           backgroundColor: 'rgba(0,0,0,0.1)',
         }}
       >
-        {/* Dialog Container */}
         <StyledView
           className='bg-white p-4 rounded-lg shadow-lg'
           style={{
@@ -30,18 +28,15 @@ function ConfirmDialog({ visible, onConfirm, onCancel, withdraw }) {
             borderColor: '#DDD',
           }}
         >
-          {/* Dialog Image */}
           <StyledImage
             source={require('../../../../assets/images/withdraw-error.png')}
             className='w-8 h-8 mb-4'
           />
 
-          {/* Dialog Title */}
           <StyledText className='font-heading mb-1' style={{ width: '100%' }}>
             {withdraw ? 'Are you sure?' : 'Confirm Deposit'}
           </StyledText>
 
-          {/* Dialog Message */}
           <StyledText
             className='text-gray-900 font-sourceSans3 leading-5 mb-4'
             style={{ width: '100%' }}
@@ -51,9 +46,7 @@ function ConfirmDialog({ visible, onConfirm, onCancel, withdraw }) {
               : "You're about to deposit funds into your real estate portfolio. Review the amount and allocation before proceeding."}
           </StyledText>
 
-          {/* Buttons Container */}
           <StyledView className='flex-row justify-between'>
-            {/* Primary Button */}
             <Button
               type='secondary'
               size='medium'
@@ -63,7 +56,6 @@ function ConfirmDialog({ visible, onConfirm, onCancel, withdraw }) {
               <StyledText>Cancel</StyledText>
             </Button>
 
-            {/* Secondary Button */}
             <Button
               type='primary'
               size='medium'

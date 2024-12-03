@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import Tag from '../../components/Tag';
@@ -9,6 +9,7 @@ const Ellipse = styled(View);
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledImage = styled(Image);
 
 export default function ConfirmScreen({ route }) {
   const { withdraw } = route.params || {}; // Get the `withdraw` prop from the route params
@@ -46,10 +47,8 @@ export default function ConfirmScreen({ route }) {
         </StyledView>
       </StyledView>
 
-      {/* White Card */}
       <StyledView className='bg-white rounded-t-2xl mx-6 px-7 py-8 pb-10'>
         <StyledView>
-          {/* Conditional Title and Message */}
           <StyledText className='text-2xl font-heading font-bold text-defaultText mb-2'>
             {withdraw ? 'Pending Withdrawal' : 'Pending Deposit'}
           </StyledText>
@@ -59,7 +58,6 @@ export default function ConfirmScreen({ route }) {
               : 'You successfully deposited $200 into your 3 Stones account.'}
           </StyledText>
 
-          {/* Transaction Details */}
           <StyledView className='py-6'>
             <StyledView className='flex-row justify-between items-center mb-2'>
               <StyledText className='font-sourceSans3Bold text-base'>Transaction ID</StyledText>
@@ -82,11 +80,20 @@ export default function ConfirmScreen({ route }) {
             <StyledView className='flex-row justify-between items-center'>
               <StyledText className='font-sourceSans3Bold text-base'>Status</StyledText>
               <Tag level='success' className='flex-row items-center'>
-                <StyledText className='font-sourceSans3'>Success</StyledText>
+                <StyledView>
+                  <StyledImage
+                    source={require('../../../assets/images/confetti.png')}
+                    className='h-4 w-4 justify-center mr-1 mb-0.5'
+                  />
+                </StyledView>
+                <StyledView>
+                  <StyledText className='font-sourceSans3 text-white leading-none'>
+                    Success
+                  </StyledText>
+                </StyledView>
               </Tag>
             </StyledView>
 
-            {/* Total */}
             <StyledView className='flex-row justify-between pt-6'>
               <StyledText className='font-heading text-lg'>Total</StyledText>
               <StyledText className='font-heading text-lg'>$199.75</StyledText>
@@ -95,7 +102,6 @@ export default function ConfirmScreen({ route }) {
         </StyledView>
       </StyledView>
 
-      {/* Perforated Bottom */}
       <StyledView
         className='flex-row'
         style={{

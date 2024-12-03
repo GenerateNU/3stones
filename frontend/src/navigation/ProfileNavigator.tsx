@@ -1,5 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TouchableOpacity, Image } from 'react-native';
 
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import ProfileLegalDocumentsScreen from '../screens/profile/ProfileLegalDocumentsScreen';
@@ -9,9 +10,8 @@ import ConfirmScreen from '../screens/profile/ConfirmScreen';
 type ProfileNavigatorParamList = {
   profile: undefined;
   'profile-legal-documents': undefined;
-  'profile-transaction': { withdraw: boolean }; // Define withdraw parameter
-  'profile-withdraw-confirm': { withdraw: boolean };
-  'profile-deposit-confirm': { withdraw: boolean };
+  'profile-transaction': { withdraw: boolean };
+  'profile-confirm': { withdraw: boolean };
 };
 
 const Stack = createNativeStackNavigator<ProfileNavigatorParamList>();
@@ -32,22 +32,40 @@ export default function ProfileNavigator() {
       <Stack.Screen
         name='profile-transaction'
         component={TransactionScreen}
-        options={({ route }) => ({
-          title: route.params.withdraw ? 'Withdraw' : 'Deposit', // Dynamic title
-          headerShown: true,
+        options={({ route, navigation }) => ({
+          title: route.params.withdraw ? 'Withdraw' : 'Deposit',
+          headerBackVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('profile')}
+              style={{ marginLeft: 16 }}
+            >
+              <Image
+                source={require('../../assets/images/x-icon-default.png')}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+          ),
         })}
       />
       <Stack.Screen
-        name='profile-withdraw-confirm'
+        name='profile-confirm'
         component={ConfirmScreen}
-        initialParams={{ withdraw: true }} // Pass withdraw as true
-        options={{ title: 'Withdraw Confirm', headerShown: true }}
-      />
-      <Stack.Screen
-        name='profile-deposit-confirm'
-        component={ConfirmScreen}
-        initialParams={{ withdraw: false }} // Pass withdraw as false
-        options={{ title: 'Deposit Confirm', headerShown: true }}
+        options={({ route, navigation }) => ({
+          title: route.params.withdraw ? 'Withdraw Confirm' : 'Deposit Confirm',
+          headerBackVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('profile')}
+              style={{ marginLeft: 16 }}
+            >
+              <Image
+                source={require('../../assets/images/x-icon-default.png')}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );

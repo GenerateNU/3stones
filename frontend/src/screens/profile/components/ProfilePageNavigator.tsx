@@ -9,10 +9,8 @@ interface ProfilePageNavigatorProps {
   navigation: NavigationScreenProp<any, any>;
   navigationName: string;
   pageName: string;
-  // Route to button's icon
   iconRoute?: ImageSourcePropType;
-  // Optional additional navigation parameters
-  navigationParams?: boolean;
+  navigationParams?: { withdraw: boolean };
 }
 
 const StyledView = styled(View);
@@ -24,7 +22,7 @@ export default function ProfilePageNavigator({
   navigationName,
   pageName,
   iconRoute,
-  navigationParams, // Accept additional params
+  navigationParams,
 }: ProfilePageNavigatorProps) {
   return (
     <TouchableOpacity onPress={() => navigation.navigate(navigationName, navigationParams)}>

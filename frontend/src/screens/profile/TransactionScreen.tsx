@@ -3,14 +3,14 @@ import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../components/Button';
 import TextField from '../../components/TextField';
-import ConfirmDialog from './components/ConfirmDialog'; // Adjust the import path if necessary
+import ConfirmDialog from './components/ConfirmDialog';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function TransactionScreen({ route, navigation }) {
-  const { withdraw } = route.params; // Get the withdraw variable
+  const { withdraw } = route.params;
   const [inputValue, setInputValue] = useState('');
   const [isValidInput, setIsValidInput] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -18,7 +18,6 @@ export default function TransactionScreen({ route, navigation }) {
   const handleInputChange = (text) => {
     setInputValue(text);
 
-    // Validate the input
     const regex = /^\d+(\.\d{1,2})?$/;
     const amount = Number(text);
 
@@ -35,7 +34,7 @@ export default function TransactionScreen({ route, navigation }) {
 
   const handleConfirm = () => {
     setConfirmVisible(false);
-    navigation.navigate(withdraw ? 'profile-withdraw-confirm' : 'profile-deposit-confirm');
+    navigation.navigate('profile-confirm', { withdraw });
   };
 
   const handleCancel = () => {
@@ -123,7 +122,6 @@ export default function TransactionScreen({ route, navigation }) {
         </StyledView>
       </StyledView>
 
-      {/* Confirm Dialog */}
       <ConfirmDialog
         visible={confirmVisible}
         onConfirm={handleConfirm}
