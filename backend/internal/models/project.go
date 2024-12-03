@@ -29,6 +29,10 @@ type InvestRequestBody struct {
 	Amount int32 `json:"amount"`
 }
 
+type SearchRequestBody struct {
+	Query string `json:"query"`
+}
+
 type ProjectPost struct {
 	ID          uuid.UUID   `json:"id"`
 	CreatedAt   time.Time   `json:"created_at"`
