@@ -1,34 +1,36 @@
 import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
-// import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { useContributors } from '../../services/contributor';
 import Button from '../../components/Button';
 import { useAuth } from '../../context/AuthContext';
 
+import PortfolioValue from './components/portfolioValue';
+import WelcomeBlock from './components/welcomeBlock';
+import BottomSheetComponent from './components/BottomSheetComponent';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import 'react-native-url-polyfill/auto';
+import { useInvestorProfile, useInvestorPortfolio } from '../../services/investor';
 
 interface HomeScreenProps {
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }
-// interface HomeScreenProps {
-//   // This actually should be `any`, so disabling the linter rule
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   navigation: NavigationScreenProp<any, any>;
-// }
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-  const { signOut } = useAuth();
-  console.log("Hello, world");
+  const userProfile = useInvestorProfile();
+  const [totalInvested, setTotalInvested] = useState(0);
+  const { portfolio } = useInvestorPortfolio();
 
-  async function getEndPoint() {
-    try {
-      console.log(await useContributors());
+  useEffect(() => {
+    if (portfolio) {
+      // Sum up the total invested amount
+      const total = Object.values(portfolio).reduce((sum, value) => sum + value, 0);
+      setTotalInvested(total);
     }
     catch (error) {
       console.log(error);
@@ -83,53 +85,19 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   //             onPress = {() => {}}
   //           />
 
-        
-  //   <StyledView className='flex-1 items-center bg-surfaceBG'>
-  //     <StyledView className='pt-[5vh]'>
-  //       <WelcomeBlock name='Michael' />
-  //       <PortfolioValue
-  //         Portfoliovalue={12345.67}
-  //         portfolioChange={350.23}
-  //         navigation={navigation}
-  //       />
-  //     </StyledView>
-  //     {/* Some dummy image */}
-  //     <StyledView className='align-center'>
-  //       <Image source={require('../../../assets/images/icon.png')}/>
-  //       {/* Some dummy button */}
-       
-  //     </StyledView>
-  //     <View>
-  //       <TouchableOpacity onPress={() => navigation.navigate('secondScreen')}>
-  //         <View>
-  //           <StyledText className='align-center text-3xl font-title text-defaultText'>
-  //             Dummy page
-  //           </StyledText>
-  //         </View>
-  //       </TouchableOpacity>
-  //       <TouchableOpacity onPress={() => navigation.navigate('profileScreen')}>
-  //         <View>
-  //           <StyledText className='align-center text-3xl font-title text-defaultText'>
-  //             Profile Page
-  //           </StyledText>
-  //         </View>
-  //       </TouchableOpacity>
-  //            </View>
-  //   <StyledView className='w-[100vw] h-[100vh] flex items-center justify-center'>
-  //     <Button
-  //       title='Log Out'
-  //       onPress={() => {
-  //         signOut();
-  //       }}
-  //     />
-  //     <StyledText>{developers}</StyledText>
-  //           <Button onPress={(evt) => {
-  //             console.log("Hello, world!");
-  //           }} title="Click me"></Button>
-  //         </View>
-  //       </TouchableOpacity>
-  //     </View>
-  //   </StyledView>
-  //   **/
-  // );
+  return (
+    <GestureHandlerRootView>
+      <StyledView className='flex-1 items-center bg-surfaceBG'>
+        <StyledView className='pt-[5vh]'>
+          <WelcomeBlock name={userProfile?.profile?.first} />
+          <PortfolioValue
+            Portfoliovalue={totalInvested}
+            portfolioChange={350.23}
+            navigation={navigation}
+          />
+        </StyledView>
+        <BottomSheetComponent portfolio={portfolio} navigation={navigation} />
+      </StyledView>
+    </GestureHandlerRootView>
+  );
 }

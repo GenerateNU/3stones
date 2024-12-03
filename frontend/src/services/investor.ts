@@ -65,11 +65,19 @@ export const useInvestorPortfolio = () => {
 };
 
 // GET investor's history of transactions
-const getInvestorHistory = async (accessToken: string): Promise<History | null> => {
+const getInvestorHistory = async (
+  accessToken: string,
+  offset: number,
+  limit: number,
+): Promise<History | null> => {
   try {
     const response = await axios.get<History>(`${API_URL}/api/v1/investors/history`, {
       headers: {
         Authorization: `${accessToken}`,
+      },
+      params: {
+        limit,
+        offset,
       },
     });
     return response.data; // Return the project if successful
@@ -79,12 +87,12 @@ const getInvestorHistory = async (accessToken: string): Promise<History | null> 
   }
 };
 
-export const useInvestorHistory = () => {
+export const useInvestorHistory = (currentPage, itemsPerPage) => {
   const { session } = useAuth();
 
   const { data: history, isLoading } = useQuery<History>({
     queryKey: ['investor_portfolio'],
-    queryFn: () => getInvestorHistory(session?.access_token),
+    queryFn: () => getInvestorHistory(session?.access_token, currentPage, itemsPerPage),
   });
 
   return {

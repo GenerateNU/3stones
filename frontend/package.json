@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo/ngrok": "^4.1.0",
     "@expo/vector-icons": "^14.0.2",
+    "@gorhom/bottom-sheet": "^5.0.6",
     "@likashefqet/react-native-image-zoom": "^4.2.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^6.6.1",
@@ -42,6 +43,7 @@
     "react-native-gesture-handler": "~2.20.2",
     "react-native-get-random-values": "^1.11.0",
     "react-native-google-places-autocomplete": "^2.5.7",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-maps": "1.18.0",
     "react-native-reanimated": "~3.16.1",
     "react-native-reanimated-carousel": "^3.5.1",

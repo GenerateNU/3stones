@@ -40,7 +40,7 @@ const backgroundStyles = cva(
       state: 'default',
       size: 'medium',
     },
-  }
+  },
 );
 
 // Text styles
@@ -74,13 +74,12 @@ const textStyles = cva(
       state: 'default',
       size: 'medium',
     },
-  }
+  },
 );
-
 
 // Define button props
 interface ButtonProps extends TouchableOpacityProps {
-  children: React.ReactNode; 
+  children: React.ReactNode;
   icon?: React.ReactNode;
   type?: 'primary' | 'secondary' | 'plain-dark';
   state?: 'default' | 'pressed' | 'disabled';
@@ -116,9 +115,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {icon && icon}
-      <StyledText className={textStyles({ type, state, size })}>
-        {children}
-      </StyledText>
+      <StyledText className={textStyles({ type, state, size })}>{children}</StyledText>
     </StyledTouchableOpacity>
   );
 };
