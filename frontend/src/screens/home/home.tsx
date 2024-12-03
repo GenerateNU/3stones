@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import PortfolioValue from './components/portfolioValue';
@@ -16,14 +16,12 @@ interface HomeScreenProps {
 }
 
 const StyledView = styled(View);
-const StyledTextInput = styled(TextInput);
-const StyledButton = styled(Button);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   const userProfile = useInvestorProfile();
   const [totalInvested, setTotalInvested] = useState(0);
   const { portfolio } = useInvestorPortfolio();
-  const [searchInput, setSearchInput] = useState('');
+
 
   useEffect(() => {
     if (portfolio) {
@@ -38,8 +36,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <StyledView className='flex-1 items-center bg-surfaceBG'>
         <StyledView className='pt-[5vh]'>
           <WelcomeBlock name={userProfile?.profile?.first} />
-          <StyledTextInput className="w-[80vw] h-[10vh] border-b border-[1px]" value={searchInput} onChangeText={setSearchInput} />
-          <StyledButton title="Search" onPress={() => console.log(searchInput)}>Search</StyledButton>
           <PortfolioValue
             Portfoliovalue={totalInvested}
             portfolioChange={350.23}
