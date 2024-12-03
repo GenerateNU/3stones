@@ -85,6 +85,7 @@ interface ButtonProps extends TouchableOpacityProps {
   type?: 'primary' | 'secondary' | 'plain-dark';
   state?: 'default' | 'pressed' | 'disabled';
   size?: 'small' | 'medium' | 'large';
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -94,6 +95,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   disabled,
   icon,
+  className,
   ...props
 }) => {
   const [isPressed, setIsPressed] = React.useState(false);
@@ -110,7 +112,7 @@ const Button: React.FC<ButtonProps> = ({
       onPress={onPress}
       disabled={disabled}
       activeOpacity={1}
-      className={backgroundStyles({ type, state, size })}
+      className={`${backgroundStyles({ type, state, size })} ${className ? className : ""}`}
       {...props}
     >
       {icon && icon}
