@@ -1,6 +1,3 @@
-//TO DO Add the tag component 
-//TO DO Make the updates page inline with the figma 
-
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { styled } from 'nativewind';
