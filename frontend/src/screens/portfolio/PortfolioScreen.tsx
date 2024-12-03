@@ -1,6 +1,6 @@
 //Change loading page and if a portfolio cant be loaded page
 import React, { useState } from 'react';
-import { Image, Text, View, TouchableOpacity} from 'react-native';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import { ScrollView } from 'react-native';
@@ -66,7 +66,6 @@ function netPortfolioValue(projects) {
 }
 
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
-
   const [activeTab, setActiveTab] = useState('Your Projects');
 
   const { portfolio, isLoading: portfolioLoading } = useInvestorPortfolio();
@@ -103,7 +102,6 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
   return (
     <StyledView className='flex-1 justify-center bg-surfaceBG overflow-auto'>
-      
       {/* Padding */}
       <StyledView className='flex w-93 h-14 items-center shrink-0'></StyledView>
 

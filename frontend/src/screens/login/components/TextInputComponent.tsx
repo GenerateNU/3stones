@@ -16,6 +16,7 @@ type TextInputComponentProps = {
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'; // Explicitly typed as autoCapitalize
     autoFocus?: boolean;
     error?: boolean;
+    maxLength?: number;
 };
 
 const TextInputComponent: React.FC<TextInputComponentProps> = ({
@@ -27,6 +28,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
     autoCapitalize = 'none', // Default value
     autoFocus = true, // Default value
     error = false,
+    maxLength,
 }) => {
     const [isSecure, setIsSecure] = useState(isPassword);
 
@@ -48,6 +50,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
                 autoCapitalize={autoCapitalize}
                 keyboardType={keyboardType}
                 autoFocus={autoFocus}
+                maxLength={maxLength}
             />
             {isPassword && (
                 <StyledPressable onPress={toggleSecureEntry}>

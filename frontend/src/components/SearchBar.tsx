@@ -34,7 +34,7 @@ const iconVariants = {
   'x-default': require('../../assets/images/x-icon-default.png'),
   'x-disabled': require('../../assets/images/x-icon-disabled.png'),
   'search-default': require('../../assets/images/search-icon-default.png'),
-  'search-disabled': require('../../assets/images/search-icon-disabled.png')
+  'search-disabled': require('../../assets/images/search-icon-disabled.png'),
 };
 
 const { height: screenHeight } = Dimensions.get('window');
@@ -50,17 +50,27 @@ type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   textColor: string;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, intent, icon, textColor, onValueChange, onPressed }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  value,
+  intent,
+  icon,
+  textColor,
+  onValueChange,
+  onPressed,
+}) => {
   return (
-    <StyledView className={searchBarVariants({ intent, icon })} style={{ width: calculatedWidth, height: calculatedHeight, paddingHorizontal: 12 }}>
+    <StyledView
+      className={searchBarVariants({ intent, icon })}
+      style={{ width: calculatedWidth, height: calculatedHeight, paddingHorizontal: 12 }}
+    >
       <StyledTextInput
-        style={{ fontSize: 14, fontFamily: "sourceSans3", fontWeight: 500}}
-        className="flex-1"
+        style={{ fontSize: 14, fontFamily: 'sourceSans3', fontWeight: 500 }}
+        className='flex-1'
         placeholder={value}
         placeholderTextColor={textColor}
         onChangeText={onValueChange}
       />
-      <StyledPressable className="ml-2" onPress={onPressed}>
+      <StyledPressable className='ml-2' onPress={onPressed}>
         <StyledImage source={iconVariants[icon || 'clear']} style={{ width: 14, height: 14 }} />
       </StyledPressable>
     </StyledView>
