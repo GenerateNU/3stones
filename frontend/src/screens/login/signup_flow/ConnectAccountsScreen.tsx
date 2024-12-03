@@ -8,7 +8,8 @@ import TextField from '../../../components/TextField';
 import TextInputComponent from '../components/TextInputComponent';
 import { BodyBoldText, BodyText, CaptionText } from '../../../components/Typography';
 import Button from '../../../components/Button';
-
+import NavProgressBar from '../components/NavProgressBar';
+import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -16,11 +17,6 @@ const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledImage = styled(Image);
-import NavProgressBar from '../components/NavProgressBar';
-import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
-
-const StyledView = styled(View);
-const StyledText = styled(Text);
 
 export default function ConnectAccountsScreen({ navigation }) {
   const [search, setSearch] = useState("")

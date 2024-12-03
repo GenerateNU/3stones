@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { styled } from 'nativewind';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';

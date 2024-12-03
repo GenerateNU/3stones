@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
@@ -22,6 +22,8 @@ interface HomeScreenProps {
 const StyledView = styled(View);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const { signOut } = useAuth();
+  
   const userProfile = useInvestorProfile();
   const [totalInvested, setTotalInvested] = useState(0);
   const { portfolio } = useInvestorPortfolio();
@@ -32,12 +34,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       const total = Object.values(portfolio).reduce((sum, value) => sum + value, 0);
       setTotalInvested(total);
     }
-    catch (error) {
-      console.log(error);
-    } 
-  }
-  
-  getEndPoint();
+  })
   
   return (
     <StyledView className='flex-1 mt-12'>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import WelcomeScreen from '../screens/login/WelcomeScreen';
@@ -11,6 +12,7 @@ import LoginEmailScreen from '../screens/login/login_flow/LoginEmailScreen';
 import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen';
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
+import NavProgressBar from '../screens/login/components/NavProgressBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +27,11 @@ export default function LoginNavigator() {
         <Stack.Screen
           name='EmailInputScreen'
           component={EmailInputScreen}
-          options={{ title: 'Enter Your Email' }}
+          options={{ title: 'Enter Your Email', headerShown: true, header: (props) => {
+            return (
+              <NavProgressBar currentStep={1} totalSteps={6} buttonType={'back'} onPress={() => props.navigation.goBack()} />
+            )
+          }}}
         />
         <Stack.Screen
           name='PasswordInputScreen'

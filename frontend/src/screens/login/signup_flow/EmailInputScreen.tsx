@@ -21,10 +21,6 @@ export default function EmailInputScreen({ navigation }) {
 
   return (
     <OnboardingScreenWrapper>
-
-      {/* Progress Bar */}
-      <NavProgressBar currentStep={1} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
-
       {/* Email Input Section */}
       <StyledView className="w-full flex-1 justify-center items-center">
         <StyledText className="text-center text-2xl font-bold text-black mb-2">Let's start with your email</StyledText>

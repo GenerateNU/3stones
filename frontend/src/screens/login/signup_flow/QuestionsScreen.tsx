@@ -110,17 +110,15 @@ export default function QuestionsScreen({ navigation }) {
                 totalQuestions={questions.length}
             />
 
-                    {/* Continue Button */}
-                    <StyledView className="w-full mt-6">
-                        <Button type="plain-dark" onPress={handleSaveForLater}>
-                            Save for Later
-                        </Button>
-                        <Button type="primary" onPress={handleNext}>
-                            Next
-                        </Button>
-                    </StyledView>
-                </StyledView>
-            </StyledScrollView>
-        </StyledKeyboardAvoidingView>
+            {/* Continue Button */}
+            <StyledView className="w-full mt-6">
+                <Button type="plain-dark" onPress={handleSaveForLater}>
+                    Save for Later
+                </Button>
+                <Button type="primary" onPress={handleNext}>
+                    Next
+                </Button>
+            </StyledView>
+        </OnboardingScreenWrapper>
     );
 }
