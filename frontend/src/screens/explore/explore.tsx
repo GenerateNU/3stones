@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image, Text, View, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import React from 'react';
+import { Text, View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import SideBySide from '../../components/SideBySide';
@@ -7,10 +7,9 @@ import CategoryCard from './components/ExploreCategoryCard';
 import GenericCarousel from '../../components/carousel';
 import PropertyCard from './components/PropertyCard';
 import SearchBar from '../../components/SearchBar';
+import property1 from './components/property-placeholder1.png';
 
 interface ExploreScreenProps {
-  // This actually should be `any`, so disabling the linter rule
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }
 
@@ -25,6 +24,7 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
         <StyledText className='text-4xl font-Nunito-ExtraBold'>Explore</StyledText>
       </StyledView>
 
+      {/* Search Bar */}
       <StyledView className='pt-[3vh] pl-[2vh]'>
         <SearchBar
           intent='unselected'
@@ -38,16 +38,16 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
 
       {/* Recommended Projects */}
       <StyledView className='pl-[2vh] pt-[5vh] pb-[2vh]'>
-        <StyledText className='text-3xl font-nunitoSemiBold mb-2'>Recommended Projects</StyledText>
+        <StyledText className='text-3xl font-nunitoSemiBold'>Recommended Projects</StyledText>
       </StyledView>
 
       {/* Carousel Section */}
-      <StyledView>
+      <StyledView className='pl-[2vh] pr-[2vh] pb-[3vh]'>
         <GenericCarousel
           components={[
             <PropertyCard
               key='1'
-              image={undefined}
+              image={property1}
               addressLine1='120 Massachusetts Ave.'
               addressLine2='Boston, MA 02119'
               progressCurrent={6}
@@ -55,7 +55,7 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
             />,
             <PropertyCard
               key='2'
-              image={undefined}
+              image={property1}
               addressLine1='709 Sunset Blvd.'
               addressLine2='Hollywood, CA 90028'
               progressCurrent={9}
@@ -66,8 +66,9 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
       </StyledView>
 
       {/* Popular Projects */}
-      <StyledView className='pl-[2vh] pt-[2vh] pb-[3vh]'>
+      <StyledView className='pl-[2vh] pt-[2vh]'>
         <StyledText className='text-3xl font-nunitoSemiBold mb-2'>Popular Projects</StyledText>
+
         <SideBySide
           leftComponent={<CategoryCard category='Residential' image={undefined} />}
           rightComponent={<CategoryCard category='Commercial' image={undefined} />}
