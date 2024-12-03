@@ -43,31 +43,35 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
       {/* Recommended Projects */}
       <StyledView className='pl-[2vh] pt-[5vh] pb-[2vh]'>
         <StyledText className='text-3xl font-nunitoSemiBold'>Recommended Projects</StyledText>
+         {/* Carousel Section: tweak the container's height according to the height you adjust the carousel to */}
+        <StyledView className='h-[35vh] pt-[2vh]'>
+          <GenericCarousel
+            width={80}
+            height={35}
+            components={[
+              <PropertyCard
+                key='1'
+                image={property1}
+                addressLine1='120 Massachusetts Ave.'
+                addressLine2='Boston, MA 02119'
+                progressCurrent={6}
+                progressTotal={10}
+              />,
+              <PropertyCard
+                key='2'
+                image={property1}
+                addressLine1='709 Sunset Blvd.'
+                addressLine2='Hollywood, CA 90028'
+                progressCurrent={9}
+                progressTotal={10}
+              />,
+            ]}
+          />
+        </StyledView>
       </StyledView>
+    
 
-      {/* Carousel Section */}
-      <StyledView className='pl-[2vh] pr-[2vh] pb-[3vh] pt-[3vh]'>
-        <GenericCarousel
-          components={[
-            <PropertyCard
-              key='1'
-              image={property1}
-              addressLine1='120 Massachusetts Ave.'
-              addressLine2='Boston, MA 02119'
-              progressCurrent={6}
-              progressTotal={10}
-            />,
-            <PropertyCard
-              key='2'
-              image={property1}
-              addressLine1='709 Sunset Blvd.'
-              addressLine2='Hollywood, CA 90028'
-              progressCurrent={9}
-              progressTotal={10}
-            />,
-          ]}
-        />
-      </StyledView>
+     
 
       {/* Popular Projects */}
       <StyledView className='pl-[2vh] pt-[2vh] pb-[10vh]'>
