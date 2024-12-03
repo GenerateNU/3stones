@@ -6,6 +6,8 @@ import (
 	"backend/internal/transactions"
 	"backend/internal/types"
 
+	"strings"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
@@ -38,7 +40,13 @@ func (c *ProjectsController) SearchProjects(ctx *fiber.Ctx) error {
 		return &api_errors.INVALID_REQUEST_BODY
 	}
 
-	searchProjects, err := transactions.SearchProjects(c.ServiceParams.DB, searchProjectsQuery.Query)
+	// Split into words
+	words := strings.Split(searchProjectsQuery.Query, " ")
+
+	// Join words with | for full text search
+	parsedQuery := strings.Join(words, " | ")
+
+	searchProjects, err := transactions.SearchProjects(c.ServiceParams.DB, parsedQuery)
 	if err != nil {
 		return err
 	}

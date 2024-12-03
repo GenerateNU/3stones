@@ -61,7 +61,7 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 func SearchProjects(db *pgxpool.Pool, query string) ([]models.Project, error) {
 	rows, err := db.Query(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, completion_date, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE to_tsvector(description || ' ' || title || ' ' || 'street' || ' ' || 'locality' || ' ' || 'state' || ' ' || 'zipcode') @@ to_tsquery($1);", query)
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, completion_date, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE to_tsvector(description || ' ' || title || ' ' || street || ' ' || locality || ' ' || state || ' ' || zipcode) @@ to_tsquery($1);", query)
 	if err != nil {
 		return nil, err
 	}
