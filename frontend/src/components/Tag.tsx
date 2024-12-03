@@ -73,6 +73,7 @@ export function Tag({
     <StyledView className={`${tagVariants({ level })} ${className || ''}`} {...props}>
       <StyledView className={`${tagIconVariants({ level })}`}>{icon}</StyledView>
       <StyledText className={`${tagTextVariants({ level })} ${icon ? 'ml-1' : ''}`}>
+   
         {children}
       </StyledText>
     </StyledView>
