@@ -7,7 +7,6 @@ import { useAuth } from '../../../context/AuthContext';
 import NavProgressBar from '../components/NavProgressBar';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
 
-
 const StyledView = styled(View);
 const StyledText = styled(Text);
 

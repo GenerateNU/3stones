@@ -15,15 +15,17 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function LoginPasswordScreen({ navigation }) {
   const { loginData, updateLoginData, login } = useAuth(); // Access loginData and updateLoginData from AuthContext
-  const [password] = useState(loginData.password);
+  const [password, setPassword] = useState(loginData.password);
   const [error, setError] = useState(null);
 
   const handleLogin = async () => {
     try {
-      await login(loginData.email, password);
+      console.log('Logging in with:', loginData.email, loginData.password);
+      await login(loginData.email, loginData.password);
       setError(null);
     } catch (error) {
       setError("Invalid username or password");
+      console.log('Error logging in:', error);
     }
   };
 
@@ -51,10 +53,11 @@ export default function LoginPasswordScreen({ navigation }) {
         <TextInputComponent
           placeholder="Password"
           value={loginData.password}
-          onChangeText={(input) => updateLoginData('password', input)}
-          isPassword={true}
-          error={!!error}
-        />
+          // update the password in password state
+            onChangeText={(input: string) => { updateLoginData('password', input); }}
+            isPassword={true}
+            error={!!error}
+          />
         {error && (
           <StyledText className='text-red-500 text-sm mt-2'>
             {error}

@@ -34,16 +34,6 @@ export default function SignUpMainScreen({ navigation }) {
                     onPress={handleNext}>
                     Continue with Email
                 </Button>
-
-                <Divider text='OR' />
-
-                {/* Google and Apple Sign-In Buttons (Stub) */}
-                <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">
-                    <StyledText className="text-gray-500">Sign in with Google</StyledText>
-                </StyledTouchableOpacity>
-                <StyledTouchableOpacity className="w-full h-12 border border-gray-300 rounded-md flex-row items-center justify-center mb-4">
-                    <StyledText className="text-gray-500">Sign in with Apple</StyledText>
-                </StyledTouchableOpacity>
             </StyledView>
         </OnboardingScreenWrapper>
     );

@@ -27,38 +27,42 @@ export default function UserDetailsScreen({ navigation }) {
           <NavProgressBar currentStep={3} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
 
           {/* User Details Input Section */}
-          <StyledView className="w-full flex-1 justify-center items-center">
-            <StyledText className="text-center text-2xl font-bold text-black mb-2">A bit about you</StyledText>
-            <StyledText className="text-center text-gray-600 mb-8">
+          <StyledView className='w-full flex-1 justify-center items-center'>
+            <StyledText className='text-center text-2xl font-bold text-black mb-2'>
+              A bit about you
+            </StyledText>
+            <StyledText className='text-center text-gray-600 mb-8'>
               We need your first and last name to get started.
             </StyledText>
 
             <TextInputComponent
-              placeholder="First Name"
+              placeholder='First Name'
               value={firstName}
               onChangeText={(input) => setFirstName(input)}
               autoCapitalize='words'
               autoFocus={true}
-            >
-            </TextInputComponent>
+            ></TextInputComponent>
 
             <TextInputComponent
-              placeholder="Last Name"
+              placeholder='Last Name'
               value={lastName}
               onChangeText={(input) => setLastName(input)}
               autoCapitalize='words'
               autoFocus={false}
-            >
-            </TextInputComponent>
+            ></TextInputComponent>
           </StyledView>
 
           {/* Continue Button */}
-          <StyledView className="w-full mt-6">
+          <StyledView className='w-full mt-6'>
             <Button
-              type="primary"
-              onPress={() => { handleNext() }}
+              type='primary'
+              onPress={() => {
+                handleNext();
+              }}
               disabled={!firstName.trim() || !lastName.trim()}
-            >Continue</Button>
+            >
+              Continue
+            </Button>
           </StyledView>
 
         </OnboardingScreenWrapper>

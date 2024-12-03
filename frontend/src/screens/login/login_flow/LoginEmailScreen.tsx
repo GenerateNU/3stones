@@ -5,7 +5,6 @@ import Button from '../../../components/Button';
 import { useAuth } from '../../../context/AuthContext'; // Update import path based on where AuthContext is stored
 import WelcomeToThreeStonesComponent from '../components/WelcomeToThreeStones';
 import TextInputComponent from '../components/TextInputComponent';
-import Divider from '../../../components/Divider';
 import NavProgressBar from '../components/NavProgressBar';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
 
