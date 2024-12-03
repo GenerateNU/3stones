@@ -24,8 +24,46 @@ const StyledScrollView = styled(ScrollView);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity= styled(TouchableOpacity);
 
+function calculateDaysRemaining(completionDateStr) {
+  const today = new Date();
+  const [monthStr, yearStr] = completionDateStr.split(" ");
+  const completionDate = new Date(`${monthStr} 1, ${yearStr}`);
 
-  
+  const timeDifference = completionDate.getTime() - today.getTime();
+
+  return Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+}
+
+function calculateExpMaturity(projects) {
+    let totalDays = 0;
+    let validProjects = 0;
+
+    projects.forEach(project => {
+        const daysRemaining = calculateDaysRemaining(project.completion_date);
+
+        if (daysRemaining !== null) {
+            totalDays += daysRemaining;
+            validProjects++;
+        }
+    });
+
+    if (validProjects === 0) {
+        console.error("No valid projects to calculate average maturity.");
+        return null;
+    }
+
+    return totalDays / validProjects;
+}
+
+function netPortfolioValue(projects) {
+    let value = 0;
+
+    projects.forEach(project => {
+        value = value + project.funding_goal_cents
+    });
+
+    return value / 100;
+}
 
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
@@ -83,12 +121,12 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         </StyledView>
         
         <PortfolioDetails 
-        netPortfolioValue={0} 
-        portfolioChangeAmount={0} 
-        marketValue={0} 
-        cashValue={0} 
+        netPortfolioValue={netPortfolioValue(allProjects)} 
+        portfolioChangeAmount={350} // HARD CODED VALUE
+        marketValue={10000} // HARD CODED VALUE 
+        cashValue={2345.67} //HARD CODED VALUE
         totalProjects={allProjects.length} 
-        expMaturity={0}>
+        expMaturity={calculateExpMaturity(allProjects)}>
 
         </PortfolioDetails>
 
@@ -130,17 +168,16 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
                 <PortfolioItem
                   address={project.street}
                   location={project.state}
-                  price={project.funding_goal_cents / 100}
-                  duration={''}
-                  invested={-1}
-                  completion={useProjectTotalFunded(project.id).projectTotalFunded}
-                  image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />} 
-                  status={project.milestone}></PortfolioItem>
+                  image={<Image key={project.images[0].id} src={project.images[0].url} alt="Project Image" />}
+                  status={project.milestone} 
+                  description={project.description} 
+                  initialValue={useProjectTotalFunded(project.id).projectTotalFunded} 
+                  finalValue={project.funding_goal_cents/ 100}></PortfolioItem>
               </StyledView>))}
         </StyledView>
        </StyledView>
         
-        ) 
+        )   
       : 
         (<StyledView className = 'bg-defaultPrimary'>
         <StyledView className={`flex p-[16px] flex-col items-start bg-white ${activeTab === 'Updates' ? 'rounded-tl-[27px]' : 'rounded-tr-[27px]'}`}>

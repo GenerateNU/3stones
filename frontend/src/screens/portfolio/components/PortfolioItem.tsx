@@ -16,25 +16,24 @@ const StyledImage = styled(Image);
 interface PortfolioItemProps {
     address: string;
     location: string;
-    price: number;
-    duration: string;
-    invested: number;
-    completion: number;
+    description: string;
+    initialValue: number;
+    finalValue: number;
     image: React.ReactNode;
     status: string;
 }
 
-const PortfolioItem = ({address, location, price, duration, invested, completion, image, status} : PortfolioItemProps & { className?: string })=> {
+const PortfolioItem = ({address, location, description, initialValue, finalValue, image, status} : PortfolioItemProps & { className?: string })=> {
     return (
         <Card className = 'h-100'>
             <StyledView className = 'flex w-full min-w-38 flex-row items-start self-stretch'>
                 {/* Left Side of the Card*/}
                 <StyledView className = 'flex w-2/3 flex-col items-start'>
                     <StyledView className = 'flex flex-col items-start p-1 self-stretch space-y-2 mb-2'>
-                        <StyledText className = 'font-sourceSans3Bold text-[16px]' >333 Market Street</StyledText>
-                        <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >San Francisco, CA</StyledText>
+                        <StyledText className = 'font-sourceSans3Bold text-[16px]' >{address}</StyledText>
+                        <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >{location}</StyledText>
                         <StyledView className = 'py-3'>
-                            <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Commercial Development</StyledText>
+                            <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >{description}</StyledText>
                         </StyledView>
                         <StyledView>
             {status == "Sold" &&
@@ -77,11 +76,11 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                         <StyledView className = 'flex flex-row items-start justify-between w-full mb-3'>
                             <StyledView className = 'flex justify-between items-start mr-4'>
                                 <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Final Value</StyledText>
-                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >$350.00</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >{finalValue}</StyledText>
                             </StyledView>
                             <StyledView className = 'flex flex-col items-start'>
                                 <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Initial Value</StyledText>
-                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >$250.00</StyledText>
+                                <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >{initialValue}</StyledText>
                             </StyledView>
 
                         </StyledView>
@@ -109,7 +108,7 @@ const PortfolioItem = ({address, location, price, duration, invested, completion
                     </StyledView>
                     <StyledView className = 'flex flex-col w-full py-1 justify-between items-end '>
                         <StyledText className = 'font-sourceSans3CaptionMedium text-[12px]' >Total Returns</StyledText>
-                        <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >+5.12%</StyledText>
+                        <StyledText className = 'font-sourceSans3BodyBold text-[16px]' >{((finalValue - initialValue)/initialValue) * 100}</StyledText>
                     </StyledView>
                 </StyledView>
             </StyledView>
