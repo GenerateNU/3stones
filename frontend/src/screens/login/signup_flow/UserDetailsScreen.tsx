@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, ScrollView, TextInput } from 'react-native';
+import React, {useState } from 'react';
+import { View, Text } from 'react-native';
 import { styled } from 'nativewind';
 import Button from '../../../components/Button';
-import ProgressBar from '../../../components/ProgressBar';
 import { useAuth } from '../../../context/AuthContext';
 import TextInputComponent from '../components/TextInputComponent';
+import NavProgressBar from '../components/NavProgressBar';
+import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
-const StyledScrollView = styled(ScrollView);
 
 export default function UserDetailsScreen({ navigation }) {
   const { signupData, updateSignupData } = useAuth();
@@ -19,28 +18,20 @@ export default function UserDetailsScreen({ navigation }) {
   const handleNext = () => {
     updateSignupData('firstName', firstName);
     updateSignupData('lastName', lastName);
-    navigation.navigate('ConnectAccountsScreen');
+    navigation.navigate('ConnectAccountsScreen')
   };
 
   return (
-    <StyledKeyboardAvoidingView
-      className='flex-1'
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
-      <StyledScrollView className='flex-1' contentContainerStyle={{ flexGrow: 1 }}>
-        <StyledView className='flex-1 items-center bg-surfaceBG p-6 justify-between'>
-          {/* Progress Bar */}
-          <StyledView className='w-full mb-4'>
-            <ProgressBar current={3} total={6} />
-          </StyledView>
+    <OnboardingScreenWrapper>
+
+          <NavProgressBar currentStep={3} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
 
           {/* User Details Input Section */}
           <StyledView className='w-full flex-1 justify-center items-center'>
-            <StyledText className='text-center text-2xl font-bold text-black mb-2'>
+            <StyledText className='text-center text-2xl font-bold font-title text-defaultText mb-2'>
               A bit about you
             </StyledText>
-            <StyledText className='text-center text-gray-600 mb-8'>
+            <StyledText className='text-center font-sourceSans3 text-defaultText mb-8'>
               We need your first and last name to get started.
             </StyledText>
 
@@ -73,8 +64,7 @@ export default function UserDetailsScreen({ navigation }) {
               Continue
             </Button>
           </StyledView>
-        </StyledView>
-      </StyledScrollView>
-    </StyledKeyboardAvoidingView>
+
+        </OnboardingScreenWrapper>
   );
 }

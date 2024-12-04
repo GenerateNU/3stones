@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import WelcomeScreen from '../screens/login/WelcomeScreen';
@@ -10,14 +11,13 @@ import { AuthProvider } from '../context/AuthContext';
 import LoginEmailScreen from '../screens/login/login_flow/LoginEmailScreen';
 import LoginPasswordScreen from '../screens/login/login_flow/LoginPasswordScreen';
 import LegalInformationScreen from '../screens/login/signup_flow/LegalInformationScreen';
-import SignupMainScreen from '../screens/login/signup_flow/SignupMainScreen';
 import QuestionsScreen from '../screens/login/signup_flow/QuestionsScreen';
+import NavProgressBar from '../screens/login/components/NavProgressBar';
 
 const Stack = createNativeStackNavigator();
 
 export default function LoginNavigator() {
   return (
-    <AuthProvider>
       <Stack.Navigator initialRouteName='WelcomeScreen'>
         <Stack.Screen
           name='WelcomeScreen'
@@ -27,49 +27,43 @@ export default function LoginNavigator() {
         <Stack.Screen
           name='EmailInputScreen'
           component={EmailInputScreen}
-          options={{ title: 'Enter Your Email' }}
+          options={{ title: 'Enter Your Email', headerShown: false}}
         />
         <Stack.Screen
           name='PasswordInputScreen'
           component={PasswordInputScreen}
-          options={{ title: 'Create a Password' }}
+          options={{ title: 'Create a Password', headerShown: false }}
         />
         <Stack.Screen
           name='UserDetailsScreen'
           component={UserDetailsScreen}
-          options={{ title: 'Your Details' }}
+          options={{ title: 'Your Details', headerShown: false }}
         />
         <Stack.Screen
           name='ConnectAccountsScreen'
           component={ConnectAccountsScreen}
-          options={{ title: 'Your Details' }}
+          options={{ title: 'Your Details' , headerShown: false}}
         />
         <Stack.Screen
           name='LoginEmailScreen'
           component={LoginEmailScreen}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login', headerShown: false }}
         />
         <Stack.Screen
           name='LoginPasswordScreen'
           component={LoginPasswordScreen}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login', headerShown: false }}
         />
         <Stack.Screen
           name='LegalInformationScreen'
           component={LegalInformationScreen}
-          options={{ title: 'Legal Info' }}
-        />
-        <Stack.Screen
-          name='SignupMainScreen'
-          component={SignupMainScreen}
-          options={{ title: 'Manual Address Entry' }}
+          options={{ title: 'Legal Info', headerShown: false }}
         />
         <Stack.Screen
           name='QuestionsScreen'
           component={QuestionsScreen}
-          options={{ title: 'Questions Screen' }}
+          options={{ title: 'Questions Screen', headerShown: false }}
         />
       </Stack.Navigator>
-    </AuthProvider>
   );
 }

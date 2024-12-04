@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strings"
+
 	"backend/internal/api_errors"
 	"backend/internal/models"
 	"backend/internal/transactions"
@@ -27,6 +29,29 @@ func (c *ProjectsController) GetProjects(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.JSON(projects)
+}
+
+func (c *ProjectsController) SearchProjects(ctx *fiber.Ctx) error {
+	searchProjectsQuery := new(models.SearchRequestBody)
+
+	// parses the incoming request body into the searchProjectsQuery struct
+	// returns an error if there was an issue such as missing fields
+	if err := ctx.BodyParser(searchProjectsQuery); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	// Split into words
+	words := strings.Split(searchProjectsQuery.Query, " ")
+
+	// Join words with | for full text search
+	parsedQuery := strings.Join(words, " | ")
+
+	searchProjects, err := transactions.SearchProjects(c.ServiceParams.DB, parsedQuery)
+	if err != nil {
+		return err
+	}
+
+	return ctx.JSON(searchProjects)
 }
 
 func (c *ProjectsController) GetProjectById(ctx *fiber.Ctx) error {

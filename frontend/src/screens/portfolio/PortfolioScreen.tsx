@@ -17,8 +17,8 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledScrollView = styled(ScrollView);
 const StyledImage = styled(Image);
-const StyledTouchableOpacity = styled(TouchableOpacity);
-
+const StyledTouchableOpacity= styled(TouchableOpacity);
+  
 export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
   const [activeTab, setActiveTab] = useState('Your Projects');
 
