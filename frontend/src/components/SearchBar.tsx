@@ -37,9 +37,7 @@ const iconVariants = {
   'search-disabled': require('../../assets/images/search-icon-disabled.png'),
 };
 
-const { height: screenHeight } = Dimensions.get('window');
-const calculatedWidth = (239 / 1000) * screenHeight;
-const calculatedHeight = (42 / 1000) * screenHeight;
+
 
 type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   value: string;
@@ -48,6 +46,8 @@ type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   intent: string;
   icon: string;
   textColor: string;
+  width: number;
+  height: number;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -55,9 +55,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
   intent,
   icon,
   textColor,
+  width,
+  height,
   onValueChange,
   onPressed,
 }) => {
+
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const calculatedWidth = (width / 100) * screenWidth;
+const calculatedHeight = (height / 100) * screenHeight;
   return (
     <StyledView
       className={searchBarVariants({ intent, icon })}

@@ -5,6 +5,7 @@ import PortfolioScreen from '../screens/portfolio/PortfolioScreen';
 import ProjectNavigator from './ProjectNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import HomeScreen from '../screens/home/home';
+import ExploreNavigator from './ExploreNavigator';
 import ExploreScreen from '../screens/explore/explore';
 
 const Tab = createBottomTabNavigator();
@@ -32,7 +33,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name='Explore'
-        component={ExploreScreen}
+        component={ExploreNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarIcon color={focused ? 'blue' : 'black'} name='search' />
