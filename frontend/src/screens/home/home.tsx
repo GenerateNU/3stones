@@ -28,6 +28,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   const [totalInvested, setTotalInvested] = useState(0);
   const { portfolio } = useInvestorPortfolio();
 
+
   useEffect(() => {
     if (portfolio) {
       // Sum up the total invested amount
