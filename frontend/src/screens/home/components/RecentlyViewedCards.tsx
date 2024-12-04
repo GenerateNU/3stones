@@ -82,7 +82,7 @@ const RecentlyViewedCard = ({ projectId }: { projectId: string }) => {
     );
   };
   return (
-    <Card className='w-full h-auto flex flex-col justify-center items-center border-borderPrimary'>
+    <Card className='w-full h-full flex flex-col justify-center items-center border-borderPrimary'>
       <StyledView className='flex flex-row flex-1 h-[15vh]'>
         <StyledView className='flex-1 flex-col '>
           <ProjectInformation />

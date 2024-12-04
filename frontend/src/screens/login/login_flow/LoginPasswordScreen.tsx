@@ -18,9 +18,13 @@ export default function LoginPasswordScreen({ navigation }) {
   const [password, setPassword] = useState(loginData.password);
   const [error, setError] = useState(null);
 
+  const [searchInput, setSearchinput] = useState('');
+
   const handleLogin = async () => {
     try {
-      console.log('Logging in with:', loginData.email, loginData.password);
+      //console.log(loginData.email);
+      //console.log(password);
+      //console.log('Logging in with:', loginData.email, loginData.password);
       await login(loginData.email, loginData.password);
       setError(null);
     } catch (error) {

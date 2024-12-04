@@ -76,6 +76,10 @@ const getAllProjects = async (accessToken): Promise<Project[] | null> => {
   }
 };
 
+
+
+
+
 export const useAllProjects = () => {
   const { session } = useAuth();
   const { data: allProjects, isLoading } = useQuery<Project[]>({
@@ -97,7 +101,7 @@ const postInvestment = async (
   try {
     await axios.post(
       `${API_URL}/api/v1/projects/${projectId}/invest`,
-      { amount },
+      { amount: amount},
       {
         headers: {
           Authorization: `${accessToken}`,
@@ -124,6 +128,45 @@ export const usePostInvestment = (projectId: string) => {
     triggerPostInvestment: mutation.mutate,
     isLoading: mutation.isPending,
     error: mutation.error,
+  };
+};
+
+
+// POST a search query
+const searchProjects = async (
+  query: string,
+  accessToken: string,
+): Promise<Project[]> => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/v1/projects/search-projects`,
+      { query: query },
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      },
+    );
+    console.log("response data: ", response.data);
+    return response.data; // Return the projects if successful
+    
+  } catch (error) {
+    dumpAxiosError(error);
+    throw error;
+  }
+};
+
+// Returns a lsit of projects that match the search query
+export const useSearchProjects = (query: string) => {
+  const { session } = useAuth();
+
+  const { data: projectResults, isLoading } = useQuery<Project[]>({
+    queryKey: ['project_results'],
+    queryFn: () => searchProjects(query, session?.access_token),
+  });
+  return {
+    projectResults,
+    isLoading,
   };
 };
 

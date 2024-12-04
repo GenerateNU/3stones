@@ -30,7 +30,6 @@ type AuthContextType = {
   setIsInSignupFlow: (value: boolean) => void;
 };
 
-
 // Initialize the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -113,7 +112,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const updateLoginData = (field: string, value: string) => {
     setLoginData((prevData) => ({ ...prevData, [field]: value }));
   };
-  
 
   // updates the signup
   const updateSignupData = (key: string, value: any) => {
@@ -163,4 +161,3 @@ export function useAuth() {
   }
   return context;
 }
-

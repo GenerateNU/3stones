@@ -85,7 +85,6 @@ func GetProfile(db *pgxpool.Pool, investorId uuid.UUID) (models.InvestorProfile,
 		&investorProfile.Zipcode,
 		&investorProfile.ProfilePictureUrl,
 	)
-
 	if err != nil {
 		return models.InvestorProfile{}, err
 	}
