@@ -12,7 +12,6 @@ import residential from './components/residential.png';
 import newlyAdded from './components/newlyadded.png';
 import commercial1 from './components/commercial.png';
 import commercial2 from './components/commercial2.png';
-import { useAuth } from '../../context/AuthContext';
 
 interface ExploreScreenProps {
   // This actually should be `any`, so disabling the linter rule
