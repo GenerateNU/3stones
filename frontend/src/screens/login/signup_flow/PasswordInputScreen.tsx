@@ -14,8 +14,8 @@ export default function PasswordInputScreen({ navigation }) {
   const { signupData, updateSignupData } = useAuth();
   const [password, setPassword] = useState(signupData.password);
 
-  const handleNext = () => {
-    updateSignupData('password', password);
+  const handleNext = async () => {
+    updateSignupData("password", password)
     navigation.navigate('UserDetailsScreen');
   };
 
@@ -23,11 +23,10 @@ export default function PasswordInputScreen({ navigation }) {
     <OnboardingScreenWrapper>
       <NavProgressBar currentStep={2} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
 
-
       {/* Password Input Section */}
       <StyledView className="w-full flex-1 justify-center items-center">
-        <StyledText className="text-center text-2xl font-bold text-black mb-2">Create a password</StyledText>
-        <StyledText className="text-center text-gray-600 mb-8">
+        <StyledText className="text-center text-2xl font-bold font-title text-defaultText mb-2">Create a password</StyledText>
+        <StyledText className="text-center font-sourceSans3 text-defaultText mb-8">
           Choose a strong password for your account.
         </StyledText>
 

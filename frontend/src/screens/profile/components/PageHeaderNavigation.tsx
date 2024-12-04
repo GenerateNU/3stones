@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Text, Image, ImageSourcePropType} from "react-native";
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import { SubheadingText } from '../../../components/typography';
+import { SubheadingText } from '../../../components/Typography';
 
 interface ProfilePageNavigatorProps {
     // This actually should be `any`, so disabling the linter rule
@@ -15,7 +15,6 @@ interface ProfilePageNavigatorProps {
 }
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function PageHeaderNavigation({ navigation, navigationName, pageName, leftIconRoute}: ProfilePageNavigatorProps) {

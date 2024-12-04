@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { styled } from 'nativewind';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -56,18 +57,18 @@ export default function LegalInformationScreen({ navigation }) {
         <StyledView className="flex-1 items-center bg-surfaceBG p-6 justify-between">
           {/* Progress Bar */}
           <NavProgressBar
-            currentStep={4}
+            currentStep={5}
             totalSteps={6}
             buttonType="back"
             onPress={() => navigation.goBack()}
           />
 
           {/* Legal Information Input Section */}
-          <StyledView className="w-full flex-1 justify-center items-center">
-            <StyledText className="text-center text-2xl font-bold text-black mb-2">
+          <StyledView className="w-full flex-1 justify-center items-center mt-12">
+            <StyledText className="text-center text-2xl font-bold font-title text-defaultText mb-2">
               Some legal information
             </StyledText>
-            <StyledText className="text-center text-gray-600 mb-8">
+            <StyledText className="text-center text-defaultText font-sourceSans3 mb-8">
               We need this information to get you started investing in 3 Stones.
             </StyledText>
 
@@ -75,7 +76,7 @@ export default function LegalInformationScreen({ navigation }) {
             <TextInputComponent
               placeholder="Social Security Number"
               value={signupData.ssn}
-              onChangeText={(input) => updateSignupData('ssn', input)}
+              onChangeText={(input) => updateSignupData('ssn', input.replace(/\D/g, '').slice(0, 9))}
               keyboardType="numeric"
               maxLength={9}
             />
@@ -158,8 +159,7 @@ export default function LegalInformationScreen({ navigation }) {
             <Button
               type="primary"
               onPress={handleNext}
-              disabled={!signupData.ssn.trim() || !signupData.address.addressLine.trim()}
-            >
+              disabled={!signupData.ssn.trim() || !signupData.address.addressLine.trim()}>
               Continue
             </Button>
           </StyledView>

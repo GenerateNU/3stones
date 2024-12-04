@@ -129,3 +129,22 @@ export const useInvestors = () => {
     isLoading,
   };
 };
+
+// PUT investor's profile information
+export const updateInvestorProfile = async (accessToken: string, profile: Partial<InvestorProfile>): Promise<InvestorProfile | null> => {
+  try {
+    const response = await axios.put<InvestorProfile>(
+      `${API_URL}/api/v1/investors/profile`,
+      profile,
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    dumpAxiosError(error);
+    return null;
+  }
+};
