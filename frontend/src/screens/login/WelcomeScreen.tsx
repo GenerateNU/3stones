@@ -13,18 +13,20 @@ export default function WelcomeScreen({ navigation }) {
   const { setIsInSignupFlow } = useAuth();
 
   return (
-    <StyledView className='flex-1 justify-center items-center bg-surfaceBG p-6'>
+    <StyledView className='flex-1 justify-between items-center bg-surfaceBG p-6'>
+      <StyledView>
       <WelcomeToThreeStonesComponent />
-
-      <StyledText className='text-center text-gray-900 mb-8'>
+      <StyledText className='text-center font-nunitoRegular text-gray-900 mb-8'>
         Providing the tools you need to make your first investments in real estate.
       </StyledText>
+
+      </StyledView>
 
       {/* Some dummy image, not sure how this works */}
       <StyledView className='align-center'>
         <StyledImage
-          className='h-1/4 resize-contain mt-5 mb-5'
-          source={require('../../../assets/images/icon.png')}
+          className='h-80 w-80 mt-5 mb-5'
+          source={require('../../../assets/images/logingraphic.png')}
         />
       </StyledView>
 

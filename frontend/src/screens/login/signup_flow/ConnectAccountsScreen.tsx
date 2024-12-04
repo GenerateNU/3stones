@@ -75,34 +75,25 @@ export default function ConnectAccountsScreen({ navigation }) {
   ]
 
   return (
-    <StyledKeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}
-    >
-      <StyledView className="flex-1 justify-center items-start bg-surfaceBG p-6">
+    <OnboardingScreenWrapper>
+        <NavProgressBar currentStep={4} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />
 
-        {/* Progress Bar */}
-        <StyledView className="w-full mb-8">
-          <ProgressBar
-            current={4}
-            total={6}
-          />
-        </StyledView>
 
         {/* Connect Accounts Section */}
-        <StyledView className="w-ful flex flex-col items-center">
+        <StyledView className="w-full flex flex-col items-center mt-12">
           <StyledText className="text-2xl font-bold font-title text-defaultText mb-4">Connect your accounts</StyledText>
           <TextInputComponent placeholder="Search Institutions" value={search} onChangeText={(text) => { setSearch(text)}} />
         </StyledView>
 
-        <BodyBoldText className='mt-8'>Most popular accounts</BodyBoldText>
-
+        <StyledView className="w-full flex flex-row items-start">
+          <BodyBoldText className='mt-8'>Most popular accounts</BodyBoldText>
+        </StyledView>
+        
         <StyledScrollView 
             className="w-full mt-2"
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
-  
+              
             }}
           >
             {banks.filter((val, ind, arr) => {
@@ -133,8 +124,6 @@ export default function ConnectAccountsScreen({ navigation }) {
           </StyledScrollView>
 
         <Button type="secondary" className="w-full" onPress={() => { navigation.navigate("LegalInformationScreen") }}>Save for later</Button>
-      </StyledView>
-
-    </StyledKeyboardAvoidingView>
+    </OnboardingScreenWrapper>
   );
 }

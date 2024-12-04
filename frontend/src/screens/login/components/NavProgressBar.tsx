@@ -26,9 +26,11 @@ const NavProgressBar: React.FC<NavProgressBarProps> = ({
   // Determine if the progress bar should be displayed
   const showProgress = currentStep !== undefined && totalSteps !== undefined;
 
+  console.log(`${showProgress}`)
+
   return (
     <SafeAreaView>
-      <StyledView className="bg-white flex-row items-center justify-between p-6">
+      <StyledView className="w-full flex flex-row items-center justify-between">
         {/* Left Section: Back or Close Button */}
         <StyledView className="flex-row items-center">
           {buttonType === 'back' && (
@@ -56,7 +58,7 @@ const NavProgressBar: React.FC<NavProgressBarProps> = ({
         </StyledView>
 
         {/* Center Section: Progress Bar */}
-        <StyledView className="flex-1">
+        <StyledView className="flex-1 mt-[6px] flex flex-row items-center w-full">
           {showProgress && (
             <ProgressBar current={currentStep} total={totalSteps} />
           )}

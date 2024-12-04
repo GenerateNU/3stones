@@ -89,14 +89,13 @@ export default function QuestionsScreen({ navigation }) {
 
     return (
         <OnboardingScreenWrapper>
-
             {/* Progress Bar */}
-            <NavProgressBar currentStep={4} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />\
+            <NavProgressBar currentStep={6} totalSteps={6} buttonType={'back'} onPress={() => navigation.goBack()} />\
 
             {/* User Details Input Section */}
             <StyledView className="w-full flex-1 justify-center items-center">
-                <StyledText className="text-center text-2xl font-bold text-black mb-2">Last but not least!</StyledText>
-                <StyledText className="text-center text-gray-600 mb-8">
+                <StyledText className="text-center text-2xl font-bold font-title mt-12 text-defaultText mb-2">Last but not least!</StyledText>
+                <StyledText className="text-center font-sourceSans3 text-defaultText mb-8">
                     Take a second to answer questions to better understand you as an investor.
                 </StyledText>
             </StyledView>

@@ -27,46 +27,42 @@ export default function LoginNavigator() {
         <Stack.Screen
           name='EmailInputScreen'
           component={EmailInputScreen}
-          options={{ title: 'Enter Your Email', headerShown: true, header: (props) => {
-            return (
-              <NavProgressBar currentStep={1} totalSteps={6} buttonType={'back'} onPress={() => props.navigation.goBack()} />
-            )
-          }}}
+          options={{ title: 'Enter Your Email', headerShown: false}}
         />
         <Stack.Screen
           name='PasswordInputScreen'
           component={PasswordInputScreen}
-          options={{ title: 'Create a Password' }}
+          options={{ title: 'Create a Password', headerShown: false }}
         />
         <Stack.Screen
           name='UserDetailsScreen'
           component={UserDetailsScreen}
-          options={{ title: 'Your Details' }}
+          options={{ title: 'Your Details', headerShown: false }}
         />
         <Stack.Screen
           name='ConnectAccountsScreen'
           component={ConnectAccountsScreen}
-          options={{ title: 'Your Details' }}
+          options={{ title: 'Your Details' , headerShown: false}}
         />
         <Stack.Screen
           name='LoginEmailScreen'
           component={LoginEmailScreen}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login', headerShown: false }}
         />
         <Stack.Screen
           name='LoginPasswordScreen'
           component={LoginPasswordScreen}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login', headerShown: false }}
         />
         <Stack.Screen
           name='LegalInformationScreen'
           component={LegalInformationScreen}
-          options={{ title: 'Legal Info' }}
+          options={{ title: 'Legal Info', headerShown: false }}
         />
         <Stack.Screen
           name='QuestionsScreen'
           component={QuestionsScreen}
-          options={{ title: 'Questions Screen' }}
+          options={{ title: 'Questions Screen', headerShown: false }}
         />
       </Stack.Navigator>
   );
