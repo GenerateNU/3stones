@@ -61,6 +61,7 @@ export default function SearchResults({ route, navigation }: ExploreScreenProps)
               navigation.navigate('search');
             }}
             textColor=''
+            onSubmit={(evt) => {}}
           />
         </StyledTouchableOpacity>
 
