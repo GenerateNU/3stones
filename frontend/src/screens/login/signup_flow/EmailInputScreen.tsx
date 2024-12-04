@@ -6,7 +6,7 @@ import TextInputComponent from '../components/TextInputComponent';
 import { useAuth } from '../../../context/AuthContext';
 import NavProgressBar from '../components/NavProgressBar';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
-import { HeadingText, TitleText } from '../../../components/Typography';
+import { HeadingText, TitleText } from '../../../components/typography';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

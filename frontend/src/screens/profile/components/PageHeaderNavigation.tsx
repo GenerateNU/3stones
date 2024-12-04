@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Text, Image, ImageSourcePropType} from "react-native";
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
-import { SubheadingText } from '../../../components/Typography';
+import { SubheadingText } from '../../../components/typography';
 
 interface ProfilePageNavigatorProps {
     // This actually should be `any`, so disabling the linter rule
