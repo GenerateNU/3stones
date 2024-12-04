@@ -12,31 +12,28 @@ import TextField from '../../components/TextField';
 import TextInputComponent from '../login/components/TextInputComponent';
 import Card from '../../components/Card';
 import Tag from '../../components/Tag';
+import { TransactionInfo } from '../../types/plaid';
+import { useNavigation } from '@react-navigation/native';
+import { useInvestorBalance } from '../../services/investor';
 
 const StyledView = styled(View);
-const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
-const StyledImage = styled(Image);
-const StyledTouchableOpacity = styled(TouchableOpacity);
-const StyledBottomSheetView = styled(BottomSheetView);
-const StyledBottomSheet = styled(BottomSheet);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledTouchableWithoutFeedback = styled(TouchableWithoutFeedback);
 
-interface ProjectInvestSuccessScreenProps {
-  // This actually should be `any`, so disabling the linter rule
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  navigation: NavigationScreenProp<any, any>;
-}
 
-export default function ProjectInvestSuccessScreen({ navigation }: ProjectInvestSuccessScreenProps) {
-  const [amount, setAmount] = useState("")
+export default function ProjectInvestSuccessScreen({ route }) {
+  const navigation = useNavigation();
+  const { balance, isLoading: isInvestorLoading} = useInvestorBalance();
+    
+  console.log(route.params)
+  const transactionInfo: TransactionInfo = route.params.transactionInfo;
 
   const transactionDetails = [
-    ["Transaction ID", "4444 3333 2222 1111"],
-    ["Date", "September 1, 2024"],
-    ["Nominal", "$100.00"],
-    ["Administrative Fee", "$0.25"]
+    ["Transaction ID", `${transactionInfo.transaction_id.substring(0,13)}`],
+    ["Date", new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })],
+    ["Nominal", `\$${(transactionInfo.nominal_cents / 100).toFixed(2)}`],
+    ["Administrative Fee", "$0.00"]
   ]
   return (
     <StyledTouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -45,7 +42,7 @@ export default function ProjectInvestSuccessScreen({ navigation }: ProjectInvest
         <StyledView className="flex flex-col">
           <StyledText className="text-[#282828]font-body text-base font-normal leading-[22px]">Total Cash Available</StyledText>
           <StyledView className="flex flex-row items-center justify-between mt-1">
-            <StyledText className="truncate text-[#282828] font-heading text-[32px] font-extrabold leading-[40px]">$1,234,567</StyledText>
+            <StyledText className="truncate text-[#282828] font-heading text-[32px] font-extrabold leading-[40px]">{`\$${(balance/100).toFixed(2)}`}</StyledText>
             <Button type="secondary" size="small">
               Add funds
             </Button>

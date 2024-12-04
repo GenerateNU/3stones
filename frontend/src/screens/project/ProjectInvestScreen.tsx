@@ -12,6 +12,7 @@ import TextField from '../../components/TextField';
 import TextInputComponent from '../login/components/TextInputComponent';
 import { useAuth } from '../../context/AuthContext';
 import { useInvestorBalance, useInvestors } from '../../services/investor';
+import { invest } from '../../services/plaid';
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
@@ -68,7 +69,11 @@ export default function ProjectInvestScreen({ navigation }: ProjectInvestScreenP
               className="w-full mt-8"
               type="primary"
               disabled={amount == ""}
-              onPress={() => { navigation.navigate("project-invest-success") }}>
+              onPress={async () => { 
+                const data = await invest(session.access_token, 'c3733692-5a86-441f-8ad0-9c32c648bb72', (parseFloat(amount) * 100))
+                console.log(data)
+                navigation.navigate("project-invest-success", { transactionInfo: data })
+              }}>
               Make Payment
             </Button>
           </> : <StyledText className="text-[#282828]font-body text-base font-normal leading-[22px] mt-8">Please add funds to your wallet in order to invest in this project.</StyledText>  }

@@ -164,15 +164,22 @@ func (c *PlaidController) Invest(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	// Record the investment
-	err = transactions.RecordInvestment(c.ServiceParams.DB, id, body.PropertyID, body.Amount, "")
+	transactionId, err := transactions.RecordInvestment(c.ServiceParams.DB, id, body.PropertyID, body.Amount)
 	if err != nil {
 		return err
 	}
 
+	type ResponseBody struct {
+		TransactionId       uuid.UUID `json:"transaction_id"`
+		NominalCents        int       `json:"nominal_cents"`
+		AdministrativeCents int       `json:"administrative_cents"`
+	}
+
 	// Return success response
-	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Investment successful",
+	return ctx.Status(fiber.StatusOK).JSON(ResponseBody{
+		TransactionId:       transactionId,
+		NominalCents:        amountCents,
+		AdministrativeCents: 0,
 	})
 }
 
