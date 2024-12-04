@@ -19,12 +19,6 @@ function RootNavigator() {
   return session ? <TabNavigator /> : <LoginNavigator />;
 }
 
-// function TestNavigator() {
-//   const { login } = useAuth();
-//   login('user1@example.com', 'password123');
-//   return <TabNavigator />;
-// }
-
 export default function App() {
   const [loaded, error] = useFonts({
     'Nunito-Black': require('./assets/fonts/nunito/Nunito-Black.ttf'),
