@@ -1,23 +1,13 @@
 import React, { useEffect } from 'react';
 import 'react-native-get-random-values';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigator from './src/navigation/BottomTabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
-import LoginNavigator from './src/navigation/LoginNavigator';
+import RootNavigator  from './src/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync();
-
-// Navigates user to the log in screen if seesion is not found (i.e. user not logged in)
-function RootNavigator() {
-  const { session, isLoading } = useAuth();
-  if (isLoading) {
-    return null; // or some loading screen (maybe we make in future?)
-  }
-  return session ? <TabNavigator /> : <LoginNavigator />;
-}
 
 export default function App() {
   const [loaded, error] = useFonts({

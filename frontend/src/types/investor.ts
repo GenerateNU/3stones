@@ -5,25 +5,29 @@ export type InvestorProfile = {
   phone_number: string;
   ssn: string;
   premise: string;
+  subpremise: string;
   street: string;
   locality: string;
   state: string;
   zipcode: string;
-  pfp: string;
+  profile_picture_url: string;
 };
 
 export type Portfolio = {
   [projectId: string]: number;
 };
 
-export type History = {
-  [projectId: string]: number;
+export type HistoryEntry = {
+  created_at: string;
+  project_id: string;
+  funded_cents: number;
 };
 
+export type History = HistoryEntry[];
+
 export type Investor = {
-  first: string;
-  last: string;
   id: string;
-  investment_breakdown: Portfolio;
+  profile: InvestorProfile;
   total_investment_amount: number;
+  investment_breakdown: Portfolio;
 };

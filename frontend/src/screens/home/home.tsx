@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
+import { useContributors } from '../../services/contributor';
+import Button from '../../components/Button';
+import { useAuth } from '../../context/AuthContext';
+
 import PortfolioValue from './components/portfolioValue';
 import WelcomeBlock from './components/welcomeBlock';
 import BottomSheetComponent from './components/BottomSheetComponent';
@@ -18,6 +22,8 @@ interface HomeScreenProps {
 const StyledView = styled(View);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const { signOut } = useAuth();
+  
   const userProfile = useInvestorProfile();
   const [totalInvested, setTotalInvested] = useState(0);
   const { portfolio } = useInvestorPortfolio();
@@ -28,7 +34,53 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       const total = Object.values(portfolio).reduce((sum, value) => sum + value, 0);
       setTotalInvested(total);
     }
-  }, [portfolio]);
+  })
+  
+  return (
+    <StyledView className='flex-1 mt-12'>
+      <Button onPress={() => { signOut(); }}>SIGN ME OUT</Button>
+    </StyledView>
+  );
+  //   <StyledView className='flex-1 items-center justify-center bg-surfaceBG'>
+  //     {/* Some dummy image */}
+  //     <StyledView className='align-center'>
+  //       <Image source={require('../../../assets/images/icon.png')}/>
+  //     </StyledView>
+  //     {/* Some dummy button */}
+  //     <ButtonComponent
+  //             title="Continue"
+  //             theme="primary"
+  //             // do nothing for now
+  //             onPress = {() => {}}
+  //             disabled={false}
+  //           />
+  //           <ButtonComponent
+  //             title="Continue"
+  //             theme="secondary"
+  //             // do nothing for now
+  //             onPress = {() => {}}
+  //             disabled={false}
+  //           />
+  //           <ButtonComponent
+  //             title="Continue"
+  //             theme="secondary"
+  //             // do nothing for now
+  //             onPress = {() => {}}
+  //             disabled={true}
+  //           />
+  //           <TextInputComponent
+  //             placeholder="Username"
+  //             value=""
+  //             onChangeText={() => {}}
+  //             isPassword={false}
+  //           />
+  //           <ProgressBarComponent
+  //             currentStep={1}
+  //             totalSteps={3}
+  //             showBack={true}
+  //             showClose={false}
+  //             onPress = {() => {}}
+  //           />
 
   return (
     <GestureHandlerRootView>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { supabase } from './supabase';
 import { Session } from '@supabase/supabase-js';
 
@@ -22,10 +22,12 @@ type AuthContextType = {
     questions: { [key: string]: string[] }; // A flexible type for questions
   };
   login: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<Session>;
   signOut: () => Promise<void>;
   updateLoginData: (field: string, value: string) => void;
   updateSignupData: (key: string, value: any) => void;
+  isInSignupFlow: boolean;
+  setIsInSignupFlow: (value: boolean) => void;
 };
 
 
@@ -50,6 +52,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
     questions: {},
   });
+  const [isInSignupFlow, setIsInSignupFlow] = useState(false);
+
+  // Add a ref to track auth state changes
+  const isAuthStateChange = useRef(false);
 
   // Fetches the current session from Supabase when the app loads and stores it in the session state.
   useEffect(() => {
@@ -59,12 +65,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state change:', event);
+      isAuthStateChange.current = true;
       setSession(session);
       setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    console.log(`IsInSignupflow: ${isInSignupFlow}`)
+  }, [isInSignupFlow])
 
   // signs in the user with email and password
   const login = async (email: string, password: string) => {
@@ -77,8 +89,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
+
     setSession(data.session);
+    return data.session;
   };
+
+  // Add an effect to handle session changes
+  useEffect(() => {
+    if (isAuthStateChange.current && session) {
+      // Don't reset isInSignupFlow when session changes due to signup
+      isAuthStateChange.current = false;
+    }
+  }, [session]);
 
   // signs out the user
   const signOut = async () => {
@@ -124,6 +146,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signOut,
         updateLoginData,
         updateSignupData,
+        isInSignupFlow,
+        setIsInSignupFlow,
       }}
     >
       {children}

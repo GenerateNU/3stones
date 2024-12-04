@@ -18,7 +18,7 @@ export default function UserDetailsScreen({ navigation }) {
   const handleNext = () => {
     updateSignupData('firstName', firstName);
     updateSignupData('lastName', lastName);
-    navigation.navigate('ConnectAccountsScreen');
+    navigation.navigate('ConnectAccountsScreen')
   };
 
   return (
@@ -28,10 +28,10 @@ export default function UserDetailsScreen({ navigation }) {
 
           {/* User Details Input Section */}
           <StyledView className='w-full flex-1 justify-center items-center'>
-            <StyledText className='text-center text-2xl font-bold text-black mb-2'>
+            <StyledText className='text-center text-2xl font-bold font-title text-defaultText mb-2'>
               A bit about you
             </StyledText>
-            <StyledText className='text-center text-gray-600 mb-8'>
+            <StyledText className='text-center font-sourceSans3 text-defaultText mb-8'>
               We need your first and last name to get started.
             </StyledText>
 
