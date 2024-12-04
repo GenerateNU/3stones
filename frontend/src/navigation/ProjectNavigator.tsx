@@ -19,10 +19,11 @@ const StyledSafeAreaView = styled(SafeAreaView);
 
 export default function ProjectNavigator() {
   return (
-    <Stack.Navigator initialRouteName='project'>
+    <Stack.Navigator initialRouteName='project' >
       <Stack.Screen
         name='project'
         component={ProjectScreen}
+        initialParams={{projectId: 'c3733692-5a86-441f-8ad0-9c32c648bb72'}}
         options={{ title: 'Project details', header: (props) => {
           return (
             <StyledSafeAreaView className="bg-surfaceBG">

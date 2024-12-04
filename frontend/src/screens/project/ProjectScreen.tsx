@@ -17,12 +17,8 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import { LinearGradient as ExpoLinearGradient } from 'expo-linear-gradient';
 import Tag from '../../components/Tag';
+import { useNavigation } from '@react-navigation/native';
 
-interface ProjectScreenProps {
-  // This actually should be `any`, so disabling the linter rule
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  navigation: NavigationScreenProp<any, any>;
-}
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
@@ -32,10 +28,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledMapView = styled(MapView);
 
 
-export default function ProjectScreen({ navigation }: ProjectScreenProps) {
-  const { project, isLoading } = useProject('c3733692-5a86-441f-8ad0-9c32c648bb72');
+export default function ProjectScreen({ navigation, route }) {
+  const projectId: string = route.params.projectId
+  const { project, isLoading } = useProject(projectId);
   const { projectTotalFunded, isLoading: isProjectTotalFundedLoading } = useProjectTotalFunded(
-    'c3733692-5a86-441f-8ad0-9c32c648bb72',
+    projectId,
   );
 
   if (isLoading || isProjectTotalFundedLoading) {
@@ -80,7 +77,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
             <StyledTouchableOpacity
               className='flex flex-row h-32 w-full'
               onPress={(evt) => {
-                navigation.navigate('project-images');
+                navigation.navigate('project-images', { projectId: projectId });
               }}
             >
               <StyledView className='flex-grow bg-red-100 mr-2'>
@@ -116,7 +113,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
             <StyledTouchableOpacity
               className='my-6 h-16 w-full rounded overflow-hidden'
               onPress={(evt) => {
-                navigation.navigate('project-map');
+                navigation.navigate('project-map', { projectId: projectId });
               }}
             >
               <StyledMapView className='w-full h-full' initialRegion={mapRegion} scrollEnabled={false}>
@@ -170,7 +167,7 @@ export default function ProjectScreen({ navigation }: ProjectScreenProps) {
           <Button 
             className="w-full" 
             type="primary" 
-            onPress={() => { navigation.navigate("project-invest")}}
+            onPress={() => { navigation.navigate("project-invest", {projectId: projectId})}}
           >
             Invest
           </Button>

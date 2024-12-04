@@ -30,7 +30,9 @@ interface ProjectInvestScreenProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
-export default function ProjectInvestScreen({ navigation }: ProjectInvestScreenProps) {
+export default function ProjectInvestScreen({ navigation, route }) {
+  const projectId = route.params.projectId;
+
   const { session, isLoading } = useAuth();
   const { balance, isLoading: isInvestorLoading} = useInvestorBalance();
     
