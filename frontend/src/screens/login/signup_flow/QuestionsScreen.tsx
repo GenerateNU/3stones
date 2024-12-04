@@ -5,7 +5,7 @@ import Button from '../../../components/Button';
 import NavProgressBar from '../components/NavProgressBar';
 import QuestionCard from '../components/QuestionCard';
 import { useAuth } from '../../../context/AuthContext'; // Import AuthContext
-import { updateInvestorProfile } from '../../../services/investor';
+import { createInvestorProfile, updateInvestorProfile } from '../../../services/investor';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
 
 
@@ -60,11 +60,19 @@ export default function QuestionsScreen({ navigation }) {
                 throw Error("Session expected after successful signup, instead found null.");
             }
 
-            await updateInvestorProfile(session.access_token, {
-                first: signupData.firstName ?? undefined,
-                last: signupData.lastName ?? undefined,
+            await createInvestorProfile(session.access_token, {
+                first: signupData.firstName ?? "",
+                last: signupData.lastName ?? "",
                 email: signupData.email,
-                ssn: signupData.ssn ?? undefined
+                ssn: signupData.ssn ?? "000-00-0000",
+                phone_number: '000-000-0000',
+                premise: '123',
+                subpremise: undefined,
+                street: 'Any St',
+                locality: 'Boston',
+                state: 'MA',
+                zipcode: '80303',
+                profile_picture_url: ''
             })
 
             console.log("Sign up worked.")

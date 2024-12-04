@@ -149,6 +149,24 @@ export const updateInvestorProfile = async (accessToken: string, profile: Partia
   }
 };
 
+export const createInvestorProfile = async (accessToken: string, profile: InvestorProfile): Promise<void> => {
+  try {
+    const response = await axios.post<InvestorProfile>(
+      `${API_URL}/api/v1/investors/profile`,
+      profile,
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      }
+    );
+    return null;
+  } catch (error) {
+    dumpAxiosError(error);
+    return null;
+  }
+}
+
 // GET investor's cash balance
 const getCashBalance = async (accessToken: string): Promise<number | null> => {
   try {
