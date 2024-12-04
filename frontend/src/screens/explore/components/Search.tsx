@@ -4,6 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styled } from 'nativewind';
 import SearchBar from '../../../components/SearchBar';
 import logo from '../../../../assets/images/Logo x 100.png';
+import { useSearchProjects } from '../../../services/project';
 
 interface ExploreScreenProps {
   // This actually should be `any`, so disabling the linter rule
@@ -12,11 +13,15 @@ interface ExploreScreenProps {
 }
 
 const StyledView = styled(View);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function SearchScreen({ navigation }: ExploreScreenProps) {
+    const [searchValue, setSearchValue] = React.useState('');
+    const { projectResults, isLoading } = useSearchProjects(searchValue);
+    console.log(projectResults);
+    console.log("searchValue: ", searchValue);
+
   return (
     <StyledView className='flex-1 bg-surfaceBG'>
       {/* Explore Header */}
@@ -29,11 +34,12 @@ export default function SearchScreen({ navigation }: ExploreScreenProps) {
         <SearchBar
           intent='unselected'
           icon='search-default'
-          value='Explore investments'
+          value={searchValue}
           width={90}
           height={6}
-          onValueChange={() => {}}
-          onPressed={(evt) => {}}
+          onValueChange={setSearchValue}
+          onPressed={() => {}}
+          onSubmit={(evt) => {navigation.navigate('search-results', {searchQuery: searchValue});}}
           textColor=''
         />
         
@@ -44,7 +50,7 @@ export default function SearchScreen({ navigation }: ExploreScreenProps) {
           <StyledText className='mt-[2vh] font-sourceSans3Bold text-[4vw]'>
             No recent searches yet.
           </StyledText>
-          <StyledText className='mt-[1vh] font-body text-[3w]'>
+          <StyledText className='mt-[1vh] font-body text-[3w] text-center'>
             Try searching for something or explore the categories to find what you are looking for.
           </StyledText>
         </StyledView>

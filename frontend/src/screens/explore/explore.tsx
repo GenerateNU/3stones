@@ -33,9 +33,11 @@ export default function ExploreScreen({ navigation }: ExploreScreenProps) {
       </StyledView>
 
       {/* Search Bar */}
-      <StyledTouchableOpacity className='pt-[3vh] pl-[2vh]' onPress={(evt) => {
+      <StyledTouchableOpacity className='pt-[3vh] pl-[2vh]'>
+         <StyledTouchableOpacity className='pt-[3vh] pl-[2vh] absolute z-20 w-[100vw] h-[8vh]' onPress={(evt) => {
             navigation.navigate('search');
-          }}>
+          }}></StyledTouchableOpacity>
+
         <SearchBar
           intent='unselected'
           icon='search-default'

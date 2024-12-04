@@ -43,6 +43,7 @@ type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   value: string;
   onValueChange: (text: string) => void;
   onPressed: (event: GestureResponderEvent) => void;
+  onSubmit: (event: GestureResponderEvent) => void;
   intent: string;
   icon: string;
   textColor: string;
@@ -59,6 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   height,
   onValueChange,
   onPressed,
+  onSubmit,
 }) => {
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
@@ -75,6 +77,7 @@ const calculatedHeight = (height / 100) * screenHeight;
         placeholder={value}
         placeholderTextColor={textColor}
         onChangeText={onValueChange}
+        onSubmitEditing={onSubmit}
       />
       <StyledPressable className='ml-2' onPress={onPressed}>
         <StyledImage source={iconVariants[icon || 'clear']} style={{ width: 14, height: 14 }} />
