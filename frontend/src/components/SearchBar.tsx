@@ -37,17 +37,18 @@ const iconVariants = {
   'search-disabled': require('../../assets/images/search-icon-disabled.png'),
 };
 
-const { height: screenHeight } = Dimensions.get('window');
-const calculatedWidth = (239 / 1000) * screenHeight;
-const calculatedHeight = (42 / 1000) * screenHeight;
+
 
 type SearchBarProps = VariantProps<typeof searchBarVariants> & {
   value: string;
   onValueChange: (text: string) => void;
   onPressed: (event: GestureResponderEvent) => void;
+  onSubmit: (event: GestureResponderEvent) => void;
   intent: string;
   icon: string;
   textColor: string;
+  width: number;
+  height: number;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -55,9 +56,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
   intent,
   icon,
   textColor,
+  width,
+  height,
   onValueChange,
   onPressed,
+  onSubmit,
 }) => {
+
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const calculatedWidth = (width / 100) * screenWidth;
+const calculatedHeight = (height / 100) * screenHeight;
   return (
     <StyledView
       className={searchBarVariants({ intent, icon })}
@@ -69,6 +77,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         placeholder={value}
         placeholderTextColor={textColor}
         onChangeText={onValueChange}
+        onSubmitEditing={onSubmit}
       />
       <StyledPressable className='ml-2' onPress={onPressed}>
         <StyledImage source={iconVariants[icon || 'clear']} style={{ width: 14, height: 14 }} />

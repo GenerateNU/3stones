@@ -9,8 +9,10 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 //Button to add funds to the account
-const AddFundsButton = ({ navigation }: 
-  {// This actually should be `any`, so disabling the linter rule
+const AddFundsButton = ({
+  navigation,
+}: {
+  // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }) => {
@@ -79,7 +81,9 @@ const PortfolioMoreDetailsIcon = ({ navigation }) => {
   );
 };
 
-const PortfolioButtons = ({ navigation }: {
+const PortfolioButtons = ({
+  navigation,
+}: {
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;

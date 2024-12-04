@@ -6,7 +6,7 @@ import { NavigationScreenProp } from 'react-navigation';
 
 import Divider from '../../components/Divider';
 import Button from '../../components/Button';
-import { BodyText, SubheadingText } from '../../components/Typography';
+import { BodyText, SubheadingText } from '../../components/typography';
 import { useInvestorProfile } from '../../services/investor';
 import ProfiileHeaderNavigation from './components/PageHeaderNavigation';
 import PageHeaderNavigation from './components/PageHeaderNavigation';
