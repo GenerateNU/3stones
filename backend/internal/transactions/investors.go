@@ -27,7 +27,7 @@ func CheckInvestorExists(pool *pgxpool.Pool, investorID string) (bool, error) {
 	return true, nil
 }
 
-func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
+func CreateInvestor(pool *pgxpool.Pool, supabaseID string, profile models.InvestorProfile) error {
 	query := `
 		INSERT INTO investors (
 			supabase_id, 
@@ -49,16 +49,16 @@ func CreateInvestor(pool *pgxpool.Pool, supabaseID string) error {
 		context.Background(),
 		query,
 		supabaseID,
-		"John",
-		"Doe",
-		"unknown@email.com",
-		"000-000-0000",
-		"000-00-0000",
-		"123",
-		"Main St",
-		"Anytown",
-		"MA",
-		"12345",
+		profile.FirstName,
+		profile.LastName,
+		profile.Email,
+		profile.PhoneNumber,
+		profile.SSN,
+		profile.Premise,
+		profile.Street,
+		profile.Locality,
+		profile.State,
+		profile.Zipcode,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to insert investor: %w", err)

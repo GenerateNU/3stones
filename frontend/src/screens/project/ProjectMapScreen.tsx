@@ -14,9 +14,10 @@ interface ProjectMapScreenProps {
 
 const StyledMapView = styled(MapView);
 
-export default function ProjectMapScreen({ navigation }: ProjectMapScreenProps) {
-  const { project, isLoading } = useProject('c3733692-5a86-441f-8ad0-9c32c648bb72');
+export default function ProjectMapScreen({ navigation, route }) {
+  const { project, isLoading } = useProject(route.params.projectId);
 
+  console.log(route.params.projectId)
   if (isLoading) {
     return <Text>Loading ...</Text>;
   }

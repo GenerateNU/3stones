@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import 'react-native-get-random-values';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -38,7 +39,7 @@ export default function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
-          <RootNavigator />
+            <RootNavigator />
         </NavigationContainer>
       </QueryClientProvider>
     </AuthProvider>

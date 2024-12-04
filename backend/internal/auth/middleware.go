@@ -3,7 +3,6 @@ package auth
 import (
 	"backend/internal/api_errors"
 	"backend/internal/config"
-	"backend/internal/transactions"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
@@ -34,18 +33,6 @@ func (a *AuthFactory) Middleware() func(ctx *fiber.Ctx) error {
 		subject, err := payload.Claims.GetSubject()
 		if err != nil {
 			return err
-		}
-
-		investorExists, err := transactions.CheckInvestorExists(a.DB, subject)
-		if err != nil {
-			return err
-		}
-
-		if !investorExists {
-			err := transactions.CreateInvestor(a.DB, subject)
-			if err != nil {
-				return err
-			}
 		}
 
 		ctx.Locals("userId", subject)

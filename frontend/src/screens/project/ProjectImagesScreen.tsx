@@ -28,8 +28,9 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledScrollView = styled(ScrollView);
 
-export default function ProjectImagesScreen({ navigation }: ProjectImagesScreenProps) {
-  const { project, isLoading } = useProject('c3733692-5a86-441f-8ad0-9c32c648bb72');
+export default function ProjectImagesScreen({ navigation, route }) {
+  const { project, isLoading } = useProject(route.params.projectId);
+
   const ref = React.useRef<ICarouselInstance>(null);
 
   const progress = useSharedValue<number>(0);

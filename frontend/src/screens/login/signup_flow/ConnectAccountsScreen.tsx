@@ -6,7 +6,7 @@ import PlaidLink from '../../../expo-plaid-link/Index';
 import { useLink } from '../../../services/plaid';
 import TextField from '../../../components/TextField';
 import TextInputComponent from '../components/TextInputComponent';
-import { BodyBoldText, BodyText, CaptionText } from '../../../components/typography';
+import { BodyBoldText, BodyText, CaptionText } from '../../../components/Typography';
 import Button from '../../../components/Button';
 import NavProgressBar from '../components/NavProgressBar';
 import OnboardingScreenWrapper from '../components/OnboardingScreenWrapper';
