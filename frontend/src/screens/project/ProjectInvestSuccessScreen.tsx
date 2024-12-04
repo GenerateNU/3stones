@@ -10,8 +10,8 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TextField from '../../components/TextField';
 import TextInputComponent from '../login/components/TextInputComponent';
-import { useAuth } from '../../context/AuthContext';
-import { useInvestorBalance, useInvestors } from '../../services/investor';
+import Card from '../../components/Card';
+import Tag from '../../components/Tag';
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
@@ -23,22 +23,21 @@ const StyledBottomSheet = styled(BottomSheet);
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
 const StyledTouchableWithoutFeedback = styled(TouchableWithoutFeedback);
 
-interface ProjectInvestScreenProps {
+interface ProjectInvestSuccessScreenProps {
   // This actually should be `any`, so disabling the linter rule
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation: NavigationScreenProp<any, any>;
 }
 
-export default function ProjectInvestScreen({ navigation }: ProjectInvestScreenProps) {
-  const { session, isLoading } = useAuth();
-  const { balance, isLoading: isInvestorLoading} = useInvestorBalance();
-    
+export default function ProjectInvestSuccessScreen({ navigation }: ProjectInvestSuccessScreenProps) {
   const [amount, setAmount] = useState("")
 
-  if (isLoading || isInvestorLoading) {
-    return null;
-  }
-
+  const transactionDetails = [
+    ["Transaction ID", "4444 3333 2222 1111"],
+    ["Date", "September 1, 2024"],
+    ["Nominal", "$100.00"],
+    ["Administrative Fee", "$0.25"]
+  ]
   return (
     <StyledTouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <StyledKeyboardAvoidingView className='flex flex-col flex-1 p-6 bg-surfaceBG' behavior="height">
@@ -46,34 +45,30 @@ export default function ProjectInvestScreen({ navigation }: ProjectInvestScreenP
         <StyledView className="flex flex-col">
           <StyledText className="text-[#282828]font-body text-base font-normal leading-[22px]">Total Cash Available</StyledText>
           <StyledView className="flex flex-row items-center justify-between mt-1">
-            <StyledText className="truncate text-[#282828] font-heading text-[32px] font-extrabold leading-[40px]">{`\$${(balance/100).toFixed(2)}`}</StyledText>
+            <StyledText className="truncate text-[#282828] font-heading text-[32px] font-extrabold leading-[40px]">$1,234,567</StyledText>
             <Button type="secondary" size="small">
               Add funds
             </Button>
           </StyledView>
-
-          {balance != 0 ? <>
-            <StyledText className="mt-8 font-title text-lg mb-4">Investment Amount</StyledText>
-            <TextInputComponent keyboardType='decimal-pad' placeholder="Enter amount" value={amount} onChangeText={(val) => setAmount(val)} />
-
-            <StyledView className="flex flex-row w-full justify-between">
-              {[50, 100, 500, 1000].map((val, ind, arr) => {
-                return (
-                  <Button size="small" type="secondary" onPress={() => setAmount(val.toString())}>{`\$${val}`}</Button>
-                )
-              })}
-            </StyledView>
-
-            <Button
-              className="w-full mt-8"
-              type="primary"
-              disabled={amount == ""}
-              onPress={() => { navigation.navigate("project-invest-success") }}>
-              Make Payment
-            </Button>
-          </> : <StyledText className="text-[#282828]font-body text-base font-normal leading-[22px] mt-8">Please add funds to your wallet in order to invest in this project.</StyledText>  }
         </StyledView>
 
+        <Card className='flex-1 my-8 px-7 py-8'>
+          <StyledText className="text-2xl font-heading">Payment successful!</StyledText>
+          <StyledText className='text-base'>You successfully invested $100 into this project.</StyledText>
+
+          <StyledView className='flex flex-col gap-y-2 py-4'>
+            {transactionDetails.map((val, idx, arr) => (
+              <StyledView className='flex flex-row justify-between'>
+                <StyledText className='font-heading text-base'>{val[0]}</StyledText>
+                <StyledText className='font-body text-base'>{val[1]}</StyledText>
+              </StyledView>
+            ))}
+            <StyledView className='flex flex-row justify-between'>
+              <StyledText className='font-heading text-base'>Status</StyledText>
+              <Tag level="success">Success</Tag>
+            </StyledView>
+          </StyledView>
+        </Card>
 
       </StyledKeyboardAvoidingView>
     </StyledTouchableWithoutFeedback>

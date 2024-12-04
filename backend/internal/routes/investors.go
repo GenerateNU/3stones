@@ -15,4 +15,5 @@ func Investors(params types.RouterParams) {
 	investors.Get("/portfolio", params.Auth.Middleware(), investorsController.GetPortfolio)
 	investors.Get("/history", params.Auth.Middleware(), investorsController.GetHistory)
 	investors.Get("/", params.Auth.Middleware(), investorsController.GetInvestor)
+	investors.Get("/balance", params.Auth.Middleware(), investorsController.GetCashBalance)
 }

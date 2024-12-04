@@ -150,3 +150,19 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(investor)
 }
+
+func (c *InvestorsController) GetCashBalance(ctx *fiber.Ctx) error {
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	balance, err := transactions.GetCashBalance(c.ServiceParams.DB, userId)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"cash_balance_cents": balance,
+	})
+}

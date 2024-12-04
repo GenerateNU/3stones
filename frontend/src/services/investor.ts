@@ -148,3 +148,32 @@ export const updateInvestorProfile = async (accessToken: string, profile: Partia
     return null;
   }
 };
+
+// GET investor's cash balance
+const getCashBalance = async (accessToken: string): Promise<number | null> => {
+  try {
+    const response = await axios.get<number>(`${API_URL}/api/v1/investors/balance`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
+    return response.data["cash_balance_cents"];
+  } catch (error) {
+    dumpAxiosError(error);
+    return null;
+  }
+};
+
+export const useInvestorBalance = () => {
+  const { session } = useAuth();
+
+  const { data: balance, isLoading } = useQuery<number>({
+    queryKey: ['investor-balance'],
+    queryFn: () => getCashBalance(session?.access_token),
+  });
+
+  return {
+    balance,
+    isLoading,
+  };
+};

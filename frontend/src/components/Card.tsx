@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 const StyledView = styled(View);
 
-const cardVariants = cva('bg-white rounded-[16px] border border-border p-4', {
+const cardVariants = cva('bg-white rounded-[16px] border border-[#DDDDDD] p-4', {
   variants: {},
   defaultVariants: {},
 });
