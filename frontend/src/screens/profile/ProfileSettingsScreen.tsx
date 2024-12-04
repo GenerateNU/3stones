@@ -5,7 +5,7 @@ import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
 
 import Divider from '../../components/Divider';
-import { SubheadingText } from '../../components/typography';
+import { SubheadingText } from '../../components/Typography';
 import PageHeaderNavigation from './components/PageHeaderNavigation';
 
 const StyledView = styled(View);

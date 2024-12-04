@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, ImageSourcePropType } from 'react-native';
 import { styled } from 'nativewind';
-import { CaptionText } from './typography';
+import { CaptionText } from './Typography';
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);
@@ -22,7 +22,7 @@ const Divider: React.FC<DividerProps> = ({ text, image }) => {
       <StyledView className='flex-1 h-[0.2vh] bg-gray-200' />
       {text && (
         //Allows for conditional rendering of text element
-        //Text element styling is taken from typography.tsx
+        //Text element styling is taken from Typography.tsx
         <StyledView className='items-center px-[0.5vh]'>
           <CaptionText className='text-gray-300'>{text}</CaptionText>
         </StyledView>
