@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { styled } from 'nativewind';
 import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
@@ -94,8 +94,9 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
               leftIconRoute={require('../../../assets/images/deposit-icon.png')}
               rightIconRoute={require('../../../assets/images/side-arrow.png')}
               navigation={navigation}
-              navigationName='profile-deposit'
+              navigationName='profile-transaction'
               pageName='Deposit'
+              navigationParams={{ withdraw: false }} // Pass withdraw as false
             />
           </StyledView>
           <StyledView>
@@ -103,8 +104,9 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
               leftIconRoute={require('../../../assets/images/withdraw-icon.png')}
               rightIconRoute={require('../../../assets/images/side-arrow.png')}
               navigation={navigation}
-              navigationName='profile-withdraw'
+              navigationName='profile-transaction'
               pageName='Withdraw'
+              navigationParams={{ withdraw: true }} // Pass withdraw as true
             />
           </StyledView>
         </StyledView>

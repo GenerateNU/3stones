@@ -9,6 +9,8 @@ interface ProfilePageNavigatorProps {
   navigation: NavigationScreenProp<any, any>;
   navigationName: string;
   pageName: string;
+  iconRoute?: ImageSourcePropType;
+  navigationParams?: { withdraw: boolean };
   //route to button's icon
   leftIconRoute?: ImageSourcePropType;
   rightIconRoute: ImageSourcePropType;
@@ -24,9 +26,10 @@ export default function ProfilePageNavigator({
   pageName,
   leftIconRoute,
   rightIconRoute,
+  navigationParams,
 }: ProfilePageNavigatorProps) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(navigationName)}>
+    <TouchableOpacity onPress={() => navigation.navigate(navigationName, navigationParams)}>
       <StyledView className='flex-row justify-between items-center self-stretch'>
         <StyledView className='flex-row justify-between items-center self-stretch space-x-[4vh]'>
           {leftIconRoute && <StyledImage source={leftIconRoute} className='w-[3vh] h-[3vh]' />}

@@ -7,6 +7,7 @@ type Investor struct {
 	Profile               InvestorProfile   `json:"profile"`
 	TotalInvestmentAmount int               `json:"total_investment_amount"`
 	InvestmentBreakdown   map[uuid.UUID]int `json:"investment_breakdown"`
+	CashBalance           int               `json:"cash_balance"`
 }
 
 type InvestorProfile struct {

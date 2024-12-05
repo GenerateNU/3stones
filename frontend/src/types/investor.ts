@@ -29,5 +29,6 @@ export type Investor = {
   id: string;
   profile: InvestorProfile;
   total_investment_amount: number;
+  cash_balance: number;
   investment_breakdown: Portfolio;
 };
