@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, ImageSourcePropType } from 'react-native';
 import { styled } from 'nativewind';
-import { CaptionText } from './Typography';
+import { CaptionText } from './typography';
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);

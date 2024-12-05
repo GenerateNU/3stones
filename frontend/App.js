@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
-import RootNavigator  from './src/navigation/RootNavigator';
+import RootNavigator from './src/navigation/RootNavigator';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,7 +39,7 @@ export default function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
-            <RootNavigator />
+          <RootNavigator />
         </NavigationContainer>
       </QueryClientProvider>
     </AuthProvider>
