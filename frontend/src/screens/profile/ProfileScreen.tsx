@@ -96,6 +96,7 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
               navigation={navigation}
               navigationName='profile-transaction'
               pageName='Deposit'
+              navigationParams={{ withdraw: false }} // Pass withdraw as false
             />
           </StyledView>
           <StyledView>
@@ -105,6 +106,7 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
               navigation={navigation}
               navigationName='profile-transaction'
               pageName='Withdraw'
+              navigationParams={{ withdraw: true }} // Pass withdraw as true
             />
           </StyledView>
         </StyledView>
