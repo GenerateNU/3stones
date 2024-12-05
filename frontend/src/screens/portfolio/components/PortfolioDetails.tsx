@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
+import { formatNum } from '../../../util/format';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,7 +14,7 @@ interface PortfolioDetailsProps {
     marketValue: number;
     cashValue: number;
     totalProjects: number;
-    expMaturity: number;
+    expMaturity: string;
     
 }
 
@@ -49,7 +50,7 @@ const PortfolioDetails = ({netPortfolioValue, portfolioChangeAmount, marketValue
                         />
                     </StyledTouchableOpacity>
                 </StyledView>
-                <StyledText className = 'font-bold text-[32px]'>{netPortfolioValue}</StyledText>
+                <StyledText className = 'font-bold text-[32px]'>{formatNum(netPortfolioValue)}</StyledText>
                 <StyledView className = 'flex flex-row justify-between items-center'>
                     <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} font-sourceSans3Bold text-[16px]`}> {portfolioChangeAmount}</StyledText>
                     <StyledText className = {`${portfolioChangeAmount >= 0 ? 'color-success' : 'color-error'} px-4 font-sourceSans3Bold text-[16px]`}>{displayValue((portfolioChangeAmount/netPortfolioValue*100).toFixed(2) + '%')}</StyledText>
@@ -61,11 +62,11 @@ const PortfolioDetails = ({netPortfolioValue, portfolioChangeAmount, marketValue
                 <StyledView className = 'flex flex-col gap-6'>
                     <StyledView className = 'flex flex-col items-start gap-1'>
                         <StyledText className = 'font-body text-[16px]'>Market Value</StyledText>
-                        <StyledText className = 'font-sourceSans3Bold text-[18px]'>{marketValue}</StyledText>
+                        <StyledText className = 'font-sourceSans3Bold text-[18px]'>{formatNum(marketValue)}</StyledText>
                     </StyledView>
                         <StyledView className = 'flex flex-col items-start gap-1'>
                         <StyledText className = 'font-body text-[16px]'>Cash Value</StyledText>
-                        <StyledText className = 'font-sourceSans3Bold text-[18px]'>{cashValue}</StyledText>
+                        <StyledText className = 'font-sourceSans3Bold text-[18px]'>{formatNum(cashValue)}</StyledText>
                     </StyledView>
                 </StyledView>
                 <StyledView className = 'flex flex-col gap-6'>

@@ -88,8 +88,14 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
 
   const { portfolio, isLoading: portfolioLoading } = useInvestorPortfolio();
   const { allProjects, isLoading: projectsLoading } = useAllProjects();
-  const {history, isLoading: historyLoading } = useInvestorHistory(1, 1000); //dont know what to put for the pages - maybe change later?
+  const { history, isLoading: historyLoading } = useInvestorHistory(1, 1000); //dont know what to put for the pages - maybe change later?
 
+  useEffect(() => {
+    console.log("update XXX")
+    console.log(history);
+  }, [history])
+
+  console.log(`HISTORY: ${history.length}`)
   const [totalInvested, setTotalInvested] = useState(0);
 
   useEffect(() => {
@@ -152,7 +158,7 @@ export default function PorfolioScreen({ navigation }: PortfolioScreenProps) {
         marketValue={1000.0/*calculateMarketValue(history)*/}
         cashValue={totalInvested}
         totalProjects={allProjects.length} 
-        expMaturity={calculateExpMaturity(allProjects)} />
+        expMaturity={"12.5 Years"}/>
 
 
         {/* Tab section */}

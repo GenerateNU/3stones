@@ -90,6 +90,7 @@ const getInvestorHistory = async (
 export const useInvestorHistory = (currentPage, itemsPerPage) => {
   const { session } = useAuth();
 
+  
   const { data: history, isLoading } = useQuery<History>({
     queryKey: ['investor_portfolio'],
     queryFn: () => getInvestorHistory(session?.access_token, currentPage, itemsPerPage),
