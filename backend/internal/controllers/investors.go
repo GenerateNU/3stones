@@ -106,25 +106,6 @@ func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	return ctx.JSON(investors)
 }
 
-func (c *InvestorsController) GetCashBalance(ctx *fiber.Ctx) error {
-	userId, ok := ctx.Locals("userId").(string)
-	if !ok {
-		return &api_errors.INVALID_UUID
-	}
-
-	id, err := uuid.Parse(userId)
-	if err != nil {
-		return &api_errors.INVALID_UUID
-	}
-
-	investors, err := transactions.GetCashBalance(c.ServiceParams.DB, id)
-	if err != nil {
-		return err
-	}
-
-	return ctx.JSON(investors)
-}
-
 func (c *InvestorsController) GetHistory(ctx *fiber.Ctx) error {
 	paginationParams := new(types.PaginationParams)
 
@@ -184,7 +165,7 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	cashBalance, err := transactions.GetCashBalance(c.ServiceParams.DB, id)
+	cashBalance, err := transactions.GetCashBalance(c.ServiceParams.DB, id.String())
 	if err != nil {
 		return err
 	}

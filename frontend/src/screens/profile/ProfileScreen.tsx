@@ -7,7 +7,7 @@ import { useInvestorProfile } from '../../../src/services/investor';
 
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
-import { BodyBoldText, BodyText, SubheadingText } from '../../components/typography';
+import { BodyBoldText, BodyText, SubheadingText } from '../../components/Typography';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

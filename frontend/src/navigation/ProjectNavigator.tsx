@@ -17,13 +17,15 @@ const StyledView = styled(View);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledSafeAreaView = styled(SafeAreaView);
 
-export default function ProjectNavigator() {
+export default function ProjectNavigator({ route }) {
+  const projectId = route?.params?.projectId;
+
   return (
-    <Stack.Navigator initialRouteName='project' >
+    <Stack.Navigator initialRouteName='project-initial' >
       <Stack.Screen
-        name='project'
+        name='project-initial'
         component={ProjectScreen}
-        initialParams={{projectId: 'c3733692-5a86-441f-8ad0-9c32c648bb72'}}
+        initialParams={{ projectId: projectId || 'c3733692-5a86-441f-8ad0-9c32c648bb72' }}
         options={{ title: 'Project details', header: (props) => {
           return (
             <StyledSafeAreaView className="bg-surfaceBG">

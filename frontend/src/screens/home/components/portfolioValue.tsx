@@ -20,7 +20,7 @@ const AddFundsButton = ({
     <WideButton
       name={'Add Funds'}
       iconRoute={require('../../../../assets/images/attach-money.png')}
-      navigation={() => navigation.navigate('Profile')}
+      navigation={() => navigation.navigate('profile-transaction', { withdraw: 'Deposit'})}
       intent='secondary'
     ></WideButton>
   );

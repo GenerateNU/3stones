@@ -21,6 +21,7 @@ const StyledMapView = styled(MapView);
 
 export default function ProjectScreen({ navigation, route }) {
   const projectId: string = route.params.projectId;
+  console.log(`From project screen: ${projectId}`)
   const { project, isLoading } = useProject(projectId);
   const { projectTotalFunded, isLoading: isProjectTotalFundedLoading } =
     useProjectTotalFunded(projectId);
@@ -151,7 +152,7 @@ export default function ProjectScreen({ navigation, route }) {
 
           <StyledView className='flex flex-col gap-y-2 py-6'>
             {propertyDetails.map((val, idx, arr) => (
-              <StyledView className='flex flex-row justify-between'>
+              <StyledView key={val[0]} className='flex flex-row justify-between'>
                 <StyledText className='font-heading text-base'>{val[0]}</StyledText>
                 <StyledText className='font-body text-base'>{val[1]}</StyledText>
               </StyledView>

@@ -23,7 +23,7 @@ const StyledTouchableWithoutFeedback = styled(TouchableWithoutFeedback);
 
 
 export default function ProjectInvestSuccessScreen({ route }) {
-  const navigation = useNavigation();
+  const navigation: NavigationScreenProp<any, any> = useNavigation();
   const { balance, isLoading: isInvestorLoading} = useInvestorBalance();
     
   console.log(route.params)
@@ -43,7 +43,7 @@ export default function ProjectInvestSuccessScreen({ route }) {
           <StyledText className="text-[#282828]font-body text-base font-normal leading-[22px]">Total Cash Available</StyledText>
           <StyledView className="flex flex-row items-center justify-between mt-1">
             <StyledText className="truncate text-[#282828] font-heading text-[32px] font-extrabold leading-[40px]">{`\$${(balance/100).toFixed(2)}`}</StyledText>
-            <Button type="secondary" size="small">
+            <Button type="secondary" size="small" onPress={() => { navigation.navigate("profile-transaction", { withdraw: 'Deposit'})}}>
               Add funds
             </Button>
           </StyledView>

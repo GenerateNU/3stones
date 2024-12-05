@@ -56,18 +56,6 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name='Project'
-        component={ProjectNavigator}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon color={focused ? 'blue' : 'black'} name='building' />
-          ),
-          tabBarLabel: 'Project',
-          title: '',
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
         name='Profile'
         component={ProfileNavigator}
         options={{
