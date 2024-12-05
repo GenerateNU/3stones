@@ -23,7 +23,9 @@ const Investments = ({ portfolio, navigation }: {
       <StyledText className='text-[5vw] font-heading py-[2vh]'>Your Investments</StyledText>
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
-          <StyledTouchableOpacity onPress={() => navigation.navigate('Project')} key={projectId}>
+          <StyledTouchableOpacity onPress={() => {
+            console.log(`From portfolio screen: ${projectId}`)
+            navigation.navigate('project', {projectId: projectId})}} key={projectId}>
             <InvestmentContainer projectId={projectId} />
             <StyledView className='w-full h-[1px] bg-borderPrimary'></StyledView>
           </StyledTouchableOpacity>
@@ -32,7 +34,7 @@ const Investments = ({ portfolio, navigation }: {
       <StyledText className='text-[5vw] font-heading pt-[3vh]'>Recently Viewed</StyledText>
       {portfolio &&
         Object.keys(portfolio).map((projectId) => (
-          <StyledTouchableOpacity onPress={() => navigation.navigate('Project')} key={projectId} className='mt-[3vh]'>
+          <StyledTouchableOpacity onPress={() => navigation.navigate('project', {projectId: projectId})} key={projectId} className='mt-[3vh]'>
             <RecentlyViewedCard projectId={projectId} />
           </StyledTouchableOpacity>
         ))}
