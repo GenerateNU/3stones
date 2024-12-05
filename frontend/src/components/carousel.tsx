@@ -5,25 +5,28 @@ import { styled } from 'nativewind';
 
 interface GenericCarouselProps {
   components: React.ReactNode[]; // ReactNode allows you to pass JSX elements
+  width: number;
+  height: number;
 }
 const StyledView = styled(View);
 
-export default function GenericCarousel({ components }: GenericCarouselProps) {
-  const width = Dimensions.get('window').width;
+// height and width arguments are % values of the screen for example, passing 80 into the width argument will make the carousel 80% of the screen width
+export default function GenericCarousel({ components, width, height }: GenericCarouselProps) {
+  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
+  const carouselWidth = (width / 100) * screenWidth;
+  const carouselHeight = (height / 100) * screenHeight;
   return (
-    <StyledView className='flex-1'>
       <Carousel
-        width={width}
-        height={width}
+        width={carouselWidth}
+        height={carouselHeight}
         data={components}
         renderItem={({ item }) => (
-          <StyledView className='flex-1 justify-center items-center bg-lightgray'>
+          <StyledView className='flex justify-center items-center bg-lightgray'>
             {item}
           </StyledView>
         )}
         scrollAnimationDuration={1000}
       />
-    </StyledView>
   );
 }

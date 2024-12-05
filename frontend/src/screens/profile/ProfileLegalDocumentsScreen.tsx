@@ -5,6 +5,7 @@ import ProfilePageNavigator from './components/ProfilePageNavigator';
 import { NavigationScreenProp } from 'react-navigation';
 
 import Divider from '../../components/Divider';
+import PageHeaderNavigation from './components/PageHeaderNavigation';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,33 +21,55 @@ export default function ProfileLegalDocumentsScreen({
   navigation,
 }: ProfileLegalDocumentsScreenProps) {
   return (
-    <StyledView className='flex h-screen py-[6vh]'>
-      <StyledView className='flex flex-col space-y-[32vw]'>
-        <Divider />
-        <StyledView className='flex flex-col gap-y-[40vh]'>
-          <ProfilePageNavigator
-            navigation={navigation}
-            navigationName='legal-documents-terms-of-service'
-            pageName='Terms of Service'
-          />
+    <StyledView className='flex h-screen py-[4vh] bg-surfaceBG'>
+      <StyledView className='py-[2vh] px-[4vw]'>
+        <PageHeaderNavigation
+          leftIconRoute={require('../../../assets/images/left-arrow.png')}
+          navigation={navigation}
+          navigationName='profile'
+          pageName='Legal Documents'
+        />
+      </StyledView>
+      <StyledView className='flex flex-col px-[4vh] space-y-[10vh]'>
+        <StyledView className='flex flex-col space-y-[10vh]'>
+          <StyledView>
+            <ProfilePageNavigator
+              navigation={navigation}
+              rightIconRoute={require('../../../assets/images/side-arrow.png')}
+              navigationName='legal-documents-terms-of-service'
+              pageName='Terms of Service'
+            />
+          </StyledView>
         </StyledView>
-        <Divider />
-        <StyledView className='flex flex-col'>
-          <ProfilePageNavigator
-            navigation={navigation}
-            navigationName='legal-documents-user-agreement'
-            pageName='User Agreement'
-          />
+        <StyledView>
+          <Divider />
         </StyledView>
-        <Divider />
-        <StyledView className='flex flex-col'>
-          <ProfilePageNavigator
-            navigation={navigation}
-            navigationName='legal-documents-investment-disclaimer'
-            pageName='Investment Disclaimer'
-          />
+        <StyledView className='flex flex-col space-y-[10vh]'>
+          <StyledView>
+            <ProfilePageNavigator
+              navigation={navigation}
+              rightIconRoute={require('../../../assets/images/side-arrow.png')}
+              navigationName='legal-documents-user-agreement'
+              pageName='User Agreement'
+            />
+          </StyledView>
         </StyledView>
-        <Divider />
+        <StyledView>
+          <Divider />
+        </StyledView>
+        <StyledView className='flex flex-col space-y-[10vh]'>
+          <StyledView>
+            <ProfilePageNavigator
+              navigation={navigation}
+              rightIconRoute={require('../../../assets/images/side-arrow.png')}
+              navigationName='legal-documents-investment-disclaimer'
+              pageName='Investment Disclaimer'
+            />
+          </StyledView>
+        </StyledView>
+        <StyledView>
+          <Divider />
+        </StyledView>
       </StyledView>
     </StyledView>
   );

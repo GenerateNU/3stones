@@ -39,6 +39,54 @@ func (c *InvestorsController) GetProfile(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(investorProfile)
 }
 
+func (c *InvestorsController) CreateProfile(ctx *fiber.Ctx) error {
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	var body models.InvestorProfile
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	err = transactions.CreateInvestor(c.ServiceParams.DB, id.String(), body)
+	if err != nil {
+		return err
+	}
+
+	return ctx.SendStatus(fiber.StatusOK)
+}
+
+func (c *InvestorsController) UpdateProfile(ctx *fiber.Ctx) error {
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	id, err := uuid.Parse(userId)
+	if err != nil {
+		return &api_errors.INVALID_UUID
+	}
+
+	var body models.InvestorProfile
+	if err := ctx.BodyParser(&body); err != nil {
+		return &api_errors.INVALID_REQUEST_BODY
+	}
+
+	updatedInvestorProfile, err := transactions.UpdateProfile(c.ServiceParams.DB, id, body)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(updatedInvestorProfile)
+}
+
 func (c *InvestorsController) GetPortfolio(ctx *fiber.Ctx) error {
 	userId, ok := ctx.Locals("userId").(string)
 	if !ok {
@@ -143,12 +191,27 @@ func (c *InvestorsController) GetInvestor(ctx *fiber.Ctx) error {
 
 	investor := models.Investor{
 		ID:                    id,
-		FirstName:             profile.FirstName,
-		LastName:              profile.LastName,
+		Profile:               profile,
 		TotalInvestmentAmount: totalValue,
 		InvestmentBreakdown:   investments,
 		CashBalance:           cashBalance,
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(investor)
+}
+
+func (c *InvestorsController) GetCashBalance(ctx *fiber.Ctx) error {
+	userId, ok := ctx.Locals("userId").(string)
+	if !ok {
+		return &api_errors.INVALID_UUID
+	}
+
+	balance, err := transactions.GetCashBalance(c.ServiceParams.DB, userId)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"cash_balance_cents": balance,
+	})
 }

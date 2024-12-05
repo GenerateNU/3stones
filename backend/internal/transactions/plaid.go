@@ -50,17 +50,24 @@ func GetFirstAccountID(plaidClient *plaid.APIClient, accessToken string) (string
 	return accounts[0].GetAccountId(), nil
 }
 
-func RecordInvestment(db *pgxpool.Pool, investorID uuid.UUID, propertyID, amount, transferID string) error {
+func RecordInvestment(db *pgxpool.Pool, investorID uuid.UUID, propertyID, amount string) (uuid.UUID, error) {
 	query := `
-        INSERT INTO investor_investments (investor_id, project_id, funded_cents, transfer_id)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO investor_investments (investor_id, project_id, funded_cents)
+        VALUES ($1, $2, $3)
+        RETURNING id
     `
 	amountCents, err := strconv.Atoi(amount)
 	if err != nil {
-		return err
+		return uuid.Nil, err
 	}
-	_, err = db.Exec(context.Background(), query, investorID, propertyID, amountCents, transferID)
-	return err
+
+	var id uuid.UUID
+	err = db.QueryRow(context.Background(), query, investorID, propertyID, amountCents).Scan(&id)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	return id, nil
 }
 
 func UpdateCashBalance(db *pgxpool.Pool, investorID uuid.UUID, amount string, operation string) error {

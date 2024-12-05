@@ -16,7 +16,7 @@ import (
 func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 	rows, err := db.Query(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects")
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, completion_date, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects")
 	if err != nil {
 		return nil, err
 	}
@@ -34,6 +34,52 @@ func GetProjects(db *pgxpool.Pool) ([]models.Project, error) {
 			&project.Completed,
 			&project.FundingGoalCents,
 			&project.Milestone,
+			&project.CompletionDate,
+			&project.Premise,
+			&project.Street,
+			&project.Locality,
+			&project.State,
+			&project.Zipcode,
+			&project.Latitude,
+			&project.Longitude)
+		if err != nil {
+			return nil, err
+		}
+
+		images, err := GetProjectImages(db, project.ID)
+		if err != nil {
+			return nil, err
+		}
+		project.Images = images
+
+		projects = append(projects, project)
+	}
+
+	return projects, nil
+}
+
+func SearchProjects(db *pgxpool.Pool, query string) ([]models.Project, error) {
+	rows, err := db.Query(
+		context.Background(),
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, completion_date, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE to_tsvector(description || ' ' || title || ' ' || street || ' ' || locality || ' ' || state || ' ' || zipcode) @@ to_tsquery($1);", query)
+	if err != nil {
+		return nil, err
+	}
+
+	projects := []models.Project{}
+
+	defer rows.Close()
+	for rows.Next() {
+		var project models.Project
+		err := rows.Scan(
+			&project.ID,
+			&project.DeveloperID,
+			&project.Title,
+			&project.Description,
+			&project.Completed,
+			&project.FundingGoalCents,
+			&project.Milestone,
+			&project.CompletionDate,
 			&project.Premise,
 			&project.Street,
 			&project.Locality,
@@ -72,7 +118,7 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 	// Execute the query with the provided context and developer ID
 	row := db.QueryRow(
 		context.Background(),
-		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE ID = $1",
+		"SELECT id, developer_id, title, description, completed, funding_goal_cents, milestone, completion_date, premise, street, locality, state, zipcode, ST_X(coordinates::geometry) as latitude, ST_Y(coordinates::geometry) as longitude FROM projects WHERE ID = $1",
 		id)
 
 	var project models.Project
@@ -84,6 +130,7 @@ func GetProjectById(db *pgxpool.Pool, id uuid.UUID) (*models.Project, error) {
 		&project.Completed,
 		&project.FundingGoalCents,
 		&project.Milestone,
+		&project.CompletionDate,
 		&project.Premise,
 		&project.Street,
 		&project.Locality,

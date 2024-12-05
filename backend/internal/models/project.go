@@ -22,10 +22,15 @@ type Project struct {
 	Latitude         float32     `json:"latitude"`
 	Longitude        float32     `json:"longitude"`
 	Images           []ImageLink `json:"images"`
+	CompletionDate   string      `json:"completion_date"`
 }
 
 type InvestRequestBody struct {
 	Amount int32 `json:"amount"`
+}
+
+type SearchRequestBody struct {
+	Query string `json:"query"`
 }
 
 type ProjectPost struct {
