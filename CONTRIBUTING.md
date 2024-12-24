@@ -1,7 +1,3 @@
-# Guiding Philosophy
-
-[Cognitive load is what matters.](https://github.com/zakirullin/cognitive-load)
-
 # For Windows Users
 
 This guide assumes that you are using Linux/MacOS. If you are using Windows, please install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
@@ -33,9 +29,7 @@ This guide assumes that you are using Linux/MacOS. If you are using Windows, ple
 
 6. Create a file `.env` to store environment variables. Run `cp ./.env.template ./.env`.
 
-7. To get your auth token, run `go run ../backend/cmd/login/main.go [username] [password]` AFTER setting up the backend and following the steps in the SupaBase setup video.
-
-8. Run `npx expo start --tunnel` to run the frontend! If this doesn't work, try running `npx expo start`
+7. Run `npx expo start --tunnel` to run the frontend! If this doesn't work, try running `npx expo start`
 
 # Backend setup (using Supabase)
 

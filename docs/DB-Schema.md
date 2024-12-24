@@ -29,7 +29,6 @@ Scattered thoughts when I was designing out schema, not really meant for reading
 - TODO: Lots of 'description' fields on these tables - do we want this to be plaintext or markdown/more fancy format? Mostly a design thing.
 - All locations are addresses
 - TODO: Constraint checking on shares: the shares that users have bought of a project should never exceed its total_shares (obv), consequently theres also some stuff we could maybe do to calculate remaining shares, idk.
-- TODO: fuck we need to keep purchase history
     - I think if we just change user_shares to user_shares_purchases (table stores # of shares user has in a project -> table stores purchases of shares of project over time that a user made) this fixes it well, though this could result in some complex queries for getting total shares user has in a project, shares remaining, etc.
 - TODO: switch to kickstarter model
     - Total amonut of money to raise, users can fund arbitrary amount that translates into % of eventual profits

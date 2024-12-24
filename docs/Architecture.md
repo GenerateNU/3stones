@@ -39,9 +39,13 @@
   - `constants/`: All constants used in the frontend, such as colors.
   - `node_modules/`: External packages.
   - `src/`: Contains all product code for the frontend.
-    - `navigation/`: Code for navigation between screens.
-    - `screens/`: Contains the definitions of all screens. Each screen has its own subdirectory which contains the screen definition and styles for the screen.
+    - `components/`: Code for components used across the app.
+    - `context/`: Code for any contexts used across the app.
+    - `navigation/`: Code for screen navigators/React Router stacks.
+    - `screens/`: Contains all the screens for the app. Screens that make up a single feature/flow are contained in their own subdirectory.
     - `services/`: Code to interface with services used in the frontend, such as the API.
     - `types/`: Type definitions.
+    - `util/`: Utility/helper functions.
+    - `constants.ts`: Constants used across the app (API and Supabase links).
   - `App.js`: The main entrypoint for running the frontend.
   - All of the other files are configuration files.
